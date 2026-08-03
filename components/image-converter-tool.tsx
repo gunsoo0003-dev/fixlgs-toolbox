@@ -1,0 +1,745 @@
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createStoredZip } from "@/lib/zip";
+import { tool001LocalNotes, type Locale } from "@/lib/site";
+
+type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
+type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
+type Status = "idle" | "queued" | "processing" | "done" | "error";
+
+type FileItem = {
+  id: string;
+  file: File;
+  previewUrl: string;
+  resultUrl?: string;
+  resultBlob?: Blob;
+  status: Status;
+  error?: string;
+  outputFormat: OutputFormat;
+  width?: number;
+  height?: number;
+  originalSize: number;
+  outputSize?: number;
+  transparency?: boolean;
+};
+
+const outputOptions: { value: OutputFormat; label: Record<Locale, string> }[] = [
+  { value: "image/jpeg", label: { ko: "JPG", en: "JPG", ja: "JPG" } },
+  { value: "image/png", label: { ko: "PNG", en: "PNG", ja: "PNG" } },
+  { value: "image/webp", label: { ko: "WebP", en: "WebP", ja: "WebP" } },
+];
+
+const qualityPresets: Record<Exclude<QualityMode, "custom">, Record<Locale, string>> = {
+  auto: { ko: "자동 추천", en: "Auto recommended", ja: "自動おすすめ" },
+  high: { ko: "고화질", en: "High quality", ja: "高画質" },
+  balanced: { ko: "균형", en: "Balanced", ja: "バランス" },
+  space: { ko: "용량 절약", en: "Save space", ja: "容量節約" },
+};
+
+function getMimeForFormat(format: OutputFormat) {
+  return format;
+}
+
+function getExtensionForFormat(format: OutputFormat) {
+  return format === "image/jpeg" ? "jpg" : format === "image/png" ? "png" : "webp";
+}
+
+function baseName(name: string) {
+  const idx = name.lastIndexOf(".");
+  return idx > 0 ? name.slice(0, idx) : name;
+}
+
+function formatBytes(bytes: number) {
+  if (!Number.isFinite(bytes)) return "-";
+  if (bytes < 1024) return `${bytes.toFixed(0)} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+function formatChange(bytes: number) {
+  const abs = Math.abs(bytes);
+  const text = formatBytes(abs);
+  if (bytes > 0) return `+${text}`;
+  if (bytes < 0) return `-${text}`;
+  return "0 B";
+}
+
+function formatPercent(delta: number, original: number) {
+  if (!original) return "0%";
+  const percent = (delta / original) * 100;
+  return `${percent > 0 ? "+" : ""}${percent.toFixed(1)}%`;
+}
+
+function isSupportedImage(file: File) {
+  const mime = file.type.toLowerCase();
+  const name = file.name.toLowerCase();
+  return (
+    mime === "image/jpeg" ||
+    mime === "image/png" ||
+    mime === "image/webp" ||
+    name.endsWith(".jpg") ||
+    name.endsWith(".jpeg") ||
+    name.endsWith(".png") ||
+    name.endsWith(".webp")
+  );
+}
+
+async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
+  if (typeof window !== "undefined" && "createImageBitmap" in window) {
+    try {
+      const bitmap = await createImageBitmap(file);
+      return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
+    } catch {
+      // fallback below
+    }
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => URL.revokeObjectURL(objectUrl) });
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("이미지를 불러올 수 없습니다."));
+    };
+    image.src = objectUrl;
+  });
+}
+
+async function detectTransparency(source: CanvasImageSource, width: number, height: number) {
+  const canvas = document.createElement("canvas");
+  const maxSide = 256;
+  const scale = Math.min(1, maxSide / Math.max(width, height));
+  const sampleWidth = Math.max(1, Math.floor(width * scale));
+  const sampleHeight = Math.max(1, Math.floor(height * scale));
+  canvas.width = sampleWidth;
+  canvas.height = sampleHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return false;
+  ctx.clearRect(0, 0, sampleWidth, sampleHeight);
+  ctx.drawImage(source, 0, 0, sampleWidth, sampleHeight);
+  const imageData = ctx.getImageData(0, 0, sampleWidth, sampleHeight).data;
+  for (let index = 3; index < imageData.length; index += 16) {
+    if (imageData[index] < 255) return true;
+  }
+  return false;
+}
+
+async function canvasToBlob(canvas: HTMLCanvasElement, mime: string, quality?: number) {
+  return new Promise<Blob | null>((resolve) => {
+    canvas.toBlob(
+      (blob) => {
+        resolve(blob);
+      },
+      mime,
+      quality,
+    );
+  });
+}
+
+
+function getQualityPresetLabel(mode: QualityMode, locale: Locale) {
+  if (mode === "custom") return locale === "ko" ? "직접 설정" : locale === "en" ? "Custom" : "手動設定";
+  return qualityPresets[mode][locale];
+}
+
+function qualityFor(mode: QualityMode, format: OutputFormat) {
+  if (format === "image/png") return undefined;
+  if (mode === "custom") return undefined;
+  const defaults: Record<Exclude<QualityMode, "custom">, Record<Exclude<OutputFormat, "image/png">, number>> = {
+    auto: { "image/jpeg": 0.92, "image/webp": 0.88 },
+    high: { "image/jpeg": 0.96, "image/webp": 0.94 },
+    balanced: { "image/jpeg": 0.88, "image/webp": 0.84 },
+    space: { "image/jpeg": 0.76, "image/webp": 0.72 },
+  };
+  return defaults[mode][format];
+}
+
+export function ImageConverterTool({ locale }: { locale: Locale }) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [items, setItems] = useState<FileItem[]>([]);
+  const [dragActive, setDragActive] = useState(false);
+  const [globalFormat, setGlobalFormat] = useState<OutputFormat>("image/webp");
+  const [qualityMode, setQualityMode] = useState<QualityMode>("auto");
+  const [customQuality, setCustomQuality] = useState(88);
+  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const itemsRef = useRef<FileItem[]>([]);
+
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
+
+  useEffect(() => {
+    return () => {
+      itemsRef.current.forEach((item) => {
+        URL.revokeObjectURL(item.previewUrl);
+        if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+      });
+    };
+  }, []);
+
+  const supportedLabel = useMemo(() => tool001LocalNotes[locale], [locale]);
+
+  const aggregate = useMemo(() => {
+    const done = items.filter((item) => item.status === "done").length;
+    const failed = items.filter((item) => item.status === "error").length;
+    const originalSize = items.reduce((sum, item) => sum + item.originalSize, 0);
+    const outputSize = items.reduce((sum, item) => sum + (item.outputSize ?? 0), 0);
+    return { done, failed, originalSize, outputSize, delta: outputSize - originalSize };
+  }, [items]);
+
+  const effectiveQualityLabel = useMemo(() => {
+    if (globalFormat === "image/png") return locale === "ko" ? "PNG는 무손실로 처리됩니다." : locale === "en" ? "PNG is handled as lossless output." : "PNGは無損失で処理されます。";
+    if (qualityMode === "custom") {
+      return locale === "ko"
+        ? `직접 설정 ${customQuality}`
+        : locale === "en"
+          ? `Custom ${customQuality}`
+          : `手動設定 ${customQuality}`;
+    }
+    return qualityPresets[qualityMode][locale];
+  }, [customQuality, globalFormat, locale, qualityMode]);
+
+  const addFiles = async (fileList: FileList | File[]) => {
+    const incoming = Array.from(fileList).filter(isSupportedImage);
+    if (incoming.length === 0) {
+      setMessage(
+        locale === "ko"
+          ? "지원하지 않는 파일은 제외했습니다. JPG, JPEG, PNG, WebP만 선택할 수 있습니다."
+          : locale === "en"
+            ? "Unsupported files were ignored. Only JPG, JPEG, PNG, and WebP are allowed."
+            : "対応していないファイルは除外しました。JPG、JPEG、PNG、WebPのみ選択できます。",
+      );
+      return;
+    }
+
+    const newItems: FileItem[] = incoming.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+      previewUrl: URL.createObjectURL(file),
+      status: "idle",
+      outputFormat: globalFormat,
+      originalSize: file.size,
+    }));
+
+    setItems((prev) => [...prev, ...newItems]);
+    setMessage(
+      locale === "ko"
+        ? `${newItems.length}개 이미지를 추가했습니다.`
+        : locale === "en"
+          ? `Added ${newItems.length} images.`
+          : `${newItems.length}件の画像を追加しました。`,
+    );
+  };
+
+  const removeItem = (id: string) => {
+    setItems((prev) => {
+      const target = prev.find((item) => item.id === id);
+      if (target) {
+        URL.revokeObjectURL(target.previewUrl);
+        if (target.resultUrl) URL.revokeObjectURL(target.resultUrl);
+      }
+      return prev.filter((item) => item.id !== id);
+    });
+  };
+
+  const clearAll = () => {
+    setItems((prev) => {
+      prev.forEach((item) => {
+        URL.revokeObjectURL(item.previewUrl);
+        if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+      });
+      return [];
+    });
+    setMessage("");
+  };
+
+  const moveItem = (index: number, direction: -1 | 1) => {
+    setItems((prev) => {
+      const next = [...prev];
+      const target = index + direction;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const setAllFormats = (format: OutputFormat) => {
+    setGlobalFormat(format);
+    setItems((prev) => prev.map((item) => ({ ...item, outputFormat: format })));
+  };
+
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  const convertAll = async () => {
+    if (processing || items.length === 0) return;
+    setProcessing(true);
+    setMessage(
+      locale === "ko"
+        ? "변환 중입니다."
+        : locale === "en"
+          ? "Converting images..."
+          : "画像を変換しています。",
+    );
+
+    const nextItems = [...items];
+    for (let i = 0; i < nextItems.length; i += 1) {
+      const item = nextItems[i];
+      nextItems[i] = { ...item, status: "processing", error: undefined };
+      setItems([...nextItems]);
+
+      try {
+        const format = item.outputFormat;
+        const quality = qualityFor(qualityMode, format);
+        const loaded = await loadImageSource(item.file);
+        const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
+        const canvas = document.createElement("canvas");
+        canvas.width = loaded.width;
+        canvas.height = loaded.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("Canvas 2D context unavailable");
+        if (format === "image/jpeg") {
+          ctx.fillStyle = transparency ? backgroundColor : backgroundColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        ctx.drawImage(loaded.source, 0, 0);
+        const blob = await canvasToBlob(canvas, getMimeForFormat(format), quality);
+        if (!blob) throw new Error("Failed to export image");
+        if (loaded.dispose) loaded.dispose();
+        const resultUrl = URL.createObjectURL(blob);
+        nextItems[i] = {
+          ...item,
+          status: "done",
+          error: undefined,
+          resultBlob: blob,
+          resultUrl,
+          outputSize: blob.size,
+          outputFormat: format,
+          width: loaded.width,
+          height: loaded.height,
+          transparency,
+        };
+        setItems([...nextItems]);
+      } catch (error) {
+        nextItems[i] = {
+          ...item,
+          status: "error",
+          error: error instanceof Error ? error.message : "Unknown error",
+        };
+        setItems([...nextItems]);
+      }
+    }
+
+    const done = nextItems.filter((item) => item.status === "done").length;
+    const failed = nextItems.filter((item) => item.status === "error").length;
+    setProcessing(false);
+    setMessage(
+      failed > 0
+        ? locale === "ko"
+          ? `${done}개 파일은 완료되었고 ${failed}개 파일은 실패했습니다.`
+          : locale === "en"
+            ? `${done} files completed and ${failed} failed.`
+            : `${done}件は完了し、${failed}件は失敗しました。`
+        : locale === "ko"
+          ? `${done}개 이미지 변환이 완료되었습니다.`
+          : locale === "en"
+            ? `${done} images converted successfully.`
+            : `${done}件の画像変換が完了しました。`,
+    );
+  };
+
+  const downloadAllZip = async () => {
+    const readyFiles = items
+      .filter((item) => item.status === "done" && item.resultBlob)
+      .map((item) => ({
+        name: `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`,
+        blob: item.resultBlob as Blob,
+      }));
+    if (readyFiles.length === 0) return;
+    const zipBlob = await createStoredZip(readyFiles);
+    downloadBlob(zipBlob, `fixlgs-image-converter.zip`);
+  };
+
+  const hasDownloadableResults = items.some((item) => item.status === "done" && item.resultBlob);
+
+  return (
+    <div className="toolbox-tool-workflow">
+      <section className="toolbox-workbench">
+      <div
+        onDragOver={(event) => {
+          event.preventDefault();
+          setDragActive(true);
+        }}
+        onDragLeave={() => setDragActive(false)}
+        onDrop={(event) => {
+          event.preventDefault();
+          setDragActive(false);
+          if (event.dataTransfer.files.length > 0) {
+            void addFiles(event.dataTransfer.files);
+          }
+        }}
+        className={`toolbox-workbench-upload ${dragActive ? "is-dragging" : ""}`}
+      >
+        <div className="toolbox-workbench-topline">
+          <div><span>WORKSPACE</span><strong>{locale === "ko" ? "이미지 변환 작업장" : locale === "en" ? "Image conversion workspace" : "画像変換ワークスペース"}</strong></div>
+          <button type="button" onClick={clearAll}>{locale === "ko" ? "전체 초기화" : locale === "en" ? "Reset all" : "すべてリセット"}</button>
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+          multiple
+          className="hidden"
+          onChange={(event) => {
+            if (event.target.files) {
+              void addFiles(event.target.files);
+              event.target.value = "";
+            }
+          }}
+        />
+        {items.length === 0 ? (
+          <div className="toolbox-upload-focus">
+            <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
+            <h2>{locale === "ko" ? "이미지를 여기에 놓으세요" : locale === "en" ? "Drop images here" : "画像をここにドロップ"}</h2>
+            <p>{locale === "ko" ? "여러 파일을 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다." : locale === "en" ? "Add several files at once, or choose them with the button below." : "複数ファイルをまとめて追加するか、下のボタンから選択できます。"}</p>
+            <button type="button" onClick={() => fileInputRef.current?.click()}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
+            <small>{supportedLabel}</small>
+          </div>
+        ) : (
+          <div className="toolbox-upload-active">
+            <div className="toolbox-upload-active-head">
+              <div>
+                <span>{locale === "ko" ? "선택한 이미지" : locale === "en" ? "Selected images" : "選択した画像"}</span>
+                <p>{locale === "ko" ? "파일을 놓은 자리에서 순서, 형식, 상태와 결과를 바로 확인합니다." : locale === "en" ? "Manage order, format, status, and results where you added the files." : "追加した場所で順序、形式、状態、結果を確認できます。"}</p>
+              </div>
+              <div className="toolbox-upload-active-actions">
+                <div className="toolbox-file-stats">
+                  <span>{items.length} files</span>
+                  <span>{aggregate.done} done</span>
+                  <span>{aggregate.failed} failed</span>
+                </div>
+                <button type="button" onClick={() => fileInputRef.current?.click()}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
+              </div>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {items.map((item, index) => (
+              <article key={item.id} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
+                <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">
+                  <img src={item.previewUrl} alt={item.file.name} className="h-full w-full object-cover" />
+                </div>
+                <div className="space-y-3 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h3 className="truncate text-sm font-semibold" title={item.file.name}>
+                        {item.file.name}
+                      </h3>
+                      <p className="mt-1 text-xs text-muted">
+                        {formatBytes(item.originalSize)} · {item.width ?? "-"}×{item.height ?? "-"}
+                      </p>
+                    </div>
+                    <span
+                      className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                        item.status === "done"
+                          ? "bg-success/10 text-success"
+                          : item.status === "error"
+                            ? "bg-warning/10 text-warning"
+                            : item.status === "processing"
+                              ? "bg-foreground/10 text-foreground dark:bg-white/10 dark:text-white"
+                              : "border border-border text-muted"
+                      }`}
+                    >
+                      {item.status === "done"
+                        ? locale === "ko"
+                          ? "완료"
+                          : locale === "en"
+                            ? "Done"
+                            : "完了"
+                        : item.status === "error"
+                          ? locale === "ko"
+                            ? "실패"
+                            : locale === "en"
+                              ? "Error"
+                              : "失敗"
+                          : item.status === "processing"
+                            ? locale === "ko"
+                              ? "변환중"
+                              : locale === "en"
+                                ? "Working"
+                                : "処理中"
+                            : locale === "ko"
+                              ? "대기"
+                              : locale === "en"
+                                ? "Ready"
+                                : "待機"}
+                    </span>
+                  </div>
+
+                  <label className="flex flex-col gap-2 text-xs font-medium text-muted">
+                    <span>{locale === "ko" ? "파일별 출력 형식" : locale === "en" ? "Per-file output format" : "ファイルごとの出力形式"}</span>
+                    <select
+                      value={item.outputFormat}
+                      onChange={(event) => {
+                        const value = event.target.value as OutputFormat;
+                        setItems((prev) => prev.map((current) => (current.id === item.id ? { ...current, outputFormat: value } : current)));
+                      }}
+                      className="rounded-2xl border border-border bg-surface px-3 py-2 text-sm text-foreground outline-none transition focus:border-foreground dark:focus:border-white"
+                    >
+                      {outputOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label[locale]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {item.status === "done" && item.resultBlob ? (
+                    <div className="grid gap-2 rounded-2xl border border-border bg-surface p-3 text-xs leading-6 text-muted">
+                      <div className="flex justify-between gap-3">
+                        <span>{locale === "ko" ? "결과 용량" : locale === "en" ? "Output size" : "変換後サイズ"}</span>
+                        <span className="font-medium text-foreground">{formatBytes(item.outputSize ?? 0)}</span>
+                      </div>
+                      <div className="flex justify-between gap-3">
+                        <span>{locale === "ko" ? "용량 변화" : locale === "en" ? "Size change" : "容量変化"}</span>
+                        <span className="font-medium text-foreground">{formatChange((item.outputSize ?? 0) - item.originalSize)}</span>
+                      </div>
+                      <div className="flex justify-between gap-3">
+                        <span>{locale === "ko" ? "변화율" : locale === "en" ? "Rate" : "比率"}</span>
+                        <span className="font-medium text-foreground">{formatPercent((item.outputSize ?? 0) - item.originalSize, item.originalSize)}</span>
+                      </div>
+                    </div>
+                  ) : item.status === "error" ? (
+                    <div className="rounded-2xl border border-warning/30 bg-warning/10 p-3 text-xs leading-6 text-warning">
+                      {item.error || (locale === "ko" ? "변환 실패" : locale === "en" ? "Conversion failed" : "変換失敗")}
+                    </div>
+                  ) : null}
+
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => moveItem(index, -1)}
+                      className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium transition hover:border-foreground hover:text-foreground dark:hover:border-white dark:hover:text-white"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveItem(index, 1)}
+                      className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium transition hover:border-foreground hover:text-foreground dark:hover:border-white dark:hover:text-white"
+                    >
+                      ↓
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeItem(item.id)}
+                      className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium transition hover:border-foreground hover:text-foreground dark:hover:border-white dark:hover:text-white"
+                    >
+                      {locale === "ko" ? "삭제" : locale === "en" ? "Remove" : "削除"}
+                    </button>
+                    {item.status === "done" && item.resultBlob ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => downloadBlob(item.resultBlob as Blob, `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`)}
+                          className="ml-auto rounded-full bg-foreground px-3 py-1.5 text-xs font-semibold text-background dark:bg-white dark:text-black"
+                        >
+                          {locale === "ko" ? "다운로드" : locale === "en" ? "Download" : "保存"}
+                        </button>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          </div>
+        )}
+
+        <div className="toolbox-workbench-settings-head">
+          <div>
+            <span>{locale === "ko" ? "출력 설정" : locale === "en" ? "Output settings" : "出力設定"}</span>
+            <p>{locale === "ko" ? "파일을 추가한 뒤 원하는 형식과 품질을 선택하세요." : locale === "en" ? "Choose the format and quality after adding files." : "ファイル追加後に形式と画質を選択してください。"}</p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {outputOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setAllFormats(option.value)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  globalFormat === option.value
+                    ? "bg-foreground text-background dark:bg-white dark:text-black"
+                    : "border border-border bg-surface-2 text-foreground hover:border-foreground hover:text-foreground dark:hover:border-white dark:hover:text-white"
+                }`}
+              >
+                {option.label[locale]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="rounded-2xl border border-border bg-surface-2 p-4">
+            <p className="text-sm font-medium text-foreground">{locale === "ko" ? "품질" : locale === "en" ? "Quality" : "画質"}</p>
+            <p className="mt-1 text-sm text-muted">{effectiveQualityLabel}</p>
+            {globalFormat !== "image/png" ? (
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                {(["auto", "high", "balanced", "space", "custom"] as QualityMode[]).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setQualityMode(mode)}
+                    className={`rounded-full px-3 py-1.5 transition ${
+                      qualityMode === mode
+                        ? "bg-foreground text-background dark:bg-white dark:text-black"
+                        : "border border-border bg-surface text-foreground hover:border-foreground hover:text-foreground dark:hover:border-white dark:hover:text-white"
+                    }`}
+                  >
+                    {getQualityPresetLabel(mode, locale)}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-3 text-sm leading-6 text-muted">
+                {locale === "ko"
+                  ? "PNG는 기본 무손실 출력입니다."
+                  : locale === "en"
+                    ? "PNG is handled as lossless output."
+                    : "PNGは無損失出力です。"}
+              </p>
+            )}
+            {globalFormat !== "image/png" && qualityMode === "custom" ? (
+              <div className="mt-4">
+                <input
+                  type="range"
+                  min={1}
+                  max={100}
+                  value={customQuality}
+                  onChange={(event) => setCustomQuality(Number(event.target.value))}
+                  className="w-full accent-[var(--accent)]"
+                />
+                <div className="mt-1 flex justify-between text-xs text-muted">
+                  <span>1</span>
+                  <span>{customQuality}</span>
+                  <span>100</span>
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          {globalFormat === "image/jpeg" ? (
+            <label className="flex min-w-52 flex-col gap-2 text-sm font-medium">
+              <span>{locale === "ko" ? "JPG 배경색" : locale === "en" ? "JPG background" : "JPG背景色"}</span>
+              <input
+                type="color"
+                value={backgroundColor}
+                onChange={(event) => setBackgroundColor(event.target.value)}
+                className="h-12 w-full cursor-pointer rounded-2xl border border-border bg-surface p-1"
+              />
+            </label>
+          ) : null}
+        </div>
+
+        {advancedOpen ? (
+          <div className="mt-4 rounded-2xl border border-border bg-surface p-4 text-sm leading-7 text-muted">
+            {locale === "ko"
+              ? "기본적으로 메타데이터는 제거됩니다. JPG는 투명 배경을 지원하지 않으므로 JPG로 변환할 때는 선택한 배경색으로 채워집니다."
+              : locale === "en"
+                ? "Metadata is removed by default. JPG does not support transparency, so transparent areas are filled with the selected background color when converting to JPG."
+                : "メタデータは基本的に削除されます。JPGは透明背景に対応しないため、JPG変換時は選択した背景色で塗りつぶされます。"}
+          </div>
+        ) : null}
+
+        {items.length > 0 ? (
+          <div className="toolbox-workbench-actions">
+            <button
+              type="button"
+              onClick={() => void convertAll()}
+              disabled={processing}
+              className="toolbox-primary-action"
+            >
+              {processing ? (locale === "ko" ? "변환 중..." : locale === "en" ? "Converting..." : "変換中...") : (locale === "ko" ? "변환하기" : locale === "en" ? "Convert" : "変換する")}
+            </button>
+            <button
+              type="button"
+              onClick={downloadAllZip}
+              disabled={!hasDownloadableResults}
+              className="toolbox-zip-action"
+            >
+              {locale === "ko" ? "전체 ZIP 다운로드" : locale === "en" ? "Download all as ZIP" : "すべてZIPで保存"}
+            </button>
+            <button
+              type="button"
+              className="toolbox-restart-action"
+              onClick={() => { clearAll(); setGlobalFormat("image/webp"); setQualityMode("auto"); setCustomQuality(88); setBackgroundColor("#ffffff"); }}
+            >
+              {locale === "ko" ? "다시 변환" : locale === "en" ? "Convert again" : "もう一度変換"}
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      {message ? (
+        <div className="toolbox-workbench-notice">
+          <strong className="mr-2 text-foreground">{locale === "ko" ? "안내" : locale === "en" ? "Notice" : "案内"}</strong>
+          <span>{message}</span>
+        </div>
+      ) : null}
+
+
+      </section>
+
+      <section className="toolbox-next-work">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold">{locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業"}</h2>
+            <p className="mt-1 text-sm text-muted">
+              {locale === "ko"
+                ? "이 결과를 이어서 활용하기 좋은 도구를 먼저 보여줍니다."
+                : locale === "en"
+                  ? "Tools that naturally continue this result are shown first."
+                  : "この結果を続けて使いやすいツールを先に表示します。"}
+            </p>
+          </div>
+          <a href={`/${locale}`} className="text-sm font-medium text-foreground">
+            {locale === "ko" ? "카테고리로 돌아가기" : locale === "en" ? "Back to categories" : "カテゴリへ戻る"}
+          </a>
+        </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <ToolCardSkeleton title={locale === "ko" ? "이미지 압축기" : locale === "en" ? "Image Compressor" : "画像圧縮"} description={locale === "ko" ? "001의 다음 흐름으로 연결되는 도구" : locale === "en" ? "Natural next step after conversion" : "変換後の次に使いやすいツール"} />
+          <ToolCardSkeleton title={locale === "ko" ? "이미지 크기 변경기" : locale === "en" ? "Image Resizer" : "画像サイズ変更"} description={locale === "ko" ? "웹용 크기 조정에 연결" : locale === "en" ? "For resizing before upload" : "アップロード前のサイズ調整"} />
+          <ToolCardSkeleton title={locale === "ko" ? "웹 이미지 최적화기" : locale === "en" ? "Web Image Optimizer" : "Web最適化"} description={locale === "ko" ? "용량 줄이기와 웹 최적화" : locale === "en" ? "For lighter web-ready assets" : "軽量なWeb向け画像へ"} />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function ToolCardSkeleton({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="toolbox-next-work-card">
+      <h3 className="text-base font-semibold">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+      <div className="toolbox-next-work-card-foot"><span>Coming soon</span><strong aria-hidden="true">↗</strong></div>
+    </div>
+  );
+}
+
