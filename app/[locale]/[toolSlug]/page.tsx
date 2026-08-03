@@ -2,23 +2,45 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageConverterTool } from "@/components/image-converter-tool";
+import { HeicAvifPage } from "@/components/heic-avif-page";
 import { ToolboxSubpageShell } from "@/components/toolbox-subpage-shell";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
-import { locales, tool001Descriptions, tool001Slug, tool001Titles, type Locale } from "@/lib/site";
+import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, type Locale } from "@/lib/site";
 
-export function generateStaticParams() { return locales.map((locale) => ({ locale, toolSlug: tool001Slug })); }
+export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug].map((toolSlug) => ({ locale, toolSlug }))); }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; toolSlug: string }> }): Promise<Metadata> {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || toolSlug !== tool001Slug) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug)) notFound();
   const current = locale as Locale;
-  return { title: `${tool001Titles[current]} - TOOLBOX`, description: tool001Descriptions[current], alternates: { canonical: `https://toolbox.fixlgs.com/${current}/${tool001Slug}` } };
+  const is002 = toolSlug === tool002Slug;
+  const titles = is002 ? tool002Titles : tool001Titles;
+  const descriptions = is002 ? tool002Descriptions : tool001Descriptions;
+  const seoTitle = is002
+    ? current === "ko" ? "HEIC·AVIF 이미지 변환기 | JPG·PNG·AVIF 일괄 변환"
+      : current === "en" ? "HEIC & AVIF Image Converter | Batch JPG, PNG and AVIF"
+      : "HEIC・AVIF画像変換ツール | JPG・PNG・AVIF一括変換"
+    : `${titles[current]} - TOOLBOX`;
+  return {
+    title: seoTitle,
+    description: descriptions[current],
+    alternates: {
+      canonical: `https://toolbox.fixlgs.com/${current}/${toolSlug}`,
+      languages: {
+        ko: `https://toolbox.fixlgs.com/ko/${toolSlug}`,
+        en: `https://toolbox.fixlgs.com/en/${toolSlug}`,
+        ja: `https://toolbox.fixlgs.com/ja/${toolSlug}`,
+        "x-default": `https://toolbox.fixlgs.com/en/${toolSlug}`,
+      },
+    },
+  };
 }
 
 export default async function Tool001Page({ params }: { params: Promise<{ locale: string; toolSlug: string }> }) {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || toolSlug !== tool001Slug) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug)) notFound();
   const current = locale as Locale;
+  if (toolSlug === tool002Slug) return <HeicAvifPage locale={current} />;
   const back = current === "ko" ? "이미지 변환·최적화" : current === "en" ? "Image Convert" : "画像変換・最適化";
   const eyebrow = current === "ko" ? "브라우저에서 바로 처리" : current === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理";
   const info: {
@@ -148,7 +170,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
   };
 
   return (
-    <ToolboxSubpageShell locale={current}>
+    <ToolboxSubpageShell locale={current} appName={tool001Titles[current]}>
       <section className="toolbox-tool-detail-hero">
         <Link className="toolbox-subpage-back" href={`/${current}/category/image-convert`}>← {back}</Link>
         <p className="toolbox-subpage-eyebrow">001 · IMAGE CONVERT</p>

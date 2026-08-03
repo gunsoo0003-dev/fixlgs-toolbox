@@ -169,6 +169,21 @@ export const categories: Category[] = [
 
 export const tool001Slug = "jpg-png-webp-image-converter" as const;
 
+
+export const tool002Slug = "heic-avif-image-converter" as const;
+
+export const tool002Titles: Record<Locale, string> = {
+  ko: "HEIC·AVIF 이미지 변환기",
+  en: "HEIC & AVIF Image Converter",
+  ja: "HEIC・AVIF画像変換ツール",
+};
+
+export const tool002Descriptions: Record<Locale, string> = {
+  ko: "HEIC·AVIF 이미지를 JPG·PNG로 변환하거나 JPG·PNG 이미지를 AVIF로 한 번에 변환합니다.",
+  en: "Convert HEIC and AVIF images to JPG or PNG, or convert JPG and PNG images to AVIF in batches.",
+  ja: "HEIC・AVIF画像をJPG・PNGに変換したり、JPG・PNG画像をAVIFにまとめて変換できます。",
+};
+
 export const tool001Titles: Record<Locale, string> = {
   ko: "JPG·PNG·WebP 이미지 변환기",
   en: "JPG, PNG & WebP Image Converter",
@@ -343,12 +358,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "HEIC・AVIF画像変換ツール",
       },
       description: {
-        ko: "002번 도구",
-        en: "Tool 002",
-        ja: "ツール002",
+        ko: "",
+        en: "",
+        ja: "",
       },
-      status: "NEXT",
-      active: false,
+      href: `/${"ko"}/${tool002Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: {
@@ -357,9 +373,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "SVG・BMP・TIFF画像変換ツール",
       },
       description: {
-        ko: "003번 도구",
-        en: "Tool 003",
-        ja: "ツール003",
+        ko: "",
+        en: "",
+        ja: "",
       },
       status: "NEXT",
       active: false,
@@ -371,9 +387,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "画像圧縮ツール",
       },
       description: {
-        ko: "004번 도구",
-        en: "Tool 004",
-        ja: "ツール004",
+        ko: "",
+        en: "",
+        ja: "",
       },
       status: "NEXT",
       active: false,
@@ -385,9 +401,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "目標容量圧縮ツール",
       },
       description: {
-        ko: "005번 도구",
-        en: "Tool 005",
-        ja: "ツール005",
+        ko: "",
+        en: "",
+        ja: "",
       },
       status: "NEXT",
       active: false,
@@ -399,9 +415,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "画像サイズ変更ツール",
       },
       description: {
-        ko: "006번 도구",
-        en: "Tool 006",
-        ja: "ツール006",
+        ko: "",
+        en: "",
+        ja: "",
       },
       status: "NEXT",
       active: false,
@@ -413,9 +429,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         ja: "Web画像最適化ツール",
       },
       description: {
-        ko: "007번 도구",
-        en: "Tool 007",
-        ja: "ツール007",
+        ko: "",
+        en: "",
+        ja: "",
       },
       status: "NEXT",
       active: false,
@@ -454,7 +470,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }));
 
   if (categorySlug === "image-convert") {
-    return cards.map((item, index) => (index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : item));
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : item);
   }
 
   return cards;

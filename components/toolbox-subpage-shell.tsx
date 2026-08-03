@@ -10,7 +10,7 @@ const labels = {
   ja: { featured: "主要ツール", categories: "カテゴリー", home: "TOOLBOX ホーム", privacy: "プライバシーポリシー", terms: "利用規約", contact: "お問い合わせ" },
 } satisfies Record<Locale, Record<string, string>>;
 
-export function ToolboxSubpageShell({ locale, children }: { locale: Locale; children: ReactNode }) {
+export function ToolboxSubpageShell({ locale, children, appName = "FIXLGS TOOLBOX" }: { locale: Locale; children: ReactNode; appName?: string }) {
   const copy = labels[locale];
 
   return (
@@ -32,7 +32,7 @@ export function ToolboxSubpageShell({ locale, children }: { locale: Locale; chil
       <footer className="toolbox-footer">
         <Link href={`/${locale}`}>{copy.home}</Link>
         <span>TOOLBOX · 2026</span>
-        <div><Link href="https://fixlgs.com/privacy">{copy.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.terms}</Link><Link href="https://fixlgs.com/contact?app=FIXLGS%20TOOLBOX">{copy.contact}</Link></div>
+        <div><Link href="https://fixlgs.com/privacy">{copy.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.terms}</Link><Link href={`https://fixlgs.com/contact?app=${encodeURIComponent(appName)}`}>{copy.contact}</Link></div>
       </footer>
     </main>
   );

@@ -97,11 +97,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
             const body = (
               <>
                 <div className="toolbox-subpage-card-top"><span>{String(index + 1).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
-                <div><h2>{tool.title[currentLocale]}</h2><p>{tool.description[currentLocale]}</p></div>
+                <div><h2>{currentLocale === "ko" && categorySlug === "image-convert" && index === 1 ? <>HEIC·AVIF<br />이미지 변환기</> : currentLocale === "ko" && categorySlug === "image-convert" && index === 2 ? <>SVG·BMP·TIFF<br />이미지 변환기</> : currentLocale === "ko" && categorySlug === "image-convert" && index === 4 ? <>목표 용량<br />이미지 압축기</> : tool.title[currentLocale]}</h2>{tool.description[currentLocale] ? <p>{tool.description[currentLocale]}</p> : null}</div>
                 <div className="toolbox-subpage-card-foot"><b>{tool.active ? open : preparing}</b><i>↗</i></div>
               </>
             );
-            return tool.active && tool.href ? <Link className="toolbox-subpage-card is-active" href={tool.href} key={tool.title[currentLocale]}>{body}</Link> : <article className="toolbox-subpage-card" key={tool.title[currentLocale]}>{body}</article>;
+            return tool.active && tool.href ? <Link className={`toolbox-subpage-card ${index === 0 ? "is-featured" : ""}`} href={tool.href} key={tool.title[currentLocale]}>{body}</Link> : <article className={`toolbox-subpage-card ${index === 0 ? "is-featured" : ""}`} key={tool.title[currentLocale]}>{body}</article>;
           })}
         </div>
       </section>

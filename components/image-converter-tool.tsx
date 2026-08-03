@@ -401,7 +401,6 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
       >
         <div className="toolbox-workbench-topline">
           <div><span>WORKSPACE</span><strong>{locale === "ko" ? "이미지 변환 작업장" : locale === "en" ? "Image conversion workspace" : "画像変換ワークスペース"}</strong></div>
-          <button type="button" onClick={clearAll}>{locale === "ko" ? "전체 초기화" : locale === "en" ? "Reset all" : "すべてリセット"}</button>
         </div>
         <input
           ref={fileInputRef}
@@ -676,7 +675,11 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
               disabled={processing}
               className="toolbox-primary-action"
             >
-              {processing ? (locale === "ko" ? "변환 중..." : locale === "en" ? "Converting..." : "変換中...") : (locale === "ko" ? "변환하기" : locale === "en" ? "Convert" : "変換する")}
+              {processing
+                ? (locale === "ko" ? "변환 중..." : locale === "en" ? "Converting..." : "変換中...")
+                : hasDownloadableResults
+                  ? (locale === "ko" ? "다시 변환" : locale === "en" ? "Convert again" : "もう一度変換")
+                  : (locale === "ko" ? "변환하기" : locale === "en" ? "Convert" : "変換する")}
             </button>
             <button
               type="button"
@@ -691,7 +694,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
               className="toolbox-restart-action"
               onClick={() => { clearAll(); setGlobalFormat("image/webp"); setQualityMode("auto"); setCustomQuality(88); setBackgroundColor("#ffffff"); }}
             >
-              {locale === "ko" ? "다시 변환" : locale === "en" ? "Convert again" : "もう一度変換"}
+              {locale === "ko" ? "전체 초기화" : locale === "en" ? "Reset all" : "すべてリセット"}
             </button>
           </div>
         ) : null}
