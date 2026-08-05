@@ -166,7 +166,7 @@ function drawItemCanvas(item: Item, drawable: { source: CanvasImageSource; width
   }
   return canvas;
 }
-async function optimizePng(blob: Blob, level = 3) { const { optimise } = await loadOxiPng(); const result = await optimise(await blob.arrayBuffer(), { level }); return new Blob([result], { type: "image/png" }); }
+async function optimizePng(blob: Blob, level = 3) { const { optimise } = await loadOxiPng(); const result = await optimise(await blob.arrayBuffer(), { level }); const output = new Uint8Array(result); return new Blob([output], { type: "image/png" }); }
 async function quantizeCanvas(canvas: HTMLCanvasElement, colors: number) { const iq = await loadImageQ(); const ctx = canvas.getContext("2d", { alpha: true, willReadFrequently: true }); if (!ctx) throw new Error("canvas"); const source = ctx.getImageData(0, 0, canvas.width, canvas.height); const point = iq.utils.PointContainer.fromImageData(source); const palette = await iq.buildPalette([point], { colors, colorDistanceFormula: "euclidean-bt709", paletteQuantization: "wuquant" }); const quant = await iq.applyPalette(point, palette, { colorDistanceFormula: "euclidean-bt709", imageQuantization: "floyd-steinberg" }); ctx.putImageData(new ImageData(new Uint8ClampedArray(quant.toUint8Array()), canvas.width, canvas.height), 0, 0); }
 
 async function searchLossy(

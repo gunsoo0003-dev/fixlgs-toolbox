@@ -45,7 +45,8 @@ function loadImageQ(){return imageQPromise??=(importRemote<ImageQModule>(IMAGE_Q
 async function optimizePng(blob:Blob,level:number){
  const {optimise}=await loadOxiPng();
  const result=await optimise(await blob.arrayBuffer(),{level});
- return new Blob([result],{type:"image/png"});
+ const output = new Uint8Array(result);
+ return new Blob([output],{type:"image/png"});
 }
 async function quantizePng(canvas:HTMLCanvasElement,colors:number){
  const iq=await loadImageQ();
