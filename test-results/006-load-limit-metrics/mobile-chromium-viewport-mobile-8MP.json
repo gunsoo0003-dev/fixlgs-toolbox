@@ -1,0 +1,14 @@
+{
+  "label": "viewport-mobile-8MP",
+  "width": 3200,
+  "height": 2500,
+  "project": "mobile",
+  "timeoutMs": 120000,
+  "outputPixels": 8000000,
+  "durationMs": 2865,
+  "status": "passed",
+  "actualStatus": "done",
+  "actualWidth": 3200,
+  "actualHeight": 2500,
+  "note": "테스트 PC에서 모바일 viewport를 에뮬레이션한 결과이며 실제 모바일 기기 메모리 한계는 아니다."
+}

@@ -178,6 +178,20 @@ export const tool004Slug = "image-compressor" as const;
 
 export const tool005Slug = "target-size-image-compressor" as const;
 
+export const tool006Slug = "image-resizer" as const;
+
+export const tool006Titles: Record<Locale, string> = {
+  ko: "이미지 크기 변경기",
+  en: "Image Resizer",
+  ja: "画像サイズ変更ツール",
+};
+
+export const tool006Descriptions: Record<Locale, string> = {
+  ko: "JPG, PNG, WebP 이미지의 가로·세로 픽셀을 원하는 크기로 한 번에 변경합니다.",
+  en: "Resize JPG, PNG and WebP images to your chosen pixel dimensions in batches.",
+  ja: "JPG・PNG・WebP画像の縦横ピクセルを希望するサイズにまとめて変更します。",
+};
+
 
 
 export const tool005Titles: Record<Locale, string> = {
@@ -466,8 +480,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         en: "",
         ja: "",
       },
-      status: "NEXT",
-      active: false,
+      href: `/${"ko"}/${tool006Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: {
@@ -517,7 +532,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }));
 
   if (categorySlug === "image-convert") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool003Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool004Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool005Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool003Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool004Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool005Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool006Slug}` } : item);
   }
 
   return cards;

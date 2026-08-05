@@ -73,4 +73,16 @@ export const validationTools: readonly ToolValidationDefinition[] = [
       ja: "目標容量画像圧縮ツール",
     },
   },
+  {
+    id: "tool-006",
+    number: "006",
+    name: "이미지 크기 변경기",
+    slug: "image-resizer",
+    locales: ["ko", "en", "ja"],
+    expectedH1: {
+      ko: "이미지 크기 변경기",
+      en: "Image Resizer",
+      ja: "画像サイズ変更ツール",
+    },
+  },
 ] as const;

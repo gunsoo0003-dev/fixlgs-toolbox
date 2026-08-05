@@ -3178,3 +3178,46 @@ html[data-theme="dark"] .target-size-file-card>img{background:repeating-conic-gr
     font-size:clamp(20px,1.45vw,24px);
   }
 }
+
+/* TOOL 006 empty-state alignment — keep the notice on the same inner line as the 005 workbench content. */
+.resizer-workbench .target-size-workbench-files{
+  padding-left:22px;
+  padding-right:22px;
+}
+.resizer-workbench .target-size-workbench-files .compressor-empty{
+  margin-left:0;
+  margin-right:0;
+}
+@media(max-width:640px){
+  .resizer-workbench .target-size-workbench-files{
+    padding-left:16px;
+    padding-right:16px;
+  }
+}
+
+/* TOOL 006 · Image Resizer — extends the proven 005 workbench structure */
+.resizer-workbench{overflow:hidden;border-radius:26px}
+.resizer-settings-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;padding-top:20px}
+.resizer-setting-main,.resizer-setting-options{display:grid;gap:14px;align-content:start}
+.resizer-mode-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.resizer-mode-tabs button,.resizer-presets button{min-height:44px;border:1px solid var(--tb-line);border-radius:10px;background:var(--tb-panel);color:var(--tb-text);font:inherit;font-size:12px;font-weight:800}
+.resizer-mode-tabs button.is-active,.resizer-presets button.is-active{border-color:var(--blue);background:var(--blue);color:#fff}
+.resizer-dimension-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.resizer-dimension-grid label,.resizer-setting-main>label,.resizer-advanced-grid>label{display:grid;gap:8px;font-size:12px;font-weight:750}
+.resizer-dimension-grid label>span,.resizer-number{display:grid;grid-template-columns:minmax(0,1fr) 64px}
+.resizer-dimension-grid input,.resizer-number input,.resizer-advanced-grid select{min-height:48px;border:1px solid var(--tb-line);border-radius:10px 0 0 10px;background:var(--tb-panel);color:var(--tb-text);padding:0 14px;font:inherit}
+.resizer-dimension-grid b,.resizer-number b{display:grid;place-items:center;border:1px solid var(--tb-line);border-left:0;border-radius:0 10px 10px 0;background:var(--tb-soft);font-size:12px}
+.resizer-presets{display:flex;flex-wrap:wrap;gap:8px}.resizer-presets button{padding:0 14px;border-radius:999px}
+.resizer-setting-options details{border-top:1px solid var(--tb-line);padding-top:13px}.resizer-setting-options summary{cursor:pointer;font-size:13px;font-weight:800}
+.resizer-advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.resizer-advanced-grid select{border-radius:10px}.resizer-advanced-grid input[type="range"]{width:100%;accent-color:var(--blue)}.resizer-advanced-grid output{color:var(--blue);font-weight:800}
+.resizer-expected{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:13px 0;border-top:1px solid var(--tb-line);border-bottom:1px solid var(--tb-line)}
+.resizer-expected>span{display:grid;gap:3px;color:var(--tb-muted);font-size:11px}.resizer-expected strong{color:var(--tb-text);font-size:16px}.resizer-expected i{color:var(--blue);font-style:normal;font-weight:900}.resizer-expected em{margin-left:auto;border:1px solid var(--blue);border-radius:999px;padding:6px 9px;color:var(--blue);font-style:normal;font-size:10px;font-weight:800}
+.resizer-file-settings{display:grid;gap:16px;padding:16px;border:1px solid var(--tb-line);border-radius:12px;background:var(--tb-soft)}
+.resizer-file-settings .resizer-settings-grid{padding-top:0}
+@media(max-width:900px){.resizer-settings-grid{grid-template-columns:1fr}.resizer-advanced-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.resizer-workbench{border-radius:20px}.resizer-mode-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.resizer-dimension-grid{grid-template-columns:1fr}.resizer-file-settings{padding:12px;border-radius:16px}.resizer-expected em{margin-left:0}.resizer-advanced-grid{grid-template-columns:1fr}}
+
+/* 006 image resizer completion states */
+.resizer-expected>small{flex-basis:100%;color:var(--tb-muted);font-size:11px;line-height:1.5}
+.resizer-overall-progress{margin:18px 0 10px}
+.resizer-overall-progress span{padding-inline:12px;text-align:center}

@@ -1,0 +1,14 @@
+{
+  "label": "desktop-12MP",
+  "width": 4000,
+  "height": 3000,
+  "project": "desktop",
+  "timeoutMs": 120000,
+  "outputPixels": 12000000,
+  "durationMs": 2809,
+  "status": "passed",
+  "actualStatus": "done",
+  "actualWidth": 4000,
+  "actualHeight": 3000,
+  "note": "Desktop Chromium에서 측정한 단계별 출력 픽셀 처리 결과다."
+}

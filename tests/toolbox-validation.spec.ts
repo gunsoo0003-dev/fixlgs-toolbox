@@ -19,9 +19,13 @@ test("TOOLBOX common automatic validation completes", async ({ page }) => {
   await expect(dashboard).toHaveAttribute("data-complete", "true", { timeout: 180_000 });
 
   const rows = page.locator('[data-testid="validation-result"]');
-  await expect(rows).toHaveCount(17);
+  const total = Number(await page.getByTestId("validation-total").textContent());
+  const passed = Number(await page.getByTestId("validation-pass").textContent());
+
+  expect(total).toBeGreaterThan(0);
+  await expect(rows).toHaveCount(total);
   await expect(rows.locator('[data-status="FAIL"]')).toHaveCount(0);
-  await expect(page.getByTestId("validation-pass")).toHaveText("17");
+  expect(passed).toBe(total);
 });
 
 test("all public tool routes render in three languages", async ({ page }) => {

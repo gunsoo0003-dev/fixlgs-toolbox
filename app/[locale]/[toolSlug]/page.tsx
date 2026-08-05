@@ -6,23 +6,29 @@ import { HeicAvifPage } from "@/components/heic-avif-page";
 import { SvgBmpTiffPage } from "@/components/svg-bmp-tiff-page";
 import { ImageCompressorPage } from "@/components/image-compressor-page";
 import { TargetSizeCompressorPage } from "@/components/target-size-compressor-page";
+import { ImageResizerPage } from "@/components/image-resizer-page";
 import { ToolboxSubpageShell } from "@/components/toolbox-subpage-shell";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
-import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, type Locale } from "@/lib/site";
+import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, tool006Descriptions, tool006Slug, tool006Titles, type Locale } from "@/lib/site";
 
-export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug].map((toolSlug) => ({ locale, toolSlug }))); }
+export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug].map((toolSlug) => ({ locale, toolSlug }))); }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; toolSlug: string }> }): Promise<Metadata> {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug)) notFound();
   const current = locale as Locale;
   const is002 = toolSlug === tool002Slug;
   const is003 = toolSlug === tool003Slug;
   const is004 = toolSlug === tool004Slug;
   const is005 = toolSlug === tool005Slug;
-  const titles = is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
-  const descriptions = is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
-  const seoTitle = is005
+  const is006 = toolSlug === tool006Slug;
+  const titles = is006 ? tool006Titles : is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
+  const descriptions = is006 ? tool006Descriptions : is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
+  const seoTitle = is006
+    ? current === "ko" ? "이미지 크기 변경기 - JPG PNG WebP 픽셀 일괄 변경 | TOOLBOX"
+      : current === "en" ? "Image Resizer - Resize JPG, PNG & WebP in Batches | TOOLBOX"
+      : "画像サイズ変更ツール - JPG・PNG・WebP一括リサイズ | TOOLBOX"
+    : is005
     ? current === "ko" ? "목표 용량 이미지 압축기 - JPG PNG WebP KB MB 맞추기 | TOOLBOX"
       : current === "en" ? "Target Size Image Compressor - Compress Images to KB or MB | TOOLBOX"
       : "目標容量画像圧縮ツール - JPG・PNG・WebPをKB・MB以下に圧縮 | TOOLBOX"
@@ -56,12 +62,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Tool001Page({ params }: { params: Promise<{ locale: string; toolSlug: string }> }) {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug)) notFound();
   const current = locale as Locale;
   if (toolSlug === tool002Slug) return <HeicAvifPage locale={current} />;
   if (toolSlug === tool003Slug) return <SvgBmpTiffPage locale={current} />;
   if (toolSlug === tool004Slug) return <ImageCompressorPage locale={current} />;
   if (toolSlug === tool005Slug) return <TargetSizeCompressorPage locale={current} />;
+  if (toolSlug === tool006Slug) return <ImageResizerPage locale={current} />;
   const back = current === "ko" ? "이미지 변환·최적화" : current === "en" ? "Image Convert" : "画像変換・最適化";
   const eyebrow = current === "ko" ? "브라우저에서 바로 처리" : current === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理";
   const info: {
