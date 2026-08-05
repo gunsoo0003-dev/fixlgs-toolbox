@@ -16,7 +16,19 @@
     "test:toolbox:005": "playwright test tests/tool-005-target-size-compressor.spec.ts",
     "test:toolbox:load": "playwright test tests/tool-005-load.spec.ts",
     "test:toolbox:006": "playwright test tests/tool-006-image-resizer.spec.ts",
-    "test:toolbox:006-load": "playwright test tests/tool-006-load-limit.spec.ts --workers=1"
+    "test:toolbox:006-load": "playwright test tests/tool-006-load-limit.spec.ts --workers=1",
+    "test:toolbox:001-load": "playwright test tests/tool-001-load-limit.spec.ts --workers=1",
+    "test:toolbox:002-load": "playwright test tests/tool-002-load-limit.spec.ts --workers=1",
+    "test:toolbox:003-load": "playwright test tests/tool-003-load-limit.spec.ts --workers=1",
+    "test:toolbox:004-load": "playwright test tests/tool-004-load-limit.spec.ts --workers=1",
+    "test:toolbox:005-load": "playwright test tests/tool-005-load-limit.spec.ts --workers=1",
+    "test:toolbox:001-005-load": "playwright test tests/tool-001-load-limit.spec.ts tests/tool-002-load-limit.spec.ts tests/tool-003-load-limit.spec.ts tests/tool-004-load-limit.spec.ts tests/tool-005-load-limit.spec.ts --workers=1",
+    "test:toolbox:001-limit": "playwright test tests/tool-001-limit.spec.ts --workers=1",
+    "test:toolbox:002-limit": "playwright test tests/tool-002-limit.spec.ts --workers=1",
+    "test:toolbox:003-limit": "playwright test tests/tool-003-limit.spec.ts --workers=1",
+    "test:toolbox:004-limit": "playwright test tests/tool-004-limit.spec.ts --workers=1",
+    "test:toolbox:005-limit": "playwright test tests/tool-005-limit.spec.ts --workers=1",
+    "test:toolbox:001-005-limit": "playwright test tests/tool-001-limit.spec.ts tests/tool-002-limit.spec.ts tests/tool-003-limit.spec.ts tests/tool-004-limit.spec.ts tests/tool-005-limit.spec.ts --workers=1"
   },
   "dependencies": {
     "next": "16.2.12",

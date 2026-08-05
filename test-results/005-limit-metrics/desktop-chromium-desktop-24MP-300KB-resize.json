@@ -1,0 +1,17 @@
+{
+  "tool": "005",
+  "project": "desktop-chromium",
+  "label": "desktop-24MP-300KB-resize",
+  "width": 6000,
+  "height": 4000,
+  "pixels": 24000000,
+  "targetKB": 300,
+  "allowResize": true,
+  "inputBytes": 486545,
+  "resultBytes": 257506,
+  "attempts": 9,
+  "resultWidth": 6000,
+  "resultHeight": 4000,
+  "status": "reached",
+  "durationMs": 4200
+}

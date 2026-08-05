@@ -1,0 +1,11 @@
+{
+  "tool": "005",
+  "project": "desktop-chromium",
+  "label": "validated-operational-limits",
+  "acceptedFiles": 10,
+  "rejectedAtFiles": 11,
+  "perFileBytesBlockedAbove": 15728640,
+  "pixelsBlockedAbove": 30000000,
+  "totalPixelsConfigured": 80000000,
+  "maxQualitySearch": 9
+}

@@ -12,6 +12,8 @@ type Status = "idle" | "queued" | "processing" | "done" | "error" | "cancelled";
 const MAX_FILES = 10;
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 60 * 1024 * 1024;
+const MAX_PIXELS = 40_000_000;
+// 001 운영 안전선: 10개, 파일당 20MB, 전체 60MB, 이미지당 40MP. 한계·경계검수 통과값.
 
 type FileItem = {
   id: string;
@@ -105,6 +107,18 @@ function ascii(bytes: Uint8Array, start: number, length: number) {
   return String.fromCharCode(...bytes.slice(start, start + length));
 }
 
+function includesAsciiToken(bytes: Uint8Array, token: string) {
+  if (!token || bytes.length < token.length) return false;
+  const codes = Array.from(token, (char) => char.charCodeAt(0));
+  outer: for (let index = 0; index <= bytes.length - codes.length; index += 1) {
+    for (let offset = 0; offset < codes.length; offset += 1) {
+      if (bytes[index + offset] !== codes[offset]) continue outer;
+    }
+    return true;
+  }
+  return false;
+}
+
 async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean }> {
   if (file.size === 0) throw new Error("empty");
   const bytes = new Uint8Array(await file.arrayBuffer());
@@ -114,10 +128,10 @@ async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; 
     kind = "jpeg";
   } else if (bytes.length >= 8 && bytes[0] === 0x89 && ascii(bytes, 1, 3) === "PNG" && bytes[4] === 0x0d && bytes[5] === 0x0a && bytes[6] === 0x1a && bytes[7] === 0x0a) {
     kind = "png";
-    animated = ascii(bytes, 0, bytes.length).includes("acTL");
+    animated = includesAsciiToken(bytes, "acTL");
   } else if (bytes.length >= 12 && ascii(bytes, 0, 4) === "RIFF" && ascii(bytes, 8, 4) === "WEBP") {
     kind = "webp";
-    animated = ascii(bytes, 0, bytes.length).includes("ANIM") || ascii(bytes, 0, bytes.length).includes("ANMF");
+    animated = includesAsciiToken(bytes, "ANIM") || includesAsciiToken(bytes, "ANMF");
   }
   if (!kind) throw new Error("signature");
   const expected = expectedKindFromName(file);
@@ -279,7 +293,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           continue;
         }
         const decoded = await loadImageSource(file);
-        if (!decoded.width || !decoded.height || decoded.width * decoded.height > 40_000_000) {
+        if (!decoded.width || !decoded.height || decoded.width * decoded.height > MAX_PIXELS) {
           decoded.dispose?.();
           rejected += 1;
           continue;
@@ -456,6 +470,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           <div><span>WORKSPACE</span><strong>{locale === "ko" ? "이미지 변환 작업장" : locale === "en" ? "Image conversion workspace" : "画像変換ワークスペース"}</strong></div>
         </div>
         <input
+          data-testid="converter-file-input"
           ref={fileInputRef}
           type="file"
           accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
@@ -494,7 +509,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {items.map((item, index) => (
-              <article key={item.id} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
+              <article key={item.id} data-testid="converter-file-card" data-status={item.status} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
                 <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">
                   <img src={item.previewUrl} alt={item.file.name} className="h-full w-full object-cover" />
                 </div>
@@ -723,6 +738,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         {items.length > 0 ? (
           <div className="toolbox-workbench-actions">
             <button
+              data-testid="converter-run"
               type="button"
               onClick={() => processing ? (cancelRef.current = true) : void convertAll(false)}
               disabled={false}

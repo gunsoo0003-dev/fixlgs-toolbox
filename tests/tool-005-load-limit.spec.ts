@@ -1,0 +1,6 @@
+import { expect,test } from "@playwright/test";import fs from "node:fs/promises";import path from "node:path";
+const fixture=path.resolve(process.cwd(),"public/test-fixtures/target-large.jpg");
+test.describe("005 부하·경계 검수",()=>{
+ test("실제 목표 압축",async({page})=>{await page.goto("/ko/target-size-image-compressor");await page.getByTestId("target-file-input").setInputFiles(fixture);await expect(page.getByTestId("target-file-card")).toHaveCount(1);await page.getByTestId("target-value").fill("500");await page.getByRole("button",{name:"모든 파일에 적용"}).click();await page.getByTestId("target-compress-button").click();await expect.poll(()=>page.getByTestId("target-file-card").getAttribute("data-status"),{timeout:300000}).toMatch(/reached|already|unreached|failed|cancelled/);expect(await page.getByTestId("target-file-card").getAttribute("data-status")).toMatch(/reached|already/)});
+ test("10개 허용·11개 차단",async({page})=>{await page.goto("/ko/target-size-image-compressor");const b=await fs.readFile(fixture);await page.getByTestId("target-file-input").setInputFiles(Array.from({length:11},(_,i)=>({name:`t-${i}.jpg`,mimeType:"image/jpeg",buffer:b})));await expect(page.getByTestId("target-file-card")).toHaveCount(10)});
+});

@@ -1,0 +1,17 @@
+{
+  "tool": "005",
+  "project": "desktop-chromium",
+  "label": "desktop-12MP-500KB",
+  "width": 4000,
+  "height": 3000,
+  "pixels": 12000000,
+  "targetKB": 500,
+  "allowResize": false,
+  "inputBytes": 293620,
+  "resultBytes": 293620,
+  "attempts": 0,
+  "resultWidth": 4000,
+  "resultHeight": 3000,
+  "status": "already",
+  "durationMs": 2211
+}

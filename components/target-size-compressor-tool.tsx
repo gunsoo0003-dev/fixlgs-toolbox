@@ -44,6 +44,7 @@ type Item = {
 };
 
 const LIMITS = { count: 10, perFile: 15 * 1024 * 1024, total: 50 * 1024 * 1024, pixels: 30_000_000, totalPixels: 80_000_000 };
+// 005 운영 안전선: 10개, 파일당 15MB, 전체 50MB, 이미지당 30MP, 전체 80MP, 품질 탐색 최대 9회.
 const SAFETY_RATIO = 0.995;
 const MAX_QUALITY_SEARCH = 9;
 const RESIZE_STEPS = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.25];
