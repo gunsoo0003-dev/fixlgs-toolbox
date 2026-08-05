@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:toolbox": "playwright test",
+    "test:toolbox:ui": "playwright test --ui",
+    "test:toolbox:report": "playwright show-report",
+    "test:toolbox:common": "playwright test tests/common-*.spec.ts",
+    "test:toolbox:function": "playwright test tests/tool-004-image-compressor.spec.ts tests/tool-005-target-size-compressor.spec.ts",
+    "test:toolbox:debug": "playwright test --debug",
+    "test:toolbox:005": "playwright test tests/tool-005-target-size-compressor.spec.ts",
+    "test:toolbox:load": "playwright test tests/tool-005-load.spec.ts"
   },
   "dependencies": {
     "next": "16.2.12",
@@ -21,6 +29,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@playwright/test": "^1.54.2"
   }
 }

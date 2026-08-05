@@ -3,23 +3,41 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageConverterTool } from "@/components/image-converter-tool";
 import { HeicAvifPage } from "@/components/heic-avif-page";
+import { SvgBmpTiffPage } from "@/components/svg-bmp-tiff-page";
+import { ImageCompressorPage } from "@/components/image-compressor-page";
+import { TargetSizeCompressorPage } from "@/components/target-size-compressor-page";
 import { ToolboxSubpageShell } from "@/components/toolbox-subpage-shell";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
-import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, type Locale } from "@/lib/site";
+import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, type Locale } from "@/lib/site";
 
-export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug].map((toolSlug) => ({ locale, toolSlug }))); }
+export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug].map((toolSlug) => ({ locale, toolSlug }))); }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; toolSlug: string }> }): Promise<Metadata> {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug)) notFound();
   const current = locale as Locale;
   const is002 = toolSlug === tool002Slug;
-  const titles = is002 ? tool002Titles : tool001Titles;
-  const descriptions = is002 ? tool002Descriptions : tool001Descriptions;
-  const seoTitle = is002
-    ? current === "ko" ? "HEIC·AVIF 이미지 변환기 | JPG·PNG·AVIF 일괄 변환"
-      : current === "en" ? "HEIC & AVIF Image Converter | Batch JPG, PNG and AVIF"
-      : "HEIC・AVIF画像変換ツール | JPG・PNG・AVIF一括変換"
+  const is003 = toolSlug === tool003Slug;
+  const is004 = toolSlug === tool004Slug;
+  const is005 = toolSlug === tool005Slug;
+  const titles = is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
+  const descriptions = is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
+  const seoTitle = is005
+    ? current === "ko" ? "목표 용량 이미지 압축기 - JPG PNG WebP KB MB 맞추기 | TOOLBOX"
+      : current === "en" ? "Target Size Image Compressor - Compress Images to KB or MB | TOOLBOX"
+      : "目標容量画像圧縮ツール - JPG・PNG・WebPをKB・MB以下に圧縮 | TOOLBOX"
+    : is004
+    ? current === "ko" ? "이미지 압축기 - JPG PNG WebP 무료 일괄 압축 | TOOLBOX"
+      : current === "en" ? "Image Compressor - Compress JPG, PNG & WebP in Batches | TOOLBOX"
+      : "画像圧縮ツール - JPG・PNG・WebP一括圧縮 | TOOLBOX"
+    : is003
+    ? current === "ko" ? "SVG BMP TIFF 이미지 변환기 | TOOLBOX"
+      : current === "en" ? "SVG BMP TIFF Image Converter | TOOLBOX"
+      : "SVG・BMP・TIFF画像変換ツール | TOOLBOX"
+    : is002
+    ? current === "ko" ? "HEIC·AVIF 이미지 변환기 | JPG·PNG·AVIF 일괄 변환 | TOOLBOX"
+      : current === "en" ? "HEIC & AVIF Image Converter | Batch JPG, PNG and AVIF | TOOLBOX"
+      : "HEIC・AVIF画像変換ツール | JPG・PNG・AVIF一括変換 | TOOLBOX"
     : `${titles[current]} - TOOLBOX`;
   return {
     title: seoTitle,
@@ -38,9 +56,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Tool001Page({ params }: { params: Promise<{ locale: string; toolSlug: string }> }) {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug)) notFound();
   const current = locale as Locale;
   if (toolSlug === tool002Slug) return <HeicAvifPage locale={current} />;
+  if (toolSlug === tool003Slug) return <SvgBmpTiffPage locale={current} />;
+  if (toolSlug === tool004Slug) return <ImageCompressorPage locale={current} />;
+  if (toolSlug === tool005Slug) return <TargetSizeCompressorPage locale={current} />;
   const back = current === "ko" ? "이미지 변환·최적화" : current === "en" ? "Image Convert" : "画像変換・最適化";
   const eyebrow = current === "ko" ? "브라우저에서 바로 처리" : current === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理";
   const info: {
@@ -169,8 +190,31 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
     trust: "画像はブラウザ内で直接処理され、サーバーには保存されません。"
   };
 
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: tool001Titles[current],
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Any",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      url: `https://toolbox.fixlgs.com/${current}/${tool001Slug}`,
+      description: tool001Descriptions[current],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: info.faqs.map(([question, answer]) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ];
+
   return (
     <ToolboxSubpageShell locale={current} appName={tool001Titles[current]}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="toolbox-tool-detail-hero">
         <Link className="toolbox-subpage-back" href={`/${current}/category/image-convert`}>← {back}</Link>
         <p className="toolbox-subpage-eyebrow">001 · IMAGE CONVERT</p>

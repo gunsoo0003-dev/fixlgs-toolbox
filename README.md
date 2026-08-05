@@ -34,3 +34,37 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 개발 전용 자동 검수
+
+```powershell
+npm install
+npx playwright install chromium
+npm run test:toolbox
+```
+
+로컬 시각 검수 화면: `http://localhost:3000/dev/validation`
+
+`/dev/validation`은 development 환경에서만 열리며 production에서는 404입니다.
+
+## TOOLBOX 자동 검수
+
+전체 검수:
+
+```powershell
+npm run test:toolbox
+```
+
+004 기능 검수만:
+
+```powershell
+npm run test:toolbox:function
+```
+
+HTML 리포트:
+
+```powershell
+npm run test:toolbox:report
+```
+
+상세 구조는 `docs/validation-framework.md`를 확인합니다. `/dev/validation`은 개발 환경에서만 열리며 운영 환경에서는 404로 처리됩니다.

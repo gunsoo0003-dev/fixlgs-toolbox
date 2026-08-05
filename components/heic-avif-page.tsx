@@ -19,6 +19,12 @@ const text = {
       {from:"HEIC·AVIF",to:"PNG",title:"투명도와 선명한 경계를 유지할 때",description:"가능한 경우 투명 배경을 유지하지만 사진 파일은 JPG보다 커질 수 있습니다."},
       {from:"JPG·PNG",to:"AVIF",title:"웹 전송 용량을 줄이고 싶을 때",description:"이미지 내용과 품질에 따라 결과 용량이 비슷하거나 더 커질 수도 있습니다."}
     ],
+    practicalTitle:"형식 선택과 결과 판단의 실제 기준", practical:[
+      {title:"호환성이 먼저라면 JPG",description:"제출처나 편집 프로그램이 HEIC·AVIF를 받지 않는다면 JPG가 가장 안전합니다. 다만 투명도와 HDR 정보는 유지되지 않습니다."},
+      {title:"투명도와 선명도가 중요하면 PNG",description:"로고·스크린샷·투명 이미지처럼 경계가 중요한 자료는 PNG가 적합하지만 사진에서는 용량이 커질 수 있습니다."},
+      {title:"웹 전송량을 줄이려면 AVIF",description:"웹 게시가 목적이라면 AVIF가 유리할 수 있지만, 인코딩 시간과 일부 프로그램의 낮은 호환성을 함께 고려해야 합니다."},
+      {title:"변환 후에는 실제 사용처에서 확인",description:"색상·밝기·투명도·파일 용량은 형식마다 달라집니다. 최종 제출처나 프로그램에서 열어 보는 확인이 필요합니다."}
+    ],
     details:[
       {number:"01",title:"방향과 대표 이미지",description:"촬영 방향은 결과 픽셀에 반영합니다. HEIC·HEIF는 대표 정지 이미지 1장만 처리하며 라이브 포토 영상과 깊이 데이터는 포함하지 않습니다."},
       {number:"02",title:"투명 배경",description:"JPG는 투명도를 지원하지 않습니다. AVIF·PNG의 투명 영역을 JPG로 바꿀 때 선택한 배경색으로 채웁니다."},
@@ -55,6 +61,12 @@ const text = {
       {from:"HEIC·AVIF",to:"PNG",title:"Preserve transparency and sharp edges",description:"Transparency is preserved when possible, although photographic PNG files may be larger than JPG."},
       {from:"JPG·PNG",to:"AVIF",title:"Prepare efficient web assets",description:"The result may be smaller, similar, or larger depending on image content and quality settings."}
     ],
+    practicalTitle:"Practical criteria for choosing a format", practical:[
+      {title:"Choose JPG when compatibility comes first",description:"JPG is the safest choice when a submission site or editor does not accept HEIC or AVIF, but transparency and HDR data will not be preserved."},
+      {title:"Choose PNG for transparency and sharp edges",description:"PNG suits logos, screenshots, and transparent graphics, although photographic images can become much larger."},
+      {title:"Choose AVIF to reduce web delivery size",description:"AVIF can be efficient for web publishing, but encoding time and software compatibility should be considered."},
+      {title:"Verify the result in its final destination",description:"Colour, brightness, transparency, and file size can change by format, so open the result in the actual service or program that will use it."}
+    ],
     details:[
       {number:"01",title:"Orientation and primary image",description:"Photo orientation is applied to output pixels. For HEIC and HEIF, the tool converts one primary still image and excludes Live Photo video, depth data, and auxiliary images."},
       {number:"02",title:"Transparency",description:"JPG does not support transparency. Transparent AVIF or PNG areas are filled with the selected background colour when exported as JPG."},
@@ -90,6 +102,12 @@ const text = {
       {from:"HEIC・AVIF",to:"JPG",title:"互換性を優先する場合",description:"Windows、一般的な編集ソフト、アップロードサービスで扱いやすくなります。透明部分は選択した背景色で塗りつぶされます。"},
       {from:"HEIC・AVIF",to:"PNG",title:"透明背景や輪郭を保ちたい場合",description:"可能な場合は透明背景を維持しますが、写真ではJPGより容量が大きくなることがあります。"},
       {from:"JPG・PNG",to:"AVIF",title:"Web画像の容量を抑えたい場合",description:"画像内容や画質設定によっては、容量がほぼ同じか大きくなることもあります。"}
+    ],
+    practicalTitle:"形式選択と結果確認の実用基準", practical:[
+      {title:"互換性を優先するならJPG",description:"提出先や編集ソフトがHEIC・AVIFに対応していない場合はJPGが安全ですが、透明度やHDR情報は維持されません。"},
+      {title:"透明度と輪郭を重視するならPNG",description:"ロゴ・スクリーンショット・透明画像にはPNGが適していますが、写真では容量が大きくなる場合があります。"},
+      {title:"Web転送量を抑えるならAVIF",description:"Web掲載ではAVIFが有利な場合がありますが、変換時間とソフトの互換性も確認してください。"},
+      {title:"最終利用環境で結果を確認",description:"色・明るさ・透明度・容量は形式ごとに変わるため、実際に使うサービスやソフトで開いて確認することが重要です。"}
     ],
     details:[
       {number:"01",title:"向きと代表画像",description:"撮影方向は出力画像のピクセルに反映します。HEIC・HEIFは代表静止画1枚のみを処理し、Live Photosの動画、深度情報、補助画像は含みません。"},
@@ -135,13 +153,13 @@ export function HeicAvifPage({ locale }:{locale:Locale}) {
     {n:"026",name:locale === "ko" ? "이미지 PDF 변환기" : locale === "en" ? "Image to PDF Converter" : "画像PDF変換"}
   ];
   return <ToolboxSubpageShell locale={locale} appName={appName}><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
-    <section className="toolbox-tool-detail-hero"><Link href={`/${locale}/category/image-convert`} className="toolbox-tool-detail-back">← {t.back}</Link><div className="toolbox-tool-detail-heading"><div><p>002 · IMAGE CONVERT</p><h1><span className="toolbox-tool-title-line">{t.title1}</span><span className="toolbox-tool-title-line">{t.title2}</span></h1><div>{t.desc}</div></div></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{locale==="ko"?"브라우저에서 바로 처리":locale==="en"?"PROCESS IN YOUR BROWSER":"ブラウザ内で処理"}</span></div></section>
+    <section className="toolbox-tool-detail-hero"><Link href={`/${locale}/category/image-convert`} className="toolbox-subpage-back">← {t.back}</Link><p className="toolbox-subpage-eyebrow">002 · IMAGE CONVERT</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title1}</span><span className="toolbox-tool-title-line">{t.title2}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{locale==="ko"?"브라우저에서 바로 처리":locale==="en"?"PROCESS IN YOUR BROWSER":"ブラウザ内で処理"}</span></div></section>
     <section className="toolbox-tool-detail-body"><div><HeicAvifConverterTool locale={locale}/>
       <section className="toolbox-next-work"><div><p>NEXT WORK</p><h2>{nextTitle}</h2></div><div className="toolbox-next-work-grid">{cards.slice(0,3).map(card=>card.ready?<Link key={card.n} href={card.href!} className="toolbox-next-work-card"><span>{card.n}</span><h3>{card.name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>:<div key={card.n} className="toolbox-next-work-card is-disabled"><span>{card.n}</span><h3>{card.name}</h3><div className="toolbox-next-work-card-foot"><span>{soon}</span><strong>·</strong></div></div>)}</div></section>
       <section className="toolbox-next-work toolbox-related-tools"><div><p>RELATED TOOLS</p><h2>{relatedTitle}</h2></div><div className="toolbox-next-work-grid">{cards.slice(3).map(card=><div key={card.n} className="toolbox-next-work-card is-disabled"><span>{card.n}</span><h3>{card.name}</h3><div className="toolbox-next-work-card-foot"><span>{soon}</span><strong>·</strong></div></div>)}</div></section>
     </div></section>
     <section className="toolbox-tool-guide"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,"0")}</span><p>{s}</p></li>)}</ol></section>
-    <section className="toolbox-tool-format-guide"><div className="toolbox-tool-format-guide-head"><p>IMAGE FORMAT GUIDE</p><h2>{t.guideTitle}</h2><div>{t.guideDesc}</div></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.formats.map(f=><article key={f.name}><div><strong>{f.name}</strong><span>{f.use}</span></div><p>{f.strength}</p><small>{f.note}</small></article>)}</div><div className="toolbox-tool-direction-guide"><div className="toolbox-tool-section-intro"><p>CONVERSION ROUTES</p><h3>{t.directionTitle}</h3></div><div className="toolbox-tool-direction-grid">{t.directions.map(d=><article key={d.title}><div className="toolbox-tool-direction-route"><strong>{d.from}</strong><span>→</span><strong>{d.to}</strong></div><h4>{locale === "ko" && d.title === "투명도와 선명한 경계를 유지할 때" ? <>투명도와 선명한<br />경계를 유지할 때</> : locale === "ko" && d.title === "웹 전송 용량을 줄이고 싶을 때" ? <>웹 전송 용량을<br />줄이고 싶을 때</> : d.title}</h4><p>{d.description}</p></article>)}</div></div><div className="toolbox-tool-result-guide"><div className="toolbox-tool-section-intro toolbox-tool-section-intro-compact"><p>CHECK BEFORE USE</p><h3>{t.checkBeforeTitle}</h3></div><div className="toolbox-tool-result-grid">{t.details.map(d=><article key={d.number}><span>{d.number}</span><h4>{d.title}</h4><p>{d.description}</p></article>)}</div></div></div></section>
+    <section className="toolbox-tool-format-guide"><div className="toolbox-tool-format-guide-head"><p>IMAGE FORMAT GUIDE</p><h2>{t.guideTitle}</h2><div>{t.guideDesc}</div></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.formats.map(f=><article key={f.name}><div><strong>{f.name}</strong><span>{f.use}</span></div><p>{f.strength}</p><small>{f.note}</small></article>)}</div><div className="toolbox-tool-direction-guide"><div className="toolbox-tool-section-intro"><p>CONVERSION ROUTES</p><h3>{t.directionTitle}</h3></div><div className="toolbox-tool-direction-grid">{t.directions.map(d=><article key={d.title}><div className="toolbox-tool-direction-route"><strong>{d.from}</strong><span>→</span><strong>{d.to}</strong></div><h4>{locale === "ko" && d.title === "투명도와 선명한 경계를 유지할 때" ? <>투명도와 선명한<br />경계를 유지할 때</> : locale === "ko" && d.title === "웹 전송 용량을 줄이고 싶을 때" ? <>웹 전송 용량을<br />줄이고 싶을 때</> : d.title}</h4><p>{d.description}</p></article>)}</div></div><div className="toolbox-tool-direction-guide"><div className="toolbox-tool-section-intro"><p>PRACTICAL GUIDE</p><h3>{t.practicalTitle}</h3></div><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{t.practical.map((d)=><article key={d.title}><h4>{d.title}</h4><p>{d.description}</p></article>)}</div></div><div className="toolbox-tool-result-guide"><div className="toolbox-tool-section-intro toolbox-tool-section-intro-compact"><p>CHECK BEFORE USE</p><h3>{t.checkBeforeTitle}</h3></div><div className="toolbox-tool-result-grid">{t.details.map(d=><article key={d.number}><span>{d.number}</span><h4>{d.title}</h4><p>{d.description}</p></article>)}</div></div></div></section>
     <section className="toolbox-tool-faq"><div className="toolbox-tool-guide-head"><p>FAQ</p><h2>{t.faqTitle}</h2></div><ToolboxFaqList items={t.faqs} initialCount={3} moreLabel={t.more} collapseLabel={t.collapse} className="toolbox-tool-faq-list"/></section>
     <section className="toolbox-tool-processing-note"><p>{t.trust}</p></section>
   </ToolboxSubpageShell>;

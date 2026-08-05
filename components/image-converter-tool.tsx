@@ -7,7 +7,11 @@ import { tool001LocalNotes, type Locale } from "@/lib/site";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
-type Status = "idle" | "queued" | "processing" | "done" | "error";
+type Status = "idle" | "queued" | "processing" | "done" | "error" | "cancelled";
+
+const MAX_FILES = 10;
+const MAX_FILE_BYTES = 20 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 60 * 1024 * 1024;
 
 type FileItem = {
   id: string;
@@ -23,6 +27,8 @@ type FileItem = {
   originalSize: number;
   outputSize?: number;
   transparency?: boolean;
+  outputName?: string;
+  isNew?: boolean;
 };
 
 const outputOptions: { value: OutputFormat; label: Record<Locale, string> }[] = [
@@ -51,6 +57,19 @@ function baseName(name: string) {
   return idx > 0 ? name.slice(0, idx) : name;
 }
 
+function uniqueOutputNames(items: FileItem[]) {
+  const used = new Map<string, number>();
+  return items.map((item) => {
+    const desired = `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`;
+    const key = desired.toLowerCase();
+    const count = (used.get(key) ?? 0) + 1;
+    used.set(key, count);
+    if (count === 1) return desired;
+    const dot = desired.lastIndexOf(".");
+    return `${desired.slice(0, dot)}-${count}${desired.slice(dot)}`;
+  });
+}
+
 function formatBytes(bytes: number) {
   if (!Number.isFinite(bytes)) return "-";
   if (bytes < 1024) return `${bytes.toFixed(0)} B`;
@@ -72,24 +91,48 @@ function formatPercent(delta: number, original: number) {
   return `${percent > 0 ? "+" : ""}${percent.toFixed(1)}%`;
 }
 
-function isSupportedImage(file: File) {
-  const mime = file.type.toLowerCase();
+type DetectedImageKind = "jpeg" | "png" | "webp";
+
+function expectedKindFromName(file: File): DetectedImageKind | null {
   const name = file.name.toLowerCase();
-  return (
-    mime === "image/jpeg" ||
-    mime === "image/png" ||
-    mime === "image/webp" ||
-    name.endsWith(".jpg") ||
-    name.endsWith(".jpeg") ||
-    name.endsWith(".png") ||
-    name.endsWith(".webp")
-  );
+  if (name.endsWith(".jpg") || name.endsWith(".jpeg")) return "jpeg";
+  if (name.endsWith(".png")) return "png";
+  if (name.endsWith(".webp")) return "webp";
+  return null;
+}
+
+function ascii(bytes: Uint8Array, start: number, length: number) {
+  return String.fromCharCode(...bytes.slice(start, start + length));
+}
+
+async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean }> {
+  if (file.size === 0) throw new Error("empty");
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let kind: DetectedImageKind | null = null;
+  let animated = false;
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[bytes.length - 2] === 0xff && bytes[bytes.length - 1] === 0xd9) {
+    kind = "jpeg";
+  } else if (bytes.length >= 8 && bytes[0] === 0x89 && ascii(bytes, 1, 3) === "PNG" && bytes[4] === 0x0d && bytes[5] === 0x0a && bytes[6] === 0x1a && bytes[7] === 0x0a) {
+    kind = "png";
+    animated = ascii(bytes, 0, bytes.length).includes("acTL");
+  } else if (bytes.length >= 12 && ascii(bytes, 0, 4) === "RIFF" && ascii(bytes, 8, 4) === "WEBP") {
+    kind = "webp";
+    animated = ascii(bytes, 0, bytes.length).includes("ANIM") || ascii(bytes, 0, bytes.length).includes("ANMF");
+  }
+  if (!kind) throw new Error("signature");
+  const expected = expectedKindFromName(file);
+  if (!expected || expected !== kind) throw new Error("mismatch");
+  return { kind, animated };
+}
+
+function duplicateKey(file: File) {
+  return `${file.name.toLowerCase()}|${file.size}|${file.lastModified}`;
 }
 
 async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
   if (typeof window !== "undefined" && "createImageBitmap" in window) {
     try {
-      const bitmap = await createImageBitmap(file);
+      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
       return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
     } catch {
       // fallback below
@@ -170,6 +213,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [message, setMessage] = useState("");
+  const [zipState, setZipState] = useState<"idle" | "working" | "error">("idle");
+  const cancelRef = useRef(false);
 
   const itemsRef = useRef<FileItem[]>([]);
 
@@ -209,35 +254,71 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   }, [customQuality, globalFormat, locale, qualityMode]);
 
   const addFiles = async (fileList: FileList | File[]) => {
-    const incoming = Array.from(fileList).filter(isSupportedImage);
-    if (incoming.length === 0) {
-      setMessage(
-        locale === "ko"
-          ? "지원하지 않는 파일은 제외했습니다. JPG, JPEG, PNG, WebP만 선택할 수 있습니다."
-          : locale === "en"
-            ? "Unsupported files were ignored. Only JPG, JPEG, PNG, and WebP are allowed."
-            : "対応していないファイルは除外しました。JPG、JPEG、PNG、WebPのみ選択できます。",
-      );
-      return;
+    const incoming = Array.from(fileList);
+    const existing = new Set(items.map((item) => duplicateKey(item.file)));
+    const accepted: FileItem[] = [];
+    let total = items.reduce((sum, item) => sum + item.originalSize, 0);
+    let rejected = 0;
+    let duplicate = 0;
+    let animated = 0;
+
+    for (const file of incoming) {
+      if (items.length + accepted.length >= MAX_FILES || file.size > MAX_FILE_BYTES || total + file.size > MAX_TOTAL_BYTES) {
+        rejected += 1;
+        continue;
+      }
+      const key = duplicateKey(file);
+      if (existing.has(key)) {
+        duplicate += 1;
+        continue;
+      }
+      try {
+        const inspection = await inspectImageFile(file);
+        if (inspection.animated) {
+          animated += 1;
+          continue;
+        }
+        const decoded = await loadImageSource(file);
+        if (!decoded.width || !decoded.height || decoded.width * decoded.height > 40_000_000) {
+          decoded.dispose?.();
+          rejected += 1;
+          continue;
+        }
+        decoded.dispose?.();
+        existing.add(key);
+        total += file.size;
+        accepted.push({
+          id: crypto.randomUUID(),
+          file,
+          previewUrl: URL.createObjectURL(file),
+          status: "idle",
+          outputFormat: globalFormat,
+          originalSize: file.size,
+          width: decoded.width,
+          height: decoded.height,
+          isNew: true,
+        });
+      } catch {
+        rejected += 1;
+      }
     }
 
-    const newItems: FileItem[] = incoming.map((file) => ({
-      id: crypto.randomUUID(),
-      file,
-      previewUrl: URL.createObjectURL(file),
-      status: "idle",
-      outputFormat: globalFormat,
-      originalSize: file.size,
-    }));
-
-    setItems((prev) => [...prev, ...newItems]);
-    setMessage(
-      locale === "ko"
-        ? `${newItems.length}개 이미지를 추가했습니다.`
-        : locale === "en"
-          ? `Added ${newItems.length} images.`
-          : `${newItems.length}件の画像を追加しました。`,
-    );
+    setItems((prev) => [...prev, ...accepted]);
+    const parts = [
+      accepted.length
+        ? locale === "ko" ? `${accepted.length}개 이미지를 추가했습니다.` : locale === "en" ? `Added ${accepted.length} image(s).` : `${accepted.length}件の画像を追加しました。`
+        : "",
+      duplicate
+        ? locale === "ko" ? `중복 ${duplicate}개 제외.` : locale === "en" ? `${duplicate} duplicate(s) skipped.` : `重複${duplicate}件を除外。`
+        : "",
+      animated
+        ? locale === "ko" ? `애니메이션 이미지 ${animated}개 제외.` : locale === "en" ? `${animated} animated image(s) skipped.` : `アニメーション画像${animated}件を除外。`
+        : "",
+      rejected
+        ? locale === "ko" ? `손상·형식 불일치·제한 초과 ${rejected}개 제외.` : locale === "en" ? `${rejected} damaged, mismatched, or oversized file(s) skipped.` : `破損・形式不一致・制限超過${rejected}件を除外。`
+        : "",
+    ].filter(Boolean);
+    setMessage(parts.join(" ") || (locale === "ko" ? "추가할 수 있는 이미지가 없습니다." : locale === "en" ? "No valid images were added." : "追加できる画像がありません。"));
   };
 
   const removeItem = (id: string) => {
@@ -260,6 +341,12 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
       return [];
     });
     setMessage("");
+    setGlobalFormat("image/webp");
+    setQualityMode("auto");
+    setCustomQuality(88);
+    setBackgroundColor("#ffffff");
+    setAdvancedOpen(false);
+    setZipState("idle");
   };
 
   const moveItem = (index: number, direction: -1 | 1) => {
@@ -288,95 +375,61 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
-  const convertAll = async () => {
+  const convertAll = async (onlyNew = false) => {
     if (processing || items.length === 0) return;
+    cancelRef.current = false;
     setProcessing(true);
-    setMessage(
-      locale === "ko"
-        ? "변환 중입니다."
-        : locale === "en"
-          ? "Converting images..."
-          : "画像を変換しています。",
-    );
-
-    const nextItems = [...items];
-    for (let i = 0; i < nextItems.length; i += 1) {
-      const item = nextItems[i];
-      nextItems[i] = { ...item, status: "processing", error: undefined };
+    setZipState("idle");
+    const sourceItems = [...items];
+    const names = uniqueOutputNames(sourceItems);
+    const targetIndexes = sourceItems.map((item,index)=>({item,index})).filter(({item})=>!onlyNew || item.isNew);
+    const nextItems = [...sourceItems];
+    for (let step = 0; step < targetIndexes.length; step += 1) {
+      const { item, index: i } = targetIndexes[step];
+      if (cancelRef.current) {
+        nextItems[i] = { ...item, status: "cancelled", isNew: false };
+        setItems([...nextItems]);
+        continue;
+      }
+      if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+      nextItems[i] = { ...item, status: "processing", error: undefined, resultBlob: undefined, resultUrl: undefined, outputSize: undefined };
       setItems([...nextItems]);
-
+      setMessage(locale === "ko" ? `${step + 1} / ${targetIndexes.length}개 처리 중` : locale === "en" ? `Processing ${step + 1} of ${targetIndexes.length}` : `${step + 1} / ${targetIndexes.length}件を処理中`);
       try {
         const format = item.outputFormat;
         const quality = qualityFor(qualityMode, format);
         const loaded = await loadImageSource(item.file);
         const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
         const canvas = document.createElement("canvas");
-        canvas.width = loaded.width;
-        canvas.height = loaded.height;
+        canvas.width = loaded.width; canvas.height = loaded.height;
         const ctx = canvas.getContext("2d");
         if (!ctx) throw new Error("Canvas 2D context unavailable");
-        if (format === "image/jpeg") {
-          ctx.fillStyle = transparency ? backgroundColor : backgroundColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        if (format === "image/jpeg") { ctx.fillStyle = backgroundColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(loaded.source, 0, 0);
         const blob = await canvasToBlob(canvas, getMimeForFormat(format), quality);
+        loaded.dispose?.();
         if (!blob) throw new Error("Failed to export image");
-        if (loaded.dispose) loaded.dispose();
-        const resultUrl = URL.createObjectURL(blob);
-        nextItems[i] = {
-          ...item,
-          status: "done",
-          error: undefined,
-          resultBlob: blob,
-          resultUrl,
-          outputSize: blob.size,
-          outputFormat: format,
-          width: loaded.width,
-          height: loaded.height,
-          transparency,
-        };
-        setItems([...nextItems]);
+        nextItems[i] = { ...item, status: "done", error: undefined, resultBlob: blob, resultUrl: URL.createObjectURL(blob), outputSize: blob.size, outputFormat: format, outputName: names[i], width: loaded.width, height: loaded.height, transparency, isNew: false };
       } catch (error) {
-        nextItems[i] = {
-          ...item,
-          status: "error",
-          error: error instanceof Error ? error.message : "Unknown error",
-        };
-        setItems([...nextItems]);
+        nextItems[i] = { ...item, status: "error", error: error instanceof Error ? error.message : "Unknown error", isNew: false };
       }
+      setItems([...nextItems]);
+      await new Promise((resolve) => setTimeout(resolve, 0));
     }
-
     const done = nextItems.filter((item) => item.status === "done").length;
     const failed = nextItems.filter((item) => item.status === "error").length;
+    const cancelled = nextItems.filter((item) => item.status === "cancelled").length;
     setProcessing(false);
-    setMessage(
-      failed > 0
-        ? locale === "ko"
-          ? `${done}개 파일은 완료되었고 ${failed}개 파일은 실패했습니다.`
-          : locale === "en"
-            ? `${done} files completed and ${failed} failed.`
-            : `${done}件は完了し、${failed}件は失敗しました。`
-        : locale === "ko"
-          ? `${done}개 이미지 변환이 완료되었습니다.`
-          : locale === "en"
-            ? `${done} images converted successfully.`
-            : `${done}件の画像変換が完了しました。`,
-    );
+    setMessage(locale === "ko" ? `${done}개 완료 · ${failed}개 실패${cancelled ? ` · ${cancelled}개 취소` : ""}` : locale === "en" ? `${done} done · ${failed} failed${cancelled ? ` · ${cancelled} cancelled` : ""}` : `${done}件完了・${failed}件失敗${cancelled ? `・${cancelled}件キャンセル` : ""}`);
   };
 
   const downloadAllZip = async () => {
-    const readyFiles = items
-      .filter((item) => item.status === "done" && item.resultBlob)
-      .map((item) => ({
-        name: `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`,
-        blob: item.resultBlob as Blob,
-      }));
+    const readyFiles = items.filter((item) => item.status === "done" && item.resultBlob).map((item) => ({ name: item.outputName ?? `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`, blob: item.resultBlob as Blob }));
     if (readyFiles.length === 0) return;
-    const zipBlob = await createStoredZip(readyFiles);
-    downloadBlob(zipBlob, `fixlgs-image-converter.zip`);
+    setZipState("working");
+    try { const zipBlob = await createStoredZip(readyFiles); downloadBlob(zipBlob, `fixlgs-image-converter.zip`); setZipState("idle"); }
+    catch { setZipState("error"); }
   };
 
   const hasDownloadableResults = items.some((item) => item.status === "done" && item.resultBlob);
@@ -557,7 +610,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
                       <>
                         <button
                           type="button"
-                          onClick={() => downloadBlob(item.resultBlob as Blob, `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`)}
+                          onClick={() => downloadBlob(item.resultBlob as Blob, item.outputName ?? `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`)}
                           className="ml-auto rounded-full bg-foreground px-3 py-1.5 text-xs font-semibold text-background dark:bg-white dark:text-black"
                         >
                           {locale === "ko" ? "다운로드" : locale === "en" ? "Download" : "保存"}
@@ -671,28 +724,33 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           <div className="toolbox-workbench-actions">
             <button
               type="button"
-              onClick={() => void convertAll()}
-              disabled={processing}
+              onClick={() => processing ? (cancelRef.current = true) : void convertAll(false)}
+              disabled={false}
               className="toolbox-primary-action"
             >
               {processing
-                ? (locale === "ko" ? "변환 중..." : locale === "en" ? "Converting..." : "変換中...")
+                ? (locale === "ko" ? "취소" : locale === "en" ? "Cancel" : "キャンセル")
                 : hasDownloadableResults
                   ? (locale === "ko" ? "다시 변환" : locale === "en" ? "Convert again" : "もう一度変換")
                   : (locale === "ko" ? "변환하기" : locale === "en" ? "Convert" : "変換する")}
             </button>
+            {!processing && hasDownloadableResults && items.some((item) => item.isNew) ? (
+              <button type="button" onClick={() => void convertAll(true)}>
+                {locale === "ko" ? "추가한 이미지만 변환" : locale === "en" ? "Convert added images" : "追加画像のみ変換"}
+              </button>
+            ) : null}
             <button
               type="button"
               onClick={downloadAllZip}
               disabled={!hasDownloadableResults}
               className="toolbox-zip-action"
             >
-              {locale === "ko" ? "전체 ZIP 다운로드" : locale === "en" ? "Download all as ZIP" : "すべてZIPで保存"}
+              {zipState === "working" ? (locale === "ko" ? "ZIP 생성 중..." : locale === "en" ? "Creating ZIP..." : "ZIPを作成中...") : zipState === "error" ? (locale === "ko" ? "ZIP 다시 만들기" : locale === "en" ? "Create ZIP Again" : "ZIPを再作成") : (locale === "ko" ? "전체 ZIP 다운로드" : locale === "en" ? "Download all as ZIP" : "すべてZIPで保存")}
             </button>
             <button
               type="button"
               className="toolbox-restart-action"
-              onClick={() => { clearAll(); setGlobalFormat("image/webp"); setQualityMode("auto"); setCustomQuality(88); setBackgroundColor("#ffffff"); }}
+              onClick={clearAll}
             >
               {locale === "ko" ? "전체 초기화" : locale === "en" ? "Reset all" : "すべてリセット"}
             </button>

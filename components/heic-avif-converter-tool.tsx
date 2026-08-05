@@ -31,6 +31,8 @@ async function canvasBlob(canvas:HTMLCanvasElement,type:"image/jpeg"|"image/png"
 async function detectKind(file:File):Promise<InputKind|null>{const b=new Uint8Array(await file.slice(0,16).arrayBuffer());if(b[0]===0xff&&b[1]===0xd8)return"jpeg";if(b[0]===0x89&&b[1]===0x50&&b[2]===0x4e&&b[3]===0x47)return"png";const brand=new TextDecoder().decode(b.slice(8,16)).toLowerCase();if(brand.includes("avif")||brand.includes("avis"))return"avif";if(brand.includes("heic")||brand.includes("heif")||brand.includes("heix")||brand.includes("mif1")||brand.includes("msf1"))return"heic";return null}
 async function sourceFrom(file:File,kind:InputKind){const blob=kind==="heic"?await decodeHeic(file):file;const bitmap=await createImageBitmap(blob,{imageOrientation:"from-image"});return{blob,bitmap}}
 function uniqueNames(items:FileItem[]){const used=new Map<string,number>();return items.map(item=>{const key=`${baseName(item.file.name)}.${ext(item.outputFormat)}`;const n=(used.get(key)||0)+1;used.set(key,n);return n===1?key:`${baseName(item.file.name)}-${n}.${ext(item.outputFormat)}`})}
+function duplicateKey(file:File){return `${file.name.toLowerCase()}|${file.size}|${file.lastModified}`}
+function expectedKind(file:File):InputKind|null{const n=file.name.toLowerCase();if(/\.jpe?g$/.test(n))return"jpeg";if(n.endsWith(".png"))return"png";if(n.endsWith(".avif"))return"avif";if(/\.(heic|heif)$/.test(n))return"heic";return null}
 
 export function HeicAvifConverterTool({locale}:{locale:Locale}){
  const t=copy[locale], inputRef=useRef<HTMLInputElement|null>(null), itemsRef=useRef<FileItem[]>([]), cancelRef=useRef(false);
@@ -41,12 +43,14 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
  const commonFormats=useMemo(()=>items.length?allowedFormats(items[0].inputKind).filter(f=>items.every(i=>allowedFormats(i.inputKind).includes(f))):[],[items]);
  const hasJpg=items.some(i=>i.outputFormat==="image/jpeg"), hasLossy=items.some(i=>i.outputFormat!=="image/png");
  function patch(id:string,p:Partial<FileItem>){setItems(prev=>prev.map(i=>i.id===id?{...i,...p}:i))}
- async function addFiles(list:FileList|File[]){const incoming=Array.from(list),accepted:FileItem[]=[];let total=items.reduce((s,i)=>s+i.originalSize,0),skipped=0;
-  for(const file of incoming){if(items.length+accepted.length>=MAX_FILES||file.size===0||file.size>MAX_FILE_BYTES||total+file.size>MAX_TOTAL_BYTES){skipped++;continue}const kind=await detectKind(file);if(!kind){skipped++;continue}total+=file.size;const item:FileItem={id:crypto.randomUUID(),file,inputKind:kind,outputFormat:defaultFormat(kind),status:"idle",originalSize:file.size,isNew:true};
+ async function addFiles(list:FileList|File[]){const incoming=Array.from(list),accepted:FileItem[]=[];let total=items.reduce((s,i)=>s+i.originalSize,0),skipped=0,duplicates=0,mismatches=0;const seen=new Set(items.map(i=>duplicateKey(i.file)));
+  for(const file of incoming){if(items.length+accepted.length>=MAX_FILES||file.size===0||file.size>MAX_FILE_BYTES||total+file.size>MAX_TOTAL_BYTES){skipped++;continue}const key=duplicateKey(file);if(seen.has(key)){duplicates++;continue}const kind=await detectKind(file),expected=expectedKind(file);if(!kind){skipped++;continue}if(!expected||expected!==kind){mismatches++;continue}total+=file.size;seen.add(key);const item:FileItem={id:crypto.randomUUID(),file,inputKind:kind,outputFormat:defaultFormat(kind),status:"idle",originalSize:file.size,isNew:true};
    try{const {bitmap}=await sourceFrom(file,kind);if(bitmap.width*bitmap.height>MAX_PIXELS){bitmap.close();skipped++;continue}const c=document.createElement("canvas"),scale=Math.min(1,640/Math.max(bitmap.width,bitmap.height));c.width=Math.max(1,Math.round(bitmap.width*scale));c.height=Math.max(1,Math.round(bitmap.height*scale));c.getContext("2d")?.drawImage(bitmap,0,0,c.width,c.height);const thumb=await canvasBlob(c,"image/png");item.previewUrl=URL.createObjectURL(thumb);item.width=bitmap.width;item.height=bitmap.height;bitmap.close()}catch{item.previewUrl=kind==="heic"?undefined:URL.createObjectURL(file)}accepted.push(item)}
-  setItems(prev=>[...prev,...accepted]);setMessage(`${accepted.length?t.added(accepted.length):""}${skipped?` ${t.skipped(skipped)} ${t.limit}`:""}`.trim())}
+  setItems(prev=>[...prev,...accepted]);const extra=[duplicates?`${locale==="ko"?"중복":"en"===locale?"Duplicates":"重複"} ${duplicates}`:"",mismatches?`${t.signature} (${mismatches})`:"",skipped?`${t.skipped(skipped)} ${t.limit}`:""].filter(Boolean).join(" · ");setMessage(`${accepted.length?t.added(accepted.length):""}${extra?` ${extra}`:""}`.trim()||t.unsupported)}
  function remove(id:string){setItems(prev=>{const x=prev.find(i=>i.id===id);if(x?.previewUrl)URL.revokeObjectURL(x.previewUrl);if(x?.resultUrl)URL.revokeObjectURL(x.resultUrl);return prev.filter(i=>i.id!==id)})}
- function reset(){itemsRef.current.forEach(i=>{if(i.previewUrl)URL.revokeObjectURL(i.previewUrl);if(i.resultUrl)URL.revokeObjectURL(i.resultUrl)});setItems([]);setMessage("");setZipState("idle")}
+ function reset(){itemsRef.current.forEach(i=>{if(i.previewUrl)URL.revokeObjectURL(i.previewUrl);if(i.resultUrl)URL.revokeObjectURL(i.resultUrl)});setItems([]);setMessage("");setZipState("idle");setQualityMode("auto");setCustomQuality(84);setBg("#ffffff");setAdvanced(false)}
+ function move(index:number,direction:-1|1){setItems(prev=>{const target=index+direction;if(target<0||target>=prev.length)return prev;const next=[...prev];[next[index],next[target]]=[next[target],next[index]];return next})}
+ async function retry(id:string){const item=itemsRef.current.find(i=>i.id===id);if(!item||processing)return;patch(id,{status:"idle",error:undefined,isNew:true});await convert(true)}
  function setAll(format:OutputFormat){setItems(prev=>prev.map(i=>allowedFormats(i.inputKind).includes(format)?{...i,outputFormat:format}:i))}
  async function convert(onlyNew=false){if(processing||!items.length)return;cancelRef.current=false;setProcessing(true);setZipState("idle");let next=items.map(i=>{if(i.resultUrl)URL.revokeObjectURL(i.resultUrl);return onlyNew&&!i.isNew?i:{...i,status:"idle" as Status,resultBlob:undefined,resultUrl:undefined,outputSize:undefined,error:undefined,warning:undefined}});const targets=next.map((i,index)=>({i,index})).filter(x=>!onlyNew||x.i.isNew);const names=uniqueNames(next);
   let processed=0;for(const {i:item,index} of targets){if(cancelRef.current){next[index]={...next[index],status:"cancelled"};continue}processed++;next[index]={...next[index],status:"processing"};setItems([...next]);setMessage(`${t.processing(processed,targets.length)}${item.outputFormat==="image/avif"?` · ${t.avifSlow}`:""}`);
@@ -101,7 +105,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
        </div>
 
        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {items.map(item=>(
+        {items.map((item,index)=>(
          <article key={item.id} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
           <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">
            {item.previewUrl?<img src={item.previewUrl} alt={item.file.name} className="h-full w-full object-cover"/>:<div className="grid h-full place-items-center text-sm font-bold tracking-[.12em] text-muted">{item.inputKind.toUpperCase()}</div>}
@@ -128,6 +132,8 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
            {item.error&&<div className="rounded-2xl border border-warning/30 bg-warning/10 p-3 text-xs leading-6 text-warning">{item.error}</div>}
 
            <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={()=>move(index,-1)} disabled={processing||index===0} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs">↑</button><button type="button" onClick={()=>move(index,1)} disabled={processing||index===items.length-1} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs">↓</button>
+            {item.status==="error"&&<button type="button" onClick={()=>void retry(item.id)} disabled={processing} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs">{locale==="ko"?"다시 시도":locale==="en"?"Retry":"再試行"}</button>}
             {item.resultBlob&&<button type="button" onClick={()=>download(item.resultBlob!,item.outputName||`${baseName(item.file.name)}.${ext(item.outputFormat)}`)} className="rounded-full bg-foreground px-3 py-1.5 text-xs font-semibold text-background dark:bg-white dark:text-black">{t.download}</button>}
             <button type="button" onClick={()=>remove(item.id)} disabled={processing} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium">{t.remove}</button>
            </div>

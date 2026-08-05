@@ -172,6 +172,50 @@ export const tool001Slug = "jpg-png-webp-image-converter" as const;
 
 export const tool002Slug = "heic-avif-image-converter" as const;
 
+export const tool003Slug = "svg-bmp-tiff-image-converter" as const;
+
+export const tool004Slug = "image-compressor" as const;
+
+export const tool005Slug = "target-size-image-compressor" as const;
+
+
+
+export const tool005Titles: Record<Locale, string> = {
+  ko: "목표 용량 이미지 압축기",
+  en: "Target Size Image Compressor",
+  ja: "目標容量画像圧縮ツール",
+};
+
+export const tool005Descriptions: Record<Locale, string> = {
+  ko: "JPG, PNG, WebP 이미지를 원하는 KB·MB 이하로 가능한 한 높은 화질로 압축합니다.",
+  en: "Compress JPG, PNG and WebP images below a chosen KB or MB limit with the highest possible quality.",
+  ja: "JPG・PNG・WebP画像を指定したKB・MB以下に、できるだけ高い画質で圧縮します。",
+};
+
+export const tool004Titles: Record<Locale, string> = {
+  ko: "이미지 압축기",
+  en: "Image Compressor",
+  ja: "画像圧縮ツール",
+};
+
+export const tool004Descriptions: Record<Locale, string> = {
+  ko: "JPG, PNG, WebP 이미지의 크기와 형식은 유지하면서 파일 용량을 한 번에 줄입니다.",
+  en: "Reduce JPG, PNG and WebP file sizes in batches while keeping their original dimensions and formats.",
+  ja: "JPG・PNG・WebP画像のサイズと形式を維持したまま、ファイル容量をまとめて削減します。",
+};
+
+export const tool003Titles: Record<Locale, string> = {
+  ko: "SVG·BMP·TIFF 이미지 변환기",
+  en: "SVG, BMP & TIFF Image Converter",
+  ja: "SVG・BMP・TIFF画像変換ツール",
+};
+
+export const tool003Descriptions: Record<Locale, string> = {
+  ko: "SVG, BMP, TIFF 이미지를 JPG 또는 PNG로 빠르게 변환합니다.",
+  en: "Convert SVG, BMP and TIFF images to JPG or PNG quickly.",
+  ja: "SVG・BMP・TIFF画像をJPGまたはPNGへすばやく変換します。",
+};
+
 export const tool002Titles: Record<Locale, string> = {
   ko: "HEIC·AVIF 이미지 변환기",
   en: "HEIC & AVIF Image Converter",
@@ -377,8 +421,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         en: "",
         ja: "",
       },
-      status: "NEXT",
-      active: false,
+      href: `/${"ko"}/${tool003Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: {
@@ -391,8 +436,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         en: "",
         ja: "",
       },
-      status: "NEXT",
-      active: false,
+      href: `/${"ko"}/${tool004Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: {
@@ -405,8 +451,9 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         en: "",
         ja: "",
       },
-      status: "NEXT",
-      active: false,
+      href: `/${"ko"}/${tool005Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: {
@@ -470,7 +517,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }));
 
   if (categorySlug === "image-convert") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool003Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool004Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool005Slug}` } : item);
   }
 
   return cards;
