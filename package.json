@@ -40,7 +40,14 @@
     "test:toolbox:008": "npm run test:toolbox:008-core && npm run test:toolbox:008-limit",
     "test:toolbox:008-final": "node scripts/run-tool-008-validation.mjs",
     "test:toolbox:008-core": "playwright test tests/tool-008-image-cropper-rotator.spec.ts tests/tool-008-comprehensive.spec.ts --workers=1",
-    "test:toolbox:008-limit": "playwright test tests/tool-008-auto-limit.spec.ts --workers=1 --project=desktop-chromium"
+    "test:toolbox:008-limit": "playwright test tests/tool-008-auto-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:009": "npm run test:toolbox:009-core && npm run test:toolbox:009-regression && npm run test:toolbox:009-limit",
+    "test:toolbox:009-final": "node scripts/run-tool-009-final-validation.mjs",
+    "test:toolbox:009-core": "playwright test tests/tool-009-image-adjuster.spec.ts tests/tool-009-pixel-output.spec.ts --workers=1",
+    "test:toolbox:009-limit": "playwright test tests/tool-009-limit.spec.ts tests/tool-009-auto-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:009-regression": "playwright test tests/tool-009-regression.spec.ts --workers=1",
+    "test:toolbox:common-additive": "playwright test tests/common-tool-additive.spec.ts --workers=1",
+    "test:toolbox:009-additional": "playwright test tests/tool-009-additional.spec.ts --workers=1 --project=desktop-chromium"
   },
   "dependencies": {
     "next": "16.2.12",

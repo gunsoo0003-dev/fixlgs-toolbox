@@ -54,7 +54,7 @@ export const categories: Category[] = [
       en: "Crop, rotate, adjust, blur, and combine images.",
       ja: "切り抜き、回転、補正、ぼかし、合成。",
     },
-    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
+    toolCountLabel: { ko: "2개 사용 가능", en: "2 available", ja: "2件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -183,6 +183,11 @@ export const tool006Slug = "image-resizer" as const;
 export const tool007Slug = "web-image-optimizer" as const;
 
 export const tool008Slug = "image-cropper-rotator" as const;
+
+export const tool009Slug = "image-brightness-color-adjuster" as const;
+
+export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
+export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -519,14 +524,63 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "이미지 편집 도구 2", en: "Image Edit Tool 2", ja: "画像編集ツール2" },
-      description: { ko: "다음 이미지 편집 도구를 순서대로 추가합니다.", en: "More image editing tools will be added step by step.", ja: "次の画像編集ツールを順番に追加します。" },
+      title: tool009Titles,
+      description: tool009Descriptions,
+      href: `/${"ko"}/${tool009Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" },
+      description: { ko: "선택 영역 모자이크·블러와 개인정보 가림", en: "Mosaic, blur, and hide private areas.", ja: "選択範囲のモザイク・ぼかしと個人情報保護。" },
       status: "NEXT",
       active: false,
     },
     {
-      title: { ko: "이미지 편집 도구 3", en: "Image Edit Tool 3", ja: "画像編集ツール3" },
-      description: { ko: "다음 이미지 편집 도구를 순서대로 추가합니다.", en: "More image editing tools will be added step by step.", ja: "次の画像編集ツールを順番に追加します。" },
+      title: { ko: "이미지 여백·배경 추가기", en: "Image Padding & Background Tool", ja: "画像余白・背景追加ツール" },
+      description: { ko: "여백, 정사각형 맞춤, 단색·투명·블러 배경", en: "Add padding, square layouts, and solid, transparent, or blurred backgrounds.", ja: "余白、正方形調整、単色・透明・ぼかし背景。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 테두리·둥근 모서리 도구", en: "Image Border & Rounded Corner Tool", ja: "画像枠線・角丸ツール" },
+      description: { ko: "테두리, 둥근 모서리, 원형 이미지와 그림자", en: "Create borders, rounded corners, circles, and shadows.", ja: "枠線、角丸、円形画像、影を追加。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 합치기", en: "Image Merger", ja: "画像結合ツール" },
+      description: { ko: "여러 이미지를 가로·세로로 순서대로 합치기", en: "Combine multiple images vertically or horizontally.", ja: "複数画像を縦または横に結合。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 콜라주 만들기", en: "Image Collage Maker", ja: "画像コラージュ作成ツール" },
+      description: { ko: "분할·격자형 콜라주와 여백·배경 설정", en: "Build split and grid collages with spacing and backgrounds.", ja: "分割・グリッド型コラージュと余白・背景設定。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "전후 비교 이미지 만들기", en: "Before & After Image Maker", ja: "ビフォー・アフター画像作成ツール" },
+      description: { ko: "좌우·상하 비교, 문구와 중앙 구분선 추가", en: "Create side-by-side or top-bottom before-and-after images.", ja: "左右・上下比較、文言、中央区切り線を追加。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지에 글자 넣기", en: "Add Text to Image", ja: "画像文字入れツール" },
+      description: { ko: "제목·본문·날짜·위치 문구를 자유롭게 배치", en: "Place titles, body text, dates, and location labels.", ja: "タイトル、本文、日付、場所の文字を配置。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 워터마크 넣기", en: "Image Watermark Tool", ja: "画像ウォーターマークツール" },
+      description: { ko: "텍스트·로고·반복 워터마크와 투명도 설정", en: "Add text, logo, or repeated watermarks with opacity controls.", ja: "文字・ロゴ・繰り返し透かしと透明度設定。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 정보·메타데이터 검사기", en: "Image Info & Metadata Inspector", ja: "画像情報・メタデータ検査ツール" },
+      description: { ko: "픽셀·DPI·EXIF·GPS 확인과 메타데이터 제거", en: "Inspect pixels, DPI, EXIF, GPS, and remove metadata.", ja: "ピクセル・DPI・EXIF・GPS確認とメタデータ削除。" },
       status: "NEXT",
       active: false,
     },
@@ -568,7 +622,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : item);
   }
 
   return cards;

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { categories, locales, tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug } from "@/lib/site";
+import { categories, locales, tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug } from "@/lib/site";
 
 const baseUrl = "https://toolbox.fixlgs.com";
 
@@ -52,6 +52,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
     entries.push({
       url: `${baseUrl}/${locale}/${tool008Slug}`,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    });
+    entries.push({
+      url: `${baseUrl}/${locale}/${tool009Slug}`,
       changeFrequency: "weekly",
       priority: 0.95,
     });
