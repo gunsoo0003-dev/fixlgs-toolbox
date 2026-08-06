@@ -12,6 +12,7 @@ export default defineConfig({
     ["list"],
     ["html", { outputFolder: "playwright-report", open: "never" }],
     ["json", { outputFile: "test-results/toolbox-validation.json" }],
+    ["./tests/reporters/grouped-summary-reporter.ts"],
   ],
   use: {
     baseURL: "http://127.0.0.1:3000",

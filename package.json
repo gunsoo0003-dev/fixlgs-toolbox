@@ -28,7 +28,19 @@
     "test:toolbox:003-limit": "playwright test tests/tool-003-limit.spec.ts --workers=1",
     "test:toolbox:004-limit": "playwright test tests/tool-004-limit.spec.ts --workers=1",
     "test:toolbox:005-limit": "playwright test tests/tool-005-limit.spec.ts --workers=1",
-    "test:toolbox:001-005-limit": "playwright test tests/tool-001-limit.spec.ts tests/tool-002-limit.spec.ts tests/tool-003-limit.spec.ts tests/tool-004-limit.spec.ts tests/tool-005-limit.spec.ts --workers=1"
+    "test:toolbox:001-005-limit": "playwright test tests/tool-001-limit.spec.ts tests/tool-002-limit.spec.ts tests/tool-003-limit.spec.ts tests/tool-004-limit.spec.ts tests/tool-005-limit.spec.ts --workers=1",
+    "test:toolbox:007": "playwright test tests/tool-007-web-image-optimizer.spec.ts tests/tool-007-load-limit.spec.ts tests/tool-007-auto-limit.spec.ts --workers=1",
+    "test:toolbox:007-limit": "playwright test tests/tool-007-load-limit.spec.ts tests/tool-007-auto-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:007-fast": "playwright test tests/tool-007-web-image-optimizer.spec.ts --workers=1",
+    "test:toolbox:007-final": "npm run build && npm run test:toolbox:007",
+    "test:toolbox:001": "playwright test tests/tool-001-limit.spec.ts tests/tool-001-load-limit.spec.ts --workers=1",
+    "test:toolbox:002": "playwright test tests/tool-002-limit.spec.ts tests/tool-002-load-limit.spec.ts --workers=1",
+    "test:toolbox:003": "playwright test tests/tool-003-limit.spec.ts tests/tool-003-load-limit.spec.ts --workers=1",
+    "test:toolbox:004": "playwright test tests/tool-004-image-compressor.spec.ts tests/tool-004-limit.spec.ts tests/tool-004-load-limit.spec.ts --workers=1",
+    "test:toolbox:008": "npm run test:toolbox:008-core && npm run test:toolbox:008-limit",
+    "test:toolbox:008-final": "node scripts/run-tool-008-validation.mjs",
+    "test:toolbox:008-core": "playwright test tests/tool-008-image-cropper-rotator.spec.ts tests/tool-008-comprehensive.spec.ts --workers=1",
+    "test:toolbox:008-limit": "playwright test tests/tool-008-auto-limit.spec.ts --workers=1 --project=desktop-chromium"
   },
   "dependencies": {
     "next": "16.2.12",

@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-08-06T07:22:23.509Z",
+  "overallStatus": "passed",
+  "counts": {
+    "total": 41,
+    "passed": 41,
+    "failed": 0,
+    "skipped": 0
+  },
+  "missingReports": [],
+  "runtime": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v24.16.0",
+    "cwd": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox",
+    "npmExecPath": "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js"
+  },
+  "steps": [
+    {
+      "name": "build",
+      "command": "C:\\Program Files\\nodejs\\node.exe C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js run build",
+      "startedAt": "2026-08-06T07:21:19.483Z",
+      "endedAt": "2026-08-06T07:21:29.345Z",
+      "status": 0,
+      "signal": null,
+      "spawnError": null,
+      "logPath": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\test-results\\tool-008-build.log",
+      "summary": null,
+      "stderrTail": "",
+      "stdoutTail": "\n> fixlgs-toolbox@0.1.0 build\n> next build\n\n\u001b[1m\u001b[38;2;173;127;168m▲ Next.js 16.2.12\u001b[39m\u001b[22m (Turbopack)\n\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Creating an optimized production build ...\n\u001b[32m\u001b[1m✓\u001b[22m\u001b[39m Compiled successfully in 2.4s\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Running TypeScript ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Finished TypeScript in 3.6s ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Collecting page data using 11 workers ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 11 workers (0/67) ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 11 workers (16/67) \n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 11 workers (33/67) \n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 11 workers (50/67) \n\u001b[32m\u001b[1m✓\u001b[22m\u001b[39m Generating static pages using 11 workers (67/67) in 570ms\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Finalizing page optimization ...\n\n\u001b[4mRoute (app)\u001b[24m\n┌ ƒ /\n├ ƒ /_not-found\n├ ƒ /[locale]\n├ ƒ /[locale]/[toolSlug]\n├ ƒ /[locale]/category/[categorySlug]\n├ ƒ /dev/validation\n├ ○ /robots.txt\n└ ○ /sitemap.xml\n\n\nƒ Proxy (Middleware)\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n"
+    },
+    {
+      "name": "core",
+      "command": "C:\\Program Files\\nodejs\\node.exe C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js run test:toolbox:008-core",
+      "startedAt": "2026-08-06T07:21:29.345Z",
+      "endedAt": "2026-08-06T07:22:20.123Z",
+      "status": 0,
+      "signal": null,
+      "spawnError": null,
+      "logPath": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\test-results\\tool-008-core.log",
+      "summary": {
+        "generatedAt": "2026-08-06T07:22:20.093Z",
+        "overallStatus": "passed",
+        "counts": {
+          "total": 40,
+          "passed": 40,
+          "failed": 0,
+          "skipped": 0
+        },
+        "failureGroups": [],
+        "skipGroups": [],
+        "slowPassedTests": []
+      },
+      "stderrTail": "",
+      "stdoutTail": "\n> fixlgs-toolbox@0.1.0 test:toolbox:008-core\n> playwright test tests/tool-008-image-cropper-rotator.spec.ts tests/tool-008-comprehensive.spec.ts --workers=1\n\n\nRunning 40 tests using 1 worker\n\n  ✓   1 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:9:7 › 008 comprehensive validation › routes, category 02, expert content and localized UI (1.5s)\n  ✓   2 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:20:7 › 008 comprehensive validation › all executable controls are real buttons (1.0s)\n  ✓   3 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:26:7 › 008 comprehensive validation › core edit flow, result and distinct downloads (1.4s)\n  ✓   4 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:40:7 › 008 comprehensive validation › precise controls, batch target, skip and original inclusion (1.3s)\n  ✓   5 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:52:7 › 008 comprehensive validation › wheel zoom and all eight crop handles (1.2s)\n  ✓   6 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:60:7 › 008 comprehensive validation › deduplicates identical content (1.1s)\n  ✓   7 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:66:7 › 008 comprehensive validation › accepts 10 unique files and rejects the 11th (1.1s)\n  ✓   8 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:73:7 › 008 comprehensive validation › rejects unsupported, zero-byte, animated markers and MIME mismatch (973ms)\n  ✓   9 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:82:7 › 008 comprehensive validation › per-file byte safety limit (2.4s)\n  ✓  10 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:89:7 › 008 comprehensive validation › pixel and side boundaries (1.4s)\n  ✓  11 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:119:7 › 008 comprehensive validation › local processing does not upload user file (1.3s)\n  ✓  12 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:127:7 › 008 comprehensive validation › SEO, sitemap and robots (1.0s)\n  ✓  13 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:135:7 › 008 comprehensive validation › no horizontal overflow in current viewport (1.1s)\n  ✓  14 [desktop-chromium] › tests\\tool-008-comprehensive.spec.ts:142:7 › 008 comprehensive validation › source constants and exclusions remain explicit (3ms)\n  ✓  15 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:6:7 › 008 image cropper rotator › localized routes and primary UI (1.4s)\n  ✓  16 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:7:7 › 008 image cropper rotator › uploads image and exposes real editing controls (993ms)\n  ✓  17 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:8:7 › 008 image cropper rotator › rotation flip undo and result flow (1.3s)\n  ✓  18 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:10:7 › 008 image cropper rotator › precise controls, selected batch target and original inclusion are available (1.3s)\n  ✓  19 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:11:7 › 008 image cropper rotator › crop stage exposes edge handles and wheel zoom (1.2s)\n  ✓  20 [desktop-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:12:7 › 008 image cropper rotator › sitemap contains localized 008 urls (16ms)\n  ✓  21 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:9:7 › 008 comprehensive validation › routes, category 02, expert content and localized UI (1.6s)\n  ✓  22 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:20:7 › 008 comprehensive validation › all executable controls are real buttons (1.1s)\n  ✓  23 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:26:7 › 008 comprehensive validation › core edit flow, result and distinct downloads (1.4s)\n  ✓  24 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:40:7 › 008 comprehensive validation › precise controls, batch target, skip and original inclusion (1.4s)\n  ✓  25 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:52:7 › 008 comprehensive validation › wheel zoom and all eight crop handles (1.3s)\n  ✓  26 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:60:7 › 008 comprehensive validation › deduplicates identical content (1.1s)\n  ✓  27 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:66:7 › 008 comprehensive validation › accepts 10 unique files and rejects the 11th (1.2s)\n  ✓  28 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:73:7 › 008 comprehensive validation › rejects unsupported, zero-byte, animated markers and MIME mismatch (1.0s)\n  ✓  29 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:82:7 › 008 comprehensive validation › per-file byte safety limit (2.4s)\n  ✓  30 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:89:7 › 008 comprehensive validation › pixel and side boundaries (1.5s)\n  ✓  31 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:119:7 › 008 comprehensive validation › local processing does not upload user file (1.3s)\n  ✓  32 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:127:7 › 008 comprehensive validation › SEO, sitemap and robots (1.1s)\n  ✓  33 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:135:7 › 008 comprehensive validation › no horizontal overflow in current viewport (1.1s)\n  ✓  34 [mobile-chromium] › tests\\tool-008-comprehensive.spec.ts:142:7 › 008 comprehensive validation › source constants and exclusions remain explicit (2ms)\n  ✓  35 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:6:7 › 008 image cropper rotator › localized routes and primary UI (1.5s)\n  ✓  36 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:7:7 › 008 image cropper rotator › uploads image and exposes real editing controls (1.1s)\n  ✓  37 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:8:7 › 008 image cropper rotator › rotation flip undo and result flow (1.8s)\n  ✓  38 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:10:7 › 008 image cropper rotator › precise controls, selected batch target and original inclusion are available (1.3s)\n  ✓  39 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:11:7 › 008 image cropper rotator › crop stage exposes edge handles and wheel zoom (1.4s)\n  ✓  40 [mobile-chromium] › tests\\tool-008-image-cropper-rotator.spec.ts:12:7 › 008 image cropper rotator › sitemap contains localized 008 urls (19ms)\n\n  40 passed (50.1s)\n\n[TOOLBOX VALIDATION SUMMARY]\nPASS 40 / FAIL 0 / SKIP 0\nSummary files: test-results/toolbox-validation-summary.txt / .json\n\n"
+    },
+    {
+      "name": "limit",
+      "command": "C:\\Program Files\\nodejs\\node.exe C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js run test:toolbox:008-limit",
+      "startedAt": "2026-08-06T07:22:20.123Z",
+      "endedAt": "2026-08-06T07:22:23.509Z",
+      "status": 0,
+      "signal": null,
+      "spawnError": null,
+      "logPath": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\test-results\\tool-008-limit.log",
+      "summary": {
+        "generatedAt": "2026-08-06T07:22:23.477Z",
+        "overallStatus": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "failureGroups": [],
+        "skipGroups": [],
+        "slowPassedTests": []
+      },
+      "stderrTail": "",
+      "stdoutTail": "\n> fixlgs-toolbox@0.1.0 test:toolbox:008-limit\n> playwright test tests/tool-008-auto-limit.spec.ts --workers=1 --project=desktop-chromium\n\n\nRunning 1 test using 1 worker\n\n  ✓  1 [desktop-chromium] › tests\\tool-008-auto-limit.spec.ts:6:7 › 008 automatic limit report › progressively measure canvas capability and write TXT/JSON report (1.1s)\n\n  1 passed (2.6s)\n\n[TOOLBOX VALIDATION SUMMARY]\nPASS 1 / FAIL 0 / SKIP 0\nSummary files: test-results/toolbox-validation-summary.txt / .json\n\n"
+    }
+  ],
+  "failureGroups": [],
+  "skipGroups": []
+}

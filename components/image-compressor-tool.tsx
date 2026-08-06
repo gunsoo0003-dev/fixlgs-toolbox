@@ -208,20 +208,21 @@ export function ImageCompressorTool({locale}:{locale:Locale}){
             <small>{t.support}<br />{t.local}</small>
           </div>
         ) : (
-          <div className="toolbox-upload-active compressor-upload-active">
-            <div className="toolbox-upload-active-head">
+          <div className="toolbox-upload-active toolbox-upload-summary-card compressor-upload-active">
+            <div className="toolbox-upload-summary-main">
+              <span className="toolbox-upload-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 15v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg></span>
               <div>
-                <span>{locale === "ko" ? "선택한 이미지" : locale === "en" ? "Selected images" : "選択した画像"}</span>
-                <p>{locale === "ko" ? "파일 순서와 압축 설정, 처리 상태와 결과를 한곳에서 확인합니다." : locale === "en" ? "Manage order, compression settings, status, and results in one place." : "ファイル順、圧縮設定、処理状態、結果を一か所で確認できます。"}</p>
+                <strong>{locale === "ko" ? "선택한 이미지" : locale === "en" ? "Selected images" : "選択した画像"}</strong>
+                <p>{locale === "ko" ? "이미지를 이 작업장에 놓거나 버튼으로 추가하세요." : locale === "en" ? "Drop more images anywhere in this workspace, or use the button." : "このワークスペースに画像をドロップするか、ボタンで追加してください。"}</p>
               </div>
-              <div className="toolbox-upload-active-actions">
-                <div className="toolbox-file-stats">
-                  <span>{items.length} files</span>
-                  <span>{items.filter((item) => item.status === "done" || item.status === "kept").length} done</span>
-                  <span>{items.filter((item) => item.status === "failed").length} failed</span>
-                </div>
-                <button type="button" onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
+            </div>
+            <div className="toolbox-upload-summary-actions">
+              <div className="toolbox-file-stats">
+                <span>{items.length} files</span>
+                <span>{items.filter((item) => item.status === "done" || item.status === "kept").length} done</span>
+                <span>{items.filter((item) => item.status === "failed").length} failed</span>
               </div>
+              <button type="button" onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
             </div>
           </div>
         )}

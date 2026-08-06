@@ -4,8 +4,9 @@
       "C:\\Program Files\\nodejs\\node.exe",
       "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\node_modules\\@playwright\\test\\cli.js",
       "test",
-      "tests/tool-005-limit.spec.ts",
-      "--workers=1"
+      "tests/tool-008-auto-limit.spec.ts",
+      "--workers=1",
+      "--project=desktop-chromium"
     ],
     "configFile": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\playwright.config.ts",
     "rootDir": "C:/Users/Administrator/Desktop/WebProjects/fixlgs-toolbox/tests",
@@ -74,6 +75,10 @@
         {
           "outputFile": "test-results/toolbox-validation.json"
         }
+      ],
+      [
+        "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\reporters\\grouped-summary-reporter.ts",
+        null
       ]
     ],
     "reportSlowTests": {
@@ -95,234 +100,20 @@
   },
   "suites": [
     {
-      "title": "tool-005-limit.spec.ts",
-      "file": "tool-005-limit.spec.ts",
+      "title": "tool-008-auto-limit.spec.ts",
+      "file": "tool-008-auto-limit.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "005 확정 운영 안전선·경계 검수",
-          "file": "tool-005-limit.spec.ts",
-          "line": 12,
+          "title": "008 automatic limit report",
+          "file": "tool-008-auto-limit.spec.ts",
+          "line": 5,
           "column": 6,
           "specs": [
             {
-              "title": "desktop-4MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 210000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "desktop-chromium",
-                  "projectName": "desktop-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2883,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:14.027Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-desktop-4MP-500KB.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAiZGVza3RvcC1jaHJvbWl1bSIsCiAgImxhYmVsIjogImRlc2t0b3AtNE1QLTUwMEtCIiwKICAid2lkdGgiOiAyMDAwLAogICJoZWlnaHQiOiAyMDAwLAogICJwaXhlbHMiOiA0MDAwMDAwLAogICJ0YXJnZXRLQiI6IDUwMCwKICAiYWxsb3dSZXNpemUiOiBmYWxzZSwKICAiaW5wdXRCeXRlcyI6IDEyOTg3NCwKICAicmVzdWx0Qnl0ZXMiOiAxMjk4NzQsCiAgImF0dGVtcHRzIjogMCwKICAicmVzdWx0V2lkdGgiOiAyMDAwLAogICJyZXN1bHRIZWlnaHQiOiAyMDAwLAogICJzdGF0dXMiOiAiYWxyZWFkeSIsCiAgImR1cmF0aW9uTXMiOiAyNDQyCn0="
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-13d20094e21e7dda13da",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-12MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 270000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "desktop-chromium",
-                  "projectName": "desktop-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2609,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:17.336Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-desktop-12MP-500KB.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAiZGVza3RvcC1jaHJvbWl1bSIsCiAgImxhYmVsIjogImRlc2t0b3AtMTJNUC01MDBLQiIsCiAgIndpZHRoIjogNDAwMCwKICAiaGVpZ2h0IjogMzAwMCwKICAicGl4ZWxzIjogMTIwMDAwMDAsCiAgInRhcmdldEtCIjogNTAwLAogICJhbGxvd1Jlc2l6ZSI6IGZhbHNlLAogICJpbnB1dEJ5dGVzIjogMjkzNjIwLAogICJyZXN1bHRCeXRlcyI6IDI5MzYyMCwKICAiYXR0ZW1wdHMiOiAwLAogICJyZXN1bHRXaWR0aCI6IDQwMDAsCiAgInJlc3VsdEhlaWdodCI6IDMwMDAsCiAgInN0YXR1cyI6ICJhbHJlYWR5IiwKICAiZHVyYXRpb25NcyI6IDIyMTEKfQ=="
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-14074101f2af76656051",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-24MP-300KB-resize 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 390000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "desktop-chromium",
-                  "projectName": "desktop-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 4604,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:19.952Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-desktop-24MP-300KB-resize.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAiZGVza3RvcC1jaHJvbWl1bSIsCiAgImxhYmVsIjogImRlc2t0b3AtMjRNUC0zMDBLQi1yZXNpemUiLAogICJ3aWR0aCI6IDYwMDAsCiAgImhlaWdodCI6IDQwMDAsCiAgInBpeGVscyI6IDI0MDAwMDAwLAogICJ0YXJnZXRLQiI6IDMwMCwKICAiYWxsb3dSZXNpemUiOiB0cnVlLAogICJpbnB1dEJ5dGVzIjogNDg2NTQ1LAogICJyZXN1bHRCeXRlcyI6IDI1NzUwNiwKICAiYXR0ZW1wdHMiOiA5LAogICJyZXN1bHRXaWR0aCI6IDYwMDAsCiAgInJlc3VsdEhlaWdodCI6IDQwMDAsCiAgInN0YXR1cyI6ICJyZWFjaGVkIiwKICAiZHVyYXRpb25NcyI6IDQyMDAKfQ=="
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-0d7fbcb8623499ba4abe",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-30MP-200KB-resize 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 510000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "desktop-chromium",
-                  "projectName": "desktop-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 4926,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:24.563Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-desktop-30MP-200KB-resize.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAiZGVza3RvcC1jaHJvbWl1bSIsCiAgImxhYmVsIjogImRlc2t0b3AtMzBNUC0yMDBLQi1yZXNpemUiLAogICJ3aWR0aCI6IDYwMDAsCiAgImhlaWdodCI6IDUwMDAsCiAgInBpeGVscyI6IDMwMDAwMDAwLAogICJ0YXJnZXRLQiI6IDIwMCwKICAiYWxsb3dSZXNpemUiOiB0cnVlLAogICJpbnB1dEJ5dGVzIjogNTgwMjk5LAogICJyZXN1bHRCeXRlcyI6IDE5NzUzNSwKICAiYXR0ZW1wdHMiOiA5LAogICJyZXN1bHRXaWR0aCI6IDYwMDAsCiAgInJlc3VsdEhlaWdodCI6IDUwMDAsCiAgInN0YXR1cyI6ICJyZWFjaGVkIiwKICAiZHVyYXRpb25NcyI6IDQ1NTYKfQ=="
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-25b9db6138515aad06b1",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "mobile-12MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "mobile 전용 단계",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 15,
-                        "column": 12
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "desktop-chromium",
-                  "projectName": "desktop-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 397,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:29.496Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "mobile 전용 단계",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 15,
-                            "column": 12
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-eab7101c31a47d2186c8",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "30MP 초과·파일 수·파일 용량 경계",
+              "title": "progressively measure canvas capability and write TXT/JSON report",
               "ok": true,
               "tags": [],
               "tests": [
@@ -337,338 +128,22 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3661,
+                      "duration": 1108,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T16:33:29.899Z",
+                      "startTime": "2026-08-06T07:22:21.652Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-validated-operational-limits.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAiZGVza3RvcC1jaHJvbWl1bSIsCiAgImxhYmVsIjogInZhbGlkYXRlZC1vcGVyYXRpb25hbC1saW1pdHMiLAogICJhY2NlcHRlZEZpbGVzIjogMTAsCiAgInJlamVjdGVkQXRGaWxlcyI6IDExLAogICJwZXJGaWxlQnl0ZXNCbG9ja2VkQWJvdmUiOiAxNTcyODY0MCwKICAicGl4ZWxzQmxvY2tlZEFib3ZlIjogMzAwMDAwMDAsCiAgInRvdGFsUGl4ZWxzQ29uZmlndXJlZCI6IDgwMDAwMDAwLAogICJtYXhRdWFsaXR5U2VhcmNoIjogOQp9"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "67842bc831166b5c10d7-e53b468beaed8cd544d4",
-              "file": "tool-005-limit.spec.ts",
-              "line": 34,
-              "column": 7
-            },
-            {
-              "title": "desktop-4MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "desktop 전용 단계",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 15,
-                        "column": 12
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 530,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:34.258Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "desktop 전용 단계",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 15,
-                            "column": 12
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-b383c60de2b9062df48c",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-12MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "desktop 전용 단계",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 15,
-                        "column": 12
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 405,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:35.148Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "desktop 전용 단계",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 15,
-                            "column": 12
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-52ceb9f0720b226d8ac0",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-24MP-300KB-resize 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "desktop 전용 단계",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 15,
-                        "column": 12
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 384,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:35.560Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "desktop 전용 단계",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 15,
-                            "column": 12
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-4b773cf6f5ab21a49e38",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "desktop-30MP-200KB-resize 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "desktop 전용 단계",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 15,
-                        "column": 12
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 397,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:35.952Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "desktop 전용 단계",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 15,
-                            "column": 12
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-eb0c182f7d0486e6cbb2",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "mobile-12MP-500KB 반복 목표 압축",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 330000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2679,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:36.355Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "005-mobile-12MP-500KB.json",
-                          "contentType": "application/json",
-                          "body": "ewogICJ0b29sIjogIjAwNSIsCiAgInByb2plY3QiOiAibW9iaWxlLWNocm9taXVtIiwKICAibGFiZWwiOiAibW9iaWxlLTEyTVAtNTAwS0IiLAogICJ3aWR0aCI6IDQwMDAsCiAgImhlaWdodCI6IDMwMDAsCiAgInBpeGVscyI6IDEyMDAwMDAwLAogICJ0YXJnZXRLQiI6IDUwMCwKICAiYWxsb3dSZXNpemUiOiBmYWxzZSwKICAiaW5wdXRCeXRlcyI6IDI5MzYyMCwKICAicmVzdWx0Qnl0ZXMiOiAyOTM2MjAsCiAgImF0dGVtcHRzIjogMCwKICAicmVzdWx0V2lkdGgiOiA0MDAwLAogICJyZXN1bHRIZWlnaHQiOiAzMDAwLAogICJzdGF0dXMiOiAiYWxyZWFkeSIsCiAgImR1cmF0aW9uTXMiOiAyMTgxCn0="
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-4324b5232664701d440f",
-              "file": "tool-005-limit.spec.ts",
-              "line": 14,
-              "column": 9
-            },
-            {
-              "title": "30MP 초과·파일 수·파일 용량 경계",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 180000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "description": "desktop 전용 경계 검수",
-                      "location": {
-                        "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                        "line": 35,
-                        "column": 10
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "mobile-chromium",
-                  "projectName": "mobile-chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 385,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-08-05T16:33:39.041Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "description": "desktop 전용 경계 검수",
-                          "location": {
-                            "file": "C:\\Users\\Administrator\\Desktop\\WebProjects\\fixlgs-toolbox\\tests\\tool-005-limit.spec.ts",
-                            "line": 35,
-                            "column": 10
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "67842bc831166b5c10d7-9b647ad8393679a8b459",
-              "file": "tool-005-limit.spec.ts",
-              "line": 34,
+              "id": "10ab217df8e8db43087c-b2fbff233aa39011fb3e",
+              "file": "tool-008-auto-limit.spec.ts",
+              "line": 6,
               "column": 7
             }
           ]
@@ -678,10 +153,10 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-05T16:33:10.571Z",
-    "duration": 29285.797000000002,
-    "expected": 6,
-    "skipped": 6,
+    "startTime": "2026-08-06T07:22:20.852Z",
+    "duration": 2609.761,
+    "expected": 1,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

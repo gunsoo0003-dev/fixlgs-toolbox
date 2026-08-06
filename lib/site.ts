@@ -54,7 +54,7 @@ export const categories: Category[] = [
       en: "Crop, rotate, adjust, blur, and combine images.",
       ja: "切り抜き、回転、補正、ぼかし、合成。",
     },
-    toolCountLabel: { ko: "제작 예정", en: "Planned", ja: "制作予定" },
+    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -179,6 +179,16 @@ export const tool004Slug = "image-compressor" as const;
 export const tool005Slug = "target-size-image-compressor" as const;
 
 export const tool006Slug = "image-resizer" as const;
+
+export const tool007Slug = "web-image-optimizer" as const;
+
+export const tool008Slug = "image-cropper-rotator" as const;
+
+export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
+export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
+
+export const tool007Titles: Record<Locale, string> = { ko: "웹 이미지 최적화기", en: "Web Image Optimizer", ja: "Web画像最適化ツール" };
+export const tool007Descriptions: Record<Locale, string> = { ko: "웹사이트와 블로그에 사용할 이미지를 적절한 형식·크기·품질로 한 번에 최적화합니다.", en: "Optimize images for websites and blogs with the right format, dimensions and quality in one batch.", ja: "Webサイトやブログ用の画像を、適切な形式・サイズ・画質にまとめて最適化します。" };
 
 export const tool006Titles: Record<Locale, string> = {
   ko: "이미지 크기 변경기",
@@ -495,6 +505,28 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
         en: "",
         ja: "",
       },
+      href: `/${"ko"}/${tool007Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+  ],
+  "image-edit": [
+    {
+      title: tool008Titles,
+      description: tool008Descriptions,
+      href: `/${"ko"}/${tool008Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: { ko: "이미지 편집 도구 2", en: "Image Edit Tool 2", ja: "画像編集ツール2" },
+      description: { ko: "다음 이미지 편집 도구를 순서대로 추가합니다.", en: "More image editing tools will be added step by step.", ja: "次の画像編集ツールを順番に追加します。" },
+      status: "NEXT",
+      active: false,
+    },
+    {
+      title: { ko: "이미지 편집 도구 3", en: "Image Edit Tool 3", ja: "画像編集ツール3" },
+      description: { ko: "다음 이미지 편집 도구를 순서대로 추가합니다.", en: "More image editing tools will be added step by step.", ja: "次の画像編集ツールを順番に追加します。" },
       status: "NEXT",
       active: false,
     },
@@ -532,7 +564,11 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }));
 
   if (categorySlug === "image-convert") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool003Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool004Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool005Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool006Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool001Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool002Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool003Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool004Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool005Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool006Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool007Slug}` } : item);
+  }
+
+  if (categorySlug === "image-edit") {
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : item);
   }
 
   return cards;

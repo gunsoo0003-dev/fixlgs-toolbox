@@ -85,4 +85,12 @@ export const validationTools: readonly ToolValidationDefinition[] = [
       ja: "画像サイズ変更ツール",
     },
   },
+  {
+    id: "tool-007",
+    number: "007",
+    name: "웹 이미지 최적화기",
+    slug: "web-image-optimizer",
+    locales: ["ko", "en", "ja"],
+    expectedH1: { ko: "웹 이미지 최적화기", en: "Web Image Optimizer", ja: "Web画像最適化ツール" },
+  },
 ] as const;

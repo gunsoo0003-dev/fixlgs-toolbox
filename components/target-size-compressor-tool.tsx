@@ -376,9 +376,12 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
       <section className="toolbox-workbench target-size-workbench" data-testid="target-size-workbench">
         <div
           className="toolbox-workbench-upload"
-          onDragOver={(event) => event.preventDefault()}
+          onDragEnter={(event) => { event.preventDefault(); event.currentTarget.classList.add("is-dragging"); }}
+          onDragOver={(event) => { event.preventDefault(); event.currentTarget.classList.add("is-dragging"); }}
+          onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) event.currentTarget.classList.remove("is-dragging"); }}
           onDrop={(event) => {
             event.preventDefault();
+            event.currentTarget.classList.remove("is-dragging");
             addFiles(event.dataTransfer.files);
           }}
         >
@@ -411,20 +414,21 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
               <small>{t.support}<br />{t.local}</small>
             </div>
           ) : (
-            <div className="toolbox-upload-active target-size-upload-active">
-              <div className="toolbox-upload-active-head">
+            <div className="toolbox-upload-active toolbox-upload-summary-card target-size-upload-active">
+              <div className="toolbox-upload-summary-main">
+                <span className="toolbox-upload-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 16V5m0 0L8 9m4-4 4 4M5 15v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg></span>
                 <div>
-                  <span>{locale === "ko" ? "선택한 이미지" : locale === "en" ? "Selected images" : "選択した画像"}</span>
-                  <p>{locale === "ko" ? "파일별 목표값과 처리 상태, 결과를 한곳에서 확인합니다." : locale === "en" ? "Review per-file targets, status, and results in one place." : "ファイル別の目標値、処理状態、結果を一か所で確認できます。"}</p>
+                  <strong>{locale === "ko" ? "선택한 이미지" : locale === "en" ? "Selected images" : "選択した画像"}</strong>
+                  <p>{locale === "ko" ? "이미지를 이 작업장에 놓거나 버튼으로 추가하세요." : locale === "en" ? "Drop more images anywhere in this workspace, or use the button." : "このワークスペースに画像をドロップするか、ボタンで追加してください。"}</p>
                 </div>
-                <div className="toolbox-upload-active-actions">
-                  <div className="toolbox-file-stats">
-                    <span>{items.length} files</span>
-                    <span>{summary.reached + summary.already} done</span>
-                    <span>{summary.failed} failed</span>
-                  </div>
-                  <button type="button" disabled={running} onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
+              </div>
+              <div className="toolbox-upload-summary-actions">
+                <div className="toolbox-file-stats">
+                  <span>{items.length} files</span>
+                  <span>{summary.reached + summary.already} done</span>
+                  <span>{summary.failed} failed</span>
                 </div>
+                <button type="button" disabled={running} onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
               </div>
             </div>
           )}

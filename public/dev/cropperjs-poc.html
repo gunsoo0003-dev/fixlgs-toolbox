@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>TOOLBOX 008 Cropper.js 2.1.1 PoC</title>
+  <style>
+    :root{font-family:Arial,"Noto Sans KR",sans-serif;color:#111;background:#fff}
+    *{box-sizing:border-box} body{margin:0;padding:24px}.wrap{max-width:1100px;margin:auto}
+    h1{font-size:24px;margin:0 0 8px}.lead{margin:0 0 18px;color:#555}.grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
+    .panel{border:1px solid #d8d8d8;border-radius:14px;padding:14px;background:#fff}.stage{height:560px;background:#eee;border-radius:10px;overflow:hidden;touch-action:none}
+    cropper-canvas{height:100%;width:100%} .controls{display:grid;gap:10px}.row{display:flex;gap:8px;flex-wrap:wrap}
+    button,input,select{min-height:42px;border:1px solid #ccc;border-radius:10px;background:#fff;padding:8px 12px;font:inherit}
+    button[data-active="true"],button.primary{background:#0877e8;color:white;border-color:#0877e8}.status{font-size:13px;line-height:1.55;background:#f5f8fc;padding:10px;border-left:3px solid #0877e8}
+    .coords{display:grid;grid-template-columns:1fr 1fr;gap:8px}.coords label{font-size:12px}.coords input{width:100%}.preview{max-width:100%;max-height:180px;border:1px solid #ddd;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 50%/16px 16px}
+    @media(max-width:800px){body{padding:10px}.grid{grid-template-columns:1fr}.stage{height:55vh;min-height:360px}.panel{border-radius:18px}.controls{order:2}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>008 편집 엔진 검증 PoC</h1>
+  <p class="lead">Cropper.js 2.1.1의 자르기·회전·반전·줌·정밀좌표·결과 캔버스 기능을 격리 검증합니다.</p>
+  <div class="grid">
+    <section class="panel"><div id="stage" class="stage" data-testid="poc-stage"><img id="source" alt="PoC sample" /></div></section>
+    <aside class="panel controls">
+      <div class="row" data-testid="ratio-controls">
+        <button data-ratio="free" data-active="true">자유</button><button data-ratio="1">1:1</button><button data-ratio="1.3333333333">4:3</button><button data-ratio="1.7777777778">16:9</button>
+      </div>
+      <div class="row"><button id="rotate-left">↶ 90°</button><button id="rotate-right">↷ 90°</button><button id="fine-left">-1°</button><button id="fine-right">+1°</button></div>
+      <div class="row"><button id="flip-x">좌우 반전</button><button id="flip-y">상하 반전</button></div>
+      <div class="row"><button id="zoom-out">축소</button><button id="zoom-in">확대</button><button id="fit">화면 맞춤</button></div>
+      <div class="coords">
+        <label>X<input id="x" type="number" step="1"></label><label>Y<input id="y" type="number" step="1"></label>
+        <label>폭<input id="w" type="number" min="1" step="1"></label><label>높이<input id="h" type="number" min="1" step="1"></label>
+      </div>
+      <div class="row"><button id="apply-coords">좌표 적용</button><button id="reset">원본 복원</button></div>
+      <button id="render" class="primary">결과 캔버스 생성</button>
+      <img id="preview" class="preview" alt="result preview" data-testid="poc-preview" />
+      <div id="status" class="status" data-testid="poc-status">라이브러리 로딩 중…</div>
+    </aside>
+  </div>
+</div>
+<script type="module">
+import CropperDefault, * as CropperModule from "https://cdn.jsdelivr.net/npm/cropperjs@2.1.1/+esm";
+const CropperCtor = CropperDefault || CropperModule.Cropper || CropperModule.default;
+(() => {
+  const status = document.querySelector('#status');
+  const sample = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><defs><linearGradient id="g"><stop stop-color="#0877e8"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><rect width="1200" height="800" fill="url(#g)"/><circle cx="360" cy="390" r="190" fill="#fff" fill-opacity=".82"/><rect x="650" y="180" width="360" height="420" rx="40" fill="#111"/><text x="600" y="740" text-anchor="middle" font-size="72" font-family="Arial" fill="#111">FIXLGS 008 POC</text></svg>`;
+  const source = document.querySelector('#source');
+  source.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(sample);
+  let cropper, image, selection, canvas, flipX = 1, flipY = 1;
+  const template = `<cropper-canvas background scale-step="0.1"><cropper-image rotatable scalable translatable></cropper-image><cropper-shade hidden></cropper-shade><cropper-handle action="select" plain></cropper-handle><cropper-selection initial-coverage="0.62" movable resizable zoomable keyboard outlined><cropper-grid role="grid" bordered covered></cropper-grid><cropper-crosshair centered></cropper-crosshair><cropper-handle action="move" theme-color="rgba(255,255,255,.25)"></cropper-handle><cropper-handle action="n-resize"></cropper-handle><cropper-handle action="e-resize"></cropper-handle><cropper-handle action="s-resize"></cropper-handle><cropper-handle action="w-resize"></cropper-handle><cropper-handle action="ne-resize"></cropper-handle><cropper-handle action="nw-resize"></cropper-handle><cropper-handle action="se-resize"></cropper-handle><cropper-handle action="sw-resize"></cropper-handle></cropper-selection></cropper-canvas>`;
+  const update = () => { if(!selection) return; ['x','y','w','h'].forEach((id,i)=>document.querySelector('#'+id).value=Math.round([selection.x,selection.y,selection.width,selection.height][i])); status.textContent=`READY | selection ${Math.round(selection.width)}×${Math.round(selection.height)} | transform ${image.$getTransform().map(v=>Number(v).toFixed(3)).join(', ')}`; };
+  source.addEventListener('load', async () => {
+    try {
+      if (typeof CropperCtor !== "function") throw new Error("Cropper ESM constructor was not resolved");
+      cropper = new CropperCtor(source,{container:'#stage',template});
+      image = cropper.getCropperImage(); selection = cropper.getCropperSelection(); canvas = cropper.getCropperCanvas();
+      await image.$ready(); image.$center('contain'); selection.addEventListener('change', update); canvas.addEventListener('actionend', update); update();
+      window.__cropperPoc={cropper,image,selection,canvas,getState:()=>({selection:{x:selection.x,y:selection.y,width:selection.width,height:selection.height,aspectRatio:selection.aspectRatio},transform:image.$getTransform()})};
+    } catch(e){status.textContent='ERROR | '+e.message; console.error(e);}
+  });
+  document.querySelectorAll('[data-ratio]').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('[data-ratio]').forEach(b=>b.dataset.active='false');btn.dataset.active='true';selection.aspectRatio=btn.dataset.ratio==='free'?NaN:Number(btn.dataset.ratio);selection.$render();update();});
+  document.querySelector('#rotate-left').onclick=()=>{image.$rotate('-90deg');image.$center('cover');update()};
+  document.querySelector('#rotate-right').onclick=()=>{image.$rotate('90deg');image.$center('cover');update()};
+  document.querySelector('#fine-left').onclick=()=>{image.$rotate('-1deg');image.$center('cover');update()};
+  document.querySelector('#fine-right').onclick=()=>{image.$rotate('1deg');image.$center('cover');update()};
+  document.querySelector('#flip-x').onclick=()=>{flipX*=-1;image.$scale(flipX,flipY);update()};
+  document.querySelector('#flip-y').onclick=()=>{flipY*=-1;image.$scale(flipX,flipY);update()};
+  document.querySelector('#zoom-in').onclick=()=>{image.$zoom(.1);update()}; document.querySelector('#zoom-out').onclick=()=>{image.$zoom(-.1);update()};
+  document.querySelector('#fit').onclick=()=>{image.$center('contain');update()};
+  document.querySelector('#apply-coords').onclick=()=>{selection.$change(+x.value,+y.value,Math.max(1,+w.value),Math.max(1,+h.value),selection.aspectRatio);update()};
+  document.querySelector('#reset').onclick=()=>{flipX=flipY=1;image.$resetTransform();image.$center('contain');selection.$reset();update()};
+  document.querySelector('#render').onclick=async()=>{const out=await selection.$toCanvas();document.querySelector('#preview').src=out.toDataURL('image/png');status.textContent=`PASS | output canvas ${out.width}×${out.height}`;window.__cropperPoc.lastCanvas=out;};
+})();
+</script>
+</body></html>
