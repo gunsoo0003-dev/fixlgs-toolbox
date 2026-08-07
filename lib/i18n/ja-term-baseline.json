@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "description": "001~009 기존 코드에서 발견된 일본어 비권장 표현. 신규 발생만 실패시키기 위한 기준선이며, 기존 항목은 별도 일본어 정비 작업에서 제거한다.",
+  "entries": [
+    {
+      "file": "app/[locale]/category/[categorySlug]/page.tsx",
+      "term": "検査ツール",
+      "preferred": "確認ツール"
+    },
+    {
+      "file": "app/[locale]/[toolSlug]/page.tsx",
+      "term": "リサイズ",
+      "preferred": "サイズ変更"
+    },
+    {
+      "file": "lib/site.ts",
+      "term": "検査ツール",
+      "preferred": "確認ツール"
+    }
+  ]
+}

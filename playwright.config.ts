@@ -1,5 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const validationMode = process.env.TOOLBOX_VALIDATION_MODE || "final";
+const isFast = validationMode === "fast";
+const isCheck = validationMode === "check";
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 180_000,
@@ -7,7 +11,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : 2,
+  workers: process.env.CI ? 1 : isFast ? 4 : isCheck ? 3 : 2,
   reporter: [
     ["list"],
     ["html", { outputFolder: "playwright-report", open: "never" }],
@@ -16,9 +20,9 @@ export default defineConfig({
   ],
   use: {
     baseURL: "http://127.0.0.1:3000",
-    trace: "retain-on-failure",
+    trace: isFast ? "off" : "retain-on-failure",
     screenshot: "only-on-failure",
-    video: "retain-on-failure",
+    video: isFast || isCheck ? "off" : "retain-on-failure",
   },
   webServer: {
     command: "npm run dev",

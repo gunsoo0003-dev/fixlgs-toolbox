@@ -31,10 +31,9 @@ const addedTools: readonly ToolValidationDefinition[] = [
  * 기존 검수 레지스트리는 수정하지 않고 유지한다.
  * 신규 공통검수는 이 확장 카탈로그만 사용한다.
  */
-export const commonValidationTools: readonly ToolValidationDefinition[] = [
-  ...validationTools,
-  ...addedTools,
-];
+export const commonValidationTools: readonly ToolValidationDefinition[] = Array.from(
+  new Map([...validationTools, ...addedTools].map((tool) => [`${tool.number}:${tool.slug}`, tool])).values(),
+);
 
 export function findCommonValidationTool(number: string) {
   return commonValidationTools.find((tool) => tool.number === number);

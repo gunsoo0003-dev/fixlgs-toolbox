@@ -10,27 +10,34 @@ import { ImageResizerPage } from "@/components/image-resizer-page";
 import { WebImageOptimizerPage } from "@/components/web-image-optimizer-page";
 import { ImageCropperRotatorPage } from "@/components/image-cropper-rotator-page";
 import { ImageBrightnessColorAdjusterPage } from "@/components/image-brightness-color-adjuster-page";
+import { ImageMosaicBlurPage } from "@/components/image-mosaic-blur-page";
 import { ToolboxSubpageShell } from "@/components/toolbox-subpage-shell";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
-import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, tool006Descriptions, tool006Slug, tool006Titles, tool007Descriptions, tool007Slug, tool007Titles, tool008Descriptions, tool008Slug, tool008Titles, tool009Descriptions, tool009Slug, tool009Titles, type Locale } from "@/lib/site";
+import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, tool006Descriptions, tool006Slug, tool006Titles, tool007Descriptions, tool007Slug, tool007Titles, tool008Descriptions, tool008Slug, tool008Titles, tool009Descriptions, tool009Slug, tool009Titles, tool010Descriptions, tool010Slug, tool010Titles, type Locale } from "@/lib/site";
 
-export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug].map((toolSlug) => ({ locale, toolSlug }))); }
+export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug, tool010Slug].map((toolSlug) => ({ locale, toolSlug }))); }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; toolSlug: string }> }): Promise<Metadata> {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug)) notFound();
   const current = locale as Locale;
   const is002 = toolSlug === tool002Slug;
   const is003 = toolSlug === tool003Slug;
   const is004 = toolSlug === tool004Slug;
   const is005 = toolSlug === tool005Slug;
   const is006 = toolSlug === tool006Slug;
+  const is010 = toolSlug === tool010Slug;
   const is009 = toolSlug === tool009Slug;
   const is008 = toolSlug === tool008Slug;
   const is007 = toolSlug === tool007Slug;
-  const titles = is009 ? tool009Titles : is008 ? tool008Titles : is007 ? tool007Titles : is006 ? tool006Titles : is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
-  const descriptions = is009 ? tool009Descriptions : is008 ? tool008Descriptions : is007 ? tool007Descriptions : is006 ? tool006Descriptions : is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
-  const seoTitle = is009
+  const titles = is010 ? tool010Titles : is009 ? tool009Titles : is008 ? tool008Titles : is007 ? tool007Titles : is006 ? tool006Titles : is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
+  const descriptions = is010 ? tool010Descriptions : is009 ? tool009Descriptions : is008 ? tool008Descriptions : is007 ? tool007Descriptions : is006 ? tool006Descriptions : is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
+  const seoDescription = is010 ? (current === "ko" ? "사진 속 얼굴, 번호판, 주소와 개인정보를 모자이크·블러·단색 가림으로 처리하세요. 서버 업로드 없이 브라우저에서 JPG·PNG·WebP 이미지를 편집할 수 있습니다." : current === "en" ? "Hide faces, license plates, text, and private information with mosaic, blur, or solid redaction directly in your browser. No image upload required." : "画像内の顔、ナンバープレート、住所や個人情報をモザイク・ぼかし・塗りつぶしで隠せます。画像をアップロードせずブラウザで処理できます。") : descriptions[current];
+  const seoTitle = is010
+    ? current === "ko" ? "이미지 모자이크·블러 도구 | 얼굴·개인정보 가리기"
+      : current === "en" ? "Image Mosaic & Blur Tool for Private Information"
+      : "画像モザイク・ぼかしツール | 顔・個人情報を隠す"
+    : is009
     ? current === "ko" ? "이미지 밝기·색상 보정기 | 사진 밝기·채도 조절"
       : current === "en" ? "Image Brightness & Color Adjuster Online"
       : "画像の明るさ・色補正ツール | 無料オンライン補正"
@@ -65,7 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     : `${titles[current]} - TOOLBOX`;
   return {
     title: seoTitle,
-    description: descriptions[current],
+    description: seoDescription,
     alternates: {
       canonical: `https://toolbox.fixlgs.com/${current}/${toolSlug}`,
       languages: {
@@ -80,7 +87,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Tool001Page({ params }: { params: Promise<{ locale: string; toolSlug: string }> }) {
   const { locale, toolSlug } = await params;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug)) notFound();
   const current = locale as Locale;
   if (toolSlug === tool002Slug) return <HeicAvifPage locale={current} />;
   if (toolSlug === tool003Slug) return <SvgBmpTiffPage locale={current} />;
@@ -90,6 +97,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
   if (toolSlug === tool007Slug) return <WebImageOptimizerPage locale={current} />;
   if (toolSlug === tool008Slug) return <ImageCropperRotatorPage locale={current} />;
   if (toolSlug === tool009Slug) return <ImageBrightnessColorAdjusterPage locale={current} />;
+  if (toolSlug === tool010Slug) return <ImageMosaicBlurPage locale={current} />;
   const back = current === "ko" ? "이미지 변환·최적화" : current === "en" ? "Image Convert" : "画像変換・最適化";
   const eyebrow = current === "ko" ? "브라우저에서 바로 처리" : current === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理";
   const info: {

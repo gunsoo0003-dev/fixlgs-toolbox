@@ -59,3 +59,12 @@ npm run test:toolbox:report
 ## 주의
 
 자동 검수는 기능 실행·파일 생성·레이아웃 오류를 잡지만, 사람의 눈으로 보는 미세한 화질 선호까지 완전히 대신하지는 않습니다. 다만 실행 실패, 모듈 로딩 실패, ZIP 오류, 경로 누락, 반응형 넘침은 자동으로 검출합니다.
+
+
+## 001~136 선제 검수 계획
+
+- 마스터: `docs/validation/tool-001-136-validation-plan.json`
+- TypeScript 조회: `lib/validation/tool-001-136-plan.ts`
+- 자체검사: `npm run check:validation:136-plan`
+- 목적: 전체 공통검수와 유형별 검수를 미리 조립하고, 실제 제작 직전에 최종 전달서 기반 고유검수를 연결한다.
+- 보호: 기존 통과 검수기는 교체하지 않으며 추가 방식으로만 사용한다.

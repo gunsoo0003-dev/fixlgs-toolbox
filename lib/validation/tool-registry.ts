@@ -93,4 +93,28 @@ export const validationTools: readonly ToolValidationDefinition[] = [
     locales: ["ko", "en", "ja"],
     expectedH1: { ko: "웹 이미지 최적화기", en: "Web Image Optimizer", ja: "Web画像最適化ツール" },
   },
+  {
+    id: "tool-008",
+    number: "008",
+    name: "이미지 자르기·회전 도구",
+    slug: "image-cropper-rotator",
+    locales: ["ko", "en", "ja"],
+    expectedH1: { ko: "이미지 자르기·회전 도구", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" },
+  },
+  {
+    id: "tool-009",
+    number: "009",
+    name: "이미지 밝기·색상 보정기",
+    slug: "image-brightness-color-adjuster",
+    locales: ["ko", "en", "ja"],
+    expectedH1: { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像明るさ・色補正ツール" },
+  },
+  {
+    id: "tool-010",
+    number: "010",
+    name: "이미지 모자이크·블러 도구",
+    slug: "image-mosaic-blur-tool",
+    locales: ["ko", "en", "ja"],
+    expectedH1: { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" },
+  },
 ] as const;

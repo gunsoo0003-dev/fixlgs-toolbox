@@ -186,8 +186,12 @@ export const tool008Slug = "image-cropper-rotator" as const;
 
 export const tool009Slug = "image-brightness-color-adjuster" as const;
 
+export const tool010Slug = "image-mosaic-blur-tool" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
+export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
+export const tool010Descriptions: Record<Locale, string> = { ko: "사진 속 얼굴과 개인정보를 모자이크·블러·단색 가림으로 가리세요.", en: "Hide faces and private information with mosaic, blur, or solid redaction.", ja: "画像内の顔や個人情報をモザイク・ぼかし・塗りつぶしで隠せます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -531,10 +535,11 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" },
-      description: { ko: "선택 영역 모자이크·블러와 개인정보 가림", en: "Mosaic, blur, and hide private areas.", ja: "選択範囲のモザイク・ぼかしと個人情報保護。" },
-      status: "NEXT",
-      active: false,
+      title: tool010Titles,
+      description: tool010Descriptions,
+      href: `/${"ko"}/${tool010Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: { ko: "이미지 여백·배경 추가기", en: "Image Padding & Background Tool", ja: "画像余白・背景追加ツール" },
@@ -622,7 +627,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : item);
   }
 
   return cards;

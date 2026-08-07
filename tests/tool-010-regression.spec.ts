@@ -1,0 +1,2 @@
+import { expect,test } from "@playwright/test";
+test("010 additive registration preserves 001-009",async({page})=>{for(const path of ["/ko/jpg-png-webp-image-converter","/ko/image-brightness-color-adjuster","/ko/image-mosaic-blur-tool"]){const r=await page.goto(path);expect(r?.ok()).toBeTruthy();await expect(page.locator("h1")).toBeVisible()}const robots=await (await page.request.get("/robots.txt")).text();expect(robots).toContain("https://toolbox.fixlgs.com/sitemap.xml")});

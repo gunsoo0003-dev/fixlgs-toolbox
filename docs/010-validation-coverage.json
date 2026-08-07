@@ -1,0 +1,560 @@
+{
+  "tool": "010 image mosaic blur",
+  "version": 3,
+  "requirements": [
+    {
+      "id": "010-01",
+      "requirement": "기능 범위 확정",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-02",
+      "requirement": "다른 도구와 역할 구분",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-03",
+      "requirement": "첫 화면 작업 흐름",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-04",
+      "requirement": "JPG 입력",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-05",
+      "requirement": "JPEG 입력",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-06",
+      "requirement": "PNG 입력",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-07",
+      "requirement": "WebP 입력",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-08",
+      "requirement": "실제 디코딩",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-09",
+      "requirement": "클립보드 붙여넣기",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-10",
+      "requirement": "EXIF 방향",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-11",
+      "requirement": "투명도",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-12",
+      "requirement": "사각형 선택",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-13",
+      "requirement": "자유 브러시",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-14",
+      "requirement": "선택 모드",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-15",
+      "requirement": "캔버스 이동",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-16",
+      "requirement": "여러 영역",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-17",
+      "requirement": "영역 이동",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-18",
+      "requirement": "영역 크기 변경",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-19",
+      "requirement": "영역 삭제",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-20",
+      "requirement": "모든 영역 삭제",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-21",
+      "requirement": "모자이크",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-22",
+      "requirement": "모자이크 강도",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-23",
+      "requirement": "블러",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-24",
+      "requirement": "블러 강도",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-25",
+      "requirement": "불투명 단색 가림",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-26",
+      "requirement": "검정",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-27",
+      "requirement": "흰색",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-28",
+      "requirement": "사용자 지정 색상",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-29",
+      "requirement": "전체 픽셀화",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-30",
+      "requirement": "브러시 크기",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-31",
+      "requirement": "확대",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-32",
+      "requirement": "축소",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-33",
+      "requirement": "화면 맞춤",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-34",
+      "requirement": "100% 보기",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-35",
+      "requirement": "원본 보기",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-36",
+      "requirement": "결과 보기",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-37",
+      "requirement": "영역 표시·숨김",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-38",
+      "requirement": "실행 취소",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-39",
+      "requirement": "다시 실행",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-40",
+      "requirement": "전체 초기화",
+      "validator": "tests/tool-010-selection-history.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-41",
+      "requirement": "JPG 출력",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-42",
+      "requirement": "PNG 출력",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-43",
+      "requirement": "WebP 출력",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-44",
+      "requirement": "출력 품질",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-45",
+      "requirement": "파일명",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-46",
+      "requirement": "다운로드",
+      "validator": "tests/tool-010-output-decode.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-47",
+      "requirement": "개인정보 안전 안내",
+      "validator": "tests/tool-010-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-48",
+      "requirement": "오류·예외처리",
+      "validator": "tests/tool-010-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-49",
+      "requirement": "메모리 정리",
+      "validator": "tests/tool-010-memory-lifecycle.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-50",
+      "requirement": "PC 검수",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-51",
+      "requirement": "태블릿 검수",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-52",
+      "requirement": "모바일 검수",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-53",
+      "requirement": "라이트 모드",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-54",
+      "requirement": "다크 모드",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-55",
+      "requirement": "한국어",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-56",
+      "requirement": "영어",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-57",
+      "requirement": "일본어",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-58",
+      "requirement": "일본어 줄바꿈",
+      "validator": "tests/tool-010-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-59",
+      "requirement": "언어별 URL",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-60",
+      "requirement": "H1",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-61",
+      "requirement": "한 줄 설명",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-62",
+      "requirement": "로컬 처리 안내",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-63",
+      "requirement": "사용 방법",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-64",
+      "requirement": "활용 예시",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-65",
+      "requirement": "주의사항",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-66",
+      "requirement": "FAQ",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-67",
+      "requirement": "다음 작업",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-68",
+      "requirement": "관련 도구",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-69",
+      "requirement": "메타 제목",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-70",
+      "requirement": "메타 설명",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-71",
+      "requirement": "canonical",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-72",
+      "requirement": "hreflang",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-73",
+      "requirement": "x-default",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-74",
+      "requirement": "구조화 데이터",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-75",
+      "requirement": "사이트맵",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-76",
+      "requirement": "robots",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-77",
+      "requirement": "광고 배치",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-78",
+      "requirement": "접근성",
+      "validator": "tests/tool-010-view-mobile-accessibility.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-79",
+      "requirement": "개인정보·보안",
+      "validator": "tests/tool-010-seo-security-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-80",
+      "requirement": "공통 모듈 기록",
+      "validator": "scripts/check-tool-010-source.mjs",
+      "mode": "automated"
+    },
+    {
+      "id": "010-81",
+      "requirement": "자동 검수기 통과",
+      "validator": "scripts/check-tool-010-validator.mjs",
+      "mode": "automated"
+    },
+    {
+      "id": "010-82",
+      "requirement": "이전 도구 회귀 검수",
+      "validator": "tests/tool-010-regression-deep.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "010-83",
+      "requirement": "빌드 성공",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-84",
+      "requirement": "배포 완료",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-85",
+      "requirement": "Search Console URL 검사",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-86",
+      "requirement": "한국어 URL 색인 요청",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-87",
+      "requirement": "영어 URL 색인 요청",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-88",
+      "requirement": "일본어 URL 색인 요청",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-89",
+      "requirement": "색인 상태 기록",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "010-90",
+      "requirement": "완료 전 4대 검증 통과",
+      "validator": "docs/010-four-gate-validation.md",
+      "mode": "completion-gate"
+    }
+  ],
+  "automatedFiles": [
+    "tests/tool-010-input-errors.spec.ts",
+    "tests/tool-010-selection-history.spec.ts",
+    "tests/tool-010-rendering-output.spec.ts",
+    "tests/tool-010-view-mobile-accessibility.spec.ts",
+    "tests/tool-010-seo-security-regression.spec.ts",
+    "tests/tool-010-image-mosaic-blur.spec.ts",
+    "tests/tool-010-additional.spec.ts",
+    "tests/tool-010-regression.spec.ts",
+    "tests/tool-010-limit.spec.ts",
+    "tests/tool-010-auto-limit.spec.ts",
+    "scripts/check-tool-010-source.mjs"
+  ],
+  "completionGate": "docs/010-four-gate-validation.md"
+}
