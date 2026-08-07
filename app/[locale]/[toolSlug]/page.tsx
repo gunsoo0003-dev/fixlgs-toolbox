@@ -14,11 +14,12 @@ import { ImageMosaicBlurPage } from "@/components/image-mosaic-blur-page";
 import { ImagePaddingBackgroundPage } from "@/components/image-padding-background-page";
 import { ImageBorderRoundedPage } from "@/components/image-border-rounded-page";
 import { ImageMergerPage } from "@/components/image-merger-page";
+import { ImageCollageMakerPage } from "@/components/image-collage-maker-page";
 import { ToolboxSubpageShell } from "@/components/toolbox-subpage-shell";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
-import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, tool006Descriptions, tool006Slug, tool006Titles, tool007Descriptions, tool007Slug, tool007Titles, tool008Descriptions, tool008Slug, tool008Titles, tool009Descriptions, tool009Slug, tool009Titles, tool010Descriptions, tool010Slug, tool010Titles, tool011Descriptions, tool011Slug, tool011Titles, tool012Descriptions, tool012Slug, tool012Titles, tool013Descriptions, tool013Slug, tool013Titles, type Locale } from "@/lib/site";
+import { locales, tool001Descriptions, tool001Slug, tool001Titles, tool002Descriptions, tool002Slug, tool002Titles, tool003Descriptions, tool003Slug, tool003Titles, tool004Descriptions, tool004Slug, tool004Titles, tool005Descriptions, tool005Slug, tool005Titles, tool006Descriptions, tool006Slug, tool006Titles, tool007Descriptions, tool007Slug, tool007Titles, tool008Descriptions, tool008Slug, tool008Titles, tool009Descriptions, tool009Slug, tool009Titles, tool010Descriptions, tool010Slug, tool010Titles, tool011Descriptions, tool011Slug, tool011Titles, tool012Descriptions, tool012Slug, tool012Titles, tool013Descriptions, tool013Slug, tool013Titles, tool014Descriptions, tool014Slug, tool014Titles, type Locale } from "@/lib/site";
 
-export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug, tool010Slug, tool011Slug, tool012Slug, tool013Slug].map((toolSlug) => ({ locale, toolSlug }))); }
+export function generateStaticParams() { return locales.flatMap((locale) => [tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug, tool010Slug, tool011Slug, tool012Slug, tool013Slug, tool014Slug].map((toolSlug) => ({ locale, toolSlug }))); }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; toolSlug: string }> }): Promise<Metadata> {
   const { locale, toolSlug: rawToolSlug } = await params;
@@ -29,13 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     "image-merge": tool013Slug,
   };
   const toolSlug = aliases[rawToolSlug] ?? rawToolSlug;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug && toolSlug !== tool011Slug && toolSlug !== tool012Slug && toolSlug !== tool013Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug && toolSlug !== tool011Slug && toolSlug !== tool012Slug && toolSlug !== tool013Slug && toolSlug !== tool014Slug)) notFound();
   const current = locale as Locale;
   const is002 = toolSlug === tool002Slug;
   const is003 = toolSlug === tool003Slug;
   const is004 = toolSlug === tool004Slug;
   const is005 = toolSlug === tool005Slug;
   const is006 = toolSlug === tool006Slug;
+  const is014 = toolSlug === tool014Slug;
   const is013 = toolSlug === tool013Slug;
   const is012 = toolSlug === tool012Slug;
   const is011 = toolSlug === tool011Slug;
@@ -43,10 +45,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const is009 = toolSlug === tool009Slug;
   const is008 = toolSlug === tool008Slug;
   const is007 = toolSlug === tool007Slug;
-  const titles = is013 ? tool013Titles : is012 ? tool012Titles : is011 ? tool011Titles : is010 ? tool010Titles : is009 ? tool009Titles : is008 ? tool008Titles : is007 ? tool007Titles : is006 ? tool006Titles : is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
-  const descriptions = is013 ? tool013Descriptions : is012 ? tool012Descriptions : is011 ? tool011Descriptions : is010 ? tool010Descriptions : is009 ? tool009Descriptions : is008 ? tool008Descriptions : is007 ? tool007Descriptions : is006 ? tool006Descriptions : is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
-  const seoDescription = is013 ? (current === "ko" ? "여러 JPG·PNG·WebP 이미지를 원하는 순서대로 세로 또는 가로로 합치세요. 이미지 간격, 정렬, 배경색을 설정하고 서버 업로드 없이 브라우저에서 한 장으로 저장할 수 있습니다." : current === "en" ? "Combine JPG, PNG, and WebP images vertically or horizontally. Reorder images, adjust spacing and background, and download the result directly in your browser." : "複数のJPG・PNG・WebP画像を好きな順番で縦または横に結合できます。間隔や背景色を設定し、ブラウザ内で1枚の画像として保存できます。") : is012 ? (current === "ko" ? "이미지에 테두리와 둥근 모서리, 원형 효과, 그림자를 추가하세요. 서버 업로드 없이 브라우저에서 JPG·PNG·WebP 이미지를 편집할 수 있습니다." : current === "en" ? "Add borders, rounded corners, circular shapes, and shadows to JPG, PNG, and WebP images directly in your browser." : "画像に枠線、角丸、円形効果、影を追加できます。JPG・PNG・WebP画像をブラウザ内で処理します。") : is011 ? (current === "ko" ? "이미지를 자르지 않고 상하좌우 여백을 추가하거나 정사각형과 원하는 비율로 맞추세요. 단색·투명·블러 배경을 브라우저에서 무료로 적용할 수 있습니다." : current === "en" ? "Add padding without cropping, make images square, and use solid, transparent, or blurred backgrounds directly in your browser." : "画像を切り取らずに上下左右の余白を追加し、正方形や希望の比率に調整できます。単色・透明・ぼかし背景に対応しています。") : is010 ? (current === "ko" ? "사진 속 얼굴, 번호판, 주소와 개인정보를 모자이크·블러·단색 가림으로 처리하세요. 서버 업로드 없이 브라우저에서 JPG·PNG·WebP 이미지를 편집할 수 있습니다." : current === "en" ? "Hide faces, license plates, text, and private information with mosaic, blur, or solid redaction directly in your browser. No image upload required." : "画像内の顔、ナンバープレート、住所や個人情報をモザイク・ぼかし・塗りつぶしで隠せます。画像をアップロードせずブラウザで処理できます。") : descriptions[current];
-  const seoTitle = is013
+  const titles = is014 ? tool014Titles : is013 ? tool013Titles : is012 ? tool012Titles : is011 ? tool011Titles : is010 ? tool010Titles : is009 ? tool009Titles : is008 ? tool008Titles : is007 ? tool007Titles : is006 ? tool006Titles : is005 ? tool005Titles : is004 ? tool004Titles : is003 ? tool003Titles : is002 ? tool002Titles : tool001Titles;
+  const descriptions = is014 ? tool014Descriptions : is013 ? tool013Descriptions : is012 ? tool012Descriptions : is011 ? tool011Descriptions : is010 ? tool010Descriptions : is009 ? tool009Descriptions : is008 ? tool008Descriptions : is007 ? tool007Descriptions : is006 ? tool006Descriptions : is005 ? tool005Descriptions : is004 ? tool004Descriptions : is003 ? tool003Descriptions : is002 ? tool002Descriptions : tool001Descriptions;
+  const seoDescription = is014 ? (current === "ko" ? "여러 JPG·PNG·WebP 사진을 2·3·4분할과 최대 3×3 격자에 배치해 콜라주로 만드세요. 사진 위치·확대, 간격·여백·테두리·배경을 조절하고 브라우저에서 바로 저장할 수 있습니다." : current === "en" ? "Create image collages from JPG, PNG, and WebP photos with split and up to 3×3 grid layouts. Adjust position, zoom, spacing, borders, and background directly in your browser." : "JPG・PNG・WebP画像を2・3・4分割や最大3×3グリッドに配置してコラージュを作成できます。画像位置、拡大率、間隔、枠線、背景をブラウザ内で調整できます。") : is013 ? (current === "ko" ? "여러 JPG·PNG·WebP 이미지를 원하는 순서대로 세로 또는 가로로 합치세요. 이미지 간격, 정렬, 배경색을 설정하고 서버 업로드 없이 브라우저에서 한 장으로 저장할 수 있습니다." : current === "en" ? "Combine JPG, PNG, and WebP images vertically or horizontally. Reorder images, adjust spacing and background, and download the result directly in your browser." : "複数のJPG・PNG・WebP画像を好きな順番で縦または横に結合できます。間隔や背景色を設定し、ブラウザ内で1枚の画像として保存できます。") : is012 ? (current === "ko" ? "이미지에 테두리와 둥근 모서리, 원형 효과, 그림자를 추가하세요. 서버 업로드 없이 브라우저에서 JPG·PNG·WebP 이미지를 편집할 수 있습니다." : current === "en" ? "Add borders, rounded corners, circular shapes, and shadows to JPG, PNG, and WebP images directly in your browser." : "画像に枠線、角丸、円形効果、影を追加できます。JPG・PNG・WebP画像をブラウザ内で処理します。") : is011 ? (current === "ko" ? "이미지를 자르지 않고 상하좌우 여백을 추가하거나 정사각형과 원하는 비율로 맞추세요. 단색·투명·블러 배경을 브라우저에서 무료로 적용할 수 있습니다." : current === "en" ? "Add padding without cropping, make images square, and use solid, transparent, or blurred backgrounds directly in your browser." : "画像を切り取らずに上下左右の余白を追加し、正方形や希望の比率に調整できます。単色・透明・ぼかし背景に対応しています。") : is010 ? (current === "ko" ? "사진 속 얼굴, 번호판, 주소와 개인정보를 모자이크·블러·단색 가림으로 처리하세요. 서버 업로드 없이 브라우저에서 JPG·PNG·WebP 이미지를 편집할 수 있습니다." : current === "en" ? "Hide faces, license plates, text, and private information with mosaic, blur, or solid redaction directly in your browser. No image upload required." : "画像内の顔、ナンバープレート、住所や個人情報をモザイク・ぼかし・塗りつぶしで隠せます。画像をアップロードせずブラウザで処理できます。") : descriptions[current];
+  const seoTitle = is014
+    ? current === "ko" ? "이미지 콜라주 만들기 | 사진 2·3·4분할·격자 배치"
+      : current === "en" ? "Image Collage Maker | Split & Grid Photo Collage"
+      : "画像コラージュ作成ツール | 分割・グリッド配置"
+    : is013
     ? current === "ko" ? "이미지 합치기 | 사진·스크린샷 세로·가로 이어 붙이기"
       : current === "en" ? "Merge Images Online | Vertical & Horizontal Image Merger"
       : "画像結合ツール | 複数画像を縦・横に連結"
@@ -122,7 +128,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
     permanentRedirect(`/${locale}/${tool013Slug}`);
   }
   const toolSlug = aliases[rawToolSlug] ?? rawToolSlug;
-  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug && toolSlug !== tool011Slug && toolSlug !== tool012Slug && toolSlug !== tool013Slug)) notFound();
+  if (!locales.includes(locale as Locale) || (toolSlug !== tool001Slug && toolSlug !== tool002Slug && toolSlug !== tool003Slug && toolSlug !== tool004Slug && toolSlug !== tool005Slug && toolSlug !== tool006Slug && toolSlug !== tool007Slug && toolSlug !== tool008Slug && toolSlug !== tool009Slug && toolSlug !== tool010Slug && toolSlug !== tool011Slug && toolSlug !== tool012Slug && toolSlug !== tool013Slug && toolSlug !== tool014Slug)) notFound();
   const current = locale as Locale;
   if (toolSlug === tool002Slug) return <HeicAvifPage locale={current} />;
   if (toolSlug === tool003Slug) return <SvgBmpTiffPage locale={current} />;
@@ -136,6 +142,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
   if (toolSlug === tool011Slug) return <ImagePaddingBackgroundPage locale={current} />;
   if (toolSlug === tool012Slug) return <ImageBorderRoundedPage locale={current} />;
   if (toolSlug === tool013Slug) return <ImageMergerPage locale={current} />;
+  if (toolSlug === tool014Slug) return <ImageCollageMakerPage locale={current} />;
   const back = current === "ko" ? "이미지 변환·최적화" : current === "en" ? "Image Convert" : "画像変換・最適化";
   const eyebrow = current === "ko" ? "브라우저에서 바로 처리" : current === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理";
   const info: {

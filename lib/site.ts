@@ -194,6 +194,8 @@ export const tool012Slug = "image-border-rounded-corners-tool" as const;
 
 export const tool013Slug = "image-merger" as const;
 
+export const tool014Slug = "image-collage-maker" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -204,6 +206,8 @@ export const tool012Titles: Record<Locale, string> = { ko: "이미지 테두리�
 export const tool012Descriptions: Record<Locale, string> = { ko: "이미지에 테두리, 둥근 모서리, 원형 효과와 그림자를 추가하세요.", en: "Add borders, rounded corners, circular shapes, and shadows to images.", ja: "画像に枠線、角丸、円形効果、影を追加できます。" };
 export const tool013Titles: Record<Locale, string> = { ko: "이미지 합치기", en: "Image Merger", ja: "画像結合ツール" };
 export const tool013Descriptions: Record<Locale, string> = { ko: "여러 이미지를 원하는 순서대로 세로 또는 가로로 합쳐 한 장으로 만드세요.", en: "Combine multiple images vertically or horizontally in any order.", ja: "複数の画像を好きな順番で縦または横に結合できます。" };
+export const tool014Titles: Record<Locale, string> = { ko: "이미지 콜라주 만들기", en: "Image Collage Maker", ja: "画像コラージュ作成ツール" };
+export const tool014Descriptions: Record<Locale, string> = { ko: "여러 사진을 2·3·4분할과 격자 레이아웃으로 배치해 한 장의 콜라주로 만드세요.", en: "Arrange photos in split and grid layouts to create one collage image.", ja: "複数の写真を分割・グリッドレイアウトに配置し、1枚のコラージュ画像を作成します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -575,10 +579,11 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "이미지 콜라주 만들기", en: "Image Collage Maker", ja: "画像コラージュ作成ツール" },
-      description: { ko: "분할·격자형 콜라주와 여백·배경 설정", en: "Build split and grid collages with spacing and backgrounds.", ja: "分割・グリッド型コラージュと余白・背景設定。" },
-      status: "NEXT",
-      active: false,
+      title: tool014Titles,
+      description: tool014Descriptions,
+      href: `/${"ko"}/${tool014Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: { ko: "전후 비교 이미지 만들기", en: "Before & After Image Maker", ja: "ビフォー・アフター画像作成ツール" },
@@ -642,7 +647,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : item);
   }
 
   return cards;
