@@ -1,0 +1,581 @@
+{
+  "tool": "011",
+  "requirements": [
+    {
+      "id": "011-01",
+      "label": "기능 범위 확정",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-02",
+      "label": "다른 도구와 역할 구분",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-03",
+      "label": "첫 화면 흐름",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-04",
+      "label": "JPG 입력",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-05",
+      "label": "JPEG 입력",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-06",
+      "label": "PNG 입력",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-07",
+      "label": "WebP 입력",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-08",
+      "label": "실제 디코딩",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-09",
+      "label": "EXIF 방향",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-10",
+      "label": "투명도",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-11",
+      "label": "전체 동일 여백",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-12",
+      "label": "위 여백",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-13",
+      "label": "아래 여백",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-14",
+      "label": "왼쪽 여백",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-15",
+      "label": "오른쪽 여백",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-16",
+      "label": "값 연결",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-17",
+      "label": "값 개별 설정",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-18",
+      "label": "정사각형 맞춤",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-19",
+      "label": "원본 전체 표시",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-20",
+      "label": "사용자 지정 크기",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-21",
+      "label": "사용자 지정 비율",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-22",
+      "label": "비율 프리셋",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-23",
+      "label": "단색 배경",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-24",
+      "label": "흰색",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-25",
+      "label": "검정색",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-26",
+      "label": "사용자 지정 색상",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-27",
+      "label": "투명 배경",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-28",
+      "label": "블러 배경",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-29",
+      "label": "블러 강도",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-30",
+      "label": "블러 배경 위치",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-31",
+      "label": "이미지 크기",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-32",
+      "label": "비율 유지",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-33",
+      "label": "이미지 위치",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-34",
+      "label": "빠른 정렬",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-35",
+      "label": "직접 드래그",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-36",
+      "label": "위치 초기화",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-37",
+      "label": "원본 보기",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-38",
+      "label": "결과 보기",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-39",
+      "label": "확대",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-40",
+      "label": "축소",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-41",
+      "label": "화면 맞춤",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-42",
+      "label": "결과 픽셀 표시",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-43",
+      "label": "결과 비율 표시",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-44",
+      "label": "실행 취소",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-45",
+      "label": "다시 실행",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-46",
+      "label": "모든 설정 초기화",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-47",
+      "label": "전체 초기화",
+      "validator": "tests/tool-011-image-padding-background.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-48",
+      "label": "JPG 출력",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-49",
+      "label": "PNG 출력",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-50",
+      "label": "WebP 출력",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-51",
+      "label": "출력 품질",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-52",
+      "label": "파일명",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-53",
+      "label": "다운로드",
+      "validator": "tests/tool-011-rendering-output.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-54",
+      "label": "오류·예외처리",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-55",
+      "label": "메모리 정리",
+      "validator": "tests/tool-011-input-errors.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-56",
+      "label": "PC 검수",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-57",
+      "label": "태블릿 검수",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-58",
+      "label": "모바일 검수",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-59",
+      "label": "라이트 모드",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-60",
+      "label": "다크 모드",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-61",
+      "label": "한국어",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-62",
+      "label": "영어",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-63",
+      "label": "일본어",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-64",
+      "label": "일본어 줄바꿈",
+      "validator": "tests/tool-011-device-theme.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-65",
+      "label": "언어별 URL",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-66",
+      "label": "H1",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-67",
+      "label": "한 줄 설명",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-68",
+      "label": "로컬 처리 안내",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-69",
+      "label": "사용 방법",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-70",
+      "label": "활용 예시",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-71",
+      "label": "주의사항",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-72",
+      "label": "FAQ",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-73",
+      "label": "다음 작업",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-74",
+      "label": "관련 도구",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-75",
+      "label": "메타 제목",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-76",
+      "label": "메타 설명",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-77",
+      "label": "canonical",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-78",
+      "label": "hreflang",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-79",
+      "label": "x-default",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-80",
+      "label": "구조화 데이터",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-81",
+      "label": "사이트맵",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-82",
+      "label": "robots",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-83",
+      "label": "광고 배치",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-84",
+      "label": "접근성",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-85",
+      "label": "개인정보·보안",
+      "validator": "tests/tool-011-regression.spec.ts",
+      "mode": "automated"
+    },
+    {
+      "id": "011-86",
+      "label": "공통 모듈 기록",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "automated"
+    },
+    {
+      "id": "011-87",
+      "label": "자동 검수기 통과",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "automated"
+    },
+    {
+      "id": "011-88",
+      "label": "이전 도구 회귀 검수",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "automated"
+    },
+    {
+      "id": "011-89",
+      "label": "빌드 성공",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "automated"
+    },
+    {
+      "id": "011-90",
+      "label": "배포 완료",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-91",
+      "label": "Search Console URL 검사",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-92",
+      "label": "한국어 URL 색인 요청",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-93",
+      "label": "영어 URL 색인 요청",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-94",
+      "label": "일본어 URL 색인 요청",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-95",
+      "label": "색인 상태 기록",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    },
+    {
+      "id": "011-96",
+      "label": "완료 전 4대 검증 통과",
+      "validator": "docs/011-four-gate-validation.md",
+      "mode": "completion-gate"
+    }
+  ]
+}

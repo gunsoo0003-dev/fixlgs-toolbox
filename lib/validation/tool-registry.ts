@@ -117,4 +117,12 @@ export const validationTools: readonly ToolValidationDefinition[] = [
     locales: ["ko", "en", "ja"],
     expectedH1: { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" },
   },
-] as const;
+
+  {
+    id: "tool-011",
+    number: "011",
+    name: "이미지 여백·배경 추가기",
+    slug: "image-padding-background-tool",
+    locales: ["ko", "en", "ja"],
+    expectedH1: { ko: "이미지 여백·배경 추가기", en: "Image Padding & Background Tool", ja: "画像余白・背景追加ツール" },
+  },] as const;

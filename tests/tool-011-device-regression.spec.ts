@@ -1,0 +1,2 @@
+import { expect, test } from '@playwright/test';
+test('tool011 mobile ja dark layout and sitemap regression',async({page})=>{await page.setViewportSize({width:390,height:844});await page.goto('/ja/image-padding-background-tool');await expect(page.locator('h1')).toBeVisible();await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));await expect(page.locator('[data-testid="tool011-root"]')).toBeVisible();const r=await page.request.get('/sitemap.xml');expect(await r.text()).toContain('/ja/image-padding-background-tool');});
