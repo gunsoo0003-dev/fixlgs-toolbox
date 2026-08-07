@@ -1,6 +1,6 @@
 import fs from 'node:fs'; import path from 'node:path';
 const root=process.cwd(), failures=[]; const exists=f=>fs.existsSync(path.join(root,f)); const read=f=>fs.readFileSync(path.join(root,f),'utf8');
-const specs=['tests/tool-011-image-padding-background.spec.ts','tests/tool-011-input-errors.spec.ts','tests/tool-011-rendering-output.spec.ts','tests/tool-011-device-theme.spec.ts','tests/tool-011-regression.spec.ts','tests/tool-011-limit.spec.ts','tests/helpers/tool-011.ts'];
+const specs=['tests/tool-011-image-padding-background.spec.ts','tests/tool-011-input-errors.spec.ts','tests/tool-011-rendering-output.spec.ts','tests/tool-011-device-theme.spec.ts','tests/tool-011-regression.spec.ts','tests/tool-011-limit.spec.ts','tests/tool-011-operational-limit.spec.ts','tests/helpers/tool-011.ts'];
 for(const f of specs){if(!exists(f))failures.push(`missing ${f}`)}
 const semantic=[
  ['core',['all-side and separate padding','square and ratio','solid transparent and blur','alignment, drag, scale and undo redo']],
@@ -8,9 +8,9 @@ const semantic=[
  ['output',['transparent padding stays alpha','JPG with transparent background','blur background fills canvas','JPG PNG WebP']],
  ['device',['tablet portrait','tablet landscape','mobile','light and dark themes','keyboard focus order']],
  ['regression',['001-010 routes','SEO sitemap robots category']],
- ['limit',['incrementally discovers','firstFailed','maxPassed','without guessing operational limits']],
+ ['limit',['operational-limit-evidence','browserBlobGeneration','actualToolDownloadAtMaxPassed','physicalMobileDeviceVerified']],
 ];
-const files={core:'tests/tool-011-image-padding-background.spec.ts',input:'tests/tool-011-input-errors.spec.ts',output:'tests/tool-011-rendering-output.spec.ts',device:'tests/tool-011-device-theme.spec.ts',regression:'tests/tool-011-regression.spec.ts',limit:'tests/tool-011-limit.spec.ts'};
+const files={core:'tests/tool-011-image-padding-background.spec.ts',input:'tests/tool-011-input-errors.spec.ts',output:'tests/tool-011-rendering-output.spec.ts',device:'tests/tool-011-device-theme.spec.ts',regression:'tests/tool-011-regression.spec.ts',limit:'tests/tool-011-operational-limit.spec.ts'};
 for(const [k,marks] of semantic){const s=read(files[k]);for(const m of marks)if(!s.includes(m))failures.push(`${k} marker ${m}`)}
 const plan=read('docs/validation/tool-001-136-validation-plan.json'); for(const m of ['"number": "011"','"canvas-image-compose"','"transparency"','"exif_orientation"','"output_redecode"','"undo_redo"','"touch_gestures"','"history_limit"']) if(!plan.includes(m)) failures.push(`prevalidation marker ${m}`);
 

@@ -3770,3 +3770,72 @@ html[data-theme="dark"] .padding-canvas-wrap.is-transparent{background:repeating
 @media(max-width:1240px){.padding-editor-grid{grid-template-columns:1fr}.padding-canvas-wrap{min-height:420px}}
 @media(max-width:640px){.padding-canvas-wrap{min-height:340px}.padding-canvas-wrap canvas{max-height:54vh}.padding-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.padding-toolbar>span{display:none}.padding-viewbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.padding-mode-grid,.padding-two,.padding-four{grid-template-columns:1fr}.padding-mode-grid button:last-child{grid-column:auto}.padding-ratios{grid-template-columns:repeat(3,minmax(0,1fr))}.padding-segment{grid-template-columns:1fr}.padding-section{padding:16px}.padding-result{display:grid}.padding-panel button,.padding-toolbar button,.padding-viewbar button{width:100%;white-space:normal;overflow-wrap:anywhere}}
 .toolbox-subpage-site.toolbox-locale-ja .padding-panel button,.toolbox-subpage-site.toolbox-locale-ja .padding-toolbar button,.toolbox-subpage-site.toolbox-locale-ja .padding-viewbar button{min-width:0;overflow-wrap:anywhere;word-break:normal}
+
+/* TOOL 012 detail polish — keep 001 content rhythm and prevent expert-title overlap. */
+@media (min-width: 1024px){
+  .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid article,
+  .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid article:nth-child(even){
+    grid-template-columns:minmax(320px,.82fr) minmax(0,1.18fr);
+    column-gap:clamp(48px,5vw,80px);
+    align-items:start;
+  }
+  :lang(ko) .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid h4,
+  .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid h4{
+    min-width:0;
+    max-width:100%;
+    white-space:normal!important;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    line-height:1.42;
+  }
+  .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid p{
+    min-width:0;
+  }
+}
+@media (max-width: 1023px){
+  .toolbox-tool-expert-post--012 .toolbox-tool-practical-grid h4{
+    white-space:normal!important;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+}
+
+/* 012 HOW TO USE — 001-style real column separators, 3 columns / 2 rows / five steps */
+@media(min-width:801px){
+  .toolbox-tool-guide--012-five ol{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:repeat(2,minmax(0,1fr));
+    gap:0!important;
+  }
+  .toolbox-tool-guide--012-five li,
+  .toolbox-tool-guide--012-five li:first-child,
+  .toolbox-tool-guide--012-five li:last-child{
+    min-height:190px;
+    padding:30px 34px!important;
+    border:0!important;
+  }
+  /* Keep only the two internal vertical guides; never draw outer side borders. */
+  .toolbox-tool-guide--012-five li:nth-child(1),
+  .toolbox-tool-guide--012-five li:nth-child(2),
+  .toolbox-tool-guide--012-five li:nth-child(4),
+  .toolbox-tool-guide--012-five li:nth-child(5){
+    border-right:1px solid rgba(255,255,255,.28)!important;
+  }
+  .toolbox-tool-guide--012-five li:nth-child(3){
+    border-right:0!important;
+  }
+  .toolbox-tool-guide--012-five li:nth-child(1),
+  .toolbox-tool-guide--012-five li:nth-child(4){padding-left:0!important}
+  .toolbox-tool-guide--012-five li:nth-child(3){padding-right:0!important}
+  .toolbox-tool-guide--012-five li:nth-child(4),
+  .toolbox-tool-guide--012-five li:nth-child(5){padding-top:30px!important}
+}
+@media(max-width:800px){
+  .toolbox-tool-guide--012-five li,
+  .toolbox-tool-guide--012-five li:first-child,
+  .toolbox-tool-guide--012-five li:last-child{
+    border-right:0!important;
+  }
+}

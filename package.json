@@ -74,7 +74,7 @@
     "test:toolbox:011-input": "playwright test tests/tool-011-input-errors.spec.ts --workers=1 --project=desktop-chromium",
     "test:toolbox:011-device": "playwright test tests/tool-011-device-theme.spec.ts --workers=1",
     "test:toolbox:011-regression": "playwright test tests/tool-011-regression.spec.ts --workers=1",
-    "test:toolbox:011-limit": "playwright test tests/tool-011-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:011-limit": "playwright test tests/tool-011-operational-limit.spec.ts --workers=1 --project=desktop-chromium",
     "test:toolbox:011-fast": "node scripts/run-tool-011-tier-validation.mjs fast",
     "test:toolbox:011-check": "node scripts/run-tool-011-tier-validation.mjs check",
     "test:toolbox:011-failed": "node scripts/run-tool-011-partial-validation.mjs failed",
@@ -83,7 +83,18 @@
     "test:toolbox:011-regression-only": "node scripts/run-tool-011-partial-validation.mjs regression-only",
     "test:toolbox:011-limit-only": "node scripts/run-tool-011-partial-validation.mjs limit-only",
     "test:toolbox:011-final": "node scripts/run-tool-011-final-validation.mjs",
-    "test:toolbox:011-preflight": "node scripts/run-tool-011-preflight.mjs"
+    "test:toolbox:011-preflight": "node scripts/run-tool-011-preflight.mjs",
+    "check:tool012-source": "node scripts/check-tool-012-source.mjs",
+    "check:tool012-validator": "node scripts/check-tool-012-validator.mjs",
+    "test:toolbox:012-core": "playwright test tests/tool-012-core.spec.ts --workers=1",
+    "test:toolbox:012-core-only": "node scripts/run-tool-012-partial-validation.mjs core-only",
+    "test:toolbox:012-boundary": "playwright test tests/tool-012-boundary.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:012-boundary-only": "node scripts/run-tool-012-partial-validation.mjs boundary-only",
+    "test:toolbox:012-regression": "playwright test tests/tool-012-regression.spec.ts --workers=1",
+    "test:toolbox:012-regression-only": "node scripts/run-tool-012-partial-validation.mjs regression-only",
+    "test:toolbox:012-limit": "playwright test tests/tool-012-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:012-limit-only": "node scripts/run-tool-012-partial-validation.mjs limit-only",
+    "test:toolbox:012-final": "node scripts/run-tool-012-final-validation.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

@@ -1,0 +1,49 @@
+.workbench :global(.padding-section) > label {
+  margin-top: 10px;
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.toggle {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle input {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.preview canvas {
+  max-width: 100%;
+  height: auto;
+  transform-origin: center;
+}
+
+.panel input[type="color"] {
+  min-height: 42px;
+}
+
+@media (max-width: 760px) {
+  .presets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .editorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    order: 2;
+  }
+
+  .preview {
+    order: 1;
+  }
+}

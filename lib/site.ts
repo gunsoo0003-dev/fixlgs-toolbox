@@ -190,12 +190,16 @@ export const tool010Slug = "image-mosaic-blur-tool" as const;
 
 export const tool011Slug = "image-padding-background-tool" as const;
 
+export const tool012Slug = "image-border-rounded-corners-tool" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
 export const tool010Descriptions: Record<Locale, string> = { ko: "사진 속 얼굴과 개인정보를 모자이크·블러·단색 가림으로 가리세요.", en: "Hide faces and private information with mosaic, blur, or solid redaction.", ja: "画像内の顔や個人情報をモザイク・ぼかし・塗りつぶしで隠せます。" };
 export const tool011Titles: Record<Locale, string> = { ko: "이미지 여백·배경 추가기", en: "Image Padding & Background Tool", ja: "画像余白・背景追加ツール" };
 export const tool011Descriptions: Record<Locale, string> = { ko: "이미지를 자르지 않고 여백과 배경을 추가해 원하는 비율로 맞추세요.", en: "Add padding and backgrounds without cropping your image.", ja: "画像を切り取らずに余白や背景を追加し、希望の比率に合わせられます。" };
+export const tool012Titles: Record<Locale, string> = { ko: "이미지 테두리·둥근 모서리 도구", en: "Image Border & Rounded Corners Tool", ja: "画像枠線・角丸ツール" };
+export const tool012Descriptions: Record<Locale, string> = { ko: "이미지에 테두리, 둥근 모서리, 원형 효과와 그림자를 추가하세요.", en: "Add borders, rounded corners, circular shapes, and shadows to images.", ja: "画像に枠線、角丸、円形効果、影を追加できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -553,10 +557,11 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "이미지 테두리·둥근 모서리 도구", en: "Image Border & Rounded Corner Tool", ja: "画像枠線・角丸ツール" },
-      description: { ko: "테두리, 둥근 모서리, 원형 이미지와 그림자", en: "Create borders, rounded corners, circles, and shadows.", ja: "枠線、角丸、円形画像、影を追加。" },
-      status: "NEXT",
-      active: false,
+      title: tool012Titles,
+      description: tool012Descriptions,
+      href: `/${"ko"}/${tool012Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: { ko: "이미지 합치기", en: "Image Merger", ja: "画像結合ツール" },
@@ -632,7 +637,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : item);
   }
 
   return cards;
