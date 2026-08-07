@@ -1,0 +1,165 @@
+[웹도구 013 이미지 합치기 - 검수 실패 대응지도]
+
+주의: 아래는 수정 확정 위치가 아니라 주작업장에서 FAIL 발생 시 가장 먼저 확인할 후보 위치다.
+검수기 문제와 제품 문제를 먼저 분리한다.
+
+[HARNESS_ERROR / selector 연결 실패]
+- 검수기 helper: tests/helpers/tool-013.ts
+- preflight: tests/tool-013-preflight.spec.ts
+- 정적 연결검사: scripts/check-tool-013-harness.mjs
+- 실행 래퍼: scripts/run-tool-013-preflight.mjs
+- 실제 DOM: components/image-merger-tool.tsx
+- 핵심 selector: tool013-root / workbench / upload / file-input / files / settings / preview / output / download / status / error
+- route 연결: app/[locale]/[toolSlug]/page.tsx (PATCHES/013-common-changes.diff)
+
+[업로드 실패]
+- 파일: components/image-merger-tool.tsx
+- 핵심 함수: isSupported, signatureOk, addFiles, decodeFile
+- selector: tool013-upload, tool013-file-input, tool013-select
+
+[파일 준비/디코딩 실패]
+- 파일: components/image-merger-tool.tsx
+- 핵심 함수: signatureOk, decodeFile, retryFailedFile, closeRenderable
+- 확인: file-card data-status
+
+[선택 순서/재정렬 실패]
+- 파일: components/image-merger-tool.tsx
+- 핵심 함수: move, moveDelta
+- 확인: draggable/drop 처리와 ID 배열 순서
+
+[세로/가로 합치기 또는 좌표 실패]
+- 파일: components/image-merger-tool.tsx
+- 확인 영역: result size 계산, direction, alignment, canvas drawImage 배치
+- 핵심 상태: direction, sizing, basis, align, gap, padding
+
+[크기 맞춤/비율 실패]
+- 파일: components/image-merger-tool.tsx
+- 확인: 원본/width/height sizing, smallest/largest/custom basis, allowUpscale
+- 관련 함수/계산: display size 계산부
+
+[간격/외곽 여백 실패]
+- 파일: components/image-merger-tool.tsx
+- 상태: gap, padding
+- UI: number input + merger-range
+
+[배경/투명도 실패]
+- 파일: components/image-merger-tool.tsx
+- 상태: background, color, format
+- 확인: PNG/WebP alpha, JPG 배경 합성
+
+[미리보기 실패]
+- 파일: components/image-merger-tool.tsx
+- 핵심: preview canvas 렌더, fitPreview, viewActualPixels
+- selector: tool013-preview, tool013-preview-canvas
+
+[다운로드 실패]
+- 파일: components/image-merger-tool.tsx
+- 핵심 함수: download, safeName
+- selector: tool013-download
+- 확인: output format, quality, result canvas/blob
+
+[초대형 Canvas / limit 실패]
+- 파일: components/image-merger-tool.tsx
+- 제한 상수: MAX_SIDE_BLOCK, MAX_PIXELS_BLOCK 및 경고 기준 상수
+- 확인: 사전 결과 크기 계산과 차단/경고 분리
+- 실제 안전값 확정은 주작업장 limit 검수에서 수행
+
+[초기화 실패]
+- 파일: components/image-merger-tool.tsx
+- 함수: removeAll, resetSettings, resetAll
+- 확인: Object URL, ImageBitmap 정리
+
+[메모리 해제 실패]
+- 파일: components/image-merger-tool.tsx
+- 함수: closeRenderable, remove, removeAll, decodeFile 완료 시 URL 일치 검증
+
+[다국어 실패]
+- KO/EN/JA UI: components/image-merger-tool.tsx
+- 페이지/전문가 콘텐츠: components/image-merger-page.tsx
+- route/meta: app/[locale]/[toolSlug]/page.tsx patch
+
+[모바일 레이아웃/줄바꿈 실패]
+- 파일: app/globals.css patch
+- 관련 class: tool013-detail-hero, tool013-how-to, tool013-how-to-grid, tool013-format-guide, merger-*
+- 001 기준 비교 대상: Detail Hero, Workbench, HOW TO USE 3열 rail, 전문가 포스팅
+
+[HOW TO USE 세로선 실패]
+- 파일: app/globals.css patch
+- 핵심 class: .tool013-how-to-grid ol
+- 기준: 항목별 border가 아니라 33.333333% / 66.666667% 연속 내부 rail 2개
+- 모바일: rail 제거, 1열
+
+[전문가 포스팅 실패]
+- 파일: components/image-merger-page.tsx
+- 순서: IMAGE MERGING GUIDE -> 선택 기준/주의 -> MERGE ROUTES -> PRACTICAL DETAILS -> FAQ -> 처리안내
+- 스타일: app/globals.css patch의 tool013-format-guide
+
+[route 실패]
+- 파일: app/[locale]/[toolSlug]/page.tsx patch
+- 데이터: lib/site.ts patch
+- slug: image-merger
+
+[카테고리 카드 실패]
+- 파일: lib/site.ts patch
+- category: image-edit
+- 번호/도구명/slug 013 일치 확인
+
+[SEO 실패]
+- 파일: app/[locale]/[toolSlug]/page.tsx patch
+- 페이지 구조화 데이터: components/image-merger-page.tsx
+- sitemap: 주작업장 app/sitemap.ts에서 013 3언어 URL 추가 확인
+
+[문의 app 실패]
+- 공통 Shell 문의 연결 구조 확인
+- 실제 URL이 https://fixlgs.com/contact?app=013 실제 서비스명 형태인지 주작업장에서 확인
+
+[PRODUCT_FAIL / HARNESS_ERROR 분리 원칙]
+- selector 미탐지, 잘못된 route, helper/DOM 불일치: HARNESS_ERROR 우선
+- selector가 정상 연결된 뒤 실제 결과값/동작이 잘못됨: PRODUCT_FAIL 후보
+- 명확한 실행 제외 사유가 있을 때만 SKIP
+- selector 누락을 SKIP으로 숨기지 않음
+
+
+[regression-only HARNESS_ERROR]
+- 정적 검사: scripts/check-tool-013-regression-harness.mjs
+- regression spec: tests/tool-013-regression.spec.ts
+- 실행 runner: scripts/run-tool-013-regression-only.mjs
+- route/helper: tests/helpers/tool-013.ts
+- 결과 ZIP 공통 유틸: scripts/tool-validation-result-utils.mjs (수정 금지, 참조만)
+- package script: package.json patch의 test:toolbox:013-regression / test:toolbox:013-regression-only
+
+[regression PRODUCT_FAIL 후보]
+- 기존 001~011 route 실패: 해당 기존 route 자체 또는 공통 route 연결부 확인. 기존 검수기/기존 도구 코드를 먼저 수정하지 않음.
+- 013 route/SEO 실패: app/[locale]/[toolSlug]/page.tsx + lib/site.ts patch
+- category LIVE 카드 실패: lib/site.ts patch
+- sitemap 실패: app/sitemap.ts에 013 3언어 URL 반영 여부 확인 (보조작업장에서는 기존 역할대로 미수정)
+- robots 실패: app/robots.ts 기존 sitemap 연결 유지 여부 확인
+- 문의 app 실패: components/image-merger-page.tsx의 appName={t.title} + ToolboxSubpageShell 기존 동작 확인
+- schema 실패: components/image-merger-page.tsx JSON-LD
+
+[013 limit-only FAIL/HARNESS_ERROR]
+한 변 경고/차단 불일치:
+- 확인 파일: components/image-merger-tool.tsx
+- 상수: MAX_SIDE_WARN / MAX_SIDE_BLOCK
+- 계산: layout.width / layout.height, warnLarge / blockLarge
+픽셀 경고/차단 불일치:
+- 확인 파일: components/image-merger-tool.tsx
+- 상수: MAX_PIXELS_WARN / MAX_PIXELS_BLOCK
+- 계산: layout.pixels, warnLarge / blockLarge
+customSize clamp 실패:
+- 확인 파일: components/image-merger-tool.tsx
+- 위치: tool013-custom-size / clampInt(..., 16384)
+gap/padding clamp 실패:
+- 확인 파일: components/image-merger-tool.tsx
+- 위치: tool013-gap / tool013-padding / clampInt(..., 2000)
+차단 후 다운로드 비활성 실패:
+- 확인 파일: components/image-merger-tool.tsx
+- 위치: tool013-download disabled={readyItems.length<2||blockLarge}
+극단값 이후 복구 실패:
+- 확인 파일: components/image-merger-tool.tsx
+- 상태: customSize / padding / blockLarge / download disabled
+HARNESS_ERROR:
+- 검수기: tests/tool-013-limit.spec.ts
+- runner: scripts/run-tool-013-limit-only.mjs
+- selector: tool013-direction-vertical, tool013-sizing-width, tool013-size-basis, tool013-custom-size, tool013-allow-upscale, tool013-gap, tool013-padding, tool013-limit-warning, tool013-limit-blocked
+- fixture: test-fixtures/tool013-limit-square-1x1.png, test-fixtures/tool013-limit-landscape-100x1.png
