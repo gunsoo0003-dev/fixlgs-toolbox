@@ -121,7 +121,20 @@
     "test:toolbox:014-boundary-only": "node scripts/run-tool-014-partial-validation.mjs boundary-only",
     "test:toolbox:014-regression": "playwright test tests/tool-014-regression.spec.ts --workers=1",
     "test:toolbox:014-regression-only": "node scripts/run-tool-014-regression-only.mjs",
-    "test:toolbox:014-final": "node scripts/run-tool-014-final-validation.mjs"
+    "test:toolbox:014-final": "node scripts/run-tool-014-final-validation.mjs",
+    "check:tool015-source": "node scripts/check-tool-015-source.mjs",
+    "check:tool015-harness": "node scripts/check-tool-015-harness.mjs",
+    "check:tool015-validator": "node scripts/check-tool-015-validator.mjs",
+    "test:toolbox:015-preflight": "node scripts/run-tool-015-preflight.mjs",
+    "test:toolbox:015-core": "node scripts/run-tool-015-core.mjs",
+    "test:toolbox:015-core-only": "node scripts/run-tool-015-core.mjs",
+    "test:toolbox:015-regression": "playwright test tests/tool-015-regression.spec.ts --workers=1",
+    "test:toolbox:015-regression-only": "node scripts/run-tool-015-regression-only.mjs",
+    "test:toolbox:015-limit": "playwright test tests/tool-015-limit.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:015-limit-only": "node scripts/run-tool-015-limit-only.mjs",
+    "test:toolbox:015-boundary": "playwright test tests/tool-015-boundary.spec.ts --workers=1 --project=desktop-chromium",
+    "test:toolbox:015-boundary-only": "node scripts/run-tool-015-partial-validation.mjs boundary-only",
+    "test:toolbox:015-final": "node scripts/run-tool-015-final-validation.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

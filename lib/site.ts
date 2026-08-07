@@ -196,6 +196,8 @@ export const tool013Slug = "image-merger" as const;
 
 export const tool014Slug = "image-collage-maker" as const;
 
+export const tool015Slug = "before-after-image-maker" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -208,6 +210,8 @@ export const tool013Titles: Record<Locale, string> = { ko: "이미지 합치기"
 export const tool013Descriptions: Record<Locale, string> = { ko: "여러 이미지를 원하는 순서대로 세로 또는 가로로 합쳐 한 장으로 만드세요.", en: "Combine multiple images vertically or horizontally in any order.", ja: "複数の画像を好きな順番で縦または横に結合できます。" };
 export const tool014Titles: Record<Locale, string> = { ko: "이미지 콜라주 만들기", en: "Image Collage Maker", ja: "画像コラージュ作成ツール" };
 export const tool014Descriptions: Record<Locale, string> = { ko: "여러 사진을 2·3·4분할과 격자 레이아웃으로 배치해 한 장의 콜라주로 만드세요.", en: "Arrange photos in split and grid layouts to create one collage image.", ja: "複数の写真を分割・グリッドレイアウトに配置し、1枚のコラージュ画像を作成します。" };
+export const tool015Titles: Record<Locale, string> = { ko: "전후 비교 이미지 만들기", en: "Before & After Image Maker", ja: "ビフォー・アフター比較画像作成" };
+export const tool015Descriptions: Record<Locale, string> = { ko: "두 장의 이미지를 좌우 또는 상하로 비교하고 라벨과 중앙 구분선을 넣어 한 장으로 저장하세요.", en: "Create a side-by-side or top-bottom before-and-after image with labels and a center divider.", ja: "2枚の画像を左右または上下に比較配置し、ラベルと中央の区切り線を加えて1枚に保存できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -586,10 +590,11 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "전후 비교 이미지 만들기", en: "Before & After Image Maker", ja: "ビフォー・アフター画像作成ツール" },
-      description: { ko: "좌우·상하 비교, 문구와 중앙 구분선 추가", en: "Create side-by-side or top-bottom before-and-after images.", ja: "左右・上下比較、文言、中央区切り線を追加。" },
-      status: "NEXT",
-      active: false,
+      title: tool015Titles,
+      description: tool015Descriptions,
+      href: `/${"ko"}/${tool015Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: { ko: "이미지에 글자 넣기", en: "Add Text to Image", ja: "画像文字入れツール" },
@@ -647,7 +652,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool015Slug}` } : item);
   }
 
   return cards;

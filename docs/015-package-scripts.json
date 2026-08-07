@@ -1,0 +1,12 @@
+{
+  "check:tool015-source": "node scripts/check-tool-015-source.mjs",
+  "check:tool015-harness": "node scripts/check-tool-015-harness.mjs",
+  "check:tool015-validator": "node scripts/check-tool-015-validator.mjs",
+  "test:toolbox:015-preflight": "playwright test tests/tool-015-preflight.spec.ts --workers=1",
+  "test:toolbox:015-core": "playwright test tests/tool-015-core.spec.ts --workers=1",
+  "test:toolbox:015-core-only": "node scripts/run-tool-015-partial-validation.mjs core-only",
+  "test:toolbox:015-regression": "playwright test tests/tool-015-regression.spec.ts --workers=1",
+  "test:toolbox:015-regression-only": "node scripts/run-tool-015-regression-only.mjs",
+  "test:toolbox:015-limit": "playwright test tests/tool-015-limit.spec.ts --workers=1 --project=desktop-chromium",
+  "test:toolbox:015-limit-only": "node scripts/run-tool-015-limit-only.mjs"
+}

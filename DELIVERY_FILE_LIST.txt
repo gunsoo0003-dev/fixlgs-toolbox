@@ -1,0 +1,54 @@
+[웹도구 015 전후 비교 이미지 만들기 - 전달 파일 목록]
+
+[실제 도구 본체 - 필수]
+components/before-after-image-page.tsx
+components/before-after-image-tool.tsx
+components/before-after-image-tool.module.css
+
+[검수 helper/config]
+tests/helpers/tool-015.ts
+tests/config/tool-015-limit-candidates.ts
+
+[검수기]
+tests/tool-015-preflight.spec.ts
+tests/tool-015-core.spec.ts
+tests/tool-015-regression.spec.ts
+tests/tool-015-limit.spec.ts
+
+[실행/정적검사]
+scripts/check-tool-015-source.mjs
+scripts/check-tool-015-harness.mjs
+scripts/check-tool-015-validator.mjs
+scripts/run-tool-015-preflight.mjs
+scripts/run-tool-015-partial-validation.mjs
+scripts/run-tool-015-regression-only.mjs
+scripts/run-tool-015-limit-only.mjs
+
+[fixture]
+test-fixtures/tool-015/tiny-01.png
+test-fixtures/tool-015/tiny-02.png
+test-fixtures/tool-015/tiny-03.png
+
+[문서]
+HANDOFF.txt
+DELIVERY_FILE_LIST.txt
+docs/015-integration-map.md
+docs/015-failure-response-map.md
+docs/015-validation-plan.md
+docs/015-limit-only-prep.md
+docs/015-design-conformity.md
+docs/015-runtime-check.md
+docs/015-package-scripts.json
+docs/015-shipment-readiness.md
+
+[원본 최종 제작기획서]
+기획서원본/웹도구_015_전후비교이미지만들기_최종제작전달서_원본.md
+
+[전달본에 넣지 않는 기존 파일]
+lib/site.ts
+app/[locale]/[toolSlug]/page.tsx
+app/sitemap.ts
+app/robots.ts
+package.json
+기존 도구 코드 / 기존 검수기 / 공통 CSS
+위 항목은 docs/015-integration-map.md 기준으로 주작업장 최신본에 최소 병합한다.
