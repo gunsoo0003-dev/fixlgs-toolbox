@@ -164,7 +164,18 @@
     "check:tool017-design": "node scripts/check-tool-017-design.mjs",
     "test:toolbox:017-boundary": "playwright test tests/tool-017-boundary.spec.ts --workers=1 --project=desktop-chromium --config=playwright.tool017-runtime.config.ts",
     "test:toolbox:017-boundary-only": "node scripts/run-tool-017-boundary-only.mjs",
-    "test:toolbox:017-final": "node scripts/run-tool-017-final-validation.mjs"
+    "test:toolbox:017-final": "node scripts/run-tool-017-final-validation.mjs",
+    "check:tool018-source": "node scripts/check-tool-018-source.mjs",
+    "check:tool018-harness": "node scripts/check-tool-018-harness.mjs",
+    "check:tool018-validator": "node scripts/check-tool-018-validator.mjs",
+    "check:tool018-design": "node scripts/check-tool-018-design.mjs",
+    "test:toolbox:018-preflight": "node scripts/run-tool-018-preflight.mjs",
+    "test:toolbox:018-core-only": "node scripts/run-tool-018-partial-validation.mjs core-only",
+    "test:toolbox:018-boundary-only": "node scripts/run-tool-018-partial-validation.mjs boundary-only",
+    "test:toolbox:018-regression-only": "node scripts/run-tool-018-regression-only.mjs",
+    "test:toolbox:018-limit-only": "node scripts/run-tool-018-limit-only.mjs",
+    "test:toolbox:018-final": "node scripts/run-tool-018-final-validation.mjs",
+    "cleanup:root-garbage": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/cleanup-root-garbage.ps1"
   },
   "dependencies": {
     "next": "16.2.12",

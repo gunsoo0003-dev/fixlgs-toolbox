@@ -1,0 +1,1 @@
+const mode=process.argv[2]||'core-only'; if(!['core-only','boundary-only'].includes(mode)){console.error('Use core-only or boundary-only');process.exit(2);} process.argv[2]=mode; await import('./run-tool-018-validation.mjs');

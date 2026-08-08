@@ -46,3 +46,7 @@ next-env.d.ts
 /.next-tool017-runtime/
 /test-results/
 /playwright-report/
+
+# TOOLBOX per-tool validation runtime artifacts (generic)
+/.next-tool*-runtime/
+/.next-tool*-regression/
