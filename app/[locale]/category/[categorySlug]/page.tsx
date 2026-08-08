@@ -142,7 +142,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                 ["Image Collage", "Maker"],
                 ["Before & After", "Image Maker"],
                 ["Add Text", "to Image"],
-                ["Image Watermark", "Tool"],
+                ["Add Watermark", "to Images"],
                 ["Image Info", "& Metadata Inspector"],
               ],
               ja: [
@@ -155,7 +155,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                 ["画像コラージュ", "作成ツール"],
                 ["ビフォー・アフター", "画像作成ツール"],
                 ["画像文字入れ", "ツール"],
-                ["画像ウォーターマーク", "ツール"],
+                ["画像ウォーターマーク", "追加ツール"],
                 ["画像情報", "・メタデータ検査ツール"],
               ],
             };

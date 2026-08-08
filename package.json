@@ -150,7 +150,21 @@
     "test:toolbox:016-limit-only": "node scripts/run-tool-016-partial-validation.mjs limit-only",
     "check:tool016-validator": "node scripts/check-tool-016-validator.mjs",
     "test:toolbox:016-final": "node scripts/run-tool-016-final-validation.mjs",
-    "test:toolbox:016-common": "playwright test tests/common-tool-additive.spec.ts --workers=1 --config=playwright.tool016-runtime.config.ts"
+    "test:toolbox:016-common": "playwright test tests/common-tool-additive.spec.ts --workers=1 --config=playwright.tool016-runtime.config.ts",
+    "check:tool017-source": "node scripts/check-tool-017-source.mjs",
+    "check:tool017-harness": "node scripts/check-tool-017-harness.mjs",
+    "check:tool017-validator": "node scripts/check-tool-017-validator.mjs",
+    "test:toolbox:017-preflight": "node scripts/run-tool-017-preflight.mjs",
+    "test:toolbox:017-core": "node scripts/run-tool-017-core.mjs",
+    "test:toolbox:017-core-only": "node scripts/run-tool-017-core.mjs",
+    "test:toolbox:017-regression": "playwright test --workers=1 --config=playwright.tool017-regression.config.ts",
+    "test:toolbox:017-regression-only": "node scripts/run-tool-017-regression-only.mjs",
+    "test:toolbox:017-limit": "playwright test tests/tool-017-limit.spec.ts --workers=1 --project=desktop-chromium --config=playwright.tool017-runtime.config.ts",
+    "test:toolbox:017-limit-only": "node scripts/run-tool-017-limit-only.mjs",
+    "check:tool017-design": "node scripts/check-tool-017-design.mjs",
+    "test:toolbox:017-boundary": "playwright test tests/tool-017-boundary.spec.ts --workers=1 --project=desktop-chromium --config=playwright.tool017-runtime.config.ts",
+    "test:toolbox:017-boundary-only": "node scripts/run-tool-017-boundary-only.mjs",
+    "test:toolbox:017-final": "node scripts/run-tool-017-final-validation.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

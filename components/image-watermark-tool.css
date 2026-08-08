@@ -1,0 +1,163 @@
+/* Tool 017 dedicated styles. Keep with the 017 implementation bundle. */
+.tool017-workbench{min-width:0}
+.tool017-detail-hero .toolbox-tool-detail-heading h1,
+.tool017-detail-hero .toolbox-tool-detail-heading p,
+.tool017-how-to li p,
+.tool017-faq h2,
+.tool017-examples h2,
+.tool017-note-list li{min-width:0;white-space:normal;overflow-wrap:break-word}
+.tool017-editor{grid-template-columns:minmax(240px,.78fr) minmax(420px,1.4fr) minmax(280px,.92fr);gap:16px;align-items:start;padding:28px;background:var(--tb-soft)}
+.tool017-files,.tool017-settings,.tool017-preview{overflow:hidden;border:1px solid var(--tb-line);border-radius:18px;background:var(--tb-panel)}
+.tool017-files,.tool017-settings{padding:20px;background:var(--tb-panel)}
+.tool017-preview{padding:0;background:var(--tb-panel)}
+.tool017-preview>.toolbox-workbench-settings-head{padding:20px 22px!important;border-top:0!important;border-bottom:1px solid var(--tb-line)!important}
+.tool017-files>.toolbox-workbench-settings-head,.tool017-settings>.toolbox-workbench-settings-head{padding-top:0;border-top:0}
+.tool017-settings>.toolbox-workbench-settings-head:not(:first-child),.tool017-files>.toolbox-workbench-settings-head:not(:first-child){margin-top:20px}
+.tool017-mini-meta span{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:color-mix(in srgb,var(--blue) 8%,var(--tb-panel));color:var(--blue);font-size:11px;font-weight:800}
+.tool017-file-list{display:grid;gap:10px;max-height:720px;overflow:auto;padding-top:14px}
+.tool017-file-item{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--tb-line);border-radius:12px;background:var(--tb-panel);text-align:left;color:inherit}
+.tool017-file-item.is-selected{border-color:var(--blue);box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 12%,transparent)}
+.tool017-file-item.is-failed{border-color:#c2410c;background:rgba(234,88,12,.05)}
+.tool017-thumb{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:10px;overflow:hidden;background:var(--tb-soft);border:1px solid var(--tb-line)}
+.tool017-thumb img{width:100%;height:100%;object-fit:cover}
+.tool017-file-copy{min-width:0}
+.tool017-file-copy strong,.tool017-file-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tool017-file-copy strong{font-size:13px}
+.tool017-representative-mark{display:inline-flex;align-items:center;gap:4px;margin-top:5px;padding:2px 7px;border:1px solid currentColor;border-radius:999px;color:var(--tb-text);font-size:10px;font-weight:800;line-height:1.4}
+.tool017-file-copy small{margin-top:4px;color:var(--tb-muted);font-size:11px}
+.tool017-status-chip{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:26px;padding:0 8px;border-radius:999px;background:var(--tb-soft);font-size:10px;font-weight:800;color:var(--tb-muted)}
+.tool017-remove{grid-column:2/-1;color:var(--tb-muted);font-size:11px;text-decoration:underline;cursor:pointer;justify-self:end}
+.tool017-empty,.tool017-empty-preview{margin:0;padding:42px 18px;text-align:center;color:var(--tb-muted);font-size:13px;line-height:1.7}
+.tool017-canvas-wrap{display:grid;place-items:center;min-height:540px;padding:20px;background-image:linear-gradient(45deg,#e7e9ee 25%,transparent 25%),linear-gradient(-45deg,#e7e9ee 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e7e9ee 75%),linear-gradient(-45deg,transparent 75%,#e7e9ee 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;overflow:auto}
+.tool017-canvas-wrap canvas{display:block;max-width:100%;max-height:680px;width:auto;height:auto;box-shadow:0 8px 28px rgba(17,24,39,.14);background:transparent;touch-action:none;cursor:grab}
+.tool017-canvas-wrap canvas.is-dragging,.tool017-canvas-wrap canvas:active{cursor:grabbing}
+.tool017-editor.is-dragging{background:color-mix(in srgb,var(--blue) 7%,var(--tb-panel))}
+.tool017-preview-notes{display:grid;gap:10px;padding:16px 22px 22px;border-top:1px solid var(--tb-line);color:var(--tb-muted);font-size:12px;line-height:1.7}
+.tool017-preview-actions{display:flex;gap:8px}
+.tool017-preview-actions button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.tool017-active-mark{font-size:12px;font-weight:900;line-height:1}
+.tool017-preview-actions button,.tool017-logo-actions button,.tool017-reset-btn,.tool017-zip-row button{min-height:38px;border:1px solid var(--tb-line);border-radius:10px;background:var(--tb-panel);color:inherit;padding:0 12px;font-weight:700}
+.tool017-preview-actions button.is-active{border-color:var(--blue);box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue)}
+.tool017-preview-actions button:disabled,.tool017-logo-actions button:disabled,.tool017-reset-btn:disabled,.tool017-zip-row button:disabled{opacity:.45;cursor:not-allowed}
+.tool017-fields{display:grid;gap:12px;margin-top:16px}
+.tool017-fields label{display:grid;gap:6px;font-size:12px;font-weight:700}
+.tool017-fields input,.tool017-fields select{width:100%;min-width:0;border:1px solid var(--tb-line);border-radius:10px;background:var(--tb-panel);color:inherit;padding:9px 10px}
+.tool017-fields input[type=color]{padding:3px;min-height:40px}
+.tool017-fields input[type=range]{padding:0;border:0}
+.tool017-fields label>span{color:var(--tb-muted);font-size:11px;font-weight:700}
+.tool017-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tool017-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tool017-check{display:flex!important;grid-template-columns:none!important;align-items:center;gap:8px!important;min-height:40px;padding:0 10px;border:1px solid var(--tb-line);border-radius:10px;background:var(--tb-panel)}
+.tool017-check input{width:auto!important;padding:0!important}
+.tool017-segment{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.tool017-segment-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tool017-segment button,.tool017-grid-presets button{min-height:40px;border:1px solid var(--tb-line);border-radius:10px;background:var(--tb-panel);color:inherit;padding:8px 10px;font-weight:700}
+.tool017-segment button.is-active,.tool017-grid-presets button.is-active{border-color:var(--blue);box-shadow:0 0 0 2px color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue)}
+.tool017-grid-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tool017-logo-picker{display:grid;gap:8px;padding:14px;border:1px solid var(--tb-line);border-radius:14px;background:var(--tb-panel)}
+.tool017-logo-picker p,.tool017-logo-picker small{margin:0;color:var(--tb-muted);font-size:12px;line-height:1.6}
+.tool017-logo-actions{display:flex;gap:8px;flex-wrap:wrap}
+.tool017-soft-warning,.tool017-status,.tool017-error{margin:0;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.7}
+.tool017-soft-warning,.tool017-status{background:color-mix(in srgb,var(--blue) 6%,var(--tb-panel));color:var(--tb-text)}
+.tool017-error{background:rgba(234,88,12,.08);color:#9a3412}
+.tool017-summary-box{display:flex;flex-wrap:wrap;gap:8px}
+.tool017-summary-box span{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:var(--tb-panel);border:1px solid var(--tb-line);font-size:11px;font-weight:700;color:var(--tb-muted)}
+.tool017-output{margin:0 28px 28px;overflow:hidden;border:1px solid var(--tb-line);border-radius:18px;background:var(--tb-panel)}
+.tool017-output>.toolbox-workbench-settings-head{padding:20px 22px!important;border-top:0!important;border-bottom:1px solid var(--tb-line)!important}
+.tool017-output-body{padding:22px}
+.tool017-output .toolbox-workbench-actions{margin:0 0 18px}
+.tool017-output .toolbox-workbench-actions button:disabled{opacity:.45;cursor:not-allowed}
+.tool017-output .toolbox-workbench-summary{margin:0;padding:15px 18px}
+.tool017-zip-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;margin-bottom:18px;border:1px solid var(--tb-line);border-radius:12px;background:var(--tb-soft)}
+.tool017-example-grid{display:block;border-top:1px solid var(--tb-line-strong)}
+.tool017-example-grid article{display:grid;grid-template-columns:minmax(120px,.32fr) minmax(0,1.68fr);column-gap:clamp(28px,4vw,64px);align-items:start;padding:clamp(32px,4vw,54px) 0;border-bottom:1px solid var(--tb-line);background:transparent}
+.tool017-example-grid strong{margin-top:3px;color:var(--blue);font-size:13px;letter-spacing:.12em}
+.tool017-example-grid p{margin:0;color:var(--tb-text);font-size:16px;line-height:1.85}
+.tool017-note-list{display:block;margin:0;padding:0;border-top:1px solid var(--tb-line-strong);list-style:none}
+.tool017-note-list li{padding:22px 0;border-bottom:1px solid var(--tb-line);color:var(--tb-text);font-size:15px;line-height:1.8}
+@media(max-width:1080px){.tool017-editor{grid-template-columns:1fr;padding:22px}.tool017-output{margin:0 22px 22px}.tool017-canvas-wrap{min-height:420px}.tool017-file-list{max-height:none}.tool017-preview{order:1}.tool017-settings{order:2}.tool017-files{order:3}}
+@media(max-width:640px){.tool017-editor{padding:20px}.tool017-output{margin:0 20px 20px}.tool017-files,.tool017-settings{padding:16px}.tool017-output-body{padding:18px}.tool017-canvas-wrap{min-height:320px;padding:14px}.tool017-two,.tool017-three{grid-template-columns:1fr}.tool017-example-grid article{display:block;padding:30px 0}.tool017-example-grid strong{display:block;margin:0 0 14px}.tool017-example-grid p{font-size:15px}.tool017-file-item{grid-template-columns:52px minmax(0,1fr)}.tool017-status-chip{justify-self:start}.tool017-remove{grid-column:1/-1}.tool017-preview-actions,.tool017-logo-actions,.tool017-zip-row{flex-direction:column;align-items:stretch}.tool017-grid-presets{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+
+/* TOOL 017 batch result status */
+.tool017-file-actions{grid-column:2/-1;display:flex;justify-content:flex-end;gap:12px;align-items:center}
+.tool017-file-download,.tool017-remove{color:var(--tb-muted);font-size:11px;text-decoration:underline;cursor:pointer}
+.tool017-status-chip.is-processing{background:color-mix(in srgb,var(--blue) 10%,var(--tb-panel));color:var(--blue)}
+.tool017-status-chip.is-completed{background:rgba(22,163,74,.10);color:#15803d}
+.tool017-status-chip.is-failed{background:rgba(234,88,12,.10);color:#c2410c}
+@media(max-width:640px){.tool017-file-actions{grid-column:1/-1;justify-content:flex-start}}
+
+/* Tool 017 design hardening: preserve the established TOOLBOX wrapping and theme behavior. */
+.toolbox-locale-ko .tool017-detail-hero .toolbox-tool-detail-heading h1,
+.toolbox-locale-ko .tool017-examples .toolbox-tool-format-guide-head h2,
+.toolbox-locale-ko .tool017-how-to li p{word-break:keep-all}
+.toolbox-locale-ja .tool017-detail-hero .toolbox-tool-detail-heading h1,
+.toolbox-locale-ja .tool017-examples .toolbox-tool-format-guide-head h2{word-break:auto;overflow-wrap:anywhere}
+.tool017-preview-actions{flex-wrap:wrap;justify-content:flex-end}
+.tool017-segment button,.tool017-grid-presets button{white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+.tool017-canvas-wrap{background-color:var(--tb-soft);background-image:linear-gradient(45deg,color-mix(in srgb,var(--tb-muted) 22%,transparent) 25%,transparent 25%),linear-gradient(-45deg,color-mix(in srgb,var(--tb-muted) 22%,transparent) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,color-mix(in srgb,var(--tb-muted) 22%,transparent) 75%),linear-gradient(-45deg,transparent 75%,color-mix(in srgb,var(--tb-muted) 22%,transparent) 75%)}
+html[data-theme="dark"] .tool017-file-item.is-failed{border-color:#fb923c;background:rgba(251,146,60,.08)}
+html[data-theme="dark"] .tool017-error{background:rgba(251,146,60,.12);color:#fdba74}
+html[data-theme="dark"] .tool017-status-chip.is-failed{background:rgba(251,146,60,.14);color:#fdba74}
+html[data-theme="dark"] .tool017-status-chip.is-completed{background:rgba(74,222,128,.12);color:#86efac}
+.tool017-remove[aria-disabled="true"]{opacity:.45;cursor:not-allowed;text-decoration:none;pointer-events:none}
+
+/* TOOL 017 meeting pass: distribute secondary controls horizontally and tighten the main settings column. */
+@media(min-width:1081px){
+  .tool017-settings{padding:16px 16px 18px}
+  .tool017-settings>.toolbox-workbench-settings-head:not(:first-child){margin-top:14px}
+  .tool017-settings .tool017-fields{gap:9px;margin-top:12px}
+  .tool017-settings .tool017-segment{margin-top:12px}
+  .tool017-settings .tool017-check{min-height:36px}
+  .tool017-settings .tool017-segment button,
+  .tool017-settings .tool017-grid-presets button{min-height:36px;padding:6px 8px}
+}
+.tool017-horizontal-settings{grid-column:1/-1;min-width:0}
+.tool017-horizontal-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.tool017-horizontal-card{min-width:0;padding:18px;border:1px solid var(--tb-line);border-radius:18px;background:var(--tb-panel);overflow:hidden}
+.tool017-horizontal-card>.toolbox-workbench-settings-head{padding-top:0;border-top:0}
+.tool017-horizontal-card .tool017-fields{gap:10px;margin-top:12px}
+.tool017-horizontal-card .tool017-segment{margin-top:12px}
+.tool017-horizontal-card .tool017-check{min-height:38px}
+.tool017-horizontal-card .tool017-segment button,
+.tool017-horizontal-card .tool017-grid-presets button{min-height:38px;padding:7px 9px}
+.tool017-secondary-card .toolbox-workbench-settings-head p{max-width:34ch}
+.tool017-export-card .tool017-summary-box{margin-top:2px}
+
+/* Expert-post reading rhythm aligned with the established TOOLBOX expert guide. */
+.tool017-expert-body{margin-top:clamp(34px,4vw,56px)}
+.tool017-expert-body .toolbox-tool-practical-grid article{min-width:0}
+.tool017-expert-post .toolbox-tool-format-guide-head>span{max-width:880px}
+
+/* Keep NOTE heading and rows on the same centered content axis. */
+.tool017-notes-section{padding-block:clamp(60px,6vw,88px)}
+.tool017-notes-section .toolbox-tool-format-guide-head{padding-bottom:30px}
+.tool017-note-list{width:min(1160px,100%);margin:0 auto}
+.tool017-note-list li{padding:20px 0}
+
+@media(max-width:1080px){
+  .tool017-horizontal-settings{order:4}
+  .tool017-horizontal-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .tool017-horizontal-card{padding:16px}
+  .tool017-notes-section{padding-block:56px}
+  .tool017-note-list li{padding:18px 0;font-size:14px;line-height:1.75}
+}
+
+/* TOOL 017 position-pad redistribution: PC keeps three balanced horizontal panels. */
+.tool017-repeat-secondary-card{display:grid;align-content:start;gap:18px}
+.tool017-stacked-section+.tool017-stacked-section{padding-top:18px;border-top:1px solid var(--tb-line)}
+.tool017-stacked-section>.toolbox-workbench-settings-head{padding-top:0;border-top:0}
+.tool017-position-card .tool017-grid-presets{margin-top:2px}
+.tool017-position-card .tool017-reset-btn{min-height:38px}
+@media(max-width:1080px){
+  .tool017-horizontal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tool017-export-card{grid-column:1/-1}
+}
+@media(max-width:720px){
+  .tool017-horizontal-grid{grid-template-columns:1fr}
+  .tool017-export-card{grid-column:auto}
+  .tool017-repeat-secondary-card{gap:16px}
+  .tool017-stacked-section+.tool017-stacked-section{padding-top:16px}
+}
