@@ -198,6 +198,8 @@ export const tool014Slug = "image-collage-maker" as const;
 
 export const tool015Slug = "before-after-image-maker" as const;
 
+export const tool016Slug = "add-text-to-image" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -212,6 +214,8 @@ export const tool014Titles: Record<Locale, string> = { ko: "이미지 콜라주 
 export const tool014Descriptions: Record<Locale, string> = { ko: "여러 사진을 2·3·4분할과 격자 레이아웃으로 배치해 한 장의 콜라주로 만드세요.", en: "Arrange photos in split and grid layouts to create one collage image.", ja: "複数の写真を分割・グリッドレイアウトに配置し、1枚のコラージュ画像を作成します。" };
 export const tool015Titles: Record<Locale, string> = { ko: "전후 비교 이미지 만들기", en: "Before & After Image Maker", ja: "ビフォー・アフター比較画像作成" };
 export const tool015Descriptions: Record<Locale, string> = { ko: "두 장의 이미지를 좌우 또는 상하로 비교하고 라벨과 중앙 구분선을 넣어 한 장으로 저장하세요.", en: "Create a side-by-side or top-bottom before-and-after image with labels and a center divider.", ja: "2枚の画像を左右または上下に比較配置し、ラベルと中央の区切り線を加えて1枚に保存できます。" };
+export const tool016Titles: Record<Locale, string> = { ko: "이미지에 글자 넣기", en: "Add Text to Image", ja: "画像文字入れツール" };
+export const tool016Descriptions: Record<Locale, string> = { ko: "사진에 제목·본문·날짜·위치와 자유 문구를 넣고 스타일과 위치를 조절해 저장하세요.", en: "Add titles, body text, dates, locations, and custom text to photos, then adjust style and position before saving.", ja: "写真にタイトル・本文・日付・場所・自由な文字を追加し、スタイルと位置を調整して保存できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -597,10 +601,11 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
     {
-      title: { ko: "이미지에 글자 넣기", en: "Add Text to Image", ja: "画像文字入れツール" },
-      description: { ko: "제목·본문·날짜·위치 문구를 자유롭게 배치", en: "Place titles, body text, dates, and location labels.", ja: "タイトル、本文、日付、場所の文字を配置。" },
-      status: "NEXT",
-      active: false,
+      title: tool016Titles,
+      description: tool016Descriptions,
+      href: `/${"ko"}/${tool016Slug}`,
+      status: "LIVE",
+      active: true,
     },
     {
       title: { ko: "이미지 워터마크 넣기", en: "Image Watermark Tool", ja: "画像ウォーターマークツール" },
@@ -652,7 +657,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "image-edit") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool015Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool015Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool016Slug}` } : item);
   }
 
   return cards;

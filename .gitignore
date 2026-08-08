@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# TOOLBOX validation runtime artifacts
+/.next-tool016-regression/
+/.next-tool016-runtime/
