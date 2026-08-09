@@ -175,7 +175,17 @@
     "test:toolbox:018-regression-only": "node scripts/run-tool-018-regression-only.mjs",
     "test:toolbox:018-limit-only": "node scripts/run-tool-018-limit-only.mjs",
     "test:toolbox:018-final": "node scripts/run-tool-018-final-validation.mjs",
-    "cleanup:root-garbage": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/cleanup-root-garbage.ps1"
+    "cleanup:root-garbage": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/cleanup-root-garbage.ps1",
+    "test:toolbox:019-preflight": "node scripts/run-tool-019-preflight.mjs",
+    "test:toolbox:019-core-only": "node scripts/run-tool-019-partial-validation.mjs core-only",
+    "test:toolbox:019-boundary-only": "node scripts/run-tool-019-partial-validation.mjs boundary-only",
+    "test:toolbox:019-regression-only": "node scripts/run-tool-019-regression-only.mjs",
+    "test:toolbox:019-limit-only": "node scripts/run-tool-019-limit-only.mjs",
+    "test:toolbox:019-final": "node scripts/run-tool-019-final-validation.mjs",
+    "check:tool019-validator": "node scripts/check-tool-019-validator.mjs",
+    "check:tool019-source": "node scripts/check-tool-019-source.mjs",
+    "check:tool019-design": "node scripts/check-tool-019-design.mjs",
+    "check:tool019-harness": "node scripts/check-tool-019-harness.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

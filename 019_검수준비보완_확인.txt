@@ -1,0 +1,13 @@
+TOOL 019 검수준비 보완
+- 제품 기능/디자인 코드 수정 없음
+- 017/018 피드백 반영: DOM root/구조 selector, .first() 우회 제거, 오류 selector root 한정
+- 잘못된 TOOL019_TESTIDS.file -> fileInput 수정
+- validator/source/design/harness 사전검사 추가
+- 019 runtime: port 3019, reuseExistingServer:false, .next-tool019-runtime 격리
+- FINAL: validator -> source -> design -> harness -> ja-terms -> build -> preflight -> common -> core -> boundary -> regression -> service-limit
+정적 사전검사 결과:
+- validator PASS
+- source PASS
+- design 14/14 PASS
+- harness PASS
+실제 Playwright/build는 node_modules가 있는 사용자 로컬 환경에서 실행 필요.

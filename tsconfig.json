@@ -44,7 +44,9 @@
     ".next-tool017-regression/types/**/*.ts",
     ".next-tool017-regression/dev/types/**/*.ts",
     ".next-tool018-runtime/types/**/*.ts",
-    ".next-tool018-runtime/dev/types/**/*.ts"
+    ".next-tool018-runtime/dev/types/**/*.ts",
+    ".next-tool019-runtime/types/**/*.ts",
+    ".next-tool019-runtime/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

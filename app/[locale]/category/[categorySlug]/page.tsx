@@ -117,7 +117,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
         </div>
         <div className="toolbox-subpage-card-grid">
           {toolCards.map((tool, index) => {
-            const toolNumber = categorySlug === "image-edit" ? index + 8 : index + 1;
+            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : index + 1;
             const imageEditTitleLines: Record<Locale, string[][]> = {
               ko: [
                 ["이미지 자르기", "회전 도구"],
@@ -171,12 +171,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                     : tool.title[currentLocale];
             const body = (
               <>
-                <div className="toolbox-subpage-card-top"><span>{String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
+                <div className="toolbox-subpage-card-top"><span>{categorySlug === "content-image" ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
                 <div><h2>{cardTitle}</h2>{tool.description[currentLocale] ? <p>{tool.description[currentLocale]}</p> : null}</div>
                 <div className="toolbox-subpage-card-foot"><b>{tool.active ? open : preparing}</b><i>↗</i></div>
               </>
             );
-            return tool.active && tool.href ? <Link className={`toolbox-subpage-card ${index === 0 ? "is-featured" : ""}`} href={tool.href} key={tool.title[currentLocale]}>{body}</Link> : <article className={`toolbox-subpage-card ${index === 0 ? "is-featured" : ""}`} key={tool.title[currentLocale]}>{body}</article>;
+            const cardClassName = `toolbox-subpage-card ${index === 0 ? "is-featured" : ""} ${categorySlug === "content-image" && index === 0 ? "is-tool019-featured" : ""}`.trim();
+            return tool.active && tool.href ? <Link className={cardClassName} href={tool.href} key={tool.title[currentLocale]}>{body}</Link> : <article className={cardClassName} key={tool.title[currentLocale]}>{body}</article>;
           })}
         </div>
       </section>

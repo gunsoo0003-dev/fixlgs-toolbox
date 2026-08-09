@@ -1,0 +1,1 @@
+A long YouTube thumbnail title that should wrap across the selected text width safely

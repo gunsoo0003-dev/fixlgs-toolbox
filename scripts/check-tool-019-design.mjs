@@ -1,0 +1,15 @@
+import { readFileSync } from 'node:fs';
+const read=(p)=>readFileSync(p,'utf8');const tool=read('components/youtube-thumbnail-maker-tool.tsx');const page=read('components/youtube-thumbnail-maker-page.tsx');const css=read('components/youtube-thumbnail-maker-tool.module.css');const global=read('app/globals.css');const category=read('app/[locale]/category/[categorySlug]/page.tsx');
+const checks=[];const add=(n,ok)=>checks.push([n,ok]);
+for(const cls of ['toolbox-workbench','toolbox-workbench-topline','toolbox-upload-focus','toolbox-upload-icon'])add(`common workbench ${cls}`,tool.includes(cls)&&global.includes(`.${cls}`));
+add('desktop preview full-width first row',css.includes('"preview preview preview"'));
+add('desktop settings 3-column flow',css.includes('"background title subtitle"')&&css.includes('"output title subtitle"'));
+add('mobile single-column fallback',css.includes('@media (max-width: 900px)')&&css.includes('.workspace{grid-template-columns:1fr;gap:14px}'));
+add('workspace inset padding',css.includes('padding:26px 28px 28px'));
+add('NEXT before RELATED',page.indexOf('<p>NEXT WORK</p>')>=0&&page.indexOf('<p>RELATED TOOLS</p>')>page.indexOf('<p>NEXT WORK</p>'));
+add('use case descriptions present',page.includes('t.examples.map(([title,description],i)')&&page.includes('<p>{description}</p>'));
+add('expert post present',page.includes('tool019-expert-post')&&page.includes('EXPERT POST'));
+add('safe area and important notes compact styles',global.includes('.tool019-safe-area')&&global.includes('.tool019-important-notes')&&global.includes('padding-block:clamp(42px,3.6vw,60px)'));
+add('desktop one-line content rules',global.includes('.tool019-expert-post .toolbox-tool-format-guide-head > span')&&global.includes('.toolbox-subpage-card.is-tool019-featured p')&&global.includes('white-space:nowrap'));
+add('content-image card is 019',category.includes('categorySlug === "content-image" ? index + 19')&&category.includes('padStart(3, "0")'));
+let failed=0;for(const [n,ok] of checks){console.log(`${ok?'PASS':'FAIL'} | ${n}`);if(!ok)failed++;}console.log(`019 DESIGN STATIC CROSS-CHECK: ${failed?`FAIL (${failed})`:`PASS (${checks.length} checks)`}`);process.exit(failed?1:0);
