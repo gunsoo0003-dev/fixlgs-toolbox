@@ -195,7 +195,16 @@
     "check:tool020-validator": "node scripts/check-tool-020-validator.mjs",
     "check:tool020-source": "node scripts/check-tool-020-source.mjs",
     "check:tool020-design": "node scripts/check-tool-020-design.mjs",
-    "check:tool020-harness": "node scripts/check-tool-020-harness.mjs"
+    "check:tool020-harness": "node scripts/check-tool-020-harness.mjs",
+    "test:toolbox:021-preflight": "node scripts/tool-021/run-validation.mjs preflight",
+    "test:toolbox:021-core-only": "node scripts/tool-021/run-validation.mjs core-only",
+    "test:toolbox:021-boundary-only": "node scripts/tool-021/run-validation.mjs boundary-only",
+    "test:toolbox:021-feature-only": "node scripts/tool-021/run-validation.mjs feature-only",
+    "test:toolbox:021-regression-only": "node scripts/tool-021/run-validation.mjs regression-only",
+    "test:toolbox:021-limit-only": "node scripts/tool-021/run-validation.mjs limit-only",
+    "test:toolbox:021-final": "node scripts/tool-021/run-validation.mjs final",
+    "toolbox:check-hygiene": "node scripts/toolbox/check-worktree-hygiene.mjs",
+    "toolbox:cleanup-mojibake": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/toolbox/cleanup-mojibake.ps1"
   },
   "dependencies": {
     "next": "16.2.12",

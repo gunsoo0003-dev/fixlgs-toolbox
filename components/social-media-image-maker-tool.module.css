@@ -1,0 +1,1068 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+.topNote,
+.startCard,
+.assetCard,
+.platformSection,
+.previewPanel,
+.controlCard,
+.previewCard {
+  border: 1px solid var(--tb-line);
+  border-radius: 18px;
+  background: var(--tb-panel);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+.topNote {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.topNote strong {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: color-mix(in srgb, var(--blue) 12%, transparent);
+  color: var(--blue);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.topNote span {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.startCard {
+  padding: 24px 28px;
+  display: grid;
+  gap: 12px;
+  text-align: center;
+  border-style: dashed;
+  border-width: 1.5px;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.startCardDragActive {
+  border-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 5%, var(--tb-panel));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 10%, transparent);
+}
+
+.dropHint {
+  color: var(--blue) !important;
+  font-weight: 650;
+}
+
+.startCard h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.9rem);
+}
+
+.startCard p {
+  margin: 0;
+  color: var(--tb-muted);
+  line-height: 1.7;
+}
+
+.startActions,
+.inlineActions,
+.actionStack {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.startActions {
+  justify-content: center;
+}
+
+
+.primaryButton,
+.uploadButton,
+.secondaryButton,
+.ghostButton,
+.inlineDownload,
+.pill,
+.scopeToggle button,
+.segmented button,
+.cardCanvasButton {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.primaryButton,
+.uploadButton,
+.secondaryButton,
+.ghostButton,
+.inlineDownload,
+.scopeToggle button,
+.segmented button {
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-weight: 600;
+}
+
+.primaryButton {
+  border-radius: 999px;
+  background: var(--tb-inverse);
+  color: var(--tb-inverse-fg);
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 12px 16px;
+  min-height: 44px;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primaryButton,
+.secondaryButton,
+.ghostButton,
+.inlineDownload,
+.scopeToggle button,
+.segmented button,
+.quickAlign button,
+.fieldGrid input:not([type="range"]):not([type="color"]),
+.fieldGrid select {
+  min-height: 44px;
+}
+
+.secondaryButton,
+.inlineDownload,
+.segmented button,
+.scopeToggle button {
+  border-color: var(--tb-line);
+  background: var(--tb-panel);
+}
+
+.ghostButton {
+  border-color: var(--tb-line);
+  color: var(--tb-muted);
+}
+
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.primaryButton:focus-within,
+.uploadButton:focus-within,
+.secondaryButton:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent);
+  outline-offset: 3px;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled,
+.ghostButton:disabled,
+.inlineDownload:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.introGrid,
+.editorGrid,
+.previewGrid,
+.fieldGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.introGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.assetCard {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.assetCard p,
+.previewNote,
+.hint,
+.status,
+.error {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.assetHead,
+.sectionHead,
+.previewCardHead,
+.sectionHeadCompact {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.assetHead h3,
+.sectionHead h3,
+.sectionHeadCompact h4,
+.previewCard h4 {
+  margin: 0;
+}
+
+.assetHead span,
+.previewMeta span,
+.previewLegend span,
+.previewCardFlags span,
+.previewCardFlags strong,
+.gridInfo,
+.scopeBadge {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.platformSection,
+.previewPanel,
+.controlCard,
+.previewCard {
+  padding: 18px;
+}
+
+.sectionHead p,
+.sectionHeadCompact p,
+.previewCardHead p {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--tb-muted);
+}
+
+.sectionHead h3,
+.sectionHeadCompact h4 {
+  font-size: 1.05rem;
+}
+
+.scopeBadge {
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: color-mix(in srgb, var(--blue) 8%, transparent);
+  color: var(--blue);
+}
+
+.pillRow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pillShell {
+  position: relative;
+  min-width: 0;
+}
+
+.pill {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  border: 1px solid var(--tb-line);
+  padding: 14px;
+  text-align: left;
+  display: grid;
+  gap: 8px;
+  position: relative;
+}
+
+.pillActive {
+  border-color: var(--blue);
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+
+.pill span {
+  font-weight: 700;
+  line-break: strict;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.pill strong,
+.previewMeta strong,
+.previewLegend strong,
+.previewCardFlags strong {
+  display: block;
+}
+
+.pill small,
+.previewMeta span,
+.previewNote,
+.previewLegend strong {
+  color: var(--tb-muted);
+}
+
+.checkboxWrap {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.checkboxWrap input,
+.checkboxText input {
+  accent-color: var(--blue);
+}
+
+.editorGrid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 420px);
+  align-items: start;
+}
+
+.previewPanel {
+  display: grid;
+  gap: 12px;
+}
+
+.previewBox {
+  display: grid;
+  place-items: center;
+  min-height: 620px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--blue) 8%, var(--tb-soft)), var(--tb-soft)),
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--tb-muted) 10%, transparent) 0 8px, transparent 8px 16px);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.previewCanvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 22px 44px rgba(15, 23, 42, 0.16);
+  background: #ffffff;
+}
+
+.previewLegend {
+  display: grid;
+  gap: 6px;
+}
+
+.previewLegend span,
+.previewCardFlags span {
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.controlPanel {
+  display: grid;
+  gap: 16px;
+}
+
+.controlCard {
+  display: grid;
+  gap: 14px;
+}
+
+.fieldGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fieldGrid label,
+.fieldGroup,
+.positionBlock,
+.sliderRow {
+  display: grid;
+  gap: 8px;
+}
+
+.fieldGrid label span,
+.fieldGroup > span,
+.positionBlock h5,
+.sliderRow span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.fieldGrid input,
+.fieldGrid textarea,
+.fieldGrid select {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--tb-line);
+  background: var(--tb-panel);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.fieldGrid textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.fieldGrid input[type="color"] {
+  padding: 6px;
+  height: 48px;
+}
+
+.fieldGrid input[type="range"],
+.sliderRow input[type="range"] {
+  width: 100%;
+  accent-color: var(--blue);
+}
+
+.segmented,
+.scopeToggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.segmentedActive,
+.scopeActive {
+  border-color: var(--blue) !important;
+  background: color-mix(in srgb, var(--blue) 8%, var(--tb-panel)) !important;
+  color: var(--blue) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 12%, transparent);
+}
+
+.positionBlock {
+  padding-top: 6px;
+  border-top: 1px solid var(--tb-line);
+}
+
+.positionBlock:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.gridSection {
+  display: grid;
+  gap: 16px;
+}
+
+.previewGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.previewCard {
+  display: grid;
+  gap: 14px;
+}
+
+.previewCardActive {
+  border-color: var(--blue);
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+
+.previewCardFlags {
+  text-align: right;
+}
+
+.cardCanvasButton {
+  display: block;
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.cardCanvasButton canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.previewCardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkboxText {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.inlineDownload {
+  min-width: 96px;
+}
+
+.status {
+  color: var(--tb-fg);
+}
+
+.error {
+  color: #dc2626;
+}
+
+.hint {
+  color: var(--tb-muted);
+}
+
+@media (max-width: 1180px) {
+  .pillRow,
+  .previewGrid,
+  .introGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .editorGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .topNote {
+    align-items: flex-start;
+  }
+
+  .introGrid,
+  .pillRow,
+  .previewGrid,
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .previewBox {
+    min-height: 320px;
+    padding: 16px;
+  }
+
+  .platformSection,
+  .previewPanel,
+  .controlCard,
+  .previewCard,
+  .assetCard,
+  .startCard {
+    padding: 16px;
+  }
+
+  .previewCardActions,
+  .sectionHead,
+  .assetHead,
+  .previewCardHead,
+  .sectionHeadCompact {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .startActions,
+  .inlineActions,
+  .actionStack,
+  .scopeToggle,
+  .segmented {
+    flex-direction: column;
+  }
+}
+
+.interactiveCanvas {
+  touch-action: none;
+  cursor: grab;
+}
+
+.interactiveCanvas:active {
+  cursor: grabbing;
+}
+
+.editTargetRow {
+  display: grid;
+  gap: 10px;
+}
+
+.editTargetRow > span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.editTargetRow small {
+  color: var(--tb-muted);
+  line-height: 1.55;
+}
+
+.quickAlign {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quickAlign button {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--tb-line);
+  background: var(--tb-panel);
+  cursor: pointer;
+  font: inherit;
+}
+
+.assetCard p,
+.previewNote {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.previewBox:focus-visible,
+.pill:focus-visible,
+.primaryButton:focus-visible,
+.uploadButton:focus-visible,
+.secondaryButton:focus-visible,
+.ghostButton:focus-visible,
+.inlineDownload:focus-visible,
+.cardCanvasButton:focus-visible,
+.quickAlign button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .pillRow {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding-bottom: 6px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pillShell {
+    min-width: 210px;
+    flex: 0 0 210px;
+    scroll-snap-align: start;
+  }
+
+  .pill {
+    min-width: 0;
+  }
+
+  .quickAlign {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
+
+/* Prevent long filenames/localized labels from expanding CSS grid items past mobile viewport. */
+.introGrid,
+.editorGrid,
+.previewGrid,
+.assetCard,
+.previewPanel,
+.controlPanel,
+.controlCard,
+.previewCard,
+.assetHead > *,
+.sectionHead > *,
+.previewCardHead > * {
+  min-width: 0;
+}
+.gridSection {
+  min-width: 0;
+}
+
+
+.targetEditorPanel {
+  display: grid;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid var(--tb-line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--tb-soft) 68%, var(--tb-panel));
+}
+
+.targetEditorGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 18px;
+  align-items: end;
+}
+
+.targetTextField {
+  display: grid;
+  gap: 8px;
+  grid-column: span 2;
+}
+
+.targetTextField > span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.targetTextField input,
+.targetTextField textarea {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--tb-line);
+  background: var(--tb-panel);
+  padding: 10px 12px;
+  color: inherit;
+  font: inherit;
+}
+
+.targetTextField textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+@media (max-width: 900px) {
+  .targetEditorGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .targetTextField {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .previewBox {
+    min-height: 420px;
+    padding: 14px;
+  }
+  .targetEditorGrid {
+    grid-template-columns: 1fr;
+  }
+  .targetTextField {
+    grid-column: auto;
+  }
+}
+
+/* 021 final design pass: align the start workspace and editor flow to the completed TOOL 020 visual system. */
+.localLine {
+  margin: 0;
+  color: var(--tb-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.workspaceCard {
+  overflow: hidden;
+}
+
+.workspaceDropFocus {
+  position: relative;
+}
+
+.workspaceUploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  padding: 13px 24px;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.workspaceUploadButton:hover {
+  transform: translateY(-1px);
+  opacity: .92;
+}
+
+.workspaceUploadButton:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent);
+  outline-offset: 3px;
+}
+
+.blankStartRow {
+  display: flex;
+  align-items: center;
+  padding: 0 18px 18px;
+}
+
+/* Preview/work area first; supporting controls form the requested three-column desk below it. */
+.editorGrid {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.controlPanel {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.16fr) minmax(0, 1.16fr);
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.controlPanel > .controlCard:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: stretch;
+}
+
+.controlPanel > .controlCard:nth-child(2) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.controlPanel > .controlCard:nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.controlPanel > .controlCard:nth-child(4) {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: stretch;
+}
+
+.controlPanel > .controlCard:nth-child(1),
+.controlPanel > .controlCard:nth-child(4) {
+  align-content: start;
+}
+
+@media (max-width: 1180px) {
+  .controlPanel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+  .controlPanel > .controlCard:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .blankStartRow {
+    padding: 0 16px 16px;
+  }
+  .blankStartRow .secondaryButton {
+    width: 100%;
+  }
+  .controlPanel {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* 021 compact editing desk: preview + apply-all + common design in one row,
+   with only the file/output bar below. Background positioning lives in the design card. */
+.editorGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr) minmax(250px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.previewPanel {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.editTargetRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+
+.editTargetRow > span {
+  flex: 0 0 auto;
+}
+
+.editTargetRow .segmented {
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.editTargetRow .segmented button {
+  min-height: 34px;
+  padding: 7px 12px;
+}
+
+.controlPanel {
+  display: contents;
+}
+
+.controlPanel > .controlCard:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+}
+
+.controlPanel > .controlCard:nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: stretch;
+}
+
+.controlPanel > .controlCard:nth-child(2) {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.controlPanel > .controlCard:nth-child(2) .fieldGrid {
+  grid-template-columns: minmax(180px, .45fr) minmax(0, 1.55fr);
+  align-items: end;
+}
+
+.controlPanel > .controlCard:nth-child(2) .actionStack {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.previewBox {
+  min-height: 490px;
+  padding: 18px;
+}
+
+@media (max-width: 1180px) {
+  .editorGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .previewPanel {
+    grid-column: 1 / -1;
+  }
+
+  .controlPanel > .controlCard:nth-child(1),
+  .controlPanel > .controlCard:nth-child(3) {
+    grid-column: auto;
+    grid-row: 2;
+  }
+
+  .controlPanel > .controlCard:nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 720px) {
+  .editorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .previewPanel,
+  .controlPanel > .controlCard:nth-child(n) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .editTargetRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .editTargetRow .segmented {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .editTargetRow .segmented button {
+    flex: 1 0 auto;
+  }
+
+  .controlPanel > .controlCard:nth-child(2) .fieldGrid,
+  .controlPanel > .controlCard:nth-child(2) .actionStack {
+    grid-template-columns: 1fr;
+  }
+
+  .previewBox {
+    min-height: 420px;
+    padding: 14px;
+  }
+}
+
+
+/* 021 refinement: align the three top editing cards and slim the output bar. */
+.editorGrid {
+  align-items: stretch;
+}
+
+.previewPanel,
+.controlPanel > .controlCard:nth-child(1),
+.controlPanel > .controlCard:nth-child(3) {
+  align-self: stretch;
+  height: 100%;
+}
+
+/* File/output card: keep field labels, remove redundant section heading in TSX,
+   and reduce vertical whitespace without changing controls or download behavior. */
+.controlPanel > .controlCard:nth-child(2) {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .fieldGrid {
+  gap: 12px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .fieldGrid label {
+  gap: 6px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .fieldGrid select {
+  min-height: 44px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .actionStack {
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .actionStack button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.controlPanel > .controlCard:nth-child(2) .status {
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1180px) {
+  .previewPanel,
+  .controlPanel > .controlCard:nth-child(1),
+  .controlPanel > .controlCard:nth-child(3) {
+    height: auto;
+  }
+}
+
+
+/* 021 validation-aligned mobile order: preserve the finalized information hierarchy. */
+@media (max-width: 720px) {
+  .previewPanel {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .controlPanel > .controlCard:nth-child(1) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .controlPanel > .controlCard:nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .controlPanel > .controlCard:nth-child(2) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+}

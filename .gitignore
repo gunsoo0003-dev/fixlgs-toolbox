@@ -50,3 +50,12 @@ next-env.d.ts
 # TOOLBOX per-tool validation runtime artifacts (generic)
 /.next-tool*-runtime/
 /.next-tool*-regression/
+
+# TOOLBOX validation/runtime artifacts
+.tool021-runtime-*/
+.next-tool019-runtime/
+stage-zips/
+*_검수결과*.zip
+
+# Windows/ZIP mojibake quarantine
+.mojibake-quarantine/
