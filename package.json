@@ -185,7 +185,17 @@
     "check:tool019-validator": "node scripts/check-tool-019-validator.mjs",
     "check:tool019-source": "node scripts/check-tool-019-source.mjs",
     "check:tool019-design": "node scripts/check-tool-019-design.mjs",
-    "check:tool019-harness": "node scripts/check-tool-019-harness.mjs"
+    "check:tool019-harness": "node scripts/check-tool-019-harness.mjs",
+    "test:toolbox:020-preflight": "node scripts/run-tool-020-preflight.mjs",
+    "test:toolbox:020-core-only": "node scripts/run-tool-020-partial-validation.mjs core-only",
+    "test:toolbox:020-boundary-only": "node scripts/run-tool-020-partial-validation.mjs boundary-only",
+    "test:toolbox:020-regression-only": "node scripts/run-tool-020-regression-only.mjs",
+    "test:toolbox:020-limit-only": "node scripts/run-tool-020-limit-only.mjs",
+    "test:toolbox:020-final": "node scripts/run-tool-020-final-validation.mjs",
+    "check:tool020-validator": "node scripts/check-tool-020-validator.mjs",
+    "check:tool020-source": "node scripts/check-tool-020-source.mjs",
+    "check:tool020-design": "node scripts/check-tool-020-design.mjs",
+    "check:tool020-harness": "node scripts/check-tool-020-harness.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

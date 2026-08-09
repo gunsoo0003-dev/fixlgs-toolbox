@@ -206,6 +206,8 @@ export const tool018Slug = "image-metadata-checker" as const;
 
 export const tool019Slug = "youtube-thumbnail-maker" as const;
 
+export const tool020Slug = "youtube-channel-banner-maker" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -228,6 +230,8 @@ export const tool018Titles: Record<Locale, string> = { ko: "이미지 정보·�
 export const tool018Descriptions: Record<Locale, string> = { ko: "이미지의 해상도, DPI, 촬영 정보, GPS·EXIF 메타데이터를 확인하고 필요하면 제거하세요.", en: "Check image resolution, DPI, camera details, GPS and EXIF metadata, and remove metadata when needed.", ja: "画像の解像度、DPI、撮影情報、GPS・EXIFメタデータを確認し、必要に応じて削除できます。" };
 export const tool019Titles: Record<Locale, string> = { ko: "유튜브 썸네일 제작기", en: "YouTube Thumbnail Maker", ja: "YouTubeサムネイル作成ツール" };
 export const tool019Descriptions: Record<Locale, string> = { ko: "1280×720 유튜브 썸네일을 만들고 제목·부제·외곽선·그림자·안전영역을 조절하세요.", en: "Create 1280×720 YouTube thumbnails with titles, subtitles, outlines, shadows, and safe-area guides.", ja: "1280×720のYouTubeサムネイルを作成し、タイトル・サブタイトル・縁取り・影・セーフエリアを調整できます。" };
+export const tool020Titles: Record<Locale, string> = { ko: "유튜브 채널 배너 제작기", en: "YouTube Channel Banner Maker", ja: "YouTubeチャンネルバナー作成ツール" };
+export const tool020Descriptions: Record<Locale, string> = { ko: "PC·모바일·TV 가시영역과 안전영역을 확인하며 2560×1440 유튜브 채널 배너를 만드세요.", en: "Create 2560×1440 YouTube channel banners while checking TV, desktop, mobile and safe-area previews.", ja: "TV・PC・モバイルの表示範囲とセーフエリアを確認しながら2560×1440のYouTubeチャンネルバナーを作成できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -563,6 +567,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool020Titles,
+      description: tool020Descriptions,
+      href: `/${"ko"}/${tool020Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -680,7 +691,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "content-image") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool019Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool019Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool020Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

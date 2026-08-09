@@ -1,0 +1,9 @@
+TOOL 020 DESIGN/DENSITY FIX
+- Rechecked TOOL 019 approved workbench CSS and mapped 020 workbench to the same 3-column desktop rhythm.
+- Full-width preview row.
+- Background / title / logo cards in aligned desktop columns.
+- Output / action row aligned under the editor.
+- Added EXPERT POST with 8 practical title+description entries for KO/EN/JA.
+- Expanded 6 use cases from title-only to title+description density.
+- Restored desktop one-line description/expert/safe-area/note copy behavior; mobile wraps normally.
+- No changes to TOOL 001-019 source files.

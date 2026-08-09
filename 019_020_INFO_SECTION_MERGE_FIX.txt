@@ -1,0 +1,5 @@
+019/020 information-section layout fix
+- Safe-area/specification and Important Notes merged into one section per tool.
+- Section width aligned to FAQ container width (var(--tb-container)).
+- Headings, descriptions, divider, and notes aligned to the same left baseline as FAQ.
+- Existing information content preserved.

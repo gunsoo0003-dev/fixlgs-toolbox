@@ -1,0 +1,39 @@
+[TOOL 020 변경/신규 파일 목록]
+
+실제 구현 코드
+- components/youtube-channel-banner-page.tsx
+- components/youtube-channel-banner-tool.tsx
+- components/youtube-channel-banner-tool.module.css
+- lib/tool-020-youtube-banner.ts
+- lib/tool-020-renderer.ts
+
+격리 실행/검수 전용
+- app/__tool020-harness/page.tsx
+- scripts/check-tool-020-source.mjs
+- scripts/check-tool-020-harness.mjs
+- tests/tool-020-preflight.spec.ts
+- tests/tool-020-core.spec.ts
+- tests/tool-020-boundary.spec.ts
+- tests/tool-020-regression.spec.ts
+- tests/tool-020-limit.spec.ts
+- test-fixtures/tool020/landscape.jpg
+- test-fixtures/tool020/portrait.jpg
+- test-fixtures/tool020/square.webp
+- test-fixtures/tool020/transparent-logo.png
+- test-fixtures/tool020/exif-orientation-6.jpg
+- test-fixtures/tool020/animated-marker.png
+- test-fixtures/tool020/animated-marker.webp
+- test-fixtures/tool020/mime-mismatch.jpg
+- test-fixtures/tool020/corrupted.jpg
+
+전달/검수 문서
+- docs/tool020/HANDOFF.txt
+- docs/tool020/REQ-MASTER.md
+- docs/tool020/CHECKLIST-LATEST.md
+- docs/tool020/runtime-evidence.json
+- docs/tool020/CHANGE-FILES.txt
+- docs/tool020/CHANGE-MAP.md
+- docs/tool020/FAILURE-MAP.md
+
+공통파일 수정: 0건
+기존 완료 도구 수정: 0건

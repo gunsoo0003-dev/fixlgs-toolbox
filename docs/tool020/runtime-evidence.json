@@ -1,0 +1,215 @@
+{
+  "desktop": {
+    "result": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "safe": {
+        "width": 1544,
+        "height": 423,
+        "x": 508,
+        "y": 509
+      },
+      "safePass": true,
+      "clamp": {
+        "beforeInside": false,
+        "afterInside": true,
+        "moved": {
+          "x": 0.5,
+          "y": 0.5904166666666666
+        }
+      },
+      "export": {
+        "png": {
+          "size": 202410,
+          "type": "image/png",
+          "width": 2560,
+          "height": 1440
+        },
+        "jpg": {
+          "size": 70385,
+          "type": "image/jpeg",
+          "width": 2560,
+          "height": 1440
+        }
+      },
+      "guideExcluded": true,
+      "logoAlpha": {
+        "minA": 0,
+        "maxA": 180,
+        "partial": true
+      },
+      "exif": {
+        "width": 400,
+        "height": 800,
+        "orientationApplied": true
+      },
+      "animated": {
+        "apng": true,
+        "webp": true
+      },
+      "validation": {
+        "mismatch": {
+          "ok": false,
+          "code": "MIME_EXTENSION_MISMATCH"
+        },
+        "empty": {
+          "ok": false,
+          "code": "EMPTY_FILE"
+        },
+        "gif": {
+          "ok": false,
+          "code": "UNSUPPORTED_TYPE"
+        }
+      },
+      "filename": {
+        "source": "한글--name-banner.jpg",
+        "blank": "youtube-channel-banner.png"
+      }
+    },
+    "errors": []
+  },
+  "mobile360": {
+    "result": {
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "safe": {
+        "width": 1544,
+        "height": 423,
+        "x": 508,
+        "y": 509
+      },
+      "safePass": true,
+      "clamp": {
+        "beforeInside": false,
+        "afterInside": true,
+        "moved": {
+          "x": 0.5,
+          "y": 0.5904166666666666
+        }
+      },
+      "export": {
+        "png": {
+          "size": 202410,
+          "type": "image/png",
+          "width": 2560,
+          "height": 1440
+        },
+        "jpg": {
+          "size": 70385,
+          "type": "image/jpeg",
+          "width": 2560,
+          "height": 1440
+        }
+      },
+      "guideExcluded": true,
+      "logoAlpha": {
+        "minA": 0,
+        "maxA": 180,
+        "partial": true
+      },
+      "exif": {
+        "width": 400,
+        "height": 800,
+        "orientationApplied": true
+      },
+      "animated": {
+        "apng": true,
+        "webp": true
+      },
+      "validation": {
+        "mismatch": {
+          "ok": false,
+          "code": "MIME_EXTENSION_MISMATCH"
+        },
+        "empty": {
+          "ok": false,
+          "code": "EMPTY_FILE"
+        },
+        "gif": {
+          "ok": false,
+          "code": "UNSUPPORTED_TYPE"
+        }
+      },
+      "filename": {
+        "source": "한글--name-banner.jpg",
+        "blank": "youtube-channel-banner.png"
+      }
+    },
+    "errors": []
+  },
+  "mobile320": {
+    "result": {
+      "viewport": {
+        "width": 320,
+        "height": 720
+      },
+      "safe": {
+        "width": 1544,
+        "height": 423,
+        "x": 508,
+        "y": 509
+      },
+      "safePass": true,
+      "clamp": {
+        "beforeInside": false,
+        "afterInside": true,
+        "moved": {
+          "x": 0.5,
+          "y": 0.5904166666666666
+        }
+      },
+      "export": {
+        "png": {
+          "size": 202410,
+          "type": "image/png",
+          "width": 2560,
+          "height": 1440
+        },
+        "jpg": {
+          "size": 70385,
+          "type": "image/jpeg",
+          "width": 2560,
+          "height": 1440
+        }
+      },
+      "guideExcluded": true,
+      "logoAlpha": {
+        "minA": 0,
+        "maxA": 180,
+        "partial": true
+      },
+      "exif": {
+        "width": 400,
+        "height": 800,
+        "orientationApplied": true
+      },
+      "animated": {
+        "apng": true,
+        "webp": true
+      },
+      "validation": {
+        "mismatch": {
+          "ok": false,
+          "code": "MIME_EXTENSION_MISMATCH"
+        },
+        "empty": {
+          "ok": false,
+          "code": "EMPTY_FILE"
+        },
+        "gif": {
+          "ok": false,
+          "code": "UNSUPPORTED_TYPE"
+        }
+      },
+      "filename": {
+        "source": "한글--name-banner.jpg",
+        "blank": "youtube-channel-banner.png"
+      }
+    },
+    "errors": []
+  }
+}

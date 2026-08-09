@@ -1,0 +1,9 @@
+TOOL 020 validator precheck fix
+- Added stable selector contract helper based on current TOOL020 DOM.
+- Split initial DOM vs editor DOM to avoid dynamic-state false failures.
+- Added explicit PRODUCT_FAIL / HARNESS_ERROR / SKIP classification.
+- Tests no longer depend on generic file-input DOM order or category title visual line breaks.
+- Added actual public-route preflight for KO/EN/JA.
+- Added independent limit assertions and actual PNG dimension check.
+- Harness checker now cross-checks declared testids against current component source.
+- Runtime no longer loops on automatic npm install when Playwright is missing; reports HARNESS_ERROR immediately.

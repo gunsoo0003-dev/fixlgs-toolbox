@@ -1,0 +1,144 @@
+[웹도구 020 보조작업장 HANDOFF]
+도구 번호: 020
+도구명: 유튜브 채널 배너 제작기 / YouTube Channel Banner Maker
+소속 카테고리: C. 콘텐츠 이미지 제작
+slug: youtube-channel-banner-maker
+예상 URL: /ko|en|ja/youtube-channel-banner-maker
+현재 상태: READY / 전달 ZIP 생성·재개봉·파일목록 1:1 대조 완료 / 최신판 기능 반영 완료 / 정적검수 PASS / Chromium 격리 렌더러 실검수 PASS / 전체 Next·실제 React UI Playwright는 의존성 설치 차단으로 미완료
+
+[최신 전달서 기준 구현]
+- 2560×1440 기본 Canvas, 16:9
+- 최소 2048×1152 / 안전영역 1235×338 / 6MB 기준 단일 정책 데이터
+- 2560×1440 안전영역 비례 환산 1544×423, 중앙 배치
+- 빈 배너 시작
+- 배경 JPG/JPEG/PNG/WebP 1개
+- No-Stretch Cover crop, normalized X/Y/zoom
+- createImageBitmap imageOrientation=from-image 경로로 EXIF Orientation 반영
+- APNG / Animated WebP 감지 거부, GIF/SVG 미지원
+- MIME/확장자 불일치, 빈 파일, 서비스 상한 초과 거부
+- 제목 1개 / 120자 / font / size / color / align / wrap / outline / shadow / drag / keyboard 이동
+- 부제·본문 레이어 제외
+- 로고 1개 / PNG alpha / size / position / opacity / aspect / drag / keyboard 이동
+- 제목·로고 실제 bounds 기준 안전영역 판정
+- 안전영역 밖 요소 자동 이동 시 1px 내부 여유 clamp
+- TV / PC / Mobile / Safe preview
+- Preview mode는 디자인 좌표를 변경하지 않음
+- Guide ON/OFF
+- JPG / PNG export
+- JPG quality
+- 실제 Blob.size 표시
+- 6MB 초과 안내 및 JPG 6MB 이하 맞추기
+- 새 이미지 / 전체 초기화 / 계속 편집 / 재다운로드
+- Undo / Redo history 최대 24 state
+- 로컬 브라우저 처리, 서버 업로드 없음
+
+[서비스 유효상한 후보 - 최신 전달서 우선값]
+- 배경 수: 1개
+- 로고 수: 1개
+- 배경 파일: 20MB 우선 후보 (30MB 비교는 주작업장 limit 확장 판단)
+- 로고 파일: 5MB 우선 후보 (10MB 비교는 주작업장 limit 확장 판단)
+- 원본 총 픽셀: 40MP 우선 후보 (48MP 비교)
+- 제목: 120자
+- History: 24 state (전달서 20~30 state 범위 내)
+- 전문/하드코어 영역: 20MB 초과 배경, 5MB 초과 로고, 40MP 초과 원본 등은 기본 서비스 후보에서 제외
+
+[020 전용 이식 파일]
+- components/youtube-channel-banner-page.tsx
+- components/youtube-channel-banner-tool.tsx
+- components/youtube-channel-banner-tool.module.css
+- lib/tool-020-youtube-banner.ts
+- lib/tool-020-renderer.ts
+- app/__tool020-harness/page.tsx
+- tests/tool-020-preflight.spec.ts
+- tests/tool-020-core.spec.ts
+- tests/tool-020-boundary.spec.ts
+- tests/tool-020-regression.spec.ts
+- tests/tool-020-limit.spec.ts
+- scripts/check-tool-020-source.mjs
+- scripts/check-tool-020-harness.mjs
+- test-fixtures/tool020/landscape.jpg
+- test-fixtures/tool020/portrait.jpg
+- test-fixtures/tool020/square.webp
+- test-fixtures/tool020/transparent-logo.png
+- test-fixtures/tool020/exif-orientation-6.jpg
+- test-fixtures/tool020/animated-marker.png
+- test-fixtures/tool020/animated-marker.webp
+- test-fixtures/tool020/mime-mismatch.jpg
+- test-fixtures/tool020/corrupted.jpg
+- docs/tool020/REQ-MASTER.md
+- docs/tool020/CHECKLIST-LATEST.md
+- docs/tool020/runtime-evidence.json
+- docs/tool020/CHANGE-FILES.txt
+- docs/tool020/CHANGE-MAP.md
+- docs/tool020/FAILURE-MAP.md
+- docs/tool020/HANDOFF.txt
+
+[공통파일 보호]
+- app/globals.css 수정 없음
+- 공통 layout/header/footer/navigation/workbench 수정 없음
+- lib/site.ts 수정 없음
+- app/[locale]/[toolSlug]/page.tsx 수정 없음
+- app/sitemap.ts / app/robots.ts 수정 없음
+- 기존 001~017 구현/검수기 수정 없음
+- 기준 017과 비-.git 파일 SHA-256 대조: SAME 457 / CHANGED 0 / MISSING 0
+- 020 확인을 위해 공통파일을 임시 수정하지 않음
+
+[정적 검수]
+- node scripts/check-tool-020-source.mjs : PASS
+- node scripts/check-tool-020-harness.mjs : PASS
+
+[Chromium 격리 실행검수 - 실제 브라우저 엔진]
+실행 환경: Python Playwright + 시스템 Chromium, 020 브라우저 전용 renderer/policy를 격리 주입해 실제 Canvas/File/Blob/ImageBitmap 실행
+확인 viewport: 1440×1000 / 360×800 / 320×720
+- console error: 0
+- page error: 0
+- safe area 환산: 1544×423 / x=508 / y=509 PASS
+- 안전영역 밖 제목 bounds 판정 PASS
+- '안전영역 안으로 이동' 보정 후 실제 bounds 내부 진입 PASS
+- JPG 실제 encode/decode 2560×1440 PASS
+- PNG 실제 encode/decode 2560×1440 PASS
+- transparent-logo alpha: 투명/부분 alpha 확인 PASS
+- guide=true/false 최종 renderer pixel 비교: 동일 PASS (가이드 export 미포함)
+- EXIF orientation fixture: createImageBitmap(from-image) 적용 확인 PASS
+- APNG 감지: PASS
+- Animated WebP 감지: PASS
+- MIME/확장자 mismatch 거부: PASS
+- 빈 파일 거부: PASS
+- GIF 미지원 거부: PASS
+- 다국어 Canvas 문자열 KO/JA 혼합 렌더 경로 실행 PASS
+상세 증거: docs/tool020/runtime-evidence.json
+
+[실행 중 발견·수정한 실제 FAIL]
+1) HANDOFF가 이전 015 내용으로 남아 있었음 -> 020 전용 HANDOFF로 전면 교체.
+2) 안전영역 자동 이동이 실제 title bounds를 경계에 정확히 붙이며 부동소수 오차로 여전히 outside가 될 수 있었음 -> safe rect 1px 내부 여유 clamp로 보정. Chromium 재검수에서 beforeOutside=true / afterInside=true 확인.
+
+[아직 주작업장/통합환경에서만 확정 가능한 항목]
+- 현재 작업 사본에는 node_modules가 없고 npm registry에서 @playwright/test 설치가 404로 차단되어 Next 앱 자체를 구동한 실제 React UI Playwright를 실행하지 못함.
+- 따라서 실제 TOOLBOX Header/Footer 포함 PC·모바일 전체 페이지 픽셀 렌더, KO/EN/JA 실제 route, 일본어 IME/touch/scroll/hover, 실제 component selector timing은 통합환경에서 재확인 필요.
+- 최신 실프로젝트에는 019까지 존재할 수 있으나 제공 기준본은 017이므로 019와의 실제 코드/디자인 비교는 수행 불가.
+- sitemap/robots/category/site route 정식 연결, 전체 regression, production build, 통합 FINAL, 배포/Search Console은 주작업장 책임.
+
+[주작업장 이식 시 필요한 공통 연결 후보 - 보조작업장에서는 수정 금지]
+- app/[locale]/[toolSlug]/page.tsx에 020 component 연결
+- lib/site.ts 또는 현재 최신 site/category data에 020 등록
+- KO/EN/JA category card 등록
+- sitemap에 /ko|en|ja/youtube-channel-banner-maker 추가
+- robots 영향 확인
+- 문의 링크 app=유튜브 채널 배너 제작기(실제 프로젝트 표준 서비스명 기준)
+- 실제 활성 관련도구만 연결
+
+[검수 순서]
+- preflight -> core-only -> boundary-only -> regression-only -> 서비스 유효상한 실제 적용 -> limit-only -> FINAL
+- 보조작업장 Chromium 격리 renderer 검수는 위 단계의 대체가 아니라 별도 실행 근거임.
+- 최신 통합본 FINAL은 FAIL 0 / SKIP 0이어야 함.
+
+[출고 판정]
+- 전달 ZIP 생성 완료.
+- 실제 ZIP 재개봉 및 내부 파일목록 확인 완료.
+- HANDOFF 이식파일 목록과 실제 ZIP 이식파일 1:1 대조 완료.
+- 최상위 폴더 `fixlgs-toolbox` 확인.
+- node_modules/.next/cache/공통 route/site/sitemap/robots 파일 미포함 확인.
+- 실제 React/Next UI Playwright를 이 작업 사본에서 실행할 수 없는 구조적 이유가 있으므로, 이 항목을 허위 PASS로 기록하지 않음.
+
+[원본 최종 제작기획서]
+- 전달 ZIP에는 사용자가 제공한 최신 `FIXLGS_TOOLBOX_020_유튜브_채널_배너_제작기_최종제작전달서_최신판(1).pdf` 원본을 수정 없이 포함한다.

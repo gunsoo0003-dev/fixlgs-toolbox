@@ -1,0 +1,6 @@
+TOOL 019/020 two-column info balance fix
+- SAFE AREA and IMPORTANT NOTES are side-by-side on desktop, stacked on mobile.
+- Overall width follows the FAQ container width and left alignment.
+- TOOL 019 safe-area copy rewritten into 8 shorter lines to balance 8 note bullets without overlap.
+- TOOL 020 safe-area copy rewritten into 6 concise lines to balance 6 note bullets.
+- Existing lower sections and tool functionality are not changed by this patch.
