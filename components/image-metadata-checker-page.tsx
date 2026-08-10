@@ -125,10 +125,10 @@ export function ImageMetadataCheckerPage({ locale }: { locale: Locale }) {
     <section className={`toolbox-tool-format-guide toolbox-tool-expert-post tool018-format-guide ${styles.metadataGuide}`}>
       <div className="toolbox-tool-format-guide-head"><p>METADATA GUIDE</p><h2 className={styles.keepWords}>{t.guideTitle}</h2><span>{t.guideDesc}</span></div>
       <div className="toolbox-tool-result-grid">{notes.map(([title,description],index) => <article key={title}><span>{String(index+1).padStart(2,'0')}</span><div><h4>{title}</h4><p>{description}</p></div></article>)}</div>
-      <div className="toolbox-tool-format-notes">
+      <section className="toolbox-tool-format-notes-section" aria-label="Additional guide notes"><div className="toolbox-tool-format-notes">
         <article><h3>{locale === 'ko' ? '주의사항' : locale === 'en' ? 'Important notes' : '注意事項'}</h3><ul>{cautions.map((item) => <li key={item}>{item}</li>)}</ul></article>
         <article><h3>{locale === 'ko' ? '개인정보 확인 기준' : locale === 'en' ? 'Privacy check guide' : 'プライバシー確認の基準'}</h3><ul>{(locale === 'ko' ? ['GPS·촬영일·카메라·작성자 정보는 실제 태그가 있을 때만 표시합니다.','파일 수정 시간은 촬영일로 바꾸어 표시하지 않습니다.','원본 파일은 수정하지 않고 정리된 새 파일을 생성합니다.'] : locale === 'en' ? ['GPS, capture date, camera, and author information are shown only when matching tags exist.','File modified time is not presented as the date taken.','The source file is not modified; cleaning creates a new file.'] : ['GPS・撮影日時・カメラ・作成者情報は実際のタグがある場合のみ表示します。','ファイル更新日時を撮影日時として表示しません。','元ファイルは変更せず、削除後の新しいファイルを作成します。']).map((item) => <li key={item}>{item}</li>)}</ul></article>
-      </div>
+      </div></section>
     </section>
 
     <section className={`toolbox-tool-format-guide toolbox-tool-expert-post tool018-use-cases ${styles.useCases}`}>

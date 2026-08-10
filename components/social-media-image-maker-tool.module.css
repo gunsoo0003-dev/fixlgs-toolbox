@@ -733,10 +733,7 @@
 }
 
 @media (max-width: 720px) {
-  .previewBox {
-    min-height: 420px;
-    padding: 14px;
-  }
+  
   .targetEditorGrid {
     grid-template-columns: 1fr;
   }
@@ -751,10 +748,6 @@
   color: var(--tb-muted);
   font-size: 13px;
   line-height: 1.65;
-}
-
-.workspaceCard {
-  overflow: hidden;
 }
 
 .workspaceDropFocus {

@@ -1,0 +1,304 @@
+/* Shared TOOLBOX detail-page design modifiers — normalized after TOOL 019-022 */
+
+/* Detail hero description: keep approved desktop lead copy on one line when the page opts in. */
+@media (min-width:901px){
+  .toolbox-tool-detail-hero--single-line-description .toolbox-tool-detail-heading>p{
+    max-width:none;
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:keep-all;
+    font-size:15px;
+  }
+}
+@media (max-width:900px){
+  .toolbox-tool-detail-hero--single-line-description .toolbox-tool-detail-heading>p{
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+
+/* HOW TO USE: reuse the established .toolbox-tool-guide--five 3-column multi-row modifier for 4/5-step guides. */
+
+/* EXPERT POST: shared width modifiers instead of per-tool head overrides. */
+.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head{max-width:none}
+.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head>span{max-width:980px}
+@media (min-width:901px){
+  .toolbox-tool-expert-post--compact-copy .toolbox-tool-format-guide-head>span{
+    max-width:none;
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:keep-all;
+    font-size:14px;
+  }
+}
+@media (max-width:900px){
+  .toolbox-tool-expert-post--compact-copy .toolbox-tool-format-guide-head>span{
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+/* USE CASES: approved 019/020 editorial row treatment, now reusable. */
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid article{
+  grid-template-columns:70px minmax(280px,.78fr) minmax(0,1.22fr);
+}
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid h3{font-size:clamp(22px,2vw,31px)}
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid p{max-width:760px;margin:0;align-self:start}
+@media (max-width:900px){
+  .toolbox-tool-use-cases--editorial .toolbox-tool-format-grid article{display:block}
+  .toolbox-tool-use-cases--editorial .toolbox-tool-format-grid p{margin-top:12px}
+}
+
+/* IMPORTANT NOTES / RESULT CHECKS: common long-form information band. */
+.toolbox-tool-info-band{
+  width:min(1160px,calc(100% - 40px));
+  margin:0 auto;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.toolbox-tool-info-band--section-start{
+  position:relative;
+  padding-top:clamp(84px,9vw,140px);
+}
+.toolbox-tool-info-band--section-start::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:100vw;
+  border-top:1px solid var(--tb-line);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.toolbox-tool-info-band--spaced{margin-top:clamp(84px,9vw,140px)}
+.toolbox-tool-info-band--bottom-gap{padding-bottom:clamp(84px,9vw,140px)}
+.toolbox-tool-info-band-head{
+  display:grid;
+  grid-template-columns:minmax(136px,.34fr) minmax(0,1.9fr);
+  grid-template-areas:"eyebrow title" ". description";
+  align-items:end;
+  column-gap:clamp(28px,4vw,64px);
+  row-gap:14px;
+  padding:0 0 30px;
+  border-bottom:1px solid var(--tb-line-strong);
+}
+.toolbox-tool-info-band-head>p{
+  grid-area:eyebrow;
+  margin:0 0 7px;
+  color:var(--blue);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.2em;
+}
+.toolbox-tool-info-band-head>h2{
+  grid-area:title;
+  margin:0;
+  color:var(--tb-text);
+  font-size:clamp(40px,4.6vw,68px);
+  font-weight:400;
+  line-height:1.06;
+  letter-spacing:-.052em;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band-head>span{
+  grid-area:description;
+  max-width:900px;
+  margin:0;
+  color:var(--tb-muted);
+  font-size:18px;
+  line-height:1.9;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band--left-head .toolbox-tool-info-band-head{
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"eyebrow" "title" "description";
+  align-items:start;
+  justify-items:start;
+  row-gap:12px;
+}
+.toolbox-tool-info-band--left-head .toolbox-tool-info-band-head>p{margin:0}
+.toolbox-tool-info-band--left-head .toolbox-tool-info-band-head>span{max-width:900px}
+
+/* TOOL 024: prevent the full-viewport section separator from expanding document scroll width. */
+.toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start::before{
+  left:0;
+  width:100%;
+  transform:none;
+}
+.toolbox-tool-info-band--format-head .toolbox-tool-info-band-head>span{
+  max-width:880px;
+  margin-top:26px;
+}
+.toolbox-tool-info-band-list{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.toolbox-tool-info-band-list li{
+  position:relative;
+  margin:0;
+  padding:20px 0 20px 22px;
+  border-bottom:1px solid var(--tb-line);
+  color:var(--tb-muted);
+  font-size:16px;
+  line-height:1.8;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band-list li::before{
+  content:"•";
+  position:absolute;
+  left:2px;
+  color:var(--blue);
+  font-weight:900;
+}
+@media (min-width:1180px){.toolbox-tool-info-band-list li{white-space:nowrap}}
+@media (max-width:900px){
+  .toolbox-tool-info-band-head{
+    grid-template-columns:1fr;
+    grid-template-areas:"eyebrow" "title" "description";
+    align-items:start;
+    row-gap:12px;
+  }
+  .toolbox-tool-info-band-head>span{margin-top:4px}
+}
+@media (max-width:720px){
+  .toolbox-tool-info-band{width:min(100% - 36px,1160px)}
+  .toolbox-tool-info-band--section-start{padding-top:72px}
+  .toolbox-tool-info-band--spaced{margin-top:72px}
+  .toolbox-tool-info-band--bottom-gap{padding-bottom:56px}
+  .toolbox-tool-info-band-head{padding-bottom:24px}
+  .toolbox-tool-info-band-head>h2{font-size:clamp(36px,11vw,50px)}
+  .toolbox-tool-info-band-head>span{font-size:15px;line-height:1.85}
+  .toolbox-tool-info-band-list li{
+    font-size:14px;
+    padding-top:16px;
+    padding-bottom:16px;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+/* SAFE AREA + IMPORTANT NOTES: shared two-column information section used by 019/020. */
+.toolbox-tool-info-notes-split{padding:clamp(68px,6vw,96px) var(--tb-gutter)}
+.toolbox-tool-info-notes-split>.toolbox-info-notes-inner{
+  width:min(var(--tb-container),100%);
+  margin-inline:auto;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:"safeHead notesHead" "divider divider" "safeCopy notesList";
+  column-gap:clamp(42px,5vw,76px);
+  row-gap:20px;
+  align-items:start;
+}
+.toolbox-info-notes-safe-head{grid-area:safeHead}
+.toolbox-info-notes-copy{grid-area:safeCopy}
+.toolbox-info-notes-notes-head{grid-area:notesHead;padding-bottom:0;border-bottom:0}
+.toolbox-info-notes-divider{grid-area:divider;display:block;height:1px;background:var(--tb-line-strong)}
+.toolbox-info-notes-list{grid-area:notesList;margin:0;padding:0;border:0}
+.toolbox-tool-info-notes-split .toolbox-tool-format-guide-head{
+  max-width:none;
+  margin:0;
+  padding:0;
+  text-align:left;
+  align-items:flex-start;
+}
+.toolbox-tool-info-notes-split .toolbox-tool-format-guide-head h2{max-width:none;margin:0;text-align:left}
+.toolbox-info-notes-copy{
+  display:grid;
+  gap:10px;
+  max-width:none;
+  margin:0;
+  color:var(--tb-muted);
+  font-size:14px;
+  line-height:1.62;
+  text-align:left;
+}
+.toolbox-info-notes-copy span{display:block;white-space:normal;word-break:keep-all;overflow-wrap:break-word}
+.toolbox-info-notes-list article{padding:0}
+.toolbox-info-notes-list ul{display:grid;gap:10px;margin:0;padding-left:18px}
+.toolbox-info-notes-list li{white-space:nowrap;word-break:keep-all;overflow-wrap:normal;font-size:14px;line-height:1.62}
+@media(max-width:999px){
+  .toolbox-tool-info-notes-split{padding:56px 18px}
+  .toolbox-tool-info-notes-split>.toolbox-info-notes-inner{
+    grid-template-columns:1fr;
+    grid-template-areas:"safeHead" "safeCopy" "notesHead" "divider" "notesList";
+    row-gap:20px;
+  }
+  .toolbox-info-notes-copy,
+  .toolbox-info-notes-list li{white-space:normal;overflow-wrap:anywhere;word-break:normal}
+}
+
+/* Legitimate tool-specific detail exceptions retained after common-layout cleanup. */
+.tool019-related-tools,.tool020-related-tools{margin-top:22px}
+.tool019-detail-hero .toolbox-tool-detail-heading>p,
+.tool020-detail-hero .toolbox-tool-detail-heading>p{margin-top:20px}
+@media(min-width:901px){
+  .tool019-detail-hero .toolbox-tool-detail-heading>p,
+  .tool020-detail-hero .toolbox-tool-detail-heading>p{
+    max-width:none;
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:keep-all;
+    font-size:15px;
+  }
+}
+@media(max-width:900px){
+  .tool019-detail-hero .toolbox-tool-detail-heading>p,
+  .tool020-detail-hero .toolbox-tool-detail-heading>p{
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+/* TOOL 024: allow long localized caution rows to wrap so desktop pages never widen past the viewport. */
+.toolbox-tool-info-band--format-head .toolbox-tool-info-band-list li{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+
+/* TOOL 024: allow long workflow headings to wrap at desktop widths to prevent document overflow. */
+.toolbox-subpage-site:has([data-testid="tool024-root"]) .toolbox-tool-format-guide-head h2{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:keep-all;
+}
+
+/* TOOL 024 desktop containment: keep the finalized screenshot-maker page inside the viewport without changing shared tool layouts. */
+.toolbox-subpage-site:has([data-testid="tool024-root"]){
+  width:100%;
+  max-width:100vw;
+  overflow-x:clip;
+}
+.toolbox-subpage-site:has([data-testid="tool024-root"]) .toolbox-tool-detail-hero,
+.toolbox-subpage-site:has([data-testid="tool024-root"]) .toolbox-tool-detail-heading,
+.toolbox-subpage-site:has([data-testid="tool024-root"]) .toolbox-tool-detail-body,
+.toolbox-subpage-site:has([data-testid="tool024-root"]) .toolbox-tool-detail-body>div,
+.toolbox-subpage-site:has([data-testid="tool024-root"]) [data-testid="tool024-root"],
+.toolbox-subpage-site:has([data-testid="tool024-root"]) [data-testid="tool024-workspace-dropzone"]{
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+/* Stage 5: split independent note topics from composite information sections (001/012/013/014/018 only). */
+.toolbox-tool-format-notes-section{
+  margin-top:clamp(72px,8vw,118px);
+  padding-top:clamp(48px,5vw,72px);
+  border-top:1px solid var(--tb-line-strong);
+}
+.toolbox-tool-format-notes-section .toolbox-tool-format-notes{
+  margin-top:0;
+  padding-top:0;
+  border-top:0;
+}
+@media(max-width:800px){
+  .toolbox-tool-format-notes-section{
+    margin-top:72px;
+    padding-top:40px;
+  }
+}

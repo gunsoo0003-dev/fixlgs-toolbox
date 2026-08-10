@@ -383,7 +383,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
               </article>
             ))}
           </div>
-          <div className="toolbox-tool-format-notes">
+          <section className="toolbox-tool-format-notes-section" aria-label="Additional guide notes"><div className="toolbox-tool-format-notes">
             <article>
               <h3>{info.formatGuide.useTitle}</h3>
               <ul>{info.formatGuide.useItems.map((item) => <li key={item}>{item}</li>)}</ul>
@@ -392,7 +392,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
               <h3>{info.formatGuide.noteTitle}</h3>
               <ul>{info.formatGuide.noteItems.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
-          </div>
+          </div></section>
           <div className="toolbox-tool-direction-guide">
             <div className="toolbox-tool-section-intro">
               <p>FORMAT ROUTES</p>

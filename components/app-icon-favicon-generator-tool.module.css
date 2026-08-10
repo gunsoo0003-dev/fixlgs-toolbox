@@ -19,7 +19,7 @@
 }
 
 /* Initial workspace: intentionally mirrors TOOL 022 completed upload workspace. */
-.workspaceCard{overflow:hidden}
+
 .workspaceDropFocus{position:relative}
 .workspaceUploadButton{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;background:var(--blue);color:#fff;padding:13px 24px;font:inherit;font-size:14px;font-weight:750;cursor:pointer;transition:transform .2s ease,opacity .2s ease}
 .workspaceUploadButton:hover{transform:translateY(-1px);opacity:.92}

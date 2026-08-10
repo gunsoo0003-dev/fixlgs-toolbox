@@ -198,10 +198,10 @@ export function ImageBorderRoundedPage({ locale }: { locale: Locale }) {
           <div className="toolbox-tool-format-grid">
             {t.guideCards.map(([name, use, strengths, note]) => <article key={name}><strong>{name}</strong><h3>{use}</h3><p>{strengths}</p><small>{note}</small></article>)}
           </div>
-          <div className="toolbox-tool-format-notes">
+          <section className="toolbox-tool-format-notes-section" aria-label="Additional guide notes"><div className="toolbox-tool-format-notes">
             <article><h3>{t.useTitle}</h3><ul>{t.useItems.map((item) => <li key={item}>{item}</li>)}</ul></article>
             <article><h3>{t.noteTitle}</h3><ul>{t.noteItems.map((item) => <li key={item}>{item}</li>)}</ul></article>
-          </div>
+          </div></section>
           <div className="toolbox-tool-direction-guide">
             <div className="toolbox-tool-section-intro"><p>RENDER ROUTES</p><h3>{t.directionTitle}</h3><span>{t.directionDesc}</span></div>
             <div className="toolbox-tool-direction-grid">
