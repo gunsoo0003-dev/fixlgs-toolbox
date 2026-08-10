@@ -1,0 +1,7 @@
+업로드 실패 -> app-store-screenshot-maker-tool.tsx loadImage/LIMITS/addFiles
+미리보기 실패 -> render/useEffect/canvasRef
+규격 크기 실패 -> PRESETS/render canvas width/height
+언어 실패 -> SlideText/updateText/selectedLanguages
+ZIP 실패 -> downloadZip/createStoredZip
+selector 실패 -> data-testid tool024-*와 tests/tool-024-*.spec.ts 대조
+route 404 -> 주작업장 공통 route/site 연결 확인

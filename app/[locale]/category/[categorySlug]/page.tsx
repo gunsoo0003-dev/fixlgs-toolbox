@@ -162,6 +162,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
             const imageEditLines = categorySlug === "image-edit" ? imageEditTitleLines[currentLocale][index] : null;
             const cardTitle = imageEditLines
               ? <>{imageEditLines.map((line) => <span className="toolbox-card-title-line" key={line}>{line}</span>)}</>
+              : categorySlug === "content-image" && toolNumber === 24
+                ? currentLocale === "ko"
+                  ? <>앱스토어 스크린샷<br />제작기</>
+                  : currentLocale === "en"
+                    ? <>App Store Screenshot<br />Maker</>
+                    : <>アプリストア<br />スクリーンショット作成ツール</>
               : currentLocale === "ko" && categorySlug === "content-image" && toolNumber === 20
                 ? <>유튜브 채널<br />배너 제작기</>
               : currentLocale === "ko" && categorySlug === "image-convert" && index === 1

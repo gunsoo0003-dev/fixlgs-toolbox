@@ -1,0 +1,48 @@
+TOOL 024 보조작업장 최종 체크리스트
+최신 개정 기준: 실브라우저/Playwright/production build/통합 FINAL은 주작업장 통합검증으로 이관
+디자인 코드 기준: MAIN 021 / SUB 020
+
+[PASS] 도장깨기 확정 6기능 반영
+[PASS] Apple / Google Play preset 분리
+[PASS] 세로 / 가로 preset
+[PASS] 정책값 단일 전용 데이터 구조 + verifiedAt 2026-08-09
+[PASS] KO / EN / JA 독립 문구
+[PASS] 여러 장 순서 변경 / 복제 / 삭제
+[PASS] No Stretch contain / cover
+[PASS] frame ON/OFF 및 Google 기본 OFF
+[PASS] Apple frame mismatch 안내
+[PASS] Google tagline 약 20% 가이드
+[PASS] 제목/설명 크기·색상·정렬·세로 위치
+[PASS] 단색 + 제한적 2색 그라데이션
+[PASS] 개별 / ZIP export 코드
+[PASS] 부분 실패 보존 + 실패 항목 재시도
+[PASS] 서비스 후보 10장 / 파일당 15MB / 총 80MB
+[PASS] Slide / SlideText 명시 타입
+[PASS] MIME / signature 교차검증
+[PASS] animated PNG / WebP 거부
+[PASS] 10장 초과 상한 안내
+[PASS] Object URL 수명·decode 실패 회수 보정
+[PASS] source checker
+[PASS] harness structure / selector checker
+[PASS] core / boundary / regression / limit / feature 검수기 준비
+[PASS] 제품 / UI / 정책값 / fixture / spec 기대값 정적 교차대조
+[PASS] 정상 / 상한 직전 / 상한 / 초과 / 손상 경계 시나리오 준비
+[PASS] MAIN 021 / SUB 020 기준 디자인 코드 정합성 확인
+[PASS] CHANGE MAP / FAILURE RESPONSE MAP / SERVICE LIMIT / HANDOFF 정리
+[PASS] 공통파일 및 기존 완료 도구 수정 0
+[PASS] 전달 ZIP에는 신규 도구 전용 파일만 포함
+[PASS] HANDOFF 이식 대상과 ZIP 구현 파일 대조 완료
+
+[주작업장 통합검증]
+- 실제 브라우저 / localhost / Playwright
+- PC / 모바일 실제 렌더링
+- KO / EN / JA 실제 렌더링
+- 라이트 / 다크 / overflow / drag / touch / hover / scroll
+- 실제 다운로드 결과 체감 확인
+- production build
+- 최신 프로젝트 통합 regression
+- 공통 CSS / layout 영향
+- 전체 TOOLBOX FINAL / 배포 / 색인
+
+최종 보조작업장 판정: READY
+의미: 보조작업장 역할 범위 완료. 전체 TOOLBOX 최종 완료는 주작업장 FINAL 후 확정.

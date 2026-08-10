@@ -1,0 +1,27 @@
+신규 전용 이식 파일
+components/app-store-screenshot-maker-tool.tsx
+components/app-store-screenshot-maker-tool.module.css
+components/app-store-screenshot-maker-page.tsx
+tests/tool-024-core.spec.ts
+tests/tool-024-boundary.spec.ts
+tests/tool-024-regression.spec.ts
+tests/tool-024-limit.spec.ts
+scripts/tool-024/check-source.mjs
+scripts/tool-024/check-harness.mjs
+docs/tool-024/*
+주작업장 연결 필요: lib/site.ts의 024 slug/title/description/card, app/[locale]/[toolSlug]/page.tsx import/route/metadata/render, sitemap/category 연결, package.json 024 실행 script. 보조작업장 공통파일 보호 원칙 때문에 미수정.
+
+[2026-08-10 추가 전용 파일]
+lib/tool-024-store-policy.ts
+- App Store/Google Play preset, 정책 확인일, 플랫폼 규칙, 서비스 상한을 024 전용 단일 데이터 구조로 관리.
+
+[2026-08-10 구현 보정]
+components/app-store-screenshot-maker-tool.tsx
+- 단색/그라데이션 배경, 제목/설명 세로 위치, 플랫폼 가이드 보강.
+- duplicate/remove Object URL lifecycle 보정.
+
+[2026-08-10 검수 보정]
+components/app-store-screenshot-maker-tool.tsx
+- Slide/SlideText 타입 명시, signature/animated input validation, 10장 초과 안내, export failure 상세/재시도, Object URL 실패회수.
+tests/tool-024-boundary.spec.ts
+- corrupt, animated WebP, 11-file cap 경계 시나리오 보강.
