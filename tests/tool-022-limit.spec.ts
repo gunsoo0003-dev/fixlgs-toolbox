@@ -1,0 +1,2 @@
+import { test, expect } from '@playwright/test';import { TOOL022_LIMIT_CANDIDATES } from './config/tool-022-limit-candidates';
+test('022 service limits stay conservative',()=>{expect(TOOL022_LIMIT_CANDIDATES.backgroundBytes[0]).toBe(20*1024*1024);expect(TOOL022_LIMIT_CANDIDATES.pixels[0]).toBe(40_000_000);expect(TOOL022_LIMIT_CANDIDATES.titleChars).toBe(140);expect(TOOL022_LIMIT_CANDIDATES.descriptionChars).toBe(280)});

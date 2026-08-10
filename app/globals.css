@@ -4095,242 +4095,176 @@ html[data-theme="dark"] .merger-actions .toolbox-primary-action{border-color:#ff
   }
 }
 
-/* TOOL 019 · desktop density/content alignment pass */
-.tool019-related-tools{margin-top:22px}
-.tool019-use-cases .toolbox-tool-format-grid article{
-  grid-template-columns:70px minmax(280px,.78fr) minmax(0,1.22fr);
-}
-.tool019-use-cases .toolbox-tool-format-grid h3{font-size:clamp(22px,2vw,31px)}
-.tool019-use-cases .toolbox-tool-format-grid p{max-width:760px}
-.tool019-expert-post .toolbox-tool-format-body{border-top:1px solid var(--tb-line-strong)}
-.tool019-important-notes .toolbox-tool-format-notes{
-  margin-top:0;
-  padding:38px 0 0;
-  border-top:0;
-  border-bottom:0;
-}
-.tool019-important-notes .toolbox-tool-format-notes article{padding:0}
-.tool019-important-notes .toolbox-tool-format-notes li{
-  white-space:normal;
-  word-break:keep-all;
-  overflow-wrap:break-word;
-}
-@media(min-width:1180px){
-  .tool019-important-notes .toolbox-tool-format-notes li{font-size:15px;line-height:1.7}
-}
-@media(max-width:800px){
-  .tool019-use-cases .toolbox-tool-format-grid article{display:block}
-  .tool019-use-cases .toolbox-tool-format-grid p{margin-top:12px}
-  .tool019-important-notes .toolbox-tool-format-notes{padding-top:26px}
-}
+/* Shared TOOLBOX detail-page design modifiers — normalized after TOOL 019-022 */
 
-/* TOOL 019 · approved content density and responsive text rhythm */
-.tool019-detail-hero .toolbox-tool-detail-heading > p{
-  margin-top:20px;
-}
-.tool019-safe-area,
-.tool019-important-notes,
-.tool019-expert-post{
-  padding-block:clamp(42px,3.6vw,60px);
-}
-.tool019-safe-area .toolbox-tool-format-guide-head,
-.tool019-important-notes .toolbox-tool-format-guide-head,
-.tool019-expert-post .toolbox-tool-format-guide-head{
-  padding-bottom:20px;
-}
-.tool019-safe-copy{
-  display:grid;
-  gap:10px;
-  margin-top:18px;
-  color:var(--tb-muted);
-  font-size:15px;
-  line-height:1.65;
-}
-.tool019-safe-copy span{display:block}
-.tool019-important-notes .toolbox-tool-format-body,
-.tool019-expert-post .toolbox-tool-format-body{
-  border-top:1px solid var(--tb-line-strong);
-  border-bottom:0;
-}
-.tool019-important-notes .toolbox-tool-format-notes{
-  margin-top:0;
-  padding:18px 0 0;
-  border-top:0;
-  border-bottom:0;
-}
-.tool019-important-notes .toolbox-tool-format-notes ul{gap:11px}
-.tool019-important-notes .toolbox-tool-format-notes article{padding:0}
-.tool019-expert-post .toolbox-tool-format-guide-head{
-  max-width:none;
-}
-@media (min-width: 901px){
-  .tool019-detail-hero .toolbox-tool-detail-heading > p,
-  .tool019-expert-post .toolbox-tool-format-guide-head > span,
-  .tool019-safe-copy span,
-  .tool019-important-notes .toolbox-tool-format-notes li,
-  .toolbox-subpage-card.is-tool019-featured p{
+/* HOW TO USE: reuse the established .toolbox-tool-guide--five 3-column multi-row modifier for 4/5-step guides. */
+
+/* EXPERT POST: shared width modifiers instead of per-tool head overrides. */
+.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head{max-width:none}
+.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head>span{max-width:980px}
+@media (min-width:901px){
+  .toolbox-tool-expert-post--compact-copy .toolbox-tool-format-guide-head>span{
     max-width:none;
     white-space:nowrap;
     overflow-wrap:normal;
     word-break:keep-all;
-  }
-  .tool019-detail-hero .toolbox-tool-detail-heading > p{
-    font-size:15px;
-  }
-  .tool019-expert-post .toolbox-tool-format-guide-head > span,
-  .tool019-safe-copy span,
-  .tool019-important-notes .toolbox-tool-format-notes li,
-  .toolbox-subpage-card.is-tool019-featured p{
     font-size:14px;
   }
 }
-@media (max-width: 900px){
-  .tool019-safe-area,
-  .tool019-important-notes,
-  .tool019-expert-post{padding:50px 20px}
-  .tool019-detail-hero .toolbox-tool-detail-heading > p,
-  .tool019-expert-post .toolbox-tool-format-guide-head > span,
-  .tool019-safe-copy span,
-  .tool019-important-notes .toolbox-tool-format-notes li,
-  .toolbox-subpage-card.is-tool019-featured p{
+@media (max-width:900px){
+  .toolbox-tool-expert-post--compact-copy .toolbox-tool-format-guide-head>span{
     white-space:normal;
     overflow-wrap:anywhere;
     word-break:normal;
   }
 }
 
-/* TOOL 020 · inherit the approved TOOL 019 detail-page density without changing earlier tools */
-.tool020-related-tools{margin-top:22px}
-.tool020-detail-hero .toolbox-tool-detail-heading>p{margin-top:20px}
-.tool020-use-cases .toolbox-tool-format-grid article{grid-template-columns:70px minmax(280px,.78fr) minmax(0,1.22fr)}
-.tool020-use-cases .toolbox-tool-format-grid h3{font-size:clamp(22px,2vw,31px)}
-.tool020-safe-area,.tool020-important-notes{padding-block:clamp(42px,3.6vw,60px)}
-.tool020-safe-area .toolbox-tool-format-guide-head,.tool020-important-notes .toolbox-tool-format-guide-head{padding-bottom:20px}
-.tool020-safe-copy{display:grid;gap:10px;margin-top:18px;color:var(--tb-muted);font-size:15px;line-height:1.65}
-.tool020-safe-copy span{display:block}
-.tool020-important-notes .toolbox-tool-format-body{border-top:1px solid var(--tb-line-strong);border-bottom:0}
-.tool020-important-notes .toolbox-tool-format-notes{margin-top:0;padding:18px 0 0;border-top:0;border-bottom:0}
-.tool020-important-notes .toolbox-tool-format-notes ul{gap:11px}
-.tool020-important-notes .toolbox-tool-format-notes article{padding:0}
-.tool020-important-notes .toolbox-tool-format-notes li{white-space:normal;word-break:keep-all;overflow-wrap:break-word}
-@media(min-width:901px){
-  .tool020-detail-hero .toolbox-tool-detail-heading>p,.tool020-safe-copy span,.tool020-important-notes .toolbox-tool-format-notes li{max-width:none;white-space:nowrap;overflow-wrap:normal;word-break:keep-all}
-  .tool020-detail-hero .toolbox-tool-detail-heading>p{font-size:15px}
-  .tool020-safe-copy span,.tool020-important-notes .toolbox-tool-format-notes li{font-size:14px}
-}
-@media(max-width:900px){
-  .tool020-safe-area,.tool020-important-notes{padding:50px 20px}
-  .tool020-detail-hero .toolbox-tool-detail-heading>p,.tool020-safe-copy span,.tool020-important-notes .toolbox-tool-format-notes li{white-space:normal;overflow-wrap:anywhere;word-break:normal}
-  .tool020-use-cases .toolbox-tool-format-grid article{display:block}
-}
-
-/* TOOL 020 · page density aligned to approved TOOL 019 */
-.tool020-expert-post .toolbox-tool-format-guide-head{max-width:none}
-.tool020-use-cases .toolbox-tool-format-grid article{
+/* USE CASES: approved 019/020 editorial row treatment, now reusable. */
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid article{
   grid-template-columns:70px minmax(280px,.78fr) minmax(0,1.22fr);
 }
-.tool020-use-cases .toolbox-tool-format-grid p{
-  margin:0;
-  align-self:start;
-}
-@media (min-width:901px){
-  .tool020-detail-hero .toolbox-tool-detail-heading>p,
-  .tool020-expert-post .toolbox-tool-format-guide-head>span,
-  .tool020-safe-copy span,
-  .tool020-important-notes .toolbox-tool-format-notes li{
-    max-width:none;
-    white-space:nowrap;
-    overflow-wrap:normal;
-    word-break:keep-all;
-  }
-  .tool020-detail-hero .toolbox-tool-detail-heading>p{font-size:15px}
-  .tool020-expert-post .toolbox-tool-format-guide-head>span,
-  .tool020-safe-copy span,
-  .tool020-important-notes .toolbox-tool-format-notes li{font-size:14px}
-}
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid h3{font-size:clamp(22px,2vw,31px)}
+.toolbox-tool-use-cases--editorial .toolbox-tool-format-grid p{max-width:760px;margin:0;align-self:start}
 @media (max-width:900px){
-  .tool020-expert-post{padding:50px 20px}
-  .tool020-detail-hero .toolbox-tool-detail-heading>p,
-  .tool020-expert-post .toolbox-tool-format-guide-head>span,
-  .tool020-safe-copy span,
-  .tool020-important-notes .toolbox-tool-format-notes li{
+  .toolbox-tool-use-cases--editorial .toolbox-tool-format-grid article{display:block}
+  .toolbox-tool-use-cases--editorial .toolbox-tool-format-grid p{margin-top:12px}
+}
+
+/* IMPORTANT NOTES / RESULT CHECKS: common long-form information band. */
+.toolbox-tool-info-band{
+  width:min(1160px,calc(100% - 40px));
+  margin:0 auto;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.toolbox-tool-info-band--section-start{
+  position:relative;
+  padding-top:clamp(84px,9vw,140px);
+}
+.toolbox-tool-info-band--section-start::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  width:100vw;
+  border-top:1px solid var(--tb-line);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.toolbox-tool-info-band--spaced{margin-top:clamp(84px,9vw,140px)}
+.toolbox-tool-info-band--bottom-gap{padding-bottom:clamp(84px,9vw,140px)}
+.toolbox-tool-info-band-head{
+  display:grid;
+  grid-template-columns:minmax(136px,.34fr) minmax(0,1.9fr);
+  grid-template-areas:"eyebrow title" ". description";
+  align-items:end;
+  column-gap:clamp(28px,4vw,64px);
+  row-gap:14px;
+  padding:0 0 30px;
+  border-bottom:1px solid var(--tb-line-strong);
+}
+.toolbox-tool-info-band-head>p{
+  grid-area:eyebrow;
+  margin:0 0 7px;
+  color:var(--blue);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.2em;
+}
+.toolbox-tool-info-band-head>h2{
+  grid-area:title;
+  margin:0;
+  color:var(--tb-text);
+  font-size:clamp(38px,5vw,64px);
+  font-weight:400;
+  line-height:1.02;
+  letter-spacing:-.055em;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band-head>span{
+  grid-area:description;
+  max-width:900px;
+  margin:0;
+  color:var(--tb-muted);
+  font-size:15px;
+  line-height:1.68;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band-list{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.toolbox-tool-info-band-list li{
+  position:relative;
+  margin:0;
+  padding:20px 0 20px 22px;
+  border-bottom:1px solid var(--tb-line);
+  color:var(--tb-muted);
+  font-size:15px;
+  line-height:1.65;
+  word-break:keep-all;
+}
+.toolbox-tool-info-band-list li::before{
+  content:"•";
+  position:absolute;
+  left:2px;
+  color:var(--blue);
+  font-weight:900;
+}
+@media (min-width:1180px){.toolbox-tool-info-band-list li{white-space:nowrap}}
+@media (max-width:900px){
+  .toolbox-tool-info-band-head{
+    grid-template-columns:1fr;
+    grid-template-areas:"eyebrow" "title" "description";
+    align-items:start;
+    row-gap:12px;
+  }
+  .toolbox-tool-info-band-head>span{margin-top:4px}
+}
+@media (max-width:720px){
+  .toolbox-tool-info-band{width:min(100% - 36px,1160px)}
+  .toolbox-tool-info-band--section-start{padding-top:72px}
+  .toolbox-tool-info-band--spaced{margin-top:72px}
+  .toolbox-tool-info-band--bottom-gap{padding-bottom:56px}
+  .toolbox-tool-info-band-head{padding-bottom:24px}
+  .toolbox-tool-info-band-head>h2{font-size:clamp(38px,11vw,52px)}
+  .toolbox-tool-info-band-head>span,
+  .toolbox-tool-info-band-list li{font-size:14px}
+  .toolbox-tool-info-band-list li{
+    padding-top:16px;
+    padding-bottom:16px;
     white-space:normal;
     overflow-wrap:anywhere;
     word-break:normal;
   }
-  .tool020-use-cases .toolbox-tool-format-grid article{display:block}
-  .tool020-use-cases .toolbox-tool-format-grid p{margin-top:12px}
 }
 
-
-/* TOOL 019/020 · centered information headers after visual review */
-.tool019-safe-area .toolbox-tool-format-guide-head,
-.tool019-important-notes .toolbox-tool-format-guide-head,
-.tool020-safe-area .toolbox-tool-format-guide-head,
-.tool020-important-notes .toolbox-tool-format-guide-head{
-  max-width:none;
-  margin-inline:auto;
-  text-align:center;
-  align-items:center;
-}
-.tool019-safe-copy,
-.tool020-safe-copy{
-  max-width:1120px;
-  margin-inline:auto;
-  text-align:center;
-}
-@media(max-width:800px){
-  .tool019-safe-area .toolbox-tool-format-guide-head,
-  .tool019-important-notes .toolbox-tool-format-guide-head,
-  .tool020-safe-area .toolbox-tool-format-guide-head,
-  .tool020-important-notes .toolbox-tool-format-guide-head,
-  .tool019-safe-copy,
-  .tool020-safe-copy{
-    text-align:center;
-  }
-}
-
-
-/* TOOL 019/020 · FAQ-width two-column info + notes section */
-.tool019-info-notes,
-.tool020-info-notes{
-  padding:clamp(68px,6vw,96px) var(--tb-gutter);
-}
-.tool019-info-notes > .toolbox-info-notes-inner,
-.tool020-info-notes > .toolbox-info-notes-inner{
+/* SAFE AREA + IMPORTANT NOTES: shared two-column information section used by 019/020. */
+.toolbox-tool-info-notes-split{padding:clamp(68px,6vw,96px) var(--tb-gutter)}
+.toolbox-tool-info-notes-split>.toolbox-info-notes-inner{
   width:min(var(--tb-container),100%);
   margin-inline:auto;
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  grid-template-areas:
-    "safeHead notesHead"
-    "divider divider"
-    "safeCopy notesList";
+  grid-template-areas:"safeHead notesHead" "divider divider" "safeCopy notesList";
   column-gap:clamp(42px,5vw,76px);
   row-gap:20px;
   align-items:start;
 }
-.tool019-safe-head,.tool020-safe-head{grid-area:safeHead}
-.tool019-safe-copy,.tool020-safe-copy{grid-area:safeCopy}
-.tool019-notes-head,.tool020-notes-head{grid-area:notesHead}
+.toolbox-info-notes-safe-head{grid-area:safeHead}
+.toolbox-info-notes-copy{grid-area:safeCopy}
+.toolbox-info-notes-notes-head{grid-area:notesHead;padding-bottom:0;border-bottom:0}
 .toolbox-info-notes-divider{grid-area:divider;display:block;height:1px;background:var(--tb-line-strong)}
-.toolbox-info-notes-list{grid-area:notesList}
-.tool019-info-notes .toolbox-tool-format-guide-head,
-.tool020-info-notes .toolbox-tool-format-guide-head{
+.toolbox-info-notes-list{grid-area:notesList;margin:0;padding:0;border:0}
+.toolbox-tool-info-notes-split .toolbox-tool-format-guide-head{
   max-width:none;
   margin:0;
   padding:0;
   text-align:left;
   align-items:flex-start;
 }
-.tool019-info-notes .toolbox-tool-format-guide-head h2,
-.tool020-info-notes .toolbox-tool-format-guide-head h2{
-  max-width:none;
-  margin:0;
-  text-align:left;
-}
-.tool019-safe-copy,
-.tool020-safe-copy{
+.toolbox-tool-info-notes-split .toolbox-tool-format-guide-head h2{max-width:none;margin:0;text-align:left}
+.toolbox-info-notes-copy{
   display:grid;
   gap:10px;
   max-width:none;
@@ -4340,47 +4274,40 @@ html[data-theme="dark"] .merger-actions .toolbox-primary-action{border-color:#ff
   line-height:1.62;
   text-align:left;
 }
-.tool019-safe-copy span,
-.tool020-safe-copy span{
-  display:block;
-  white-space:normal;
-  word-break:keep-all;
-  overflow-wrap:break-word;
-}
-.tool019-notes-head,
-.tool020-notes-head{
-  padding-bottom:0!important;
-  border-bottom:0;
-}
-.toolbox-info-notes-list{
-  margin:0;
-  padding:0;
-  border:0;
-}
+.toolbox-info-notes-copy span{display:block;white-space:normal;word-break:keep-all;overflow-wrap:break-word}
 .toolbox-info-notes-list article{padding:0}
 .toolbox-info-notes-list ul{display:grid;gap:10px;margin:0;padding-left:18px}
-.toolbox-info-notes-list li{
-  white-space:nowrap;
-  word-break:keep-all;
-  overflow-wrap:normal;
-  font-size:14px;
-  line-height:1.62;
-}
+.toolbox-info-notes-list li{white-space:nowrap;word-break:keep-all;overflow-wrap:normal;font-size:14px;line-height:1.62}
 @media(max-width:999px){
-  .tool019-info-notes,
-  .tool020-info-notes{padding:56px 18px}
-  .tool019-info-notes > .toolbox-info-notes-inner,
-  .tool020-info-notes > .toolbox-info-notes-inner{
+  .toolbox-tool-info-notes-split{padding:56px 18px}
+  .toolbox-tool-info-notes-split>.toolbox-info-notes-inner{
     grid-template-columns:1fr;
     grid-template-areas:"safeHead" "safeCopy" "notesHead" "divider" "notesList";
     row-gap:20px;
   }
-  .tool019-safe-copy,
-  .tool020-safe-copy,
-  .toolbox-info-notes-list li{
+  .toolbox-info-notes-copy,
+  .toolbox-info-notes-list li{white-space:normal;overflow-wrap:anywhere;word-break:normal}
+}
+
+/* Legitimate tool-specific detail exceptions retained after common-layout cleanup. */
+.tool019-related-tools,.tool020-related-tools{margin-top:22px}
+.tool019-detail-hero .toolbox-tool-detail-heading>p,
+.tool020-detail-hero .toolbox-tool-detail-heading>p{margin-top:20px}
+@media(min-width:901px){
+  .tool019-detail-hero .toolbox-tool-detail-heading>p,
+  .tool020-detail-hero .toolbox-tool-detail-heading>p{
+    max-width:none;
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:keep-all;
+    font-size:15px;
+  }
+}
+@media(max-width:900px){
+  .tool019-detail-hero .toolbox-tool-detail-heading>p,
+  .tool020-detail-hero .toolbox-tool-detail-heading>p{
     white-space:normal;
     overflow-wrap:anywhere;
     word-break:normal;
   }
 }
-

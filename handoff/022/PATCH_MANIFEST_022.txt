@@ -1,0 +1,26 @@
+TOOL 022 MAIN WORKSHOP INTEGRATION PATCH
+
+Existing files intentionally modified:
+- package.json : TOOL 022 validation scripts only
+- app/sitemap.ts : TOOL 022 locale URLs added
+- lib/site.ts : TOOL 022 slug/title/description/category card/locale href + content-image live count
+
+New TOOL 022 files:
+- app/[locale]/blog-open-graph-image-maker/page.tsx
+- components/blog-open-graph-image-maker-page.tsx
+- components/blog-open-graph-image-maker-tool.tsx
+- components/blog-open-graph-image-maker.module.css
+- lib/tool-022-blog-og.ts
+- playwright.tool022-runtime.config.ts
+- scripts/check-tool-022-*.mjs
+- scripts/run-tool-022-isolated-browser-validation.py
+- scripts/tool-022/run-validation.mjs
+- tests/tool-022-*.spec.ts
+- tests/helpers/tool-022.ts
+- tests/config/tool-022-limit-candidates.ts
+- tests/fixtures/tool-022/*
+- handoff/022/*
+
+Protection result:
+- Existing files missing: 0
+- Existing files changed outside intended common integration files: 0

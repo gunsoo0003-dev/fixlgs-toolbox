@@ -275,7 +275,7 @@ export function SocialMediaImageMakerPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className={`toolbox-tool-guide ${pageStyles.howTo}`}>
+      <section className="toolbox-tool-guide toolbox-tool-guide--five">
         <div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.howTitle}</h2></div>
         <ol>
           {t.steps.map((step, index) => (
@@ -293,29 +293,29 @@ export function SocialMediaImageMakerPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className={`toolbox-tool-format-guide toolbox-tool-expert-post ${pageStyles.expertSection}`}>
+      <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head">
         <div className="toolbox-tool-format-guide-head"><p>EXPERT POST</p><h2>{t.expertTitle}</h2><span>{t.expertDesc}</span></div>
         <div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">
           {t.expertCards.map(([title, description]) => <article key={title}><h4>{title}</h4><p>{description}</p></article>)}
         </div></div>
       </section>
 
-      <section className={`${pageStyles.infoBand} ${pageStyles.cautionBand}`}>
-        <div className={pageStyles.infoBandHead}>
+      <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start">
+        <div className="toolbox-tool-info-band-head">
           <p>IMPORTANT NOTES</p>
           <h2>{t.cautionTitle}</h2>
           <span>{locale === "ko" ? "플랫폼별 표시 차이와 파일 특성을 확인해 중요한 요소가 잘리거나 품질이 예상과 달라지는 일을 줄이세요." : locale === "en" ? "Check platform display differences and file behavior to reduce unexpected cropping or quality changes after upload." : "プラットフォームごとの表示差とファイル特性を確認し、重要要素の切れや想定外の画質変化を減らします。"}</span>
         </div>
-        <ul className={pageStyles.infoBandList}>{t.cautions.map((item) => <li key={item}>{item}</li>)}</ul>
+        <ul className="toolbox-tool-info-band-list">{t.cautions.map((item) => <li key={item}>{item}</li>)}</ul>
       </section>
 
-      <section className={`${pageStyles.infoBand} ${pageStyles.resultBand}`}>
-        <div className={pageStyles.infoBandHead}>
+      <section className="toolbox-tool-info-band toolbox-tool-info-band--spaced toolbox-tool-info-band--bottom-gap">
+        <div className="toolbox-tool-info-band-head">
           <p>RESULT CHECKS</p>
           <h2>{locale === "ko" ? "핵심 결과 기준" : locale === "en" ? "Result checks" : "結果確認の基準"}</h2>
           <span>{locale === "ko" ? "다운로드 전에 미리보기와 실제 규격, 파일명, 개별 override가 의도대로 유지되는지 확인하세요." : locale === "en" ? "Before download, confirm that preview, actual dimensions, filenames, and size-specific overrides remain consistent." : "ダウンロード前に、プレビュー・実サイズ・ファイル名・サイズ別 override が意図どおり維持されているか確認します。"}</span>
         </div>
-        <ul className={pageStyles.infoBandList}>
+        <ul className="toolbox-tool-info-band-list">
           {(locale === "ko" ? [
             "공통 디자인과 규격별 override가 분리되어 한 플랫폼의 crop·위치 조정이 다른 규격을 덮어쓰지 않아야 합니다.",
             "Preview와 export는 같은 렌더 모델을 사용하므로 미리보기의 crop·텍스트·로고 위치가 실제 출력에도 동일하게 반영되어야 합니다.",
