@@ -1,0 +1,3 @@
+import fs from 'node:fs';
+let fail=false; const specs=['preflight','core','boundary','regression','limit'].map(x=>`tests/tool-023-${x}.spec.ts`); for(const f of specs){const ok=fs.existsSync(f)&&fs.statSync(f).size>100;console.log(`${ok?'PASS':'FAIL'} ${f}`);if(!ok)fail=true;}
+const fixtures=['square-transparent.png','square-opaque.jpg','landscape.png','portrait.jpg','static.webp','small-32px.png','corrupted.png','corrupted.jpg','mime-mismatch.png','over-20mb.png','한글-아이콘.png','日本語-アイコン.png']; for(const n of fixtures){const f=`tests/fixtures/tool023/${n}`,ok=fs.existsSync(f)&&fs.statSync(f).size>0;console.log(`${ok?'PASS':'FAIL'} ${f}`);if(!ok)fail=true;} process.exit(fail?1:0);

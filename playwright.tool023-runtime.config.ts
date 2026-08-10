@@ -1,0 +1,2 @@
+import { defineConfig, devices } from '@playwright/test';
+export default defineConfig({testDir:'./tests',timeout:45000,workers:1,use:{baseURL:'http://127.0.0.1:3023',trace:'retain-on-failure'},webServer:{command:'npx next dev -p 3023',url:'http://127.0.0.1:3023',reuseExistingServer:false,timeout:120000},projects:[{name:'desktop-chromium',use:{...devices['Desktop Chrome']}},{name:'mobile-chromium',use:{...devices['Pixel 7']}}]});

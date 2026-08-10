@@ -211,7 +211,13 @@
     "test:toolbox:022-final": "node scripts/tool-022/run-validation.mjs final",
     "toolbox:check-hygiene": "node scripts/toolbox/check-worktree-hygiene.mjs",
     "toolbox:cleanup-mojibake": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/toolbox/cleanup-mojibake.ps1",
-    "check:toolbox:common-design": "node scripts/check-toolbox-common-design.mjs"
+    "check:toolbox:common-design": "node scripts/check-toolbox-common-design.mjs",
+    "test:toolbox:023-preflight": "node scripts/tool-023/run-validation.mjs preflight",
+    "test:toolbox:023-core-only": "node scripts/tool-023/run-validation.mjs core-only",
+    "test:toolbox:023-boundary-only": "node scripts/tool-023/run-validation.mjs boundary-only",
+    "test:toolbox:023-regression-only": "node scripts/tool-023/run-validation.mjs regression-only",
+    "test:toolbox:023-limit-only": "node scripts/tool-023/run-validation.mjs limit-only",
+    "test:toolbox:023-final": "node scripts/tool-023/run-validation.mjs final"
   },
   "dependencies": {
     "next": "16.2.12",

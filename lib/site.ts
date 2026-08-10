@@ -212,6 +212,8 @@ export const tool021Slug = "social-media-image-maker" as const;
 
 export const tool022Slug = "blog-open-graph-image-maker" as const;
 
+export const tool023Slug = "app-icon-favicon-generator" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -240,6 +242,8 @@ export const tool021Titles: Record<Locale, string> = { ko: "SNS 이미지 제작
 export const tool021Descriptions: Record<Locale, string> = { ko: "한 번 만든 디자인을 Instagram·Facebook·X·LinkedIn 규격에 맞춰 여러 SNS 이미지로 출력하세요.", en: "Create one design and export it for Instagram, Facebook, X, and LinkedIn sizes.", ja: "1つのデザインをInstagram・Facebook・X・LinkedInの各サイズに合わせて出力できます。" };
 export const tool022Titles: Record<Locale, string> = { ko: "블로그·오픈그래프 이미지 제작기", en: "Blog & Open Graph Image Maker", ja: "ブログ・OG画像作成ツール" };
 export const tool022Descriptions: Record<Locale, string> = { ko: "네이버 블로그·Google 블로그·웹사이트·Open Graph용 대표 이미지를 한 번에 만들고 JPG·PNG 또는 ZIP으로 저장하세요.", en: "Create featured images for Naver Blog, Google/Blogger, websites and Open Graph, then export JPG, PNG or ZIP.", ja: "NAVERブログ・Googleブログ・Webサイト・Open Graph用の代表画像を作成し、JPG・PNG・ZIPで保存できます。" };
+export const tool023Titles: Record<Locale, string> = { ko: "앱 아이콘·파비콘 생성기", en: "App Icon & Favicon Generator", ja: "アプリアイコン・ファビコン生成ツール" };
+export const tool023Descriptions: Record<Locale, string> = { ko: "하나의 이미지로 Android·PWA 앱 아이콘과 favicon.ico를 만들고 개별 파일 또는 ZIP으로 저장하세요.", en: "Create Android and PWA app icons plus favicon.ico from one image, then download individual files or ZIP bundles.", ja: "1枚の画像からAndroid・PWAアプリアイコンとfavicon.icoを生成し、個別ファイルまたはZIPで保存できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -596,6 +600,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool023Titles,
+      description: tool023Descriptions,
+      href: `/${"ko"}/${tool023Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -713,7 +724,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "content-image") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool019Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool020Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool021Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool022Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool019Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool020Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool021Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool022Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool023Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

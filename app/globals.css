@@ -4097,6 +4097,25 @@ html[data-theme="dark"] .merger-actions .toolbox-primary-action{border-color:#ff
 
 /* Shared TOOLBOX detail-page design modifiers — normalized after TOOL 019-022 */
 
+/* Detail hero description: keep approved desktop lead copy on one line when the page opts in. */
+@media (min-width:901px){
+  .toolbox-tool-detail-hero--single-line-description .toolbox-tool-detail-heading>p{
+    max-width:none;
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:keep-all;
+    font-size:15px;
+  }
+}
+@media (max-width:900px){
+  .toolbox-tool-detail-hero--single-line-description .toolbox-tool-detail-heading>p{
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+
 /* HOW TO USE: reuse the established .toolbox-tool-guide--five 3-column multi-row modifier for 4/5-step guides. */
 
 /* EXPERT POST: shared width modifiers instead of per-tool head overrides. */
