@@ -5,7 +5,7 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
 import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
-import { loadBrowserImage } from "@/lib/mobile-image-loader";
+import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type Status = "editing" | "ready" | "skipped" | "error";
 type EditState = {
@@ -134,7 +134,7 @@ export function ImageCropperRotatorTool({ locale }: { locale: Locale }) {
       if(isAnimatedImage(bytes,file.type)){setMessage(t.errorType);continue;}
       const fingerprint=await fileFingerprint(file); if(known.has(fingerprint)) continue; known.add(fingerprint);
       if(file.size>LIMITS.perFile||used+file.size>LIMITS.total){setMessage(t.errorLimit);continue;}
-      try{const loaded=await loadBrowserImage(file,"from-image"); const pixels=loaded.width*loaded.height; if(pixels>LIMITS.pixels||loaded.width>LIMITS.side||loaded.height>LIMITS.side){loaded.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:URL.createObjectURL(file),status:"editing",width:loaded.width,height:loaded.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};loaded.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
+      try{const loaded=await loadBrowserImage(file,"from-image"); const pixels=loaded.width*loaded.height; if(pixels>LIMITS.pixels||loaded.width>LIMITS.side||loaded.height>LIMITS.side){loaded.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:await createBrowserSafePreviewUrl(file),status:"editing",width:loaded.width,height:loaded.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};loaded.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
     }
     if(next.length){setItems(cur=>[...cur,...next]);if(!items.length)setIndex(0);setView("edit");}
   }

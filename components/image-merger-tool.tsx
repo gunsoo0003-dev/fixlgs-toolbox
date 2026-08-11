@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
 import { openFilePicker } from "@/lib/file-picker";
-import { loadBrowserImage } from "@/lib/mobile-image-loader";
+import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type Direction = "vertical" | "horizontal";
 type Sizing = "original" | "width" | "height";
@@ -164,36 +164,26 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
       if (!file.size) throw new Error(t.empty);
       if (!isSupported(file)) throw new Error(t.unsupported);
       if (!(await signatureOk(file))) throw new Error(t.unreadable);
-      let img: CanvasImageSource;
-      let width = 0, height = 0;
-      if (typeof createImageBitmap === "function") {
-        try {
-          const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
-          img = bitmap; width = bitmap.width; height = bitmap.height;
-        } catch {
-          const fallback = new Image(); fallback.decoding = "async"; fallback.src = url;
-          await fallback.decode();
-          img = fallback; width = fallback.naturalWidth; height = fallback.naturalHeight;
-        }
-      } else {
-        const fallback = new Image(); fallback.decoding = "async"; fallback.src = url;
-        await fallback.decode();
-        img = fallback; width = fallback.naturalWidth; height = fallback.naturalHeight;
-      }
-      if (!width || !height) { closeRenderable(img); throw new Error(t.unreadable); }
+      const loaded = await loadBrowserImage(file, "from-image");
+      const img = loaded.source;
+      const width = loaded.width, height = loaded.height;
+      if (!width || !height) { loaded.close(); throw new Error(t.unreadable); }
+      const previewUrl = await createBrowserSafePreviewUrl(file);
       setItems(prev => {
         const target = prev.find(it => it.id === id);
-        if (!target || target.url !== url) { closeRenderable(img); return prev; }
+        if (!target || target.url !== url) { loaded.close(); URL.revokeObjectURL(previewUrl); return prev; }
+        URL.revokeObjectURL(url);
         return prev.map(it => {
           if (it.id !== id) return it;
           closeRenderable(it.img);
-          return {...it, img, width, height, status:"ready", error:undefined};
+          return {...it, url: previewUrl, img, width, height, status:"ready", error:undefined};
         });
       });
     } catch (e) {
       setItems(prev => prev.map(it => it.id === id ? {...it, status:"failed", error: e instanceof Error ? e.message : t.unreadable} : it));
     }
   }, [t.empty, t.unsupported, t.unreadable]);
+
 
   const addFiles = useCallback((fileList: FileList | File[]) => {
     const files = Array.from(fileList);

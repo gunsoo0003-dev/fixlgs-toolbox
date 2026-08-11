@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/lib/site";
+import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
 import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
 
@@ -307,7 +308,7 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
         drawable.close();
         if (!width || !height || width * height > LIMITS.pixels || pixels + width * height > LIMITS.totalPixels) { setMessage("Image pixel limit exceeded."); continue; }
         total += file.size; pixels += width * height;
-        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: URL.createObjectURL(file), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
+        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: await createBrowserSafePreviewUrl(file), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
       } catch { setMessage("Damaged or unsupported image."); }
     }
     setItems((old) => [...old, ...next]);

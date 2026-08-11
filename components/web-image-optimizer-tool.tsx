@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
+import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
 import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
 
@@ -747,7 +748,7 @@ export function WebImageOptimizerTool({ locale }: { locale: Locale }) {
           width,
           height,
           hasAlpha,
-          previewUrl: URL.createObjectURL(file),
+          previewUrl: await createBrowserSafePreviewUrl(file),
           settings: { ...global },
           individual: false,
           expanded: false,

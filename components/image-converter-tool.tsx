@@ -145,27 +145,8 @@ function duplicateKey(file: File) {
 }
 
 async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
-  if (typeof window !== "undefined" && "createImageBitmap" in window) {
-    try {
-      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
-      return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
-    } catch {
-      // fallback below
-    }
-  }
-
-  const objectUrl = URL.createObjectURL(file);
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => {
-      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => URL.revokeObjectURL(objectUrl) });
-    };
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("이미지를 불러올 수 없습니다."));
-    };
-    image.src = objectUrl;
-  });
+  const loaded = await loadBrowserImage(file, "from-image");
+  return { source: loaded.source, width: loaded.width, height: loaded.height, dispose: loaded.close };
 }
 
 async function detectTransparency(source: CanvasImageSource, width: number, height: number) {
@@ -305,7 +286,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         accepted.push({
           id: crypto.randomUUID(),
           file,
-          previewUrl: URL.createObjectURL(file),
+          previewUrl: await createBrowserSafePreviewUrl(file),
           status: "idle",
           outputFormat: globalFormat,
           originalSize: file.size,

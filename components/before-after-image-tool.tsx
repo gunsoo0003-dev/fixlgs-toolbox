@@ -5,7 +5,7 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
 import { openFilePicker } from "@/lib/file-picker";
 import styles from "./before-after-image-tool.module.css";
-import { loadBrowserImage } from "@/lib/mobile-image-loader";
+import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type SlotKey = "before" | "after";
 type FitMode = "cover" | "contain";
@@ -160,8 +160,8 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
       if(file.size>LIMITS.fileBytes)throw new Error(t.tooBigFile);
       const other=key==="before"?afterRef.current.file:beforeRef.current.file;
       if(file.size+(other?.size??0)>LIMITS.totalBytes)throw new Error(t.tooBigTotal);
-      const url=URL.createObjectURL(file); let source:CanvasImageSource,width=0,height=0;
-      try{if(typeof createImageBitmap==="function"){try{const b=await createImageBitmap(file,{imageOrientation:"from-image"});source=b;width=b.width;height=b.height}catch{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}else{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}catch(e){URL.revokeObjectURL(url);throw e}
+      const loaded=await loadBrowserImage(file,"from-image"); const source=loaded.source,width=loaded.width,height=loaded.height;
+      const url=await createBrowserSafePreviewUrl(file);
       if(!width||!height){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.unreadable)}
       if(width*height>LIMITS.sourcePixels){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.tooBigSource)}
       const old=key==="before"?beforeRef.current:afterRef.current; closeSource(old.source);if(old.url)URL.revokeObjectURL(old.url);

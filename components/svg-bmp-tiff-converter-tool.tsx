@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import type { Locale } from "@/lib/site";
+import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
 import { openFilePicker } from "@/lib/file-picker";
 
 type OutputFormat = "image/png" | "image/jpeg" | "image/webp";
@@ -84,7 +85,7 @@ export function SvgBmpTiffConverterTool({locale}:{locale:Locale}){
  function patch(id:string,p:Partial<Item>){setItems(v=>v.map(i=>i.id===id?{...i,...p}:i))}
  async function addFiles(list:FileList|File[]){setMessage("");const incoming=[...Array.from(list)];let total=items.reduce((sum,item)=>sum+item.file.size,0),duplicates=0,rejected=0;const next:Item[]=[];const seen=new Set(items.map(item=>duplicateKey(item.file)));for(const file of incoming){if(items.length+next.length>=MAX_FILES||file.size>MAX_FILE||total+file.size>MAX_TOTAL){rejected++;continue}const key=duplicateKey(file);if(seen.has(key)){duplicates++;continue}const kind=await kindOf(file);if(!kind){rejected++;continue}total+=file.size;seen.add(key);const item:Item={id:crypto.randomUUID(),file,kind,output:"image/png",status:"idle",results:[],isNew:true};try{
    if(kind==="svg"){const safe=sanitizeSvg(await file.text());const sz=svgSize(safe);const blob=new Blob([safe],{type:"image/svg+xml"});item.safeSvgText=safe;item.previewUrl=URL.createObjectURL(blob);item.width=sz.width;item.height=sz.height}
-   else if(kind==="bmp"){const objectUrl=URL.createObjectURL(file);try{const img=await loadImage(objectUrl);if(!img.naturalWidth||!img.naturalHeight||img.naturalWidth*img.naturalHeight>MAX_PIXELS)throw new Error("pixels");item.width=img.naturalWidth;item.height=img.naturalHeight;item.previewUrl=URL.createObjectURL(file)}finally{URL.revokeObjectURL(objectUrl)}}
+   else if(kind==="bmp"){const objectUrl=URL.createObjectURL(file);try{const img=await loadImage(objectUrl);if(!img.naturalWidth||!img.naturalHeight||img.naturalWidth*img.naturalHeight>MAX_PIXELS)throw new Error("pixels");item.width=img.naturalWidth;item.height=img.naturalHeight;item.previewUrl=await createBrowserSafePreviewUrl(file)}finally{URL.revokeObjectURL(objectUrl)}}
    else {const UTIF=await ensureUtif();const ifds=UTIF.decode(await file.arrayBuffer());if(!ifds.length)throw new Error("tiff");item.pageCount=ifds.length;item.selectedPages=ifds.map((_,index)=>index);item.pageThumbs=await tiffThumbs(file,item.selectedPages.slice(0,Math.min(6,ifds.length)))}
   }catch(error){item.status="error";item.error=error instanceof Error&&error.message==="utif"?t.tiffLoad:kind==="svg"?t.badSvg:t.unsupported}
   next.push(item)}setItems(value=>[...value,...next]);const notes=[duplicates?`${locale==="ko"?"중복":locale==="en"?"Duplicates":"重複"} ${duplicates}`:"",rejected?`${t.unsupported} (${rejected})`:""].filter(Boolean);if(notes.length)setMessage(notes.join(" · "))}

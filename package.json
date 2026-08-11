@@ -225,7 +225,10 @@
     "test:toolbox:024-feature-only": "node scripts/tool-024/run-validation.mjs feature-only",
     "test:toolbox:024-regression-only": "node scripts/tool-024/run-validation.mjs regression-only",
     "test:toolbox:024-limit-only": "node scripts/tool-024/run-validation.mjs limit-only",
-    "test:toolbox:024-final": "node scripts/tool-024/run-validation.mjs final"
+    "test:toolbox:024-final": "node scripts/tool-024/run-validation.mjs final",
+    "check:toolbox:common-user-path-coverage": "node scripts/toolbox/check-common-user-path-coverage.mjs",
+    "test:toolbox:common-user-path": "node scripts/run-common-user-path-validation.mjs full",
+    "test:toolbox:common-user-path-fast": "node scripts/run-common-user-path-validation.mjs fast"
   },
   "dependencies": {
     "next": "16.2.12",

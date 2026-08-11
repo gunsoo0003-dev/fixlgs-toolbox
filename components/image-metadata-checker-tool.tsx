@@ -18,6 +18,7 @@ import {
 } from '@/lib/image-metadata';
 import type { Locale } from '@/lib/site';
 import { openFilePicker } from "@/lib/file-picker";
+import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
 
 type Item = {
   id: string;
@@ -157,11 +158,15 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
   }, [items, selected]);
 
   useEffect(() => {
+    let cancelled = false;
+    let url = '';
     if (!selected) { setPreviewUrl(''); return; }
     const source = viewMode === 'clean' && selected.cleanBlob ? selected.cleanBlob : selected.file;
-    const url = URL.createObjectURL(source);
-    setPreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
+    void createBrowserSafePreviewUrl(source).then((next) => {
+      if (cancelled) { URL.revokeObjectURL(next); return; }
+      url = next; setPreviewUrl(next);
+    }).catch(() => { if (!cancelled) setPreviewUrl(''); });
+    return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
   }, [selected, viewMode]);
 
   useEffect(() => {
