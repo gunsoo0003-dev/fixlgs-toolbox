@@ -477,9 +477,15 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           multiple
           className="hidden"
           onChange={(event) => {
-            if (event.target.files) {
-              void addFiles(event.target.files);
-              event.target.value = "";
+            const input = event.currentTarget;
+            const selectedFiles = input.files ? Array.from(input.files) : [];
+            if (selectedFiles.length > 0) {
+              // Android/Samsung file pickers can expose content-provider-backed Files.
+              // Keep the input selection alive until async read/decode has finished;
+              // clearing it immediately can release the underlying file handle too early.
+              void addFiles(selectedFiles).finally(() => {
+                input.value = "";
+              });
             }
           }}
         />

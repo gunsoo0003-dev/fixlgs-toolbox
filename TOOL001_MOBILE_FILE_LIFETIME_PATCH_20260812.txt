@@ -1,0 +1,26 @@
+TOOL 001 MOBILE REAL-DEVICE FILE LIFETIME PATCH
+Date: 2026-08-12
+Scope: components/image-converter-tool.tsx ONLY (product code)
+
+Observed real-device symptom:
+- Android mobile file chooser opens and a JPG/PNG can be selected.
+- Image read/decode then fails.
+
+Root-cause candidate addressed:
+- The previous onChange started async addFiles(event.target.files) and immediately cleared event.target.value.
+- addFiles performs asynchronous File.arrayBuffer()/image decode.
+- On Android/Samsung content-provider-backed picker files, clearing the input before asynchronous consumption completes can release/shorten the lifetime of the selected file handle.
+
+Change:
+- Snapshot File objects first with Array.from(input.files).
+- Keep the input selection alive while addFiles() reads/decodes.
+- Clear input.value only in addFiles(...).finally().
+
+Protection:
+- No other product component changed.
+- Common validator v7 preserved.
+- No 002~024 patch performed.
+
+Verdict before real-device deployment:
+MOBILE_BROWSER_PATH: NOT EXECUTED IN THIS PACKAGE ENVIRONMENT (node_modules absent)
+REAL_DEVICE_NOT_VERIFIED
