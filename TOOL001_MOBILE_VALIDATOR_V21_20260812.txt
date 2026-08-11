@@ -1,0 +1,28 @@
+TOOL001 MOBILE VALIDATOR V21
+DATE=2026-08-12
+PURPOSE=모바일 작업흐름 누락원인 보강
+
+기존 V20 유지 + 신규 실제 브라우저 행동검사 16축 추가
+TOTAL_WORKFLOW_RISK_AXES=66
+STATIC_COVERAGE_MISSING=0
+
+NEW_V21_SCENARIOS:
+1. File.arrayBuffer + FileReader 동시 hang 종료/피드백
+2. createImageBitmap promise hang 종료
+3. img fallback load/error 무응답 종료
+4. 파일 추가 중 component unmount/navigation
+5. 변환 중 reload 후 정상 복귀
+6. selection 후 back/forward 정상 복귀
+7. 변환 중 reset stale async resurrection 방지
+8. 변환 중 delete stale async resurrection 방지
+9. 느린 첫 선택/빠른 두번째 선택 out-of-order race
+10. download anchor click failure 예외처리
+11. zero-byte output Blob 성공 오판 방지
+12. convert double-tap 중복처리 방지
+13. 10개 full -> 삭제 -> 재추가 capacity 복구
+14. 특수문자/장문 파일명 end-to-end
+15. 320px + dark mode horizontal escape
+16. upload/reset 30회 반복 runtime error/leak sentinel
+
+REAL_DEVICE=NOT_INCLUDED
+실기기 테스트는 자동검수 전부 완료 후 최종 마지막 단계로 유지.

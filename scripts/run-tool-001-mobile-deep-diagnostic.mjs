@@ -10,6 +10,7 @@ const staging = path.join(root, 'tool001-mobile-deep-diagnostic-result');
 const expectedScenarioCount = 16;
 const expectedAndroidStressCount = 12;
 const expectedCauseMatrixCount = 30;
+const expectedWorkflowGateCount = null; // V19: reporter 실측값 사용
 const causeJson = path.join(outDir, 'tool001-mobile-cause-matrix.json');
 const causeTxt = path.join(outDir, 'tool001-mobile-cause-matrix.txt');
 const causeCoverageJson = path.join(outDir, 'tool001-mobile-cause-coverage.json');
@@ -19,9 +20,15 @@ const androidTxt = path.join(outDir, 'tool001-mobile-android-lifecycle.txt');
 const browserJson = path.join(outDir, 'tool001-mobile-deep-diagnostic.json');
 const browserTxt = path.join(outDir, 'tool001-mobile-deep-diagnostic.txt');
 const browserLog = path.join(outDir, 'tool001-mobile-deep-playwright.log.txt');
+const workflowJson = path.join(outDir, 'tool001-mobile-workflow-coverage.json');
+const workflowDetailJson = path.join(outDir, 'tool001-mobile-workflow-detail.json');
+const workflowDetailTxt = path.join(outDir, 'tool001-mobile-workflow-detail.txt');
+const workflowArtifacts = path.join(outDir, 'tool001-mobile-workflow-artifacts');
+const workflowTxt = path.join(outDir, 'tool001-mobile-workflow-coverage.txt');
 const runnerStatus = path.join(outDir, 'tool001-mobile-deep-runner-status.txt');
 
 fs.mkdirSync(outDir, { recursive: true });
+fs.rmSync(workflowArtifacts, { recursive: true, force: true });
 for (const name of [
   'tool001-mobile-source-diagnostic.json', 'tool001-mobile-source-diagnostic.txt',
   'tool001-mobile-source-run.log.txt',
@@ -31,8 +38,10 @@ for (const name of [
   'tool001-mobile-android-lifecycle.json', 'tool001-mobile-android-lifecycle.txt',
   'tool001-mobile-cause-matrix.json', 'tool001-mobile-cause-matrix.txt',
   'tool001-mobile-cause-coverage.json', 'tool001-mobile-cause-coverage.txt', 'tool001-mobile-cause-coverage-run.log.txt',
+  'tool001-mobile-workflow-gate-playwright.log.txt', 'tool001-mobile-workflow-detail.json', 'tool001-mobile-workflow-detail.txt', 'tool001-mobile-workflow-coverage.json', 'tool001-mobile-workflow-coverage.txt', 'tool001-mobile-workflow-coverage-run.log.txt',
   'tool001-mobile-cause-matrix.json', 'tool001-mobile-cause-matrix.txt',
-  'tool001-mobile-cause-coverage.json', 'tool001-mobile-cause-coverage.txt'
+  'tool001-mobile-cause-coverage.json', 'tool001-mobile-cause-coverage.txt',
+  'tool001-mobile-workflow-gate-playwright.log.txt', 'tool001-mobile-workflow-detail.json', 'tool001-mobile-workflow-detail.txt', 'tool001-mobile-workflow-coverage.json', 'tool001-mobile-workflow-coverage.txt', 'tool001-mobile-workflow-coverage-run.log.txt'
 ]) fs.rmSync(path.join(outDir, name), { force: true });
 
 function runCapturedSync(label, command, args, logFile, timeout = 30_000) {
@@ -110,7 +119,7 @@ async function runStreaming(label, command, args, logFile, timeout = 300_000) {
     child.on('close', (code, signal) => finish(code, signal));
 
     timer = setTimeout(() => {
-      console.error(`\n[V15 RUNNER] TIMEOUT after ${timeout}ms - terminating Playwright`);
+      console.error(`\n[V17 RUNNER] TIMEOUT after ${timeout}ms - terminating Playwright`);
       log.write(`\nTIMEOUT_MS=${timeout}\n`);
       try { child.kill('SIGTERM'); } catch {}
       setTimeout(() => { try { child.kill('SIGKILL'); } catch {} }, 3000).unref();
@@ -149,6 +158,7 @@ if (!playwrightCli) {
   suiteRuns.push({ name: 'BASE', code: 127, started: Date.now(), error: message });
   suiteRuns.push({ name: 'ANDROID', code: 127, started: Date.now(), error: message });
   suiteRuns.push({ name: 'CAUSE', code: 127, started: Date.now(), error: message });
+  suiteRuns.push({ name: 'WORKFLOW', code: 127, started: Date.now(), error: message });
 } else {
   const baseRun = await runStreaming(
     '001 BASE DEEP 16/16 - V15',
@@ -180,6 +190,16 @@ if (!playwrightCli) {
   suiteRuns.push({ name: 'CAUSE', ...causeRun });
   cacheReport(['tool001-mobile-cause-matrix.json', 'tool001-mobile-cause-matrix.txt', 'tool001-mobile-cause-playwright.log.txt']);
 
+  const workflowRun = await runStreaming(
+    '001 MOBILE WORKFLOW GATE + EDGE/RACE/RESILIENCE + MEMORY - V23',
+    process.execPath,
+    [playwrightCli, 'test', 'tests/tool-001-mobile-workflow-gate.spec.ts', 'tests/tool-001-mobile-limit-feedback.spec.ts', 'tests/tool-001-mobile-workflow-edge.spec.ts', 'tests/tool-001-mobile-workflow-race-resilience.spec.ts', 'tests/tool-001-mobile-memory-safety.spec.ts', '--workers=1', '--project=mobile-chromium', '--output=test-results/tool001-mobile-workflow-artifacts', '--reporter=list,./tests/reporters/tool001-workflow-diagnostic-reporter.ts'],
+    path.join(outDir, 'tool001-mobile-workflow-gate-playwright.log.txt'),
+    180_000,
+  );
+  suiteRuns.push({ name: 'WORKFLOW', ...workflowRun });
+  cacheReport(['tool001-mobile-workflow-gate-playwright.log.txt', 'tool001-mobile-workflow-detail.json', 'tool001-mobile-workflow-detail.txt']);
+
   // 마지막 Playwright 실행이 test-results를 정리하므로 앞선 두 묶음 결과를 복구한다.
   restoreCachedReports();
 
@@ -194,6 +214,12 @@ const coverage = runCapturedSync(
   process.execPath,
   ['scripts/check-tool-001-mobile-cause-coverage.mjs'],
   path.join(outDir, 'tool001-mobile-cause-coverage-run.log.txt'),
+);
+const workflowCoverage = runCapturedSync(
+  '001 MOBILE WORKFLOW COVERAGE AUDIT V17',
+  process.execPath,
+  ['scripts/check-tool-001-mobile-workflow-coverage.mjs'],
+  path.join(outDir, 'tool001-mobile-workflow-coverage-run.log.txt'),
 );
 const source = runCapturedSync(
   '001 SOURCE DIAGNOSTIC V15',
@@ -249,12 +275,34 @@ try {
   causeCoverage = JSON.parse(fs.readFileSync(causeCoverageJson, 'utf8'));
   if ((causeCoverage?.missingCount ?? 999) !== 0) throw new Error(`CAUSE_COVERAGE_MISSING_${causeCoverage?.missingCount}`);
 } catch (error) { causeCoverageError = String(error?.message || error); }
-const browserRuntimeValid = coverage.code === 0 && browser.code === 0 && browserExecuted && completeScenarioSet && normalEvidencePresent && !reportError && androidComplete && !androidReportError && causeComplete && !causeReportError && !causeCoverageError;
+
+let workflowDetail = null;
+let workflowDetailError = '';
+try {
+  if (!fs.existsSync(workflowDetailJson)) throw new Error('WORKFLOW_DETAIL_JSON_MISSING');
+  workflowDetail = JSON.parse(fs.readFileSync(workflowDetailJson, 'utf8'));
+  if (!Array.isArray(workflowDetail.tests)) throw new Error('WORKFLOW_DETAIL_TESTS_MISSING');
+} catch (error) { workflowDetailError = String(error?.message || error); }
+const workflowTestCount = Array.isArray(workflowDetail?.tests) ? workflowDetail.tests.length : 0;
+const workflowPassCount = Number(workflowDetail?.counts?.passed || 0);
+const workflowFailCount = Number(workflowDetail?.counts?.failed || 0);
+const workflowSkipCount = Number(workflowDetail?.counts?.skipped || 0);
+
+const workflowSuite = suiteRuns.find((x) => x.name === 'WORKFLOW');
+const workflowGateComplete = workflowSuite?.code === 0 && workflowTestCount > 0 && workflowFailCount === 0 && !workflowDetailError;
+const browserRuntimeValid = coverage.code === 0 && workflowCoverage.code === 0 && workflowGateComplete && browser.code === 0 && browserExecuted && completeScenarioSet && normalEvidencePresent && !reportError && androidComplete && !androidReportError && causeComplete && !causeReportError && !causeCoverageError;
 
 const statusLines = [
-  'TOOL001 MOBILE DEEP DIAGNOSTIC V13',
+  'TOOL001 MOBILE DEEP DIAGNOSTIC V23',
   `CAUSE_COVERAGE_EXIT=${coverage.code}`,
   `SOURCE_EXIT=${source.code}`,
+  `WORKFLOW_COVERAGE_EXIT=${workflowCoverage.code}`,
+  `WORKFLOW_GATE=${workflowGateComplete ? 'PASS' : 'FAIL'}`,
+  `WORKFLOW_GATE_TEST_COUNT=${workflowTestCount}`,
+  `WORKFLOW_GATE_PASS_COUNT=${workflowPassCount}`,
+  `WORKFLOW_GATE_FAIL_COUNT=${workflowFailCount}`,
+  `WORKFLOW_GATE_SKIP_COUNT=${workflowSkipCount}`,
+  `WORKFLOW_DETAIL_ERROR=${workflowDetailError || 'NONE'}`, 
   `PLAYWRIGHT_EXIT=${browser.code}`,
   ...browser.suites.map((x) => `${x.name}_SUITE_EXIT=${x.code}`),
   `BROWSER_RUNTIME_EXECUTED=${browserExecuted ? 'YES' : 'NO'}`,
@@ -271,12 +319,12 @@ const statusLines = [
   'REAL_DEVICE_NOT_VERIFIED',
 ];
 fs.writeFileSync(runnerStatus, statusLines.join('\n') + '\n');
-console.log('\n========== V15 FINAL ==========' );
+console.log('\n========== V20 FINAL ==========');
 console.log(statusLines.join('\n'));
 
 if (!browserRuntimeValid) {
   const failure = [
-    'TOOL001 MOBILE DEEP DIAGNOSTIC V15 - BROWSER RUNTIME FAILURE',
+    'TOOL001 MOBILE DEEP DIAGNOSTIC V23 - BROWSER RUNTIME FAILURE',
     ...statusLines,
     '',
     '브라우저 심층검수가 끝까지 실행되지 않았거나 정상 JPG/PNG 증거가 부족합니다.',
@@ -285,8 +333,10 @@ if (!browserRuntimeValid) {
     '우선 확인:',
     '1) npm install',
     '2) npx playwright install chromium',
-    '3) tool001-mobile-deep-playwright.log.txt',
-    '4) tool001-mobile-deep-diagnostic.json partial results',
+    '3) tool001-mobile-workflow-detail.txt',
+    '4) tool001-mobile-workflow-gate-playwright.log.txt',
+    '5) tool001-mobile-workflow-artifacts/ screenshot/trace/error-context',
+    '6) tool001-mobile-deep-diagnostic.json partial results',
   ].join('\n');
   fs.writeFileSync(path.join(outDir, 'tool001-mobile-deep-runner-failure.txt'), failure + '\n');
 }
@@ -300,16 +350,18 @@ const collect = [
   'tool001-mobile-android-lifecycle.json', 'tool001-mobile-android-lifecycle.txt',
   'tool001-mobile-cause-matrix.json', 'tool001-mobile-cause-matrix.txt',
   'tool001-mobile-cause-coverage.json', 'tool001-mobile-cause-coverage.txt', 'tool001-mobile-cause-coverage-run.log.txt',
+  'tool001-mobile-workflow-gate-playwright.log.txt', 'tool001-mobile-workflow-detail.json', 'tool001-mobile-workflow-detail.txt', 'tool001-mobile-workflow-coverage.json', 'tool001-mobile-workflow-coverage.txt', 'tool001-mobile-workflow-coverage-run.log.txt',
   'toolbox-validation.json',
 ].filter(name => fs.existsSync(path.join(outDir, name)));
 for (const name of collect) fs.copyFileSync(path.join(outDir, name), path.join(staging, name));
+if (fs.existsSync(workflowArtifacts)) fs.cpSync(workflowArtifacts, path.join(staging, 'tool001-mobile-workflow-artifacts'), { recursive: true });
 fs.writeFileSync(path.join(staging, 'REAL_DEVICE_STATUS.txt'), [
   browserRuntimeValid ? 'MOBILE_BROWSER_PATH_DIAGNOSTIC_COMPLETE' : 'MOBILE_BROWSER_PATH_DIAGNOSTIC_FAILED',
   'REAL_DEVICE_NOT_VERIFIED',
 ].join('\n') + '\n');
 
 if (process.platform === 'win32') {
-  const zip = path.join(desktop, 'TOOLBOX_001_모바일심층진단_V15_시나리오격리_58개완주_검수결과.zip');
+  const zip = path.join(desktop, 'TOOLBOX_001_모바일심층진단_V23_모바일메모리안정모듈_검수결과.zip');
   fs.rmSync(zip, { force: true });
   const ps = `Compress-Archive -Path '${staging.replaceAll("'", "''")}\\*' -DestinationPath '${zip.replaceAll("'", "''")}' -Force`;
   const z = spawnSync('powershell.exe', ['-NoProfile', '-Command', ps], { cwd: root, encoding: 'utf8' });

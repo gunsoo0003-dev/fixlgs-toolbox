@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
+import { MOBILE_FILE_READ_STAGE_TIMEOUT_MS, MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -135,40 +136,17 @@ function readBlobAsDataUrl(blob: Blob): Promise<string> {
 }
 
 async function readFileArrayBuffer(file: File): Promise<ArrayBuffer> {
-  return new Promise<ArrayBuffer>((resolve, reject) => {
-    let settled = false;
-    let failures = 0;
-    let lastError: unknown = new Error("file-read");
-    const timer = window.setTimeout(() => {
-      if (!settled) {
-        settled = true;
-        reject(lastError);
-      }
-    }, 12_000);
-    const succeed = (value: ArrayBuffer) => {
-      if (settled) return;
-      settled = true;
-      window.clearTimeout(timer);
-      resolve(value);
-    };
-    const fail = (error: unknown) => {
-      lastError = error;
-      failures += 1;
-      if (failures >= 2 && !settled) {
-        settled = true;
-        window.clearTimeout(timer);
-        reject(error);
-      }
-    };
-
-    Promise.resolve().then(() => file.arrayBuffer()).then(succeed, fail);
-    readBlobWithFileReader(file).then(succeed, fail);
-  });
-}
-
-function safeRevokeObjectUrl(url?: string) {
-  if (!url?.startsWith("blob:")) return;
-  try { URL.revokeObjectURL(url); } catch { /* no-op */ }
+  // Mobile safety: avoid holding arrayBuffer() and FileReader copies at the same time.
+  // Try the native path first, then fall back only after failure/timeout.
+  try {
+    return await withTimeout(file.arrayBuffer(), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout");
+  } catch (firstError) {
+    try {
+      return await withTimeout(readBlobWithFileReader(file), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout");
+    } catch {
+      throw firstError;
+    }
+  }
 }
 
 async function createBlobUrlOrDataUrl(blob: Blob) {
@@ -218,10 +196,24 @@ function duplicateKey(file: File) {
   return `${file.name.toLowerCase()}|${file.size}|${file.lastModified}`;
 }
 
+
 async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
   if (typeof window !== "undefined" && "createImageBitmap" in window) {
+    let bitmapTimedOut = false;
     try {
-      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+      const bitmapPromise = createImageBitmap(file, { imageOrientation: "from-image" });
+      // A content-provider/browser decoder can occasionally never settle on mobile.
+      // Bound the wait, then fall back to the Image path instead of leaving the UI stuck forever.
+      bitmapPromise.then((lateBitmap) => {
+        if (bitmapTimedOut) lateBitmap.close();
+      }).catch(() => { /* handled by the awaited race below */ });
+      const bitmap = await Promise.race([
+        bitmapPromise,
+        new Promise<never>((_, reject) => window.setTimeout(() => {
+          bitmapTimedOut = true;
+          reject(new Error("bitmap-timeout"));
+        }, MOBILE_IMAGE_DECODE_TIMEOUT_MS)),
+      ]);
       return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
     } catch {
       // fallback below
@@ -231,12 +223,31 @@ async function loadImageSource(file: File): Promise<{ source: CanvasImageSource;
   const sourceUrl = await createBlobUrlOrDataUrl(file);
   return new Promise((resolve, reject) => {
     const image = new Image();
+    let settled = false;
+    const finish = (callback: () => void) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      image.onload = null;
+      image.onerror = null;
+      callback();
+    };
+    const timer = window.setTimeout(() => {
+      finish(() => {
+        safeRevokeObjectUrl(sourceUrl);
+        reject(new Error("image-timeout"));
+      });
+    }, MOBILE_IMAGE_DECODE_TIMEOUT_MS);
     image.onload = () => {
-      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => safeRevokeObjectUrl(sourceUrl) });
+      const width = image.naturalWidth;
+      const height = image.naturalHeight;
+      finish(() => resolve({ source: image, width, height, dispose: () => safeRevokeObjectUrl(sourceUrl) }));
     };
     image.onerror = () => {
-      safeRevokeObjectUrl(sourceUrl);
-      reject(new Error("이미지를 불러올 수 없습니다."));
+      finish(() => {
+        safeRevokeObjectUrl(sourceUrl);
+        reject(new Error("이미지를 불러올 수 없습니다."));
+      });
     };
     image.src = sourceUrl;
   });
@@ -244,21 +255,25 @@ async function loadImageSource(file: File): Promise<{ source: CanvasImageSource;
 
 async function detectTransparency(source: CanvasImageSource, width: number, height: number) {
   const canvas = document.createElement("canvas");
-  const maxSide = 256;
-  const scale = Math.min(1, maxSide / Math.max(width, height));
-  const sampleWidth = Math.max(1, Math.floor(width * scale));
-  const sampleHeight = Math.max(1, Math.floor(height * scale));
-  canvas.width = sampleWidth;
-  canvas.height = sampleHeight;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return false;
-  ctx.clearRect(0, 0, sampleWidth, sampleHeight);
-  ctx.drawImage(source, 0, 0, sampleWidth, sampleHeight);
-  const imageData = ctx.getImageData(0, 0, sampleWidth, sampleHeight).data;
-  for (let index = 3; index < imageData.length; index += 16) {
-    if (imageData[index] < 255) return true;
+  try {
+    const maxSide = 256;
+    const scale = Math.min(1, maxSide / Math.max(width, height));
+    const sampleWidth = Math.max(1, Math.floor(width * scale));
+    const sampleHeight = Math.max(1, Math.floor(height * scale));
+    canvas.width = sampleWidth;
+    canvas.height = sampleHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return false;
+    ctx.clearRect(0, 0, sampleWidth, sampleHeight);
+    ctx.drawImage(source, 0, 0, sampleWidth, sampleHeight);
+    const imageData = ctx.getImageData(0, 0, sampleWidth, sampleHeight).data;
+    for (let index = 3; index < imageData.length; index += 16) {
+      if (imageData[index] < 255) return true;
+    }
+    return false;
+  } finally {
+    releaseCanvas(canvas);
   }
-  return false;
 }
 
 async function canvasToBlob(canvas: HTMLCanvasElement, mime: string, quality?: number) {
@@ -304,6 +319,10 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   const [message, setMessage] = useState("");
   const [zipState, setZipState] = useState<"idle" | "working" | "error">("idle");
   const cancelRef = useRef(false);
+  // Incremented by a full reset so any in-flight async conversion becomes stale.
+  const conversionGenerationRef = useRef(0);
+  // Item deletion must invalidate only that item's late async result.
+  const removedItemIdsRef = useRef(new Set<string>());
 
   const itemsRef = useRef<FileItem[]>([]);
 
@@ -350,6 +369,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     let rejected = 0;
     let duplicate = 0;
     let animated = 0;
+    let memoryRejected = 0;
 
     for (const file of incoming) {
       if (items.length + accepted.length >= MAX_FILES || file.size > MAX_FILE_BYTES || total + file.size > MAX_TOTAL_BYTES) {
@@ -388,8 +408,9 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           height: decoded.height,
           isNew: true,
         });
-      } catch {
+      } catch (error) {
         rejected += 1;
+        if (isMobileMemorySafetyError(error)) memoryRejected += 1;
       }
     }
 
@@ -404,6 +425,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
       animated
         ? locale === "ko" ? `애니메이션 이미지 ${animated}개 제외.` : locale === "en" ? `${animated} animated image(s) skipped.` : `アニメーション画像${animated}件を除外。`
         : "",
+      memoryRejected ? mobileMemoryErrorMessage(locale) : "",
       rejected
         ? locale === "ko" ? `손상·형식 불일치·제한 초과 ${rejected}개 제외.` : locale === "en" ? `${rejected} damaged, mismatched, or oversized file(s) skipped.` : `破損・形式不一致・制限超過${rejected}件を除外。`
         : "",
@@ -412,6 +434,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   };
 
   const removeItem = (id: string) => {
+    removedItemIdsRef.current.add(id);
     setItems((prev) => {
       const target = prev.find((item) => item.id === id);
       if (target) {
@@ -423,6 +446,10 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   };
 
   const clearAll = () => {
+    conversionGenerationRef.current += 1;
+    cancelRef.current = true;
+    removedItemIdsRef.current.clear();
+    setProcessing(false);
     setItems((prev) => {
       prev.forEach((item) => {
         safeRevokeObjectUrl(item.previewUrl);
@@ -455,62 +482,119 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   };
 
   const downloadBlob = (blob: Blob, filename: string) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    let url = "";
+    try {
+      url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.setTimeout(() => safeRevokeObjectUrl(url), 1000);
+      return true;
+    } catch {
+      if (url) safeRevokeObjectUrl(url);
+      setMessage(locale === "ko"
+        ? "다운로드를 시작하지 못했습니다. 다시 시도해 주세요."
+        : locale === "en"
+          ? "The download could not be started. Please try again."
+          : "ダウンロードを開始できませんでした。もう一度お試しください。");
+      return false;
+    }
   };
 
   const convertAll = async (onlyNew = false) => {
     if (processing || items.length === 0) return;
     cancelRef.current = false;
+    const runGeneration = conversionGenerationRef.current;
     setProcessing(true);
     setZipState("idle");
     const sourceItems = [...items];
     const names = uniqueOutputNames(sourceItems);
     const targetIndexes = sourceItems.map((item,index)=>({item,index})).filter(({item})=>!onlyNew || item.isNew);
     const nextItems = [...sourceItems];
+
+    const runIsCurrent = () => conversionGenerationRef.current === runGeneration;
+    const publishCurrentItems = () => {
+      if (!runIsCurrent()) return;
+      setItems((current) => {
+        const liveIds = new Set(current.map((entry) => entry.id));
+        return nextItems.filter((entry) => liveIds.has(entry.id) && !removedItemIdsRef.current.has(entry.id));
+      });
+    };
+
     for (let step = 0; step < targetIndexes.length; step += 1) {
       const { item, index: i } = targetIndexes[step];
+      if (!runIsCurrent()) return;
+      if (removedItemIdsRef.current.has(item.id)) continue;
       if (cancelRef.current) {
         nextItems[i] = { ...item, status: "cancelled", isNew: false };
-        setItems([...nextItems]);
+        publishCurrentItems();
         continue;
       }
       if (item.resultUrl) safeRevokeObjectUrl(item.resultUrl);
       nextItems[i] = { ...item, status: "processing", error: undefined, resultBlob: undefined, resultUrl: undefined, outputSize: undefined };
-      setItems([...nextItems]);
+      publishCurrentItems();
+      if (!runIsCurrent()) return;
       setMessage(locale === "ko" ? `${step + 1} / ${targetIndexes.length}개 처리 중` : locale === "en" ? `Processing ${step + 1} of ${targetIndexes.length}` : `${step + 1} / ${targetIndexes.length}件を処理中`);
+      let loaded: Awaited<ReturnType<typeof loadImageSource>> | null = null;
+      let producedResultUrl: string | undefined;
       try {
         const format = item.outputFormat;
         const quality = qualityFor(qualityMode, format);
-        const loaded = await loadImageSource(item.file);
+        loaded = await loadImageSource(item.file);
+        if (!runIsCurrent()) { loaded.dispose?.(); return; }
+        if (removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); continue; }
         const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
+        if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); if (!runIsCurrent()) return; continue; }
         const canvas = document.createElement("canvas");
-        canvas.width = loaded.width; canvas.height = loaded.height;
+        const target = constrainForMobileMemory(loaded.width, loaded.height);
+        canvas.width = target.width; canvas.height = target.height;
         const ctx = canvas.getContext("2d");
         if (!ctx) throw new Error("Canvas 2D context unavailable");
         if (format === "image/jpeg") { ctx.fillStyle = backgroundColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(loaded.source, 0, 0);
-        const blob = await canvasToBlob(canvas, getMimeForFormat(format), quality);
+        ctx.drawImage(loaded.source, 0, 0, canvas.width, canvas.height);
+        const resultWidth = canvas.width;
+        const resultHeight = canvas.height;
+        let blob: Blob | null = null;
+        try {
+          blob = await withTimeout(canvasToBlob(canvas, getMimeForFormat(format), quality), 12_000, "canvas-export-timeout");
+        } finally {
+          releaseCanvas(canvas);
+        }
         loaded.dispose?.();
-        if (!blob) throw new Error("Failed to export image");
-        const resultUrl = await createBlobUrlOrDataUrl(blob);
-        nextItems[i] = { ...item, status: "done", error: undefined, resultBlob: blob, resultUrl, outputSize: blob.size, outputFormat: format, outputName: names[i], width: loaded.width, height: loaded.height, transparency, isNew: false };
+        loaded = null;
+        if (!runIsCurrent()) return;
+        if (removedItemIdsRef.current.has(item.id)) continue;
+        if (!blob || blob.size <= 0) throw new Error("Failed to export image");
+        producedResultUrl = await createBlobUrlOrDataUrl(blob);
+        if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) {
+          safeRevokeObjectUrl(producedResultUrl);
+          if (!runIsCurrent()) return;
+          continue;
+        }
+        nextItems[i] = { ...item, status: "done", error: undefined, resultBlob: blob, resultUrl: producedResultUrl, outputSize: blob.size, outputFormat: format, outputName: names[i], width: resultWidth, height: resultHeight, transparency, isNew: false };
       } catch (error) {
-        nextItems[i] = { ...item, status: "error", error: error instanceof Error ? error.message : "Unknown error", isNew: false };
+        loaded?.dispose?.();
+        if (!runIsCurrent()) return;
+        if (removedItemIdsRef.current.has(item.id)) {
+          if (producedResultUrl) safeRevokeObjectUrl(producedResultUrl);
+          continue;
+        }
+        const memorySafety = isMobileMemorySafetyError(error);
+        if (memorySafety) setMessage(mobileMemoryErrorMessage(locale));
+        nextItems[i] = { ...item, status: "error", error: memorySafety ? mobileMemoryErrorMessage(locale) : error instanceof Error ? error.message : "Unknown error", isNew: false };
       }
-      setItems([...nextItems]);
+      publishCurrentItems();
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
-    const done = nextItems.filter((item) => item.status === "done").length;
-    const failed = nextItems.filter((item) => item.status === "error").length;
-    const cancelled = nextItems.filter((item) => item.status === "cancelled").length;
+    if (!runIsCurrent()) return;
+    const liveNextItems = nextItems.filter((item) => !removedItemIdsRef.current.has(item.id));
+    const done = liveNextItems.filter((item) => item.status === "done").length;
+    const failed = liveNextItems.filter((item) => item.status === "error").length;
+    const cancelled = liveNextItems.filter((item) => item.status === "cancelled").length;
     setProcessing(false);
     setMessage(locale === "ko" ? `${done}개 완료 · ${failed}개 실패${cancelled ? ` · ${cancelled}개 취소` : ""}` : locale === "en" ? `${done} done · ${failed} failed${cancelled ? ` · ${cancelled} cancelled` : ""}` : `${done}件完了・${failed}件失敗${cancelled ? `・${cancelled}件キャンセル` : ""}`);
   };
@@ -519,8 +603,10 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     const readyFiles = items.filter((item) => item.status === "done" && item.resultBlob).map((item) => ({ name: item.outputName ?? `${baseName(item.file.name)}.${getExtensionForFormat(item.outputFormat)}`, blob: item.resultBlob as Blob }));
     if (readyFiles.length === 0) return;
     setZipState("working");
-    try { const zipBlob = await createStoredZip(readyFiles); downloadBlob(zipBlob, `fixlgs-image-converter.zip`); setZipState("idle"); }
-    catch { setZipState("error"); }
+    try {
+      const zipBlob = await createStoredZip(readyFiles);
+      setZipState(downloadBlob(zipBlob, `fixlgs-image-converter.zip`) ? "idle" : "error");
+    } catch { setZipState("error"); }
   };
 
   const hasDownloadableResults = items.some((item) => item.status === "done" && item.resultBlob);

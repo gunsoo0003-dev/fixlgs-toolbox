@@ -1,0 +1,25 @@
+TOOL001 MOBILE VALIDATOR V17 CHANGELOG
+
+Added:
+- tests/tool-001-mobile-workflow-gate.spec.ts
+- tests/tool-001-mobile-limit-feedback.spec.ts
+- scripts/check-tool-001-mobile-workflow-coverage.mjs
+- TOOL001_MOBILE_WORKFLOW_VALIDATOR_V17_20260812.txt
+
+Updated:
+- scripts/run-tool-001-mobile-deep-diagnostic.mjs
+
+Validation structure:
+- BASE deep scenarios: 16
+- Android lifecycle stress: 12
+- cause matrix: 30
+- observable workflow gate: 1 test / 12 checkpoints
+- mobile rejected-input / limit feedback: 3 tests
+- workflow cause coverage audit: 42 mapped risks, missing 0
+
+Critical new gate:
+Selecting a normal image is not PASS merely because the picker/change event occurred.
+PASS now requires the visible product workflow to transition:
+blue upload zone removed -> active selected-images area -> file card -> non-zero preview -> post-selection controls -> conversion done -> actual download event -> reset -> same-file reselect.
+
+Real-device test is intentionally excluded from this validator and remains the final post-deployment confirmation step.

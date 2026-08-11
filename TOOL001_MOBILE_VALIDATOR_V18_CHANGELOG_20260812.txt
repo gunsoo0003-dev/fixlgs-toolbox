@@ -1,0 +1,13 @@
+TOOL001 MOBILE VALIDATOR V18
+V17 re-audit found remaining mobile workflow blind spots and strengthened them before real-device final verification.
+Added executable browser gates:
+1 picker cancel/no-selection state integrity
+2 mixed valid + invalid batch partial acceptance + feedback
+3 same display name with different bytes duplicate false-positive guard
+4 portrait -> landscape viewport/orientation continuity + horizontal overflow guard
+5 EN mobile accepted-file state transition
+6 JA mobile accepted-file state transition
+7 canvas.toBlob(null) terminal error/non-hang guard
+8 download ObjectURL failure uncaught-pageerror guard
+Existing V15 BASE16 + Android12 + cause30 + V17 workflow/limit gates remain.
+REAL DEVICE TEST remains excluded from automation and stays FINAL-LAST verification only.

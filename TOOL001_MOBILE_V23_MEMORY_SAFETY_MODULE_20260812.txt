@@ -1,0 +1,11 @@
+TOOL001 MOBILE V23 MEMORY SAFETY MODULE
+- NEW COMMON MODULE: lib/mobile-image-safety.ts
+- PC original-resolution path preserved; mobile guard only.
+- Mobile long-side export cap: 2048px.
+- Sequential File.arrayBuffer -> FileReader fallback to reduce duplicate buffers.
+- Decode timeout and terminal memory/large-file feedback.
+- Temporary canvas release via width=0/height=0.
+- Existing ImageBitmap close / ObjectURL revoke paths retained.
+- Existing V21 66-axis validation retained.
+- Added V23 mobile memory safety browser scenarios.
+- Real-device verification remains final manual step only.

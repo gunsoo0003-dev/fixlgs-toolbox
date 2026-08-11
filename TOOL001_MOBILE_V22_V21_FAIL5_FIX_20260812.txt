@@ -1,0 +1,25 @@
+TOOL001 MOBILE V22 - V21 FAIL 5 FIX
+Date: 2026-08-12
+
+Source fix only. V21 66-risk validator retained unchanged.
+
+Fixed:
+1. createImageBitmap never-settling promise -> 4s bounded wait then Image fallback.
+2. Image fallback neither load nor error -> 4s terminal timeout/rejection.
+3. Reset during async conversion -> generation invalidation prevents stale card/result resurrection.
+4. Delete during async conversion -> removed-item invalidation + live-state publishing prevents resurrection.
+5. Zero-byte exported Blob -> treated as conversion error, never status=done.
+
+Additional safety:
+- Late bitmap resolution after timeout is closed.
+- Full reset invalidates in-flight conversion and clears processing state.
+- Async result publishing filters against current live item IDs.
+
+Validation available in this package:
+- node scripts/check-tool-001-mobile-workflow-coverage.mjs
+  TOOL001 workflow coverage: 66 risks, missing=0
+- Runner/coverage JS syntax check PASS.
+- Full Playwright runtime was not executed in the packaging environment because node_modules is intentionally excluded.
+
+Re-run:
+npm run test:toolbox:001-mobile-deep
