@@ -4,8 +4,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
-import { openFilePicker } from "@/lib/file-picker";
-import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -146,8 +144,27 @@ function duplicateKey(file: File) {
 }
 
 async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
-  const loaded = await loadBrowserImage(file, "from-image");
-  return { source: loaded.source, width: loaded.width, height: loaded.height, dispose: loaded.close };
+  if (typeof window !== "undefined" && "createImageBitmap" in window) {
+    try {
+      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+      return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
+    } catch {
+      // fallback below
+    }
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => URL.revokeObjectURL(objectUrl) });
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("이미지를 불러올 수 없습니다."));
+    };
+    image.src = objectUrl;
+  });
 }
 
 async function detectTransparency(source: CanvasImageSource, width: number, height: number) {
@@ -287,7 +304,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         accepted.push({
           id: crypto.randomUUID(),
           file,
-          previewUrl: await createBrowserSafePreviewUrl(file),
+          previewUrl: URL.createObjectURL(file),
           status: "idle",
           outputFormat: globalFormat,
           originalSize: file.size,
@@ -471,7 +488,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{locale === "ko" ? "이미지를 여기에 놓으세요" : locale === "en" ? "Drop images here" : "画像をここにドロップ"}</h2>
             <p>{locale === "ko" ? "여러 파일을 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다." : locale === "en" ? "Add several files at once, or choose them with the button below." : "複数ファイルをまとめて追加するか、下のボタンから選択できます。"}</p>
-            <button type="button" onClick={() => openFilePicker(fileInputRef.current)}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
+            <button type="button" onClick={() => fileInputRef.current?.click()}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
             <small>{supportedLabel}</small>
           </div>
         ) : (
@@ -487,7 +504,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
                   <span>{aggregate.done} done</span>
                   <span>{aggregate.failed} failed</span>
                 </div>
-                <button type="button" onClick={() => openFilePicker(fileInputRef.current)}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
+                <button type="button" onClick={() => fileInputRef.current?.click()}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

@@ -3,9 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
-import { openFilePicker } from "@/lib/file-picker";
 import styles from "./before-after-image-tool.module.css";
-import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type SlotKey = "before" | "after";
 type FitMode = "cover" | "contain";
@@ -160,8 +158,8 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
       if(file.size>LIMITS.fileBytes)throw new Error(t.tooBigFile);
       const other=key==="before"?afterRef.current.file:beforeRef.current.file;
       if(file.size+(other?.size??0)>LIMITS.totalBytes)throw new Error(t.tooBigTotal);
-      const loaded=await loadBrowserImage(file,"from-image"); const source=loaded.source,width=loaded.width,height=loaded.height;
-      const url=await createBrowserSafePreviewUrl(file);
+      const url=URL.createObjectURL(file); let source:CanvasImageSource,width=0,height=0;
+      try{if(typeof createImageBitmap==="function"){const b=await createImageBitmap(file,{imageOrientation:"from-image"});source=b;width=b.width;height=b.height}else{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}catch(e){URL.revokeObjectURL(url);throw e}
       if(!width||!height){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.unreadable)}
       if(width*height>LIMITS.sourcePixels){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.tooBigSource)}
       const old=key==="before"?beforeRef.current:afterRef.current; closeSource(old.source);if(old.url)URL.revokeObjectURL(old.url);
@@ -218,10 +216,10 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
       <div className={styles.stepHead}><div><span>STEP 01</span><h3>{t.step1}</h3></div><p>{t.step1Desc}</p></div>
       <div className={styles.uploadGrid} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();chooseDropped(e.dataTransfer.files)}}>
         {(["before","after"] as SlotKey[]).map(key=>{const slot=key==="before"?before:after;return <section key={key} className={`${styles.slot} ${selected===key?styles.active:""}`} data-testid={`tool015-${key}-slot`} onClick={()=>setSelected(key)} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();e.stopPropagation();chooseDropped(e.dataTransfer.files,key)}}>
-          {!slot.source?<button type="button" className={styles.slotButton} onClick={()=>key==="before"?openFilePicker(beforeInput.current):openFilePicker(afterInput.current)}><b>＋</b><strong>{key==="before"?t.before:t.after}</strong><span>{t.choose}</span></button>:<div className={styles.slotReady}><img src={slot.url} alt={slot.name}/><div className={styles.slotMeta}><strong>{key==="before"?t.before:t.after}</strong><p>{slot.name}<br/>{slot.width} × {slot.height}px</p><div className={styles.slotActions}><button onClick={()=>key==="before"?openFilePicker(beforeInput.current):openFilePicker(afterInput.current)}>{t.replace}</button><button onClick={()=>removeSlot(key)}>{t.remove}</button></div></div></div>}
+          {!slot.source?<button type="button" className={styles.slotButton} onClick={()=>key==="before"?beforeInput.current?.click():afterInput.current?.click()}><b>＋</b><strong>{key==="before"?t.before:t.after}</strong><span>{t.choose}</span></button>:<div className={styles.slotReady}><img src={slot.url} alt={slot.name}/><div className={styles.slotMeta}><strong>{key==="before"?t.before:t.after}</strong><p>{slot.name}<br/>{slot.width} × {slot.height}px</p><div className={styles.slotActions}><button onClick={()=>key==="before"?beforeInput.current?.click():afterInput.current?.click()}>{t.replace}</button><button onClick={()=>removeSlot(key)}>{t.remove}</button></div></div></div>}
         </section>})}
       </div>
-      <div className={styles.dualSelect}><button type="button" onClick={()=>openFilePicker(bothInput.current)}>{t.selectTwo}</button></div><p className={styles.support}>{t.support}</p>{error&&<p role="alert" className={styles.error} data-testid="tool015-error">{error}</p>}
+      <div className={styles.dualSelect}><button type="button" onClick={()=>bothInput.current?.click()}>{t.selectTwo}</button></div><p className={styles.support}>{t.support}</p>{error&&<p role="alert" className={styles.error} data-testid="tool015-error">{error}</p>}
     </section>
 
     <aside className={styles.settings} data-testid="tool015-settings">

@@ -3,9 +3,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
-import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
-import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/avif";
 type Status = "idle" | "processing" | "done" | "error" | "cancelled";
@@ -32,7 +30,7 @@ async function decodeHeic(file:File){const mod=await remoteImport("https://esm.s
 async function encodeAvif(imageData:ImageData,quality:number){const mod=await remoteImport("https://esm.sh/@jsquash/avif@2.1.1");const buffer=await mod.encode(imageData,{cqLevel:Math.round(63-(quality/100)*55),speed:8});const output=new Uint8Array(buffer);return new Blob([output],{type:"image/avif"})}
 async function canvasBlob(canvas:HTMLCanvasElement,type:"image/jpeg"|"image/png",quality?:number){return new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("export failed")),type,quality))}
 async function detectKind(file:File):Promise<InputKind|null>{const b=new Uint8Array(await file.slice(0,16).arrayBuffer());if(b[0]===0xff&&b[1]===0xd8)return"jpeg";if(b[0]===0x89&&b[1]===0x50&&b[2]===0x4e&&b[3]===0x47)return"png";const brand=new TextDecoder().decode(b.slice(8,16)).toLowerCase();if(brand.includes("avif")||brand.includes("avis"))return"avif";if(brand.includes("heic")||brand.includes("heif")||brand.includes("heix")||brand.includes("mif1")||brand.includes("msf1"))return"heic";return null}
-async function sourceFrom(file:File,kind:InputKind){const blob=kind==="heic"?await decodeHeic(file):file;const loaded=await loadBrowserImage(blob,"from-image");return{blob,...loaded}}
+async function sourceFrom(file:File,kind:InputKind){const blob=kind==="heic"?await decodeHeic(file):file;const bitmap=await createImageBitmap(blob,{imageOrientation:"from-image"});return{blob,bitmap}}
 function uniqueNames(items:FileItem[]){const used=new Map<string,number>();return items.map(item=>{const key=`${baseName(item.file.name)}.${ext(item.outputFormat)}`;const n=(used.get(key)||0)+1;used.set(key,n);return n===1?key:`${baseName(item.file.name)}-${n}.${ext(item.outputFormat)}`})}
 function duplicateKey(file:File){return `${file.name.toLowerCase()}|${file.size}|${file.lastModified}`}
 function expectedKind(file:File):InputKind|null{const n=file.name.toLowerCase();if(/\.jpe?g$/.test(n))return"jpeg";if(n.endsWith(".png"))return"png";if(n.endsWith(".avif"))return"avif";if(/\.(heic|heif)$/.test(n))return"heic";return null}
@@ -48,7 +46,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
  function patch(id:string,p:Partial<FileItem>){setItems(prev=>prev.map(i=>i.id===id?{...i,...p}:i))}
  async function addFiles(list:FileList|File[]){const incoming=Array.from(list),accepted:FileItem[]=[];let total=items.reduce((s,i)=>s+i.originalSize,0),skipped=0,duplicates=0,mismatches=0;const seen=new Set(items.map(i=>duplicateKey(i.file)));
   for(const file of incoming){if(items.length+accepted.length>=MAX_FILES||file.size===0||file.size>MAX_FILE_BYTES||total+file.size>MAX_TOTAL_BYTES){skipped++;continue}const key=duplicateKey(file);if(seen.has(key)){duplicates++;continue}const kind=await detectKind(file),expected=expectedKind(file);if(!kind){skipped++;continue}if(!expected||expected!==kind){mismatches++;continue}total+=file.size;seen.add(key);const item:FileItem={id:crypto.randomUUID(),file,inputKind:kind,outputFormat:defaultFormat(kind),status:"idle",originalSize:file.size,isNew:true};
-   try{const loaded=await sourceFrom(file,kind);if(loaded.width*loaded.height>MAX_PIXELS){loaded.close();skipped++;continue}const c=document.createElement("canvas"),scale=Math.min(1,640/Math.max(loaded.width,loaded.height));c.width=Math.max(1,Math.round(loaded.width*scale));c.height=Math.max(1,Math.round(loaded.height*scale));c.getContext("2d")?.drawImage(loaded.source,0,0,c.width,c.height);const thumb=await canvasBlob(c,"image/png");item.previewUrl=URL.createObjectURL(thumb);item.width=loaded.width;item.height=loaded.height;loaded.close()}catch{try{item.previewUrl=kind==="heic"?undefined:await createBrowserSafePreviewUrl(file)}catch{item.previewUrl=undefined}}accepted.push(item)}
+   try{const {bitmap}=await sourceFrom(file,kind);if(bitmap.width*bitmap.height>MAX_PIXELS){bitmap.close();skipped++;continue}const c=document.createElement("canvas"),scale=Math.min(1,640/Math.max(bitmap.width,bitmap.height));c.width=Math.max(1,Math.round(bitmap.width*scale));c.height=Math.max(1,Math.round(bitmap.height*scale));c.getContext("2d")?.drawImage(bitmap,0,0,c.width,c.height);const thumb=await canvasBlob(c,"image/png");item.previewUrl=URL.createObjectURL(thumb);item.width=bitmap.width;item.height=bitmap.height;bitmap.close()}catch{item.previewUrl=kind==="heic"?undefined:URL.createObjectURL(file)}accepted.push(item)}
   setItems(prev=>[...prev,...accepted]);const extra=[duplicates?`${locale==="ko"?"중복":"en"===locale?"Duplicates":"重複"} ${duplicates}`:"",mismatches?`${t.signature} (${mismatches})`:"",skipped?`${t.skipped(skipped)} ${t.limit}`:""].filter(Boolean).join(" · ");setMessage(`${accepted.length?t.added(accepted.length):""}${extra?` ${extra}`:""}`.trim()||t.unsupported)}
  function remove(id:string){setItems(prev=>{const x=prev.find(i=>i.id===id);if(x?.previewUrl)URL.revokeObjectURL(x.previewUrl);if(x?.resultUrl)URL.revokeObjectURL(x.resultUrl);return prev.filter(i=>i.id!==id)})}
  function reset(){itemsRef.current.forEach(i=>{if(i.previewUrl)URL.revokeObjectURL(i.previewUrl);if(i.resultUrl)URL.revokeObjectURL(i.resultUrl)});setItems([]);setMessage("");setZipState("idle");setQualityMode("auto");setCustomQuality(84);setBg("#ffffff");setAdvanced(false)}
@@ -57,7 +55,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
  function setAll(format:OutputFormat){setItems(prev=>prev.map(i=>allowedFormats(i.inputKind).includes(format)?{...i,outputFormat:format}:i))}
  async function convert(onlyNew=false){if(processing||!items.length)return;cancelRef.current=false;setProcessing(true);setZipState("idle");let next=items.map(i=>{if(i.resultUrl)URL.revokeObjectURL(i.resultUrl);return onlyNew&&!i.isNew?i:{...i,status:"idle" as Status,resultBlob:undefined,resultUrl:undefined,outputSize:undefined,error:undefined,warning:undefined}});const targets=next.map((i,index)=>({i,index})).filter(x=>!onlyNew||x.i.isNew);const names=uniqueNames(next);
   let processed=0;for(const {i:item,index} of targets){if(cancelRef.current){next[index]={...next[index],status:"cancelled"};continue}processed++;next[index]={...next[index],status:"processing"};setItems([...next]);setMessage(`${t.processing(processed,targets.length)}${item.outputFormat==="image/avif"?` · ${t.avifSlow}`:""}`);
-   try{const loaded=await sourceFrom(item.file,item.inputKind);if(loaded.width*loaded.height>MAX_PIXELS){loaded.close();throw new Error(t.limit)}const canvas=document.createElement("canvas");canvas.width=loaded.width;canvas.height=loaded.height;const ctx=canvas.getContext("2d",{willReadFrequently:item.outputFormat==="image/avif"});if(!ctx){loaded.close();throw new Error(t.unsupported)}if(item.outputFormat==="image/jpeg"){ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height)}ctx.drawImage(loaded.source,0,0);loaded.close();const q=qualityValue(qualityMode,customQuality)/100;let result:Blob;if(item.outputFormat==="image/avif")result=await encodeAvif(ctx.getImageData(0,0,canvas.width,canvas.height),q*100);else result=await canvasBlob(canvas,item.outputFormat,q);const delta=Math.abs(result.size-item.originalSize)/Math.max(1,item.originalSize);next[index]={...next[index],status:"done",isNew:false,resultBlob:result,resultUrl:URL.createObjectURL(result),outputSize:result.size,outputName:names[index],warning:delta<.03?t.similar:result.size>item.originalSize?t.larger:t.smaller,width:canvas.width,height:canvas.height}}
+   try{const {bitmap}=await sourceFrom(item.file,item.inputKind);if(bitmap.width*bitmap.height>MAX_PIXELS){bitmap.close();throw new Error(t.limit)}const canvas=document.createElement("canvas");canvas.width=bitmap.width;canvas.height=bitmap.height;const ctx=canvas.getContext("2d",{willReadFrequently:item.outputFormat==="image/avif"});if(!ctx)throw new Error(t.unsupported);if(item.outputFormat==="image/jpeg"){ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height)}ctx.drawImage(bitmap,0,0);bitmap.close();const q=qualityValue(qualityMode,customQuality)/100;let result:Blob;if(item.outputFormat==="image/avif")result=await encodeAvif(ctx.getImageData(0,0,canvas.width,canvas.height),q*100);else result=await canvasBlob(canvas,item.outputFormat,q);const delta=Math.abs(result.size-item.originalSize)/Math.max(1,item.originalSize);next[index]={...next[index],status:"done",isNew:false,resultBlob:result,resultUrl:URL.createObjectURL(result),outputSize:result.size,outputName:names[index],warning:delta<.03?t.similar:result.size>item.originalSize?t.larger:t.smaller,width:canvas.width,height:canvas.height}}
    catch(error){const text=error instanceof Error&&/fetch|import|module|network/i.test(error.message)?t.cdnFail:error instanceof Error?error.message:t.unsupported;next[index]={...next[index],status:"error",error:text}}
   }
   setItems([...next]);const ok=next.filter(i=>i.status==="done").length,fail=next.filter(i=>i.status==="error").length,cancelled=next.filter(i=>i.status==="cancelled").length;setMessage(t.done(ok,fail,cancelled));setProcessing(false)}
@@ -87,7 +85,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
        <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
        <h2>{locale==="ko"?"이미지를 여기에 놓으세요":locale==="en"?"Drop images here":"画像をここにドロップ"}</h2>
        <p>{locale==="ko"?"여러 파일을 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다.":locale==="en"?"Add several files at once, or choose them with the button below.":"複数ファイルをまとめて追加するか、下のボタンから選択できます。"}</p>
-       <button type="button" onClick={()=>openFilePicker(inputRef.current)}>{t.select}</button>
+       <button type="button" onClick={()=>inputRef.current?.click()}>{t.select}</button>
        <small>{t.supported}<br/>{t.limit}</small>
       </div>
      ) : (
@@ -103,7 +101,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
           <span>{completed.length} {t.completed}</span>
           <span>{items.filter(i=>i.status==="error").length} {t.failed}</span>
          </div>
-         <button type="button" onClick={()=>openFilePicker(inputRef.current)}>＋ {t.add}</button>
+         <button type="button" onClick={()=>inputRef.current?.click()}>＋ {t.add}</button>
         </div>
        </div>
 
@@ -177,7 +175,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
      </div>}
     </div>
    </section>
-   <button className="toolbox-converter-mobile-add" type="button" onClick={()=>openFilePicker(inputRef.current)}>{t.add}</button>
+   <button className="toolbox-converter-mobile-add" type="button" onClick={()=>inputRef.current?.click()}>{t.add}</button>
   </div>
  )
 }

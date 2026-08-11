@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
-import { openFilePicker } from "@/lib/file-picker";
-import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type Direction = "vertical" | "horizontal";
 type Sizing = "original" | "width" | "height";
@@ -164,26 +162,30 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
       if (!file.size) throw new Error(t.empty);
       if (!isSupported(file)) throw new Error(t.unsupported);
       if (!(await signatureOk(file))) throw new Error(t.unreadable);
-      const loaded = await loadBrowserImage(file, "from-image");
-      const img = loaded.source;
-      const width = loaded.width, height = loaded.height;
-      if (!width || !height) { loaded.close(); throw new Error(t.unreadable); }
-      const previewUrl = await createBrowserSafePreviewUrl(file);
+      let img: CanvasImageSource;
+      let width = 0, height = 0;
+      if (typeof createImageBitmap === "function") {
+        const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+        img = bitmap; width = bitmap.width; height = bitmap.height;
+      } else {
+        const fallback = new Image(); fallback.decoding = "async"; fallback.src = url;
+        await fallback.decode();
+        img = fallback; width = fallback.naturalWidth; height = fallback.naturalHeight;
+      }
+      if (!width || !height) { closeRenderable(img); throw new Error(t.unreadable); }
       setItems(prev => {
         const target = prev.find(it => it.id === id);
-        if (!target || target.url !== url) { loaded.close(); URL.revokeObjectURL(previewUrl); return prev; }
-        URL.revokeObjectURL(url);
+        if (!target || target.url !== url) { closeRenderable(img); return prev; }
         return prev.map(it => {
           if (it.id !== id) return it;
           closeRenderable(it.img);
-          return {...it, url: previewUrl, img, width, height, status:"ready", error:undefined};
+          return {...it, img, width, height, status:"ready", error:undefined};
         });
       });
     } catch (e) {
       setItems(prev => prev.map(it => it.id === id ? {...it, status:"failed", error: e instanceof Error ? e.message : t.unreadable} : it));
     }
   }, [t.empty, t.unsupported, t.unreadable]);
-
 
   const addFiles = useCallback((fileList: FileList | File[]) => {
     const files = Array.from(fileList);
@@ -274,14 +276,14 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{t.drop}</h2>
             <p>{t.local}</p>
-            <button type="button" data-testid="tool013-select" onClick={()=>openFilePicker(inputRef.current)}>{t.select}</button>
+            <button type="button" data-testid="tool013-select" onClick={()=>inputRef.current?.click()}>{t.select}</button>
             <small>{t.support}</small>
           </div>
         ) : (
           <div className="toolbox-upload-active merger-upload-active">
             <div className="toolbox-upload-active-head">
               <div><span>{t.selected}</span><p>{t.local}</p></div>
-              <div className="toolbox-upload-active-actions"><div className="toolbox-file-stats"><span>{items.length} files</span><span>{readyItems.length} ready</span></div><button type="button" onClick={()=>openFilePicker(inputRef.current)}>＋ {t.add}</button></div>
+              <div className="toolbox-upload-active-actions"><div className="toolbox-file-stats"><span>{items.length} files</span><span>{readyItems.length} ready</span></div><button type="button" onClick={()=>inputRef.current?.click()}>＋ {t.add}</button></div>
             </div>
             <div className="toolbox-upload-selected-file"><strong>{t.count}: {items.length}</strong><span>{t.support}</span></div>
           </div>
@@ -295,7 +297,7 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
           {items.map((item,index)=><article key={item.id} className={`merger-file ${item.status}`} data-testid="tool013-file-card" data-status={item.status} draggable onDragStart={()=>{dragId.current=item.id}} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();if(dragId.current && dragId.current!==item.id) move(dragId.current,index);dragId.current=null}}>
             <button className="merger-handle" aria-label={t.drag} title={t.drag} onPointerDown={e=>{touchDrag.current={id:item.id,y:e.clientY};(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId)}} onPointerMove={e=>{const d=touchDrag.current;if(!d||d.id!==item.id)return; const dy=e.clientY-d.y;if(Math.abs(dy)>46){moveDelta(item.id,dy>0?1:-1);touchDrag.current={id:item.id,y:e.clientY}}}} onPointerUp={()=>{touchDrag.current=null}}>⋮⋮</button>
             <span className="merger-order">{index+1}</span><img src={item.url} alt=""/><div className="merger-file-meta"><strong title={item.name}>{item.name}</strong><span>{item.status==="ready"?`${item.width} × ${item.height}px · ${fmtBytes(item.size)}`:item.status==="checking"?"…":item.error}</span></div>
-            {item.status==="failed"&&<button className="merger-retry" onClick={()=>{setRetryId(item.id);openFilePicker(retryInputRef.current)}}>{t.retry}</button>}<div className="merger-reorder"><button aria-label={t.up} disabled={index===0} onClick={()=>moveDelta(item.id,-1)}>↑</button><button aria-label={t.down} disabled={index===items.length-1} onClick={()=>moveDelta(item.id,1)}>↓</button><button aria-label={t.first} disabled={index===0} onClick={()=>move(item.id,0)}>⇤</button><button aria-label={t.last} disabled={index===items.length-1} onClick={()=>move(item.id,items.length-1)}>⇥</button></div><button className="merger-remove" onClick={()=>remove(item.id)}>{t.remove}</button>
+            {item.status==="failed"&&<button className="merger-retry" onClick={()=>{setRetryId(item.id);retryInputRef.current?.click()}}>{t.retry}</button>}<div className="merger-reorder"><button aria-label={t.up} disabled={index===0} onClick={()=>moveDelta(item.id,-1)}>↑</button><button aria-label={t.down} disabled={index===items.length-1} onClick={()=>moveDelta(item.id,1)}>↓</button><button aria-label={t.first} disabled={index===0} onClick={()=>move(item.id,0)}>⇤</button><button aria-label={t.last} disabled={index===items.length-1} onClick={()=>move(item.id,items.length-1)}>⇥</button></div><button className="merger-remove" onClick={()=>remove(item.id)}>{t.remove}</button>
           </article>)}
         </div>
       </section>

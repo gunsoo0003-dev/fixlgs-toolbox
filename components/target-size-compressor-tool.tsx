@@ -3,8 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/lib/site";
-import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
-import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
 
 type Format = "jpg" | "png" | "webp";
@@ -308,7 +306,7 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
         drawable.close();
         if (!width || !height || width * height > LIMITS.pixels || pixels + width * height > LIMITS.totalPixels) { setMessage("Image pixel limit exceeded."); continue; }
         total += file.size; pixels += width * height;
-        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: await createBrowserSafePreviewUrl(file), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
+        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: URL.createObjectURL(file), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
       } catch { setMessage("Damaged or unsupported image."); }
     }
     setItems((old) => [...old, ...next]);
@@ -412,7 +410,7 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
               <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
               <h2>{t.drop}</h2>
               <p>{locale === "ko" ? "여러 이미지를 한 번에 추가하고 같은 목표 용량을 적용할 수 있습니다." : locale === "en" ? "Add several images at once and apply the same target size." : "複数の画像をまとめて追加し、同じ目標容量を適用できます。"}</p>
-              <button type="button" onClick={() => openFilePicker(inputRef.current)}>{t.choose}</button>
+              <button type="button" onClick={() => inputRef.current?.click()}>{t.choose}</button>
               <small>{t.support}<br />{t.local}</small>
             </div>
           ) : (
@@ -430,7 +428,7 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
                   <span>{summary.reached + summary.already} done</span>
                   <span>{summary.failed} failed</span>
                 </div>
-                <button type="button" disabled={running} onClick={() => openFilePicker(inputRef.current)}>＋ {t.add}</button>
+                <button type="button" disabled={running} onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
               </div>
             </div>
           )}

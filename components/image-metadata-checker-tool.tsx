@@ -17,8 +17,6 @@ import {
   type MetadataEntry,
 } from '@/lib/image-metadata';
 import type { Locale } from '@/lib/site';
-import { openFilePicker } from "@/lib/file-picker";
-import { createBrowserSafePreviewUrl } from "@/lib/mobile-image-loader";
 
 type Item = {
   id: string;
@@ -158,15 +156,11 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
   }, [items, selected]);
 
   useEffect(() => {
-    let cancelled = false;
-    let url = '';
     if (!selected) { setPreviewUrl(''); return; }
     const source = viewMode === 'clean' && selected.cleanBlob ? selected.cleanBlob : selected.file;
-    void createBrowserSafePreviewUrl(source).then((next) => {
-      if (cancelled) { URL.revokeObjectURL(next); return; }
-      url = next; setPreviewUrl(next);
-    }).catch(() => { if (!cancelled) setPreviewUrl(''); });
-    return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
+    const url = URL.createObjectURL(source);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
   }, [selected, viewMode]);
 
   useEffect(() => {
@@ -312,7 +306,7 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{t.drop}</h2>
             <p>{t.intro}</p>
-            <button type="button" onClick={() => openFilePicker(inputRef.current)}>{t.select}</button>
+            <button type="button" onClick={() => inputRef.current?.click()}>{t.select}</button>
             <small>{t.support}</small>
           </div>
         ) : (
@@ -321,7 +315,7 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
               <div><span>{t.selected}</span><p>{t.support}</p></div>
               <div className="toolbox-upload-active-actions">
                 <div className="toolbox-file-stats"><span>{totals.all} {t.total}</span><span>{totals.gps} {t.gpsFiles}</span><span>{totals.failed} {t.failed}</span></div>
-                <button type="button" onClick={() => openFilePicker(inputRef.current)}>＋ {t.add}</button>
+                <button type="button" onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
                 <button type="button" className={styles.resetButton} onClick={resetAll}>{t.clear}</button>
               </div>
             </div>

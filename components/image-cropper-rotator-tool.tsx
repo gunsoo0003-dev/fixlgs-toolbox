@@ -3,9 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
-import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
-import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type Status = "editing" | "ready" | "skipped" | "error";
 type EditState = {
@@ -134,7 +132,7 @@ export function ImageCropperRotatorTool({ locale }: { locale: Locale }) {
       if(isAnimatedImage(bytes,file.type)){setMessage(t.errorType);continue;}
       const fingerprint=await fileFingerprint(file); if(known.has(fingerprint)) continue; known.add(fingerprint);
       if(file.size>LIMITS.perFile||used+file.size>LIMITS.total){setMessage(t.errorLimit);continue;}
-      try{const loaded=await loadBrowserImage(file,"from-image"); const pixels=loaded.width*loaded.height; if(pixels>LIMITS.pixels||loaded.width>LIMITS.side||loaded.height>LIMITS.side){loaded.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:await createBrowserSafePreviewUrl(file),status:"editing",width:loaded.width,height:loaded.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};loaded.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
+      try{const bmp=await createImageBitmap(file); const pixels=bmp.width*bmp.height; if(pixels>LIMITS.pixels||bmp.width>LIMITS.side||bmp.height>LIMITS.side){bmp.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:URL.createObjectURL(file),status:"editing",width:bmp.width,height:bmp.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};bmp.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
     }
     if(next.length){setItems(cur=>[...cur,...next]);if(!items.length)setIndex(0);setView("edit");}
   }
@@ -189,7 +187,7 @@ export function ImageCropperRotatorTool({ locale }: { locale: Locale }) {
   return <div className="toolbox-tool-workflow cropper-tool-shell">
     <section className="toolbox-workbench cropper-workbench" data-testid="cropper-workbench" onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();addFiles(e.dataTransfer.files);}}>
       <div className="toolbox-workbench-upload"><div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div><input ref={inputRef} data-testid="cropper-file-input" type="file" hidden multiple accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.currentTarget.value="";}}/>
-      {items.length===0?<div className="toolbox-upload-focus cropper-upload-focus"><div className="toolbox-upload-icon" aria-hidden="true">✦</div><h2>{t.drop}</h2><p>{t.support}</p><button type="button" className="toolbox-upload-primary" onClick={()=>openFilePicker(inputRef.current)}>{t.choose}</button></div>:<div className="toolbox-upload-summary cropper-upload-summary"><div><strong>{items.length}</strong><span>{t.current}</span></div><button type="button" onClick={()=>openFilePicker(inputRef.current)}>{t.add}</button></div>}</div>
+      {items.length===0?<div className="toolbox-upload-focus cropper-upload-focus"><div className="toolbox-upload-icon" aria-hidden="true">✦</div><h2>{t.drop}</h2><p>{t.support}</p><button type="button" className="toolbox-upload-primary" onClick={()=>inputRef.current?.click()}>{t.choose}</button></div>:<div className="toolbox-upload-summary cropper-upload-summary"><div><strong>{items.length}</strong><span>{t.current}</span></div><button type="button" onClick={()=>inputRef.current?.click()}>{t.add}</button></div>}</div>
       {message&&<p className="cropper-message" role="alert" data-testid="cropper-message">{message}</p>}
       {items.length>0&&view==="edit"&&active&&<div className="cropper-editor-wrap"><div className="cropper-progress-bar"><button onClick={()=>go(-1)} disabled={index===0}>{t.previous}</button><div><strong>{index+1} / {items.length} · {edited} {t.edited}</strong><span>{active.file.name}</span></div><button onClick={()=>go(1)} disabled={index===items.length-1}>{t.next}</button></div>
       <div className="cropper-editor-grid"><aside className="cropper-file-panel">{items.map((it,i)=><div key={it.id} className="cropper-file-row"><button className={i===index?"is-active":""} onClick={()=>setIndex(i)}><img src={it.url} alt=""/><span><strong>{it.file.name}</strong><small>{it.status==="ready"?t.edited:it.status==="skipped"?t.skipped:t.pending}</small></span></button><label className="cropper-file-select"><input type="checkbox" checked={it.selected} onChange={()=>setItems(cur=>cur.map(x=>x.id===it.id?{...x,selected:!x.selected}:x))}/><span aria-hidden="true">✓</span></label></div>)}</aside>
