@@ -1,0 +1,11 @@
+import fs from 'node:fs';import path from 'node:path';
+const root=process.cwd(), out=path.join(root,'test-results');fs.mkdirSync(out,{recursive:true});
+const src=fs.readFileSync(path.join(root,'components','image-converter-tool.tsx'),'utf8');
+const spec=fs.readFileSync(path.join(root,'tests','tool-001-mobile-cause-matrix.spec.ts'),'utf8');
+const risks=[
+ ['FILE_EMPTY','file.size === 0','base/deep'],['ARRAYBUFFER','file.arrayBuffer()','ARRAYBUFFER_FAIL_ONCE'],['SIGNATURE','throw new Error("signature")','JPEG_TRAILING_BYTES'],['EXTENSION_MATCH','expectedKindFromName','NAME_NO_EXT'],['MISMATCH','throw new Error("mismatch")','NAME_WRONG_EXT'],['BITMAP','createImageBitmap','BITMAP_THROW'],['OBJECT_URL','URL.createObjectURL(file)','OBJECTURL_THROW'],['IMAGE_ONERROR','image.onerror','BITMAP_THROW'],['DIMENSION','!decoded.width || !decoded.height','base/deep'],['MAX_PIXELS','MAX_PIXELS','base/limit'],['MAX_FILE_BYTES','MAX_FILE_BYTES','base/limit'],['MAX_TOTAL_BYTES','MAX_TOTAL_BYTES','base/limit'],['MAX_FILES','MAX_FILES','RAPID_MULTI_8'],['DUPLICATE_KEY','duplicateKey(file)','RAPID_RESELECT'],['UUID','crypto.randomUUID()','RANDOMUUID_MISSING'],['PREVIEW_URL','previewUrl: URL.createObjectURL(file)','OBJECTURL_THROW'],['INPUT_ASYNC_CLEAR','input.value = ""','INPUT_CLEAR_DURING_READ'],['MULTI_EVENT','multiple','TWO_FAST_SELECTIONS'],['SLOW_PROVIDER','addFiles(selectedFiles)','ARRAYBUFFER_DELAY_5000'],['FOCUS_RETURN','onChange={(event)','VISIBILITY_CHANGE_DURING_READ'],
+];
+const rows=risks.map(([id,needle,test])=>({id,sourcePresent:src.includes(needle),coverage:test==='base/deep'||test==='base/limit'||spec.includes(test),mappedTest:test}));
+const missing=rows.filter(x=>x.sourcePresent&&!x.coverage);const report={generatedAt:new Date().toISOString(),riskCount:rows.length,missingCount:missing.length,rows};
+fs.writeFileSync(path.join(out,'tool001-mobile-cause-coverage.json'),JSON.stringify(report,null,2));fs.writeFileSync(path.join(out,'tool001-mobile-cause-coverage.txt'),['TOOL001 MOBILE CAUSE COVERAGE V12',`RISK_COUNT=${rows.length}`,`COVERAGE_MISSING=${missing.length}`,...rows.map(r=>`${r.id}\tsource=${r.sourcePresent?'YES':'NO'}\tcoverage=${r.coverage?'YES':'NO'}\ttest=${r.mappedTest}`)].join('\n')+'\n');
+console.log(`TOOL001 cause coverage: ${rows.length} risks, missing=${missing.length}`);if(missing.length)process.exit(1);

@@ -95,14 +95,6 @@ function formatPercent(delta: number, original: number) {
 
 type DetectedImageKind = "jpeg" | "png" | "webp";
 
-function expectedKindFromName(file: File): DetectedImageKind | null {
-  const name = file.name.toLowerCase();
-  if (name.endsWith(".jpg") || name.endsWith(".jpeg")) return "jpeg";
-  if (name.endsWith(".png")) return "png";
-  if (name.endsWith(".webp")) return "webp";
-  return null;
-}
-
 function ascii(bytes: Uint8Array, start: number, length: number) {
   return String.fromCharCode(...bytes.slice(start, start + length));
 }
@@ -119,12 +111,97 @@ function includesAsciiToken(bytes: Uint8Array, token: string) {
   return false;
 }
 
+function readBlobWithFileReader(blob: Blob): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result instanceof ArrayBuffer) resolve(reader.result);
+      else reject(new Error("filereader-result"));
+    };
+    reader.onerror = () => reject(reader.error ?? new Error("filereader"));
+    reader.onabort = () => reject(new Error("filereader-abort"));
+    reader.readAsArrayBuffer(blob);
+  });
+}
+
+function readBlobAsDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => typeof reader.result === "string" ? resolve(reader.result) : reject(new Error("dataurl-result"));
+    reader.onerror = () => reject(reader.error ?? new Error("dataurl"));
+    reader.onabort = () => reject(new Error("dataurl-abort"));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function readFileArrayBuffer(file: File): Promise<ArrayBuffer> {
+  return new Promise<ArrayBuffer>((resolve, reject) => {
+    let settled = false;
+    let failures = 0;
+    let lastError: unknown = new Error("file-read");
+    const timer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        reject(lastError);
+      }
+    }, 12_000);
+    const succeed = (value: ArrayBuffer) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      resolve(value);
+    };
+    const fail = (error: unknown) => {
+      lastError = error;
+      failures += 1;
+      if (failures >= 2 && !settled) {
+        settled = true;
+        window.clearTimeout(timer);
+        reject(error);
+      }
+    };
+
+    Promise.resolve().then(() => file.arrayBuffer()).then(succeed, fail);
+    readBlobWithFileReader(file).then(succeed, fail);
+  });
+}
+
+function safeRevokeObjectUrl(url?: string) {
+  if (!url?.startsWith("blob:")) return;
+  try { URL.revokeObjectURL(url); } catch { /* no-op */ }
+}
+
+async function createBlobUrlOrDataUrl(blob: Blob) {
+  try {
+    return URL.createObjectURL(blob);
+  } catch {
+    return readBlobAsDataUrl(blob);
+  }
+}
+
+function createFileItemId() {
+  try {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  } catch {
+    // fallback below
+  }
+  try {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (value) => value.toString(16).padStart(2, "0")).join("");
+  } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  }
+}
+
 async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean }> {
   if (file.size === 0) throw new Error("empty");
-  const bytes = new Uint8Array(await file.arrayBuffer());
+  const bytes = new Uint8Array(await readFileArrayBuffer(file));
   let kind: DetectedImageKind | null = null;
   let animated = false;
-  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[bytes.length - 2] === 0xff && bytes[bytes.length - 1] === 0xd9) {
+  // The filename/MIME metadata from Android content providers is advisory only.
+  // Validate the actual bytes here and let the browser decoder prove the image is readable.
+  if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xd8) {
     kind = "jpeg";
   } else if (bytes.length >= 8 && bytes[0] === 0x89 && ascii(bytes, 1, 3) === "PNG" && bytes[4] === 0x0d && bytes[5] === 0x0a && bytes[6] === 0x1a && bytes[7] === 0x0a) {
     kind = "png";
@@ -134,8 +211,6 @@ async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; 
     animated = includesAsciiToken(bytes, "ANIM") || includesAsciiToken(bytes, "ANMF");
   }
   if (!kind) throw new Error("signature");
-  const expected = expectedKindFromName(file);
-  if (!expected || expected !== kind) throw new Error("mismatch");
   return { kind, animated };
 }
 
@@ -153,17 +228,17 @@ async function loadImageSource(file: File): Promise<{ source: CanvasImageSource;
     }
   }
 
-  const objectUrl = URL.createObjectURL(file);
+  const sourceUrl = await createBlobUrlOrDataUrl(file);
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
-      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => URL.revokeObjectURL(objectUrl) });
+      resolve({ source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => safeRevokeObjectUrl(sourceUrl) });
     };
     image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
+      safeRevokeObjectUrl(sourceUrl);
       reject(new Error("이미지를 불러올 수 없습니다."));
     };
-    image.src = objectUrl;
+    image.src = sourceUrl;
   });
 }
 
@@ -239,8 +314,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   useEffect(() => {
     return () => {
       itemsRef.current.forEach((item) => {
-        URL.revokeObjectURL(item.previewUrl);
-        if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+        safeRevokeObjectUrl(item.previewUrl);
+        if (item.resultUrl) safeRevokeObjectUrl(item.resultUrl);
       });
     };
   }, []);
@@ -301,10 +376,11 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         decoded.dispose?.();
         existing.add(key);
         total += file.size;
+        const previewUrl = await createBlobUrlOrDataUrl(file);
         accepted.push({
-          id: crypto.randomUUID(),
+          id: createFileItemId(),
           file,
-          previewUrl: URL.createObjectURL(file),
+          previewUrl,
           status: "idle",
           outputFormat: globalFormat,
           originalSize: file.size,
@@ -339,8 +415,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     setItems((prev) => {
       const target = prev.find((item) => item.id === id);
       if (target) {
-        URL.revokeObjectURL(target.previewUrl);
-        if (target.resultUrl) URL.revokeObjectURL(target.resultUrl);
+        safeRevokeObjectUrl(target.previewUrl);
+        if (target.resultUrl) safeRevokeObjectUrl(target.resultUrl);
       }
       return prev.filter((item) => item.id !== id);
     });
@@ -349,8 +425,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   const clearAll = () => {
     setItems((prev) => {
       prev.forEach((item) => {
-        URL.revokeObjectURL(item.previewUrl);
-        if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+        safeRevokeObjectUrl(item.previewUrl);
+        if (item.resultUrl) safeRevokeObjectUrl(item.resultUrl);
       });
       return [];
     });
@@ -405,7 +481,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         setItems([...nextItems]);
         continue;
       }
-      if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
+      if (item.resultUrl) safeRevokeObjectUrl(item.resultUrl);
       nextItems[i] = { ...item, status: "processing", error: undefined, resultBlob: undefined, resultUrl: undefined, outputSize: undefined };
       setItems([...nextItems]);
       setMessage(locale === "ko" ? `${step + 1} / ${targetIndexes.length}개 처리 중` : locale === "en" ? `Processing ${step + 1} of ${targetIndexes.length}` : `${step + 1} / ${targetIndexes.length}件を処理中`);
@@ -424,7 +500,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         const blob = await canvasToBlob(canvas, getMimeForFormat(format), quality);
         loaded.dispose?.();
         if (!blob) throw new Error("Failed to export image");
-        nextItems[i] = { ...item, status: "done", error: undefined, resultBlob: blob, resultUrl: URL.createObjectURL(blob), outputSize: blob.size, outputFormat: format, outputName: names[i], width: loaded.width, height: loaded.height, transparency, isNew: false };
+        const resultUrl = await createBlobUrlOrDataUrl(blob);
+        nextItems[i] = { ...item, status: "done", error: undefined, resultBlob: blob, resultUrl, outputSize: blob.size, outputFormat: format, outputName: names[i], width: loaded.width, height: loaded.height, transparency, isNew: false };
       } catch (error) {
         nextItems[i] = { ...item, status: "error", error: error instanceof Error ? error.message : "Unknown error", isNew: false };
       }

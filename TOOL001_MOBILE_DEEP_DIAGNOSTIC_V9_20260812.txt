@@ -1,0 +1,12 @@
+TOOL 001 MOBILE DEEP DIAGNOSTIC V9
+
+제품 코드 수정 없음.
+V8 보완:
+- Playwright 브라우저 런타임 미실행/중단 시 강제 FAIL
+- 실행 stdout/stderr 로그 결과 ZIP 포함
+- 기존 산출물 삭제 후 freshness 검증
+- 16개 시나리오 완료 수 강제 검증
+- 각 시나리오 직후 partial JSON/TXT 저장
+- 한 시나리오 예외가 발생해도 나머지 시나리오 계속 실행
+- NORMAL JPG/PNG 증거 누락 시 FAIL
+- REAL_DEVICE_NOT_VERIFIED 유지

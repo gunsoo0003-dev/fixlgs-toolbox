@@ -228,7 +228,8 @@
     "test:toolbox:mobile-upload": "playwright test tests/mobile-upload-entry.spec.ts --workers=1 --project=mobile-chromium",
     "check:toolbox:common-user-path-coverage": "node scripts/toolbox/check-common-user-path-coverage.mjs",
     "test:toolbox:common-user-path": "node scripts/run-common-user-path-validation.mjs full",
-    "test:toolbox:common-user-path-fast": "node scripts/run-common-user-path-validation.mjs fast"
+    "test:toolbox:common-user-path-fast": "node scripts/run-common-user-path-validation.mjs fast",
+    "test:toolbox:001-mobile-deep": "node scripts/run-tool-001-mobile-deep-diagnostic.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

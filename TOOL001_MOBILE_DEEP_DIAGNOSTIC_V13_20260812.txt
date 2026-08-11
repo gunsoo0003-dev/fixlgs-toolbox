@@ -1,0 +1,14 @@
+TOOL001 MOBILE DEEP DIAGNOSTIC V13
+
+목적: V12의 360초 전체 runner timeout으로 58개 검수가 중간 종료된 문제 수정.
+
+변경:
+- BASE 16 / ANDROID 12 / CAUSE 30을 각각 독립 Playwright 실행
+- 개별 runner timeout: BASE 12분, ANDROID 12분, CAUSE 20분
+- test-level timeout: BASE 10분, ANDROID 10분, CAUSE 15분
+- 한 묶음 실패/timeout이어도 다음 묶음 계속 실행
+- Playwright outputDir 정리로 앞 결과가 삭제되지 않도록 cache/restore
+- 정적 SOURCE/CAUSE COVERAGE 검사는 Playwright 종료 후 실행
+- 16/16 + 12/12 + 30/30 + COVERAGE_MISSING=0 아니면 최종 FAIL
+- 제품 코드 추가 수정 없음
+- REAL_DEVICE_NOT_VERIFIED 유지
