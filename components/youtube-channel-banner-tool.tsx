@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./youtube-channel-banner-tool.module.css";
 import { YOUTUBE_BANNER_GUIDELINES, TOOL020_DEVICE_PREVIEWS, TOOL020_SERVICE_LIMITS, scaledSafeArea, validateImageFile, isAnimatedImage, sanitizeDownloadName, clampNormalized, type DevicePreviewMode } from "@/lib/tool-020-youtube-banner";
@@ -12,9 +13,9 @@ const copy={ko:{choose:"배경 이미지 선택",blank:"빈 배너 시작",repla
 
 async function loadImage(file:File):Promise<ImageState>{
   if(typeof createImageBitmap==="function"){
-    try{const bitmap=await createImageBitmap(file,{imageOrientation:"from-image"});return {file,img:bitmap,width:bitmap.width,height:bitmap.height,close:()=>bitmap.close()}}catch{}
+    try{const bitmap=await createImageBitmap(await materializeImageBlob(file),{imageOrientation:"from-image"});return {file,img:bitmap,width:bitmap.width,height:bitmap.height,close:()=>bitmap.close()}}catch{}
   }
-  return await new Promise<ImageState>((resolve,reject)=>{const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>resolve({file,url,img,width:img.naturalWidth,height:img.naturalHeight});img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("decode"))};img.src=url})
+  const materialized=await materializeImageBlob(file); return await new Promise<ImageState>((resolve,reject)=>{const url=URL.createObjectURL(materialized);const img=new Image();img.onload=()=>resolve({file,url,img,width:img.naturalWidth,height:img.naturalHeight});img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("decode"))};img.src=url})
 }
 function releaseImage(v:ImageState|null){if(!v)return;v.close?.();if(v.url)URL.revokeObjectURL(v.url)}
 function formatBytes(n:number){return n<1024*1024?`${(n/1024).toFixed(0)} KB`:`${(n/1024/1024).toFixed(2)} MB`}

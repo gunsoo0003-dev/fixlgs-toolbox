@@ -1,3 +1,4 @@
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 export const TOOL023_MAX_BYTES = 20 * 1024 * 1024;
 export const TOOL023_MAX_PIXELS = 40_000_000;
 export const ANDROID_SIZES = [48,72,96,144,192] as const;
@@ -31,7 +32,8 @@ export async function decodeImage(file:File){
   const sniff=await sniffImage(file);
   if(!sniff || sniff!==file.type) throw new Error('MIME_MISMATCH');
   if(await isAnimatedImage(file,sniff)) throw new Error('ANIMATED_UNSUPPORTED');
-  const bitmap=await createImageBitmap(file,{imageOrientation:'from-image'});
+  const materialized=await materializeImageBlob(file);
+  const bitmap=await createImageBitmap(materialized,{imageOrientation:'from-image'});
   if(bitmap.width*bitmap.height>TOOL023_MAX_PIXELS){bitmap.close();throw new Error('PIXELS_TOO_LARGE');}
   return bitmap;
 }

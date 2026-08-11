@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
@@ -142,7 +143,7 @@ function drawWithOrientation(ctx: CanvasRenderingContext2D, source: CanvasImageS
 async function loadOrientedDrawable(file: Blob) {
   if (typeof createImageBitmap === "function") {
     try {
-      const bitmap = await createImageBitmap(file, { imageOrientation: "none" });
+      const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "none" });
       return { source: bitmap as CanvasImageSource, width: bitmap.width, height: bitmap.height, close: () => bitmap.close() };
     } catch {}
   }
@@ -151,7 +152,7 @@ async function loadOrientedDrawable(file: Blob) {
 }
 function uniqueName(name: string, used: Set<string>) { const dot = name.lastIndexOf("."); const stem = dot >= 0 ? name.slice(0, dot) : name; const suffix = dot >= 0 ? name.slice(dot) : ""; let candidate = name; let n = 2; while (used.has(candidate.toLowerCase())) candidate = `${stem}-${n++}${suffix}`; used.add(candidate.toLowerCase()); return candidate; }
 function canvasBlob(canvas: HTMLCanvasElement, type: string, quality?: number) { return new Promise<Blob>((resolve, reject) => canvas.toBlob((b) => b ? resolve(b) : reject(new Error("encode")), type, quality)); }
-async function loadImage(file: Blob) { const url = URL.createObjectURL(file); try { const img = new Image(); img.decoding = "async"; await new Promise<void>((res, rej) => { img.onload = () => res(); img.onerror = () => rej(new Error("decode")); img.src = url; }); return img; } finally { URL.revokeObjectURL(url); } }
+async function loadImage(file: Blob) { const url = URL.createObjectURL(await materializeImageBlob(file)); try { const img = new Image(); img.decoding = "async"; await new Promise<void>((res, rej) => { img.onload = () => res(); img.onerror = () => rej(new Error("decode")); img.src = url; }); return img; } finally { URL.revokeObjectURL(url); } }
 function drawScaled(img: CanvasImageSource, width: number, height: number) { const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height; const ctx = canvas.getContext("2d", { alpha: true, willReadFrequently: true }); if (!ctx) throw new Error("canvas"); ctx.drawImage(img, 0, 0, width, height); return canvas; }
 function drawItemCanvas(item: Item, drawable: { source: CanvasImageSource; width: number; height: number }, width: number, height: number) {
   const canvas = document.createElement("canvas");
@@ -306,7 +307,7 @@ export function TargetSizeCompressorTool({ locale }: { locale: Locale }) {
         drawable.close();
         if (!width || !height || width * height > LIMITS.pixels || pixels + width * height > LIMITS.totalPixels) { setMessage("Image pixel limit exceeded."); continue; }
         total += file.size; pixels += width * height;
-        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: URL.createObjectURL(file), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
+        next.push({ id: crypto.randomUUID(), file, name: file.name, format, width, height, orientation, decoderOrientationApplied, previewUrl: URL.createObjectURL(await materializeImageBlob(file)), targetValue, targetUnit, minQuality, minScale, allowResize, individual: false, status: "ready", progress: 0 });
       } catch { setMessage("Damaged or unsupported image."); }
     }
     setItems((old) => [...old, ...next]);

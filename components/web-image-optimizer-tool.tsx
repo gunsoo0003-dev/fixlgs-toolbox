@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
@@ -409,13 +410,13 @@ function isAnimated(buffer: ArrayBuffer, format: OutputFormat) {
 async function drawable(file: Blob) {
   if (typeof createImageBitmap === "function") {
     try {
-      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+      const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "from-image" });
       return { source: bitmap as CanvasImageSource, width: bitmap.width, height: bitmap.height, close: () => bitmap.close() };
     } catch {
       // Fallback below.
     }
   }
-  const url = URL.createObjectURL(file);
+  const url = URL.createObjectURL(await materializeImageBlob(file));
   try {
     const image = new Image();
     image.decoding = "async";
@@ -746,7 +747,7 @@ export function WebImageOptimizerTool({ locale }: { locale: Locale }) {
           width,
           height,
           hasAlpha,
-          previewUrl: URL.createObjectURL(file),
+          previewUrl: URL.createObjectURL(await materializeImageBlob(file)),
           settings: { ...global },
           individual: false,
           expanded: false,

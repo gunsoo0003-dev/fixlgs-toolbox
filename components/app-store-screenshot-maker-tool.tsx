@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./app-store-screenshot-maker-tool.module.css";
@@ -66,7 +67,7 @@ async function loadImage(file: File) {
   if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw new Error("bad-type");
   if (file.size > LIMITS.maxFileBytes) throw new Error("too-large");
   await validateImageSignature(file);
-  const url = URL.createObjectURL(file);
+  const url = URL.createObjectURL(await materializeImageBlob(file));
   try {
     const image = new Image(); image.decoding = "async"; image.src = url;
     await image.decode();

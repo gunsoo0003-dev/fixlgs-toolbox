@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
@@ -165,7 +166,7 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
       let img: CanvasImageSource;
       let width = 0, height = 0;
       if (typeof createImageBitmap === "function") {
-        const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+        const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "from-image" });
         img = bitmap; width = bitmap.width; height = bitmap.height;
       } else {
         const fallback = new Image(); fallback.decoding = "async"; fallback.src = url;

@@ -1,4 +1,5 @@
 "use client";
+import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./social-media-image-maker-tool.module.css";
@@ -608,14 +609,14 @@ async function verifyBlobDimensions(blob: Blob, preset: SocialPreset) {
 async function fileToAsset(file: File): Promise<Asset> {
   if (typeof createImageBitmap === "function") {
     try {
-      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+      const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "from-image" });
       return { fileName: file.name, image: bitmap, width: bitmap.width, height: bitmap.height };
     } catch {
       // Fall through to the HTMLImageElement decoder for browsers without this option.
     }
   }
 
-  const objectUrl = URL.createObjectURL(file);
+  const objectUrl = URL.createObjectURL(await materializeImageBlob(file));
   try {
     const image = await loadImage(objectUrl);
     return { fileName: file.name, objectUrl, image, width: image.naturalWidth, height: image.naturalHeight };
