@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
 import { openFilePicker } from "@/lib/file-picker";
+import { createBrowserSafePreviewUrl, loadBrowserImage } from "@/lib/mobile-image-loader";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
