@@ -1,5 +1,4 @@
 "use client";
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";

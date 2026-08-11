@@ -1,5 +1,4 @@
 'use client';
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Locale } from '@/lib/site';
@@ -21,7 +20,7 @@ const cp={
 } as const;
 
 function download(blob:Blob,name:string){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1200)}
-async function decode(file:Blob){if(!/^image\/(jpeg|png|webp)$/i.test(file.type))throw new Error('type');if(typeof createImageBitmap==='function'){const b=await createImageBitmap(await materializeImageBlob(file),{imageOrientation:'from-image'});return {src:b as CanvasImageSource,w:b.width,h:b.height,close:()=>b.close()}}const u=URL.createObjectURL(await materializeImageBlob(file));try{const im=new Image();im.src=u;await im.decode();return {src:im as CanvasImageSource,w:im.naturalWidth,h:im.naturalHeight,close:()=>{}}}finally{URL.revokeObjectURL(u)}}
+async function decode(file:Blob){if(!/^image\/(jpeg|png|webp)$/i.test(file.type))throw new Error('type');if(typeof createImageBitmap==='function'){const b=await createImageBitmap(file,{imageOrientation:'from-image'});return {src:b as CanvasImageSource,w:b.width,h:b.height,close:()=>b.close()}}const u=URL.createObjectURL(file);try{const im=new Image();im.src=u;await im.decode();return {src:im as CanvasImageSource,w:im.naturalWidth,h:im.naturalHeight,close:()=>{}}}finally{URL.revokeObjectURL(u)}}
 function fitCover(sw:number,sh:number,dw:number,dh:number,zoom:number,cx:number,cy:number){const s=Math.max(dw/sw,dh/sh)*zoom;const rw=sw*s,rh=sh*s;const maxX=Math.max(0,(rw-dw)/2),maxY=Math.max(0,(rh-dh)/2);return {x:(dw-rw)/2-cx*maxX,y:(dh-rh)/2-cy*maxY,w:rw,h:rh}}
 function lines(ctx:CanvasRenderingContext2D,text:string,max:number){const out:string[]=[];for(const para of text.split(/\n/)){let cur='';const tokens=/\s/.test(para)?para.split(/(\s+)/):Array.from(para);for(const token of tokens){const next=cur+token;if(cur&&ctx.measureText(next).width>max){out.push(cur.trimEnd());cur=token.trimStart()}else cur=next}if(cur)out.push(cur);if(!para)out.push('')}return out.slice(0,6)}
 function drawText(ctx:CanvasRenderingContext2D,text:string,x:number,y:number,size:number,color:string,align:Align,maxW:number,weight:number){ctx.save();ctx.fillStyle=color;ctx.font=`${weight} ${size}px Arial, "Noto Sans", sans-serif`;ctx.textAlign=align;ctx.textBaseline='top';const ls=lines(ctx,text,maxW);ls.forEach((l,i)=>ctx.fillText(l,x,y+i*size*1.18,maxW));ctx.restore()}

@@ -13,7 +13,6 @@
     "test:toolbox:common": "playwright test tests/common-*.spec.ts",
     "test:toolbox:function": "playwright test tests/tool-004-image-compressor.spec.ts tests/tool-005-target-size-compressor.spec.ts tests/tool-006-image-resizer.spec.ts",
     "test:toolbox:debug": "playwright test --debug",
-    "test:toolbox:mobile-upload": "playwright test tests/mobile-upload-entry.spec.ts --workers=1 --project=mobile-chromium",
     "test:toolbox:005": "playwright test tests/tool-005-target-size-compressor.spec.ts",
     "test:toolbox:load": "playwright test tests/tool-005-load.spec.ts",
     "test:toolbox:006": "playwright test tests/tool-006-image-resizer.spec.ts",
@@ -225,10 +224,7 @@
     "test:toolbox:024-feature-only": "node scripts/tool-024/run-validation.mjs feature-only",
     "test:toolbox:024-regression-only": "node scripts/tool-024/run-validation.mjs regression-only",
     "test:toolbox:024-limit-only": "node scripts/tool-024/run-validation.mjs limit-only",
-    "test:toolbox:024-final": "node scripts/tool-024/run-validation.mjs final",
-    "check:toolbox:common-user-path-coverage": "node scripts/toolbox/check-common-user-path-coverage.mjs",
-    "test:toolbox:common-user-path": "node scripts/run-common-user-path-validation.mjs full",
-    "test:toolbox:common-user-path-fast": "node scripts/run-common-user-path-validation.mjs fast"
+    "test:toolbox:024-final": "node scripts/tool-024/run-validation.mjs final"
   },
   "dependencies": {
     "next": "16.2.12",

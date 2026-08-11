@@ -1,4 +1,3 @@
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -147,14 +146,14 @@ function duplicateKey(file: File) {
 async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
   if (typeof window !== "undefined" && "createImageBitmap" in window) {
     try {
-      const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "from-image" });
+      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
       return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() };
     } catch {
       // fallback below
     }
   }
 
-  const objectUrl = URL.createObjectURL(await materializeImageBlob(file));
+  const objectUrl = URL.createObjectURL(file);
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -305,7 +304,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         accepted.push({
           id: crypto.randomUUID(),
           file,
-          previewUrl: URL.createObjectURL(await materializeImageBlob(file)),
+          previewUrl: URL.createObjectURL(file),
           status: "idle",
           outputFormat: globalFormat,
           originalSize: file.size,
@@ -820,3 +819,4 @@ function ToolCardSkeleton({ title, description }: { title: string; description: 
     </div>
   );
 }
+

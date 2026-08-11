@@ -1,5 +1,4 @@
 "use client";
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
@@ -133,7 +132,7 @@ export function ImageCropperRotatorTool({ locale }: { locale: Locale }) {
       if(isAnimatedImage(bytes,file.type)){setMessage(t.errorType);continue;}
       const fingerprint=await fileFingerprint(file); if(known.has(fingerprint)) continue; known.add(fingerprint);
       if(file.size>LIMITS.perFile||used+file.size>LIMITS.total){setMessage(t.errorLimit);continue;}
-      try{const bmp=await createImageBitmap(await materializeImageBlob(file)); const pixels=bmp.width*bmp.height; if(pixels>LIMITS.pixels||bmp.width>LIMITS.side||bmp.height>LIMITS.side){bmp.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:URL.createObjectURL(await materializeImageBlob(file)),status:"editing",width:bmp.width,height:bmp.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};bmp.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
+      try{const bmp=await createImageBitmap(file); const pixels=bmp.width*bmp.height; if(pixels>LIMITS.pixels||bmp.width>LIMITS.side||bmp.height>LIMITS.side){bmp.close();setMessage(t.errorLimit);continue;} const item:Item={id:crypto.randomUUID(),file,url:URL.createObjectURL(file),status:"editing",width:bmp.width,height:bmp.height,edit:initialEdit(),undo:[],redo:[],selected:false,includeOriginal:false};bmp.close();next.push(item);used+=file.size;}catch{setMessage(t.errorType);}
     }
     if(next.length){setItems(cur=>[...cur,...next]);if(!items.length)setIndex(0);setView("edit");}
   }

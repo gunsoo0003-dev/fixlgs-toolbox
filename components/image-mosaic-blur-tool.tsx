@@ -1,5 +1,4 @@
 "use client";
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
@@ -88,7 +87,7 @@ async function readExifOrientation(file: File): Promise<number> {
 
 async function decodeOrientedBitmap(file: File): Promise<ImageBitmap> {
   const orientation = await readExifOrientation(file);
-  const raw = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "none" });
+  const raw = await createImageBitmap(file, { imageOrientation: "none" });
   if (orientation === 1) return raw;
   const swap = orientation >= 5 && orientation <= 8;
   const normalized = document.createElement("canvas");

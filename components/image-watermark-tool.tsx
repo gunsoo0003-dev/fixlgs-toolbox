@@ -1,5 +1,4 @@
 "use client";
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
@@ -87,13 +86,13 @@ const PREVIEW_LIMITS = { maxWidth: 1400, maxHeight: 900, thumbnailSide: 160 };
 async function decodeImageFile(file: Blob): Promise<DecodedImage> {
   if (typeof createImageBitmap === "function") {
     try {
-      const bitmap = await createImageBitmap(await materializeImageBlob(file), { imageOrientation: "from-image" });
+      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
       return { source: bitmap, width: bitmap.width, height: bitmap.height, close: () => bitmap.close() };
     } catch {
       // Fall through to HTMLImageElement for browsers with partial createImageBitmap support.
     }
   }
-  const url = URL.createObjectURL(await materializeImageBlob(file));
+  const url = URL.createObjectURL(file);
   try {
     const image = new Image();
     image.decoding = "async";
@@ -1066,7 +1065,7 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
       setError(t.unsupported);
       return;
     }
-    const url = URL.createObjectURL(await materializeImageBlob(file));
+    const url = URL.createObjectURL(file);
     const image = new Image();
     image.decoding = "async";
     image.src = url;

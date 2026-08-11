@@ -1,5 +1,4 @@
 "use client";
-import { materializeImageBlob } from "@/lib/mobile-file-materializer";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
@@ -159,8 +158,8 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
       if(file.size>LIMITS.fileBytes)throw new Error(t.tooBigFile);
       const other=key==="before"?afterRef.current.file:beforeRef.current.file;
       if(file.size+(other?.size??0)>LIMITS.totalBytes)throw new Error(t.tooBigTotal);
-      const url=URL.createObjectURL(await materializeImageBlob(file)); let source:CanvasImageSource,width=0,height=0;
-      try{if(typeof createImageBitmap==="function"){const b=await createImageBitmap(await materializeImageBlob(file),{imageOrientation:"from-image"});source=b;width=b.width;height=b.height}else{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}catch(e){URL.revokeObjectURL(url);throw e}
+      const url=URL.createObjectURL(file); let source:CanvasImageSource,width=0,height=0;
+      try{if(typeof createImageBitmap==="function"){const b=await createImageBitmap(file,{imageOrientation:"from-image"});source=b;width=b.width;height=b.height}else{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}catch(e){URL.revokeObjectURL(url);throw e}
       if(!width||!height){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.unreadable)}
       if(width*height>LIMITS.sourcePixels){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.tooBigSource)}
       const old=key==="before"?beforeRef.current:afterRef.current; closeSource(old.source);if(old.url)URL.revokeObjectURL(old.url);
