@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
+import { openFilePicker } from "@/lib/file-picker";
 
 type WatermarkKind = "text" | "logo";
 type RepeatMode = "off" | "grid" | "diagonal";
@@ -1396,7 +1397,7 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{t.drop}</h2>
             <p>{t.local}</p>
-            <button type="button" onClick={() => inputRef.current?.click()} data-testid="tool017-select">{t.select}</button>
+            <button type="button" onClick={() => openFilePicker(inputRef.current)} data-testid="tool017-select">{t.select}</button>
             <small>{t.support}</small>
           </div>
         ) : (
@@ -1412,7 +1413,7 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
                   <span>{readyItems.length} {t.ready}</span>
                   <span>{items.filter((item) => item.status === "failed").length} {t.failed}</span>
                 </div>
-                <button type="button" onClick={() => inputRef.current?.click()} data-testid="tool017-select">＋ {t.add}</button>
+                <button type="button" onClick={() => openFilePicker(inputRef.current)} data-testid="tool017-select">＋ {t.add}</button>
               </div>
             </div>
             <div className="toolbox-upload-selected-file"><strong>{t.selected}</strong><span>{t.support}</span></div>
@@ -1506,7 +1507,7 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
             <div className="tool017-fields">
               <div className="tool017-logo-picker">
                 <label>{t.logoFile}</label>
-                <div className="tool017-logo-actions"><button type="button" onClick={() => logoInputRef.current?.click()} data-testid="tool017-logo-select">{t.chooseLogo}</button>{logoImage ? <button type="button" onClick={() => { if (logoUrl) URL.revokeObjectURL(logoUrl); setLogoUrl(null); setLogoImage(null); setLogoName(""); invalidateResults(); }}>{t.removeLogo}</button> : null}</div>
+                <div className="tool017-logo-actions"><button type="button" onClick={() => openFilePicker(logoInputRef.current)} data-testid="tool017-logo-select">{t.chooseLogo}</button>{logoImage ? <button type="button" onClick={() => { if (logoUrl) URL.revokeObjectURL(logoUrl); setLogoUrl(null); setLogoImage(null); setLogoName(""); invalidateResults(); }}>{t.removeLogo}</button> : null}</div>
                 <p>{logoName || t.logoHint}</p>
                 <small>{t.logoLocal}</small>
               </div>
@@ -1559,7 +1560,7 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
                         <button type="button" className={secondarySettings.kind === "text" ? "is-active" : ""} onClick={() => pushSecondarySettings((prev) => ({ ...prev, kind: "text" }))}>{t.text}</button>
                         <button type="button" className={secondarySettings.kind === "logo" ? "is-active" : ""} onClick={() => pushSecondarySettings((prev) => ({ ...prev, kind: "logo" }))}>{t.logo}</button>
                       </div>
-                      {secondarySettings.kind === "text" ? <label>{t.textLabel}<input value={secondarySettings.text} maxLength={300} onChange={(event) => pushSecondarySettings((prev) => ({ ...prev, text: event.target.value || " " }))} /></label> : <div className="tool017-logo-picker"><p>{logoName || t.logoHint}</p><button type="button" onClick={() => logoInputRef.current?.click()}>{t.chooseLogo}</button></div>}
+                      {secondarySettings.kind === "text" ? <label>{t.textLabel}<input value={secondarySettings.text} maxLength={300} onChange={(event) => pushSecondarySettings((prev) => ({ ...prev, text: event.target.value || " " }))} /></label> : <div className="tool017-logo-picker"><p>{logoName || t.logoHint}</p><button type="button" onClick={() => openFilePicker(logoInputRef.current)}>{t.chooseLogo}</button></div>}
                       <div className="tool017-two">
                         <label>{t.size}<input type="range" min="3" max="30" value={secondarySettings.sizeRatio} onChange={(event) => pushSecondarySettings((prev) => ({ ...prev, sizeRatio: Number(event.target.value) }))} /><span>{secondarySettings.sizeRatio}%</span></label>
                         <label>{t.opacity}<input type="range" min="0" max="100" value={secondarySettings.opacity} onChange={(event) => pushSecondarySettings((prev) => ({ ...prev, opacity: Number(event.target.value) }))} /><span>{secondarySettings.opacity}%</span></label>

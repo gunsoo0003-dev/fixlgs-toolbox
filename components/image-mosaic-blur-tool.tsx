@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
+import { loadBrowserImage } from "@/lib/mobile-image-loader";
+import { openFilePicker } from "@/lib/file-picker";
 
 type Method = "mosaic" | "blur" | "solid";
 type ToolMode = "select" | "rect" | "brush" | "pan";
@@ -85,10 +87,15 @@ async function readExifOrientation(file: File): Promise<number> {
   return 1;
 }
 
-async function decodeOrientedBitmap(file: File): Promise<ImageBitmap> {
+async function decodeOrientedBitmap(file: File): Promise<{source:CanvasImageSource;width:number;height:number;close:()=>void}> {
   const orientation = await readExifOrientation(file);
-  const raw = await createImageBitmap(file, { imageOrientation: "none" });
-  if (orientation === 1) return raw;
+  let raw: ImageBitmap;
+  try {
+    raw = await createImageBitmap(file, { imageOrientation: "none" });
+  } catch {
+    return loadBrowserImage(file, "from-image");
+  }
+  if (orientation === 1) return {source:raw,width:raw.width,height:raw.height,close:()=>raw.close()};
   const swap = orientation >= 5 && orientation <= 8;
   const normalized = document.createElement("canvas");
   normalized.width = swap ? raw.height : raw.width;
@@ -106,13 +113,13 @@ async function decodeOrientedBitmap(file: File): Promise<ImageBitmap> {
   }
   context.drawImage(raw, 0, 0);
   raw.close();
-  return createImageBitmap(normalized);
+  return {source:normalized,width:normalized.width,height:normalized.height,close:()=>{}};
 }
 
 function pointInRegion(p:Point,r:Region){if(r.kind==="rect")return p.x>=r.x&&p.x<=r.x+r.width&&p.y>=r.y&&p.y<=r.y+r.height;const pts=r.points||[];return pts.some(q=>Math.hypot(q.x-p.x,q.y-p.y)<=(r.brushSize||20)/2)}
 
 export function ImageMosaicBlurTool({locale}:{locale:Locale}){
-  const t=text[locale]; const input=useRef<HTMLInputElement>(null); const canvas=useRef<HTMLCanvasElement>(null); const wrap=useRef<HTMLDivElement>(null); const image=useRef<CanvasImageSource|null>(null); const imageBitmap=useRef<ImageBitmap|null>(null); const drag=useRef<{type:"draw"|"move"|"resize"|"pan";start:Point;origin?:Region;last?:Point;regionId?:string;working?:Snapshot}|null>(null);
+  const t=text[locale]; const input=useRef<HTMLInputElement>(null); const canvas=useRef<HTMLCanvasElement>(null); const wrap=useRef<HTMLDivElement>(null); const image=useRef<CanvasImageSource|null>(null); const imageClose=useRef<(()=>void)|null>(null); const drag=useRef<{type:"draw"|"move"|"resize"|"pan";start:Point;origin?:Region;last?:Point;regionId?:string;working?:Snapshot}|null>(null);
   const [file,setFile]=useState<File|null>(null); const [pasteReady,setPasteReady]=useState(false); const [jpgBackground,setJpgBackground]=useState("#ffffff"); const [dimensions,setDimensions]=useState({width:0,height:0}); const [mode,setMode]=useState<ToolMode>("rect"); const [method,setMethod]=useState<Method>("mosaic"); const [strength,setStrength]=useState(24); const [brushSize,setBrushSize]=useState(48); const [color,setColor]=useState("#000000"); const [selectedId,setSelectedId]=useState<string|null>(null); const [showAreas,setShowAreas]=useState(true); const [showOriginal,setShowOriginal]=useState(false); const [zoom,setZoom]=useState(1); const [pan,setPan]=useState({x:0,y:0}); const [format,setFormat]=useState("original"); const [quality,setQuality]=useState(92); const [filename,setFilename]=useState("image-redacted"); const [status,setStatus]=useState(""); const [error,setError]=useState(""); const [resultSize,setResultSize]=useState<number|null>(null); const [history,setHistory]=useState<Snapshot[]>([{regions:[],pixelateAll:false,pixelStrength:24}]); const [historyIndex,setHistoryIndex]=useState(0); const [draftSnapshot,setDraftSnapshot]=useState<Snapshot|null>(null);
   const snapshot=history[historyIndex]; const effectiveSnapshot=draftSnapshot??snapshot; const regions=effectiveSnapshot.regions; const selected=regions.find(r=>r.id===selectedId)||null;
   const resolvedFormat=useMemo(()=>format==="original"?(file?.type==="image/png"?"png":file?.type==="image/webp"?"webp":"jpg"):format,[format,file]);
@@ -181,10 +188,10 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
       await inspectImageFile(f);
       const url=URL.createObjectURL(f);
       try{
-        const bitmap=await decodeOrientedBitmap(f);
-        if(bitmap.width>MAX_SIDE||bitmap.height>MAX_SIDE||bitmap.width*bitmap.height>MAX_PIXELS){bitmap.close();setError(t.tooLarge);return}
-        imageBitmap.current?.close();imageBitmap.current=bitmap;image.current=bitmap;
-        setFile(f);setDimensions({width:bitmap.width,height:bitmap.height});setFilename(`${f.name.replace(/\.[^.]+$/,"")}-redacted`);setHistory([{regions:[],pixelateAll:false,pixelStrength:24}]);setHistoryIndex(0);setDraftSnapshot(null);setSelectedId(null);setZoom(1);setPan({x:0,y:0});setShowOriginal(false);setShowAreas(true);setResultSize(null);setStatus(t.ready);
+        const decoded=await decodeOrientedBitmap(f);
+        if(decoded.width>MAX_SIDE||decoded.height>MAX_SIDE||decoded.width*decoded.height>MAX_PIXELS){decoded.close();setError(t.tooLarge);return}
+        imageClose.current?.();imageClose.current=decoded.close;image.current=decoded.source;
+        setFile(f);setDimensions({width:decoded.width,height:decoded.height});setFilename(`${f.name.replace(/\.[^.]+$/,"")}-redacted`);setHistory([{regions:[],pixelateAll:false,pixelStrength:24}]);setHistoryIndex(0);setDraftSnapshot(null);setSelectedId(null);setZoom(1);setPan({x:0,y:0});setShowOriginal(false);setShowAreas(true);setResultSize(null);setStatus(t.ready);
       }finally{URL.revokeObjectURL(url)}
     }catch(error){const code=error instanceof Error?error.message:"decode";setError(code==="empty"?t.empty:code==="mismatch"?t.mismatch:code==="unsupported"?t.unsupported:t.unreadable)}
   };
@@ -282,7 +289,7 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
     try{const out=document.createElement("canvas");out.width=dimensions.width;out.height=dimensions.height;const ctx=out.getContext("2d",{willReadFrequently:true});if(!ctx)throw new Error("canvas");renderTo(ctx,out.width,out.height,false,resolvedFormat==="jpg"?jpgBackground:undefined);const mime=resolvedFormat==="png"?"image/png":resolvedFormat==="webp"?"image/webp":"image/jpeg";const blob=await new Promise<Blob|null>(resolve=>out.toBlob(resolve,mime,quality/100));if(!blob)throw new Error("blob");const href=URL.createObjectURL(blob);try{const anchor=document.createElement("a");anchor.href=href;anchor.download=`${safeName(filename)}.${resolvedFormat}`;document.body.appendChild(anchor);anchor.click();anchor.remove()}finally{setTimeout(()=>URL.revokeObjectURL(href),0)}setResultSize(blob.size);setStatus(t.ready)}catch{setError(t.unreadable);setStatus("")}
   };
   const reset=()=>{setHistory([{regions:[],pixelateAll:false,pixelStrength:24}]);setHistoryIndex(0);setDraftSnapshot(null);setSelectedId(null);setResultSize(null);setPan({x:0,y:0});setZoom(1);setShowOriginal(false);setShowAreas(true)};
-  const fullReset=()=>{reset();imageBitmap.current?.close();imageBitmap.current=null;image.current=null;setFile(null);setDimensions({width:0,height:0});setStatus("");setError("");setFilename("image-redacted");setFormat("original")};
+  const fullReset=()=>{reset();imageClose.current?.();imageClose.current=null;image.current=null;setFile(null);setDimensions({width:0,height:0});setStatus("");setError("");setFilename("image-redacted");setFormat("original")};
   const pasteFromClipboard=async()=>{try{const items=await navigator.clipboard.read();for(const item of items){const type=item.types.find(value=>value.startsWith("image/"));if(type){const blob=await item.getType(type);await load(new File([blob],"clipboard-image",{type}));return}}setError(t.noImage)}catch{setError(t.noImage)}};
   const selectFile=(event:React.ChangeEvent<HTMLInputElement>)=>{const next=event.target.files?.[0];if(next)void load(next);event.target.value=""};
 
@@ -293,7 +300,7 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
           <div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div>
           <div className="toolbox-upload-focus">
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span><h2>{t.drop}</h2><p>{t.local}</p>
-            <div className="mosaic-upload-actions"><button data-testid="tool010-select" type="button" onClick={()=>input.current?.click()}>{t.select}</button><button className="mosaic-paste" type="button" onClick={pasteFromClipboard}>{t.paste}</button></div>
+            <div className="mosaic-upload-actions"><button data-testid="tool010-select" type="button" onClick={()=>openFilePicker(input.current)}>{t.select}</button><button className="mosaic-paste" type="button" onClick={pasteFromClipboard}>{t.paste}</button></div>
             <small>{t.support}</small>
           </div>
           <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>
@@ -311,7 +318,7 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
           <div className="toolbox-upload-active">
             <div className="toolbox-upload-active-head">
               <div><span>{t.chosen}</span><p>{t.local}</p></div>
-              <div className="toolbox-upload-active-actions"><div className="toolbox-file-stats"><span>{dimensions.width} × {dimensions.height}px</span><span>{formatBytes(file.size)}</span><span>{file.type.replace("image/","").toUpperCase()}</span></div><button type="button" onClick={()=>input.current?.click()}>＋ {t.replace}</button></div>
+              <div className="toolbox-upload-active-actions"><div className="toolbox-file-stats"><span>{dimensions.width} × {dimensions.height}px</span><span>{formatBytes(file.size)}</span><span>{file.type.replace("image/","").toUpperCase()}</span></div><button type="button" onClick={()=>openFilePicker(input.current)}>＋ {t.replace}</button></div>
             </div>
             <div className="toolbox-upload-selected-file"><strong title={file.name}>{file.name}</strong><span>{status}</span></div>
             <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>

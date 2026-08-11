@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
+import { openFilePicker } from "@/lib/file-picker";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -488,7 +489,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{locale === "ko" ? "이미지를 여기에 놓으세요" : locale === "en" ? "Drop images here" : "画像をここにドロップ"}</h2>
             <p>{locale === "ko" ? "여러 파일을 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다." : locale === "en" ? "Add several files at once, or choose them with the button below." : "複数ファイルをまとめて追加するか、下のボタンから選択できます。"}</p>
-            <button type="button" onClick={() => fileInputRef.current?.click()}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
+            <button type="button" onClick={() => openFilePicker(fileInputRef.current)}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
             <small>{supportedLabel}</small>
           </div>
         ) : (
@@ -504,7 +505,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
                   <span>{aggregate.done} done</span>
                   <span>{aggregate.failed} failed</span>
                 </div>
-                <button type="button" onClick={() => fileInputRef.current?.click()}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
+                <button type="button" onClick={() => openFilePicker(fileInputRef.current)}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

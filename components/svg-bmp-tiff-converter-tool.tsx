@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import type { Locale } from "@/lib/site";
+import { openFilePicker } from "@/lib/file-picker";
 
 type OutputFormat = "image/png" | "image/jpeg" | "image/webp";
 type Status = "idle" | "processing" | "done" | "error" | "cancelled";
@@ -105,8 +106,8 @@ export function SvgBmpTiffConverterTool({locale}:{locale:Locale}){
   <div className={`toolbox-workbench-upload ${drag?"is-dragging":""}`} onDragOver={e=>{e.preventDefault();setDrag(true)}} onDragLeave={()=>setDrag(false)} onDrop={e=>{e.preventDefault();setDrag(false);void addFiles(e.dataTransfer.files)}}>
    <div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div>
    <input data-testid="svg-file-input" ref={inputRef} hidden type="file" multiple accept=".svg,.bmp,.tif,.tiff,image/svg+xml,image/bmp,image/tiff" onChange={e=>{if(e.target.files)void addFiles(e.target.files);e.currentTarget.value=""}}/>
-   {items.length===0?<div className="toolbox-upload-focus"><span className="toolbox-upload-icon">＋</span><h2>{t.drop}</h2><p>{t.help}</p><button type="button" onClick={()=>inputRef.current?.click()}>{t.select}</button><small>{t.supported}<br/>{t.limit}</small></div>:<div className="toolbox-upload-active">
-    <div className="toolbox-upload-active-head"><div><span>{items.length} FILES</span><p>{t.local}</p></div><div className="toolbox-upload-active-actions"><button type="button" onClick={()=>inputRef.current?.click()}>＋ {t.add}</button></div></div>
+   {items.length===0?<div className="toolbox-upload-focus"><span className="toolbox-upload-icon">＋</span><h2>{t.drop}</h2><p>{t.help}</p><button type="button" onClick={()=>openFilePicker(inputRef.current)}>{t.select}</button><small>{t.supported}<br/>{t.limit}</small></div>:<div className="toolbox-upload-active">
+    <div className="toolbox-upload-active-head"><div><span>{items.length} FILES</span><p>{t.local}</p></div><div className="toolbox-upload-active-actions"><button type="button" onClick={()=>openFilePicker(inputRef.current)}>＋ {t.add}</button></div></div>
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{items.map((i,index)=><article key={i.id} data-testid="svg-file-card" data-status={i.status} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
      <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">{i.results[0]?.url||i.previewUrl?<img src={i.results[0]?.url||i.previewUrl} alt={i.file.name} className="h-full w-full object-contain"/>:<div className="grid h-full place-items-center text-sm font-bold tracking-[.12em] text-muted">{i.kind.toUpperCase()}</div>}</div>
      <div className="space-y-3 p-4"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><h3 className="truncate text-sm font-semibold">{i.file.name}</h3><p className="mt-1 text-xs text-muted">{i.kind.toUpperCase()} · {bytes(i.file.size)}{i.width&&i.height?` · ${i.width}×${i.height}`:""}</p></div><span className="text-xs font-semibold">{i.status==="processing"?t.processing:i.status==="done"?t.done:i.status==="error"?t.failed:i.status==="cancelled"?t.cancelled:t.idle}</span></div>
@@ -123,5 +124,5 @@ export function SvgBmpTiffConverterTool({locale}:{locale:Locale}){
   {message&&<div className="toolbox-workbench-notice" aria-live="polite"><strong>{t.notice}</strong> {message}</div>}
   {resultStats.ok>0&&<div className="toolbox-workbench-summary"><span>{t.summary(resultStats.ok,resultStats.fail,resultStats.cancel)}</span><strong>·</strong><span>{bytes(resultStats.size)}</span></div>}
   {items.length>0&&<div className="toolbox-workbench-actions">{processing?<button type="button" className="toolbox-primary-action" onClick={()=>{cancelRef.current=true}}>{t.cancel}</button>:<><button data-testid="svg-run" type="button" className="toolbox-primary-action" onClick={()=>void convert(false)}>{completed.length?t.reconvert:t.convert}</button>{newCount>0&&completed.length>0&&<button type="button" onClick={()=>void convert(true)}>{t.convertNew}</button>}</>}<button type="button" className="toolbox-zip-action" onClick={()=>void zip()} disabled={!resultStats.ok||zipState==="working"}>{zipState==="working"?t.zipping:zipState==="error"?t.retryZip:t.zip}</button><button type="button" className="toolbox-restart-action" onClick={reset} disabled={processing}>{t.reset}</button></div>}
- </section><button className="toolbox-converter-mobile-add" type="button" onClick={()=>inputRef.current?.click()}>{t.add}</button></div>
+ </section><button className="toolbox-converter-mobile-add" type="button" onClick={()=>openFilePicker(inputRef.current)}>{t.add}</button></div>
 }

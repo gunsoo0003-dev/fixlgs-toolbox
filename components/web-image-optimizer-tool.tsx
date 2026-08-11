@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
+import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
 
 type Format = "auto" | "original" | "jpg" | "png" | "webp" | "avif";
@@ -1168,7 +1169,7 @@ export function WebImageOptimizerTool({ locale }: { locale: Locale }) {
               <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
               <h2>{t.drop}</h2>
               <p>{locale === "ko" ? "웹 사용 목적에 맞는 형식·크기·품질 후보를 비교합니다." : locale === "en" ? "Compare format, dimensions, and quality candidates for web use." : "Web用途に適した形式・サイズ・画質候補を比較します。"}</p>
-              <button type="button" onClick={() => inputRef.current?.click()}>{t.choose}</button>
+              <button type="button" onClick={() => openFilePicker(inputRef.current)}>{t.choose}</button>
               <small><span>{t.support}</span><br /><span>{t.local}</span><br /><span data-testid="optimizer-safe-limit">{t.safeLimit}</span></small>
             </div>
           ) : (
@@ -1186,7 +1187,7 @@ export function WebImageOptimizerTool({ locale }: { locale: Locale }) {
                   <span>{summary.done + summary.kept} done</span>
                   <span>{summary.failed} failed</span>
                 </div>
-                <button type="button" onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
+                <button type="button" onClick={() => openFilePicker(inputRef.current)}>＋ {t.add}</button>
               </div>
             </div>
           )}

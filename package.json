@@ -13,6 +13,7 @@
     "test:toolbox:common": "playwright test tests/common-*.spec.ts",
     "test:toolbox:function": "playwright test tests/tool-004-image-compressor.spec.ts tests/tool-005-target-size-compressor.spec.ts tests/tool-006-image-resizer.spec.ts",
     "test:toolbox:debug": "playwright test --debug",
+    "test:toolbox:mobile-upload": "playwright test tests/mobile-upload-entry.spec.ts --workers=1 --project=mobile-chromium",
     "test:toolbox:005": "playwright test tests/tool-005-target-size-compressor.spec.ts",
     "test:toolbox:load": "playwright test tests/tool-005-load.spec.ts",
     "test:toolbox:006": "playwright test tests/tool-006-image-resizer.spec.ts",

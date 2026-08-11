@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/site";
+import { openFilePicker } from "@/lib/file-picker";
 import { createStoredZip } from "@/lib/zip";
 
 type Preset = "auto"|"high"|"balanced"|"small"|"custom";
@@ -204,7 +205,7 @@ export function ImageCompressorTool({locale}:{locale:Locale}){
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{t.title}</h2>
             <p>{locale === "ko" ? "여러 이미지를 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다." : locale === "en" ? "Add several images at once, or choose them with the button below." : "複数の画像をまとめて追加するか、下のボタンから選択できます。"}</p>
-            <button type="button" onClick={() => inputRef.current?.click()}>{t.choose}</button>
+            <button type="button" onClick={() => openFilePicker(inputRef.current)}>{t.choose}</button>
             <small>{t.support}<br />{t.local}</small>
           </div>
         ) : (
@@ -222,7 +223,7 @@ export function ImageCompressorTool({locale}:{locale:Locale}){
                 <span>{items.filter((item) => item.status === "done" || item.status === "kept").length} done</span>
                 <span>{items.filter((item) => item.status === "failed").length} failed</span>
               </div>
-              <button type="button" onClick={() => inputRef.current?.click()}>＋ {t.add}</button>
+              <button type="button" onClick={() => openFilePicker(inputRef.current)}>＋ {t.add}</button>
             </div>
           </div>
         )}
@@ -332,7 +333,7 @@ export function ImageCompressorTool({locale}:{locale:Locale}){
         <button data-testid="compressor-reset" className="toolbox-restart-action" type="button" onClick={reset}>{busy?t.cancel:t.reset}</button>
       </div>
 
-      <button className="toolbox-converter-mobile-add" type="button" onClick={() => inputRef.current?.click()}>{t.add}</button>
+      <button className="toolbox-converter-mobile-add" type="button" onClick={() => openFilePicker(inputRef.current)}>{t.add}</button>
     </section>
 
     {compare && (
