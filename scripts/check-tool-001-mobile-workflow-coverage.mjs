@@ -14,7 +14,9 @@ const limit = fs.readFileSync(path.join(root, 'tests', 'tool-001-limit.spec.ts')
 const limitFeedback = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-limit-feedback.spec.ts'), 'utf8');
 const edge = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-workflow-edge.spec.ts'), 'utf8');
 const race = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-workflow-race-resilience.spec.ts'), 'utf8');
-const corpus = `${workflow}\n${cause}\n${lifecycle}\n${deep}\n${loadLimit}\n${limit}\n${limitFeedback}\n${edge}\n${race}`;
+const memory = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-memory-safety.spec.ts'), 'utf8');
+const attachment = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-attachment-lightweight.spec.ts'), 'utf8');
+const corpus = `${workflow}\n${cause}\n${lifecycle}\n${deep}\n${loadLimit}\n${limit}\n${limitFeedback}\n${edge}\n${race}\n${memory}\n${attachment}`;
 
 const risks = [
   ['PICKER_TRIGGER_VISIBLE', '.toolbox-upload-focus button', '01_INITIAL_UPLOAD_ZONE_VISIBLE'],
@@ -67,7 +69,7 @@ const risks = [
   ['LOCALE_JA_WORKFLOW', 'converter-run', 'ja mobile route'],
   ['CANVAS_TOBLOB_NULL', 'canvasToBlob', 'canvas export returning null'],
   ['DOWNLOAD_OBJECTURL_FAILURE', 'downloadBlob', 'download URL creation failure'],
-  ['READ_BOTH_PATHS_HANG_TIMEOUT', 'readFileArrayBuffer', 'V21_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK'],
+  ['ATTACH_HEADER_READ_BOTH_PATHS_HANG_TIMEOUT', 'readAttachHeader', 'V25_ATTACH_HEADER_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK'],
   ['BITMAP_PROMISE_HANG_TIMEOUT', 'createImageBitmap', 'V21_CREATEIMAGEBITMAP_HANG_MUST_NOT_LEAVE_SELECTION_STUCK_FOREVER'],
   ['IMG_FALLBACK_HANG_TIMEOUT', 'new Image()', 'V21_IMG_FALLBACK_HANG_MUST_TERMINATE'],
   ['UNMOUNT_DURING_PENDING_ADD', 'addFiles(selectedFiles)', 'V21_UNMOUNT_DURING_DELAYED_SELECTION_MUST_NOT_CRASH_ON_RETURN'],
@@ -83,6 +85,9 @@ const risks = [
   ['SPECIAL_LONG_FILENAME', 'baseName', 'V21_SPECIAL_AND_LONG_FILENAME_SURVIVES_END_TO_END'],
   ['NARROW_DARK_MOBILE', 'toolbox-workbench-upload', 'V21_NARROW_320PX_DARKMODE_NO_HORIZONTAL_ESCAPE'],
   ['REPEAT_UPLOAD_RESET_LEAK_SENTINEL', 'safeRevokeObjectUrl', 'V21_REPEAT_UPLOAD_RESET_30X_HAS_NO_RUNTIME_ERROR'],
+  ['ATTACHMENT_HEADER_ONLY_READ', 'ATTACH_HEADER_BYTES', 'V24_SELECTION_USES_SMALL_HEADER_AND_DEFERS_CREATEIMAGEBITMAP_UNTIL_CONVERT'],
+  ['ATTACHMENT_DECODE_DEFERRED', 'Do not force createImageBitmap', 'V24_SELECTION_USES_SMALL_HEADER_AND_DEFERS_CREATEIMAGEBITMAP_UNTIL_CONVERT'],
+  ['MOBILE_DOWNSCALED_BITMAP_DECODE', 'resizeWidth', 'V25_MOBILE_CREATEIMAGEBITMAP_REQUESTS_DOWNSCALED_DECODE'],
 ];
 
 const rows = risks.map(([id, sourceNeedle, testNeedle]) => ({
@@ -96,7 +101,7 @@ const missing = rows.filter((r) => r.sourcePresent && !r.coveragePresent);
 const report = { generatedAt: new Date().toISOString(), riskCount: rows.length, missingCount: missing.length, rows };
 fs.writeFileSync(path.join(out, 'tool001-mobile-workflow-coverage.json'), JSON.stringify(report, null, 2));
 fs.writeFileSync(path.join(out, 'tool001-mobile-workflow-coverage.txt'), [
-  'TOOL001 MOBILE WORKFLOW COVERAGE V21',
+  'TOOL001 MOBILE WORKFLOW COVERAGE V25',
   `RISK_COUNT=${rows.length}`,
   `COVERAGE_MISSING=${missing.length}`,
   ...rows.map((r) => `${r.id}\tsource=${r.sourcePresent ? 'YES' : 'NO'}\tcoverage=${r.coveragePresent ? 'YES' : 'NO'}\ttest=${r.testNeedle}`),

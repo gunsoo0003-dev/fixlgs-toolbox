@@ -1,5 +1,5 @@
 export const MOBILE_IMAGE_MAX_DIMENSION = 2048;
-export const MOBILE_IMAGE_DECODE_TIMEOUT_MS = 4_000;
+export const MOBILE_IMAGE_DECODE_TIMEOUT_MS = 8_000;
 export const MOBILE_FILE_READ_STAGE_TIMEOUT_MS = 6_000;
 
 export function isMobileImageSafetyActive() {

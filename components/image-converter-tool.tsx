@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
-import { MOBILE_FILE_READ_STAGE_TIMEOUT_MS, MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
+import { MOBILE_FILE_READ_STAGE_TIMEOUT_MS, MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileImageSafetyActive, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -27,6 +27,8 @@ type FileItem = {
   outputFormat: OutputFormat;
   width?: number;
   height?: number;
+  sourceWidth?: number;
+  sourceHeight?: number;
   originalSize: number;
   outputSize?: number;
   transparency?: boolean;
@@ -135,19 +137,6 @@ function readBlobAsDataUrl(blob: Blob): Promise<string> {
   });
 }
 
-async function readFileArrayBuffer(file: File): Promise<ArrayBuffer> {
-  // Mobile safety: avoid holding arrayBuffer() and FileReader copies at the same time.
-  // Try the native path first, then fall back only after failure/timeout.
-  try {
-    return await withTimeout(file.arrayBuffer(), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout");
-  } catch (firstError) {
-    try {
-      return await withTimeout(readBlobWithFileReader(file), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout");
-    } catch {
-      throw firstError;
-    }
-  }
-}
 
 async function createBlobUrlOrDataUrl(blob: Blob) {
   try {
@@ -172,13 +161,86 @@ function createFileItemId() {
   }
 }
 
-async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean }> {
+const ATTACH_HEADER_BYTES = 256 * 1024;
+
+async function readAttachHeader(file: File): Promise<Uint8Array> {
+  // Android content providers can make a full-file read unexpectedly slow or flaky.
+  // Attachment only needs enough bytes to validate the container signature/animation marker.
+  const headerBlob = file.slice(0, Math.min(file.size, ATTACH_HEADER_BYTES));
+  try {
+    return new Uint8Array(await withTimeout(headerBlob.arrayBuffer(), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout"));
+  } catch (firstError) {
+    try {
+      return new Uint8Array(await withTimeout(readBlobWithFileReader(headerBlob), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout"));
+    } catch {
+      throw firstError;
+    }
+  }
+}
+
+function readU16BE(bytes: Uint8Array, offset: number) {
+  return (bytes[offset] << 8) | bytes[offset + 1];
+}
+
+function readU24LE(bytes: Uint8Array, offset: number) {
+  return bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+}
+
+function parseHeaderDimensions(bytes: Uint8Array, kind: DetectedImageKind): { width: number; height: number } | null {
+  if (kind === "png" && bytes.length >= 24 && ascii(bytes, 12, 4) === "IHDR") {
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const width = view.getUint32(16, false);
+    const height = view.getUint32(20, false);
+    return width > 0 && height > 0 ? { width, height } : null;
+  }
+  if (kind === "jpeg") {
+    const sof = new Set([0xc0,0xc1,0xc2,0xc3,0xc5,0xc6,0xc7,0xc9,0xca,0xcb,0xcd,0xce,0xcf]);
+    let offset = 2;
+    while (offset + 8 < bytes.length) {
+      if (bytes[offset] !== 0xff) { offset += 1; continue; }
+      while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+      if (offset >= bytes.length) break;
+      const marker = bytes[offset++];
+      if (marker === 0xd8 || marker === 0xd9) continue;
+      if (offset + 1 >= bytes.length) break;
+      const length = readU16BE(bytes, offset);
+      if (length < 2 || offset + length > bytes.length) break;
+      if (sof.has(marker) && length >= 7) {
+        const height = readU16BE(bytes, offset + 3);
+        const width = readU16BE(bytes, offset + 5);
+        return width > 0 && height > 0 ? { width, height } : null;
+      }
+      offset += length;
+    }
+    return null;
+  }
+  if (kind === "webp" && bytes.length >= 30) {
+    const chunk = ascii(bytes, 12, 4);
+    if (chunk === "VP8X" && bytes.length >= 30) {
+      return { width: readU24LE(bytes, 24) + 1, height: readU24LE(bytes, 27) + 1 };
+    }
+    if (chunk === "VP8 " && bytes.length >= 30 && bytes[23] === 0x9d && bytes[24] === 0x01 && bytes[25] === 0x2a) {
+      const width = (bytes[26] | (bytes[27] << 8)) & 0x3fff;
+      const height = (bytes[28] | (bytes[29] << 8)) & 0x3fff;
+      return width > 0 && height > 0 ? { width, height } : null;
+    }
+    if (chunk === "VP8L" && bytes.length >= 25 && bytes[20] === 0x2f) {
+      const b1 = bytes[21], b2 = bytes[22], b3 = bytes[23], b4 = bytes[24];
+      const width = 1 + ((b1 | (b2 << 8)) & 0x3fff);
+      const height = 1 + (((b2 >> 6) | (b3 << 2) | (b4 << 10)) & 0x3fff);
+      return { width, height };
+    }
+  }
+  return null;
+}
+
+async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean; width?: number; height?: number }> {
   if (file.size === 0) throw new Error("empty");
-  const bytes = new Uint8Array(await readFileArrayBuffer(file));
+  const bytes = await readAttachHeader(file);
   let kind: DetectedImageKind | null = null;
   let animated = false;
-  // The filename/MIME metadata from Android content providers is advisory only.
-  // Validate the actual bytes here and let the browser decoder prove the image is readable.
+  // Filename/MIME metadata from Android content providers is advisory only.
+  // Keep attachment validation lightweight; full decoding is deferred until conversion.
   if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xd8) {
     kind = "jpeg";
   } else if (bytes.length >= 8 && bytes[0] === 0x89 && ascii(bytes, 1, 3) === "PNG" && bytes[4] === 0x0d && bytes[5] === 0x0a && bytes[6] === 0x1a && bytes[7] === 0x0a) {
@@ -189,7 +251,8 @@ async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; 
     animated = includesAsciiToken(bytes, "ANIM") || includesAsciiToken(bytes, "ANMF");
   }
   if (!kind) throw new Error("signature");
-  return { kind, animated };
+  const dimensions = parseHeaderDimensions(bytes, kind);
+  return { kind, animated, width: dimensions?.width, height: dimensions?.height };
 }
 
 function duplicateKey(file: File) {
@@ -197,11 +260,17 @@ function duplicateKey(file: File) {
 }
 
 
-async function loadImageSource(file: File): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
+async function loadImageSource(file: File, headerDimensions?: { width?: number; height?: number }): Promise<{ source: CanvasImageSource; width: number; height: number; dispose?: () => void }> {
   if (typeof window !== "undefined" && "createImageBitmap" in window) {
     let bitmapTimedOut = false;
     try {
-      const bitmapPromise = createImageBitmap(file, { imageOrientation: "from-image" });
+      const sourceWidth = headerDimensions?.width ?? 0;
+      const sourceHeight = headerDimensions?.height ?? 0;
+      const mobileTarget = sourceWidth > 0 && sourceHeight > 0 ? constrainForMobileMemory(sourceWidth, sourceHeight) : null;
+      const bitmapOptions: ImageBitmapOptions = mobileTarget?.scaled && isMobileImageSafetyActive()
+        ? { imageOrientation: "from-image", resizeWidth: mobileTarget.width, resizeHeight: mobileTarget.height, resizeQuality: "high" }
+        : { imageOrientation: "from-image" };
+      const bitmapPromise = createImageBitmap(file, bitmapOptions);
       // A content-provider/browser decoder can occasionally never settle on mobile.
       // Bound the wait, then fall back to the Image path instead of leaving the UI stuck forever.
       bitmapPromise.then((lateBitmap) => {
@@ -387,13 +456,9 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           animated += 1;
           continue;
         }
-        const decoded = await loadImageSource(file);
-        if (!decoded.width || !decoded.height || decoded.width * decoded.height > MAX_PIXELS) {
-          decoded.dispose?.();
-          rejected += 1;
-          continue;
-        }
-        decoded.dispose?.();
+        // Do not force createImageBitmap/<img> decoding during attachment.
+        // Mobile gallery/content-provider files should become visible immediately;
+        // the heavier decode/pixel validation belongs to the explicit conversion step.
         existing.add(key);
         total += file.size;
         const previewUrl = await createBlobUrlOrDataUrl(file);
@@ -404,8 +469,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           status: "idle",
           outputFormat: globalFormat,
           originalSize: file.size,
-          width: decoded.width,
-          height: decoded.height,
+          sourceWidth: inspection.width,
+          sourceHeight: inspection.height,
           isNew: true,
         });
       } catch (error) {
@@ -514,6 +579,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     const names = uniqueOutputNames(sourceItems);
     const targetIndexes = sourceItems.map((item,index)=>({item,index})).filter(({item})=>!onlyNew || item.isNew);
     const nextItems = [...sourceItems];
+    let memoryFailureCount = 0;
 
     const runIsCurrent = () => conversionGenerationRef.current === runGeneration;
     const publishCurrentItems = () => {
@@ -543,9 +609,15 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
       try {
         const format = item.outputFormat;
         const quality = qualityFor(qualityMode, format);
-        loaded = await loadImageSource(item.file);
+        if (item.sourceWidth && item.sourceHeight && item.sourceWidth * item.sourceHeight > MAX_PIXELS) {
+          throw new Error("Image dimensions exceed the safe processing limit");
+        }
+        loaded = await loadImageSource(item.file, { width: item.sourceWidth, height: item.sourceHeight });
         if (!runIsCurrent()) { loaded.dispose?.(); return; }
         if (removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); continue; }
+        if (!loaded.width || !loaded.height || loaded.width * loaded.height > MAX_PIXELS) {
+          throw new Error("Image dimensions exceed the safe processing limit");
+        }
         const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
         if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); if (!runIsCurrent()) return; continue; }
         const canvas = document.createElement("canvas");
@@ -584,7 +656,10 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           continue;
         }
         const memorySafety = isMobileMemorySafetyError(error);
-        if (memorySafety) setMessage(mobileMemoryErrorMessage(locale));
+        if (memorySafety) {
+          memoryFailureCount += 1;
+          setMessage(mobileMemoryErrorMessage(locale));
+        }
         nextItems[i] = { ...item, status: "error", error: memorySafety ? mobileMemoryErrorMessage(locale) : error instanceof Error ? error.message : "Unknown error", isNew: false };
       }
       publishCurrentItems();
@@ -596,7 +671,8 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     const failed = liveNextItems.filter((item) => item.status === "error").length;
     const cancelled = liveNextItems.filter((item) => item.status === "cancelled").length;
     setProcessing(false);
-    setMessage(locale === "ko" ? `${done}개 완료 · ${failed}개 실패${cancelled ? ` · ${cancelled}개 취소` : ""}` : locale === "en" ? `${done} done · ${failed} failed${cancelled ? ` · ${cancelled} cancelled` : ""}` : `${done}件完了・${failed}件失敗${cancelled ? `・${cancelled}件キャンセル` : ""}`);
+    const summaryMessage = locale === "ko" ? `${done}개 완료 · ${failed}개 실패${cancelled ? ` · ${cancelled}개 취소` : ""}` : locale === "en" ? `${done} done · ${failed} failed${cancelled ? ` · ${cancelled} cancelled` : ""}` : `${done}件完了・${failed}件失敗${cancelled ? `・${cancelled}件キャンセル` : ""}`;
+    setMessage(memoryFailureCount > 0 ? `${mobileMemoryErrorMessage(locale)} ${summaryMessage}` : summaryMessage);
   };
 
   const downloadAllZip = async () => {
@@ -680,7 +756,18 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             {items.map((item, index) => (
               <article key={item.id} data-testid="converter-file-card" data-status={item.status} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
                 <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">
-                  <img src={item.previewUrl} alt={item.file.name} className="h-full w-full object-cover" />
+                  <img
+                    src={item.previewUrl}
+                    alt={item.file.name}
+                    className="h-full w-full object-cover"
+                    onLoad={(event) => {
+                      const image = event.currentTarget;
+                      const width = image.naturalWidth;
+                      const height = image.naturalHeight;
+                      if (!width || !height) return;
+                      setItems((current) => current.map((entry) => entry.id === item.id ? { ...entry, width, height } : entry));
+                    }}
+                  />
                 </div>
                 <div className="space-y-3 p-4">
                   <div className="flex items-start justify-between gap-3">

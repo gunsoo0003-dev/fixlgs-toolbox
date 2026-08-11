@@ -29,11 +29,11 @@ async function installRuntime(page: Page) {
 test.describe('TOOL001 mobile race/resilience gates V21', () => {
   test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
 
-  test('V21_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK', async ({ page }) => {
+  test('V25_ATTACH_HEADER_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK', async ({ page }) => {
     test.setTimeout(20000);
     await page.goto(route); await installRuntime(page);
     await page.evaluate(() => {
-      File.prototype.arrayBuffer = (() => new Promise<ArrayBuffer>(() => {})) as typeof File.prototype.arrayBuffer;
+      Blob.prototype.arrayBuffer = (() => new Promise<ArrayBuffer>(() => {})) as typeof Blob.prototype.arrayBuffer;
       FileReader.prototype.readAsArrayBuffer = function() {} as typeof FileReader.prototype.readAsArrayBuffer;
     });
     await select(page, { name: 'hang.jpg', mimeType: 'image/jpeg', buffer: sample });

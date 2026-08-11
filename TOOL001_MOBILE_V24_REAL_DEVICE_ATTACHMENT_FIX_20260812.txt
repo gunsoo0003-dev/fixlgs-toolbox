@@ -1,0 +1,21 @@
+TOOL001 MOBILE V24 - REAL DEVICE ATTACHMENT PATH FIX
+DATE=2026-08-12
+BASE=V23 mobile memory safety module
+
+REAL-DEVICE SYMPTOM
+- Android/mobile file chooser returns normally but most images do not become attached.
+- A file can attach once, then fail on a later selection.
+
+V24 CHANGES
+1. Attachment path no longer performs full-file ArrayBuffer reads.
+2. Attachment inspection reads at most the first 256 KiB using file.slice().
+3. Attachment path no longer forces createImageBitmap()/Image decoding before creating the file card.
+4. Preview card is registered first with a Blob URL; natural dimensions are filled from preview img onLoad.
+5. Full decode and 40 MP validation are deferred to the explicit Convert action.
+6. Mobile decode timeout is 8 seconds per decode path; hang/error feedback remains protected.
+7. Existing 2048 px mobile export cap, Canvas cleanup, ObjectURL cleanup, stale-async protection, zero-byte output guard remain intact.
+8. Added V24 attachment-lightweight Playwright regression tests and runner integration.
+9. Workflow coverage audit expanded from 66 to 68 axes.
+
+PC POLICY
+- PC output resolution policy remains unchanged; the 2048 px cap remains mobile-only.

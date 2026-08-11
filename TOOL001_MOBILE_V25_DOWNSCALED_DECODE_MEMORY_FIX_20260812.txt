@@ -1,0 +1,18 @@
+TOOL001 MOBILE V25 - DOWNSCALED DECODE / MEMORY FEEDBACK
+DATE=2026-08-12
+BASE=V24
+
+CHANGES
+1. V24 lightweight attachment path remains unchanged.
+2. Header-only inspection now extracts JPEG/PNG/WebP dimensions when available without full decode.
+3. On mobile, createImageBitmap is requested with resizeWidth/resizeHeight (max long side 2048) before Canvas conversion.
+4. Desktop keeps original-resolution createImageBitmap path.
+5. 40MP source guard can reject from header dimensions before heavy decode.
+6. Decode/memory timeout feedback is preserved after the final conversion summary instead of being overwritten by generic failed-count text.
+7. Obsolete V21 full-file hang expectation updated to V25 header-read hang behavior.
+8. New browser gate verifies mobile createImageBitmap receives 2048x-scaled decode options.
+
+VALIDATION
+- Existing V24 coverage retained.
+- New scaled-decode risk axis added.
+- Real device remains final-last verification after automatic PASS.
