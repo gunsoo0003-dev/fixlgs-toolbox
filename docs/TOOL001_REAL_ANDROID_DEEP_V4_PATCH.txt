@@ -1,0 +1,12 @@
+TOOL001 REAL ANDROID DEEP V4
+2026-08-12
+
+FIX
+- hidden <input type=file> is treated as valid when attached to DOM
+- removed visible-state requirement
+- preferred selector: [data-testid="converter-file-input"]
+- fallback selector: input[type=file]
+- progress / heartbeat logging retained
+
+PURPOSE
+Continue real Galaxy diagnostics past selector stage without altering product code.

@@ -1,0 +1,7 @@
+TOOL001 Android Photo Picker capture V16
+- V15 real-device result: trusted change 3/3, product card+preview 1/3.
+- Product fix only: immediate concurrent capture retained.
+- Added bounded retry rounds for transient Android provider handoff.
+- Added arrayBuffer / Response / stream / FileReader read paths.
+- After first full byte snapshot, only app-owned File is used.
+- Real-device runner remains non-invasive; it never reads the original File.

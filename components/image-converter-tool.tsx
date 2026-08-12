@@ -434,13 +434,13 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     return qualityPresets[qualityMode][locale];
   }, [customQuality, globalFormat, locale, qualityMode]);
 
-  const addFilesInternal = async (fileList: FileList | File[]) => {
+  const addFilesInternal = async (fileList: FileList | File[], options?: { alreadyOwned?: boolean; preRejected?: number }) => {
     const incoming = Array.from(fileList);
     const baseItems = itemsRef.current;
     const existing = new Set(baseItems.map((item) => duplicateKey(item.file)));
     const accepted: FileItem[] = [];
     let total = baseItems.reduce((sum, item) => sum + item.originalSize, 0);
-    let rejected = 0;
+    let rejected = options?.preRejected ?? 0;
     let duplicate = 0;
     let animated = 0;
     let memoryRejected = 0;
@@ -458,7 +458,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
       try {
         // V26: capture the picker-backed File exactly once while the input is still alive.
         // Every later preview/conversion uses this app-owned File, never the Android provider handle.
-        const ownedFile = await capturePickerFile(file);
+        const ownedFile = options?.alreadyOwned ? file : await capturePickerFile(file);
         const inspection = await inspectImageFile(ownedFile);
         if (inspection.animated) {
           animated += 1;
@@ -508,6 +508,55 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     const run = attachmentQueueRef.current.then(
       () => addFilesInternal(snapshot),
       () => addFilesInternal(snapshot),
+    );
+    attachmentQueueRef.current = run.catch(() => undefined);
+    return run;
+  };
+
+  const addPickerFiles = (fileList: FileList | File[]) => {
+    const snapshot = Array.from(fileList);
+    const current = itemsRef.current;
+    const remainingSlots = Math.max(0, MAX_FILES - current.length);
+    let remainingBytes = Math.max(0, MAX_TOTAL_BYTES - current.reduce((sum, item) => sum + item.originalSize, 0));
+    let preRejected = 0;
+    const captureCandidates: File[] = [];
+
+    // Start provider-backed reads during the same change turn. Do not wait for the
+    // attachment queue: on Android/Samsung the content URI can become unreadable
+    // while a previous selection is still being validated.
+    for (const file of snapshot) {
+      if (captureCandidates.length >= remainingSlots || file.size > MAX_FILE_BYTES || file.size > remainingBytes) {
+        preRejected += 1;
+        continue;
+      }
+      captureCandidates.push(file);
+      remainingBytes -= file.size;
+    }
+
+    // Calling capturePickerFile here creates every first read immediately. Promise.allSettled
+    // keeps a bad provider handle from blocking the other selected files.
+    const capturePromise = Promise.allSettled(captureCandidates.map((file) => capturePickerFile(file)));
+    const run = attachmentQueueRef.current.then(
+      async () => {
+        const settled = await capturePromise;
+        const ownedFiles: File[] = [];
+        let captureRejected = 0;
+        for (const result of settled) {
+          if (result.status === "fulfilled") ownedFiles.push(result.value);
+          else captureRejected += 1;
+        }
+        return addFilesInternal(ownedFiles, { alreadyOwned: true, preRejected: preRejected + captureRejected });
+      },
+      async () => {
+        const settled = await capturePromise;
+        const ownedFiles: File[] = [];
+        let captureRejected = 0;
+        for (const result of settled) {
+          if (result.status === "fulfilled") ownedFiles.push(result.value);
+          else captureRejected += 1;
+        }
+        return addFilesInternal(ownedFiles, { alreadyOwned: true, preRejected: preRejected + captureRejected });
+      },
     );
     attachmentQueueRef.current = run.catch(() => undefined);
     return run;
@@ -763,12 +812,12 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           className="hidden"
           onChange={(event) => {
             const input = event.currentTarget;
-            const selectedFiles = input.files ? Array.from(input.files) : [];
+            const selectedFiles: File[] = input.files ? Array.from(input.files) : [];
             if (selectedFiles.length > 0) {
               // Android/Samsung file pickers can expose content-provider-backed Files.
               // Keep the input selection alive until async read/decode has finished;
               // clearing it immediately can release the underlying file handle too early.
-              void addFiles(selectedFiles).finally(() => {
+              void addPickerFiles(selectedFiles).finally(() => {
                 input.value = "";
               });
             }

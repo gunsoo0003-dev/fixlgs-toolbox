@@ -1,0 +1,20 @@
+TOOL001 REAL ANDROID DEEP DIAGNOSTIC V6
+
+목적
+- 실제 Galaxy Chrome + Android 네이티브 파일선택기까지 자동화
+- 사람이 갤러리/내 파일을 직접 누르지 않아도 3회 파일 선택 수행
+- 브라우저 에뮬레이션이 아니라 실제 Android File/ContentProvider handoff 이후 change 이벤트와 File 읽기/디코드 추적
+
+V6 변경점
+1. 테스트 PNG를 /sdcard/Download 에 자동 adb push
+2. TOOL001 실제 '이미지 선택/이미지 추가' 버튼을 Playwright가 클릭
+3. Android native picker 진입 감지
+4. UIAutomator XML로 Downloads/검색/파일명을 찾아 ADB tap
+5. 선택 뒤 trusted change, slice/arrayBuffer/FileReader/objectURL/Image/createImageBitmap 추적
+6. attempt별 native picker XML + device screenshot + browser screenshot 저장
+7. 진행상황 / heartbeat / timeout / PASS/FAIL 실시간 표시
+
+실행
+node scripts/run-tool-001-real-android-deep-v6.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+기본 시도 횟수: 3

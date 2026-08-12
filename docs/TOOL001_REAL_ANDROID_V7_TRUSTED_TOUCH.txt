@@ -1,0 +1,12 @@
+TOOL001 REAL ANDROID DEEP V7 - TRUSTED TOUCH + NATIVE PICKER AUTO
+
+변경점
+- Playwright locator.click() 제거
+- 업로드 버튼은 attached만 확인
+- scrollIntoView 후 실제 touchscreen.tap()으로 trusted touch 전송
+- touchscreen 채널 실패 시 ADB 좌표 tap fallback
+- Android native picker 감지 후에만 파일 탐색/선택 단계 진행
+- 기존 실기기 파일 push / UIAutomator 탐색 / deep File probe / 진행상황 heartbeat 유지
+
+실행
+node scripts/run-tool-001-real-android-deep-v7.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"

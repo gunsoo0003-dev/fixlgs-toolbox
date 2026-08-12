@@ -1,0 +1,32 @@
+TOOL001 REAL ANDROID DEEP V14
+
+Basis: V13 real-device result TOOLBOX_001_REAL_ANDROID_DEEP_V13_20260812032741.zip
+Product code changes: NONE
+
+V13 confirmed:
+- Galaxy/Chrome/page/upload activation: PASS
+- Google Android 15 Photo Picker open: PASS
+- real square media-cell identification: PASS
+- target media tile selection state: PASS
+- Web input change: 0/3
+
+V13 validator defects fixed in V14:
+1) "전체 선택 해제" accessibility node was misclassified as a commit button.
+2) The actual "완료" text is a non-clickable child; V14 resolves and taps the clickable parent bounds.
+3) V13 could re-tap an already selected tile and accidentally deselect it. V14 never re-taps after selection is proven.
+4) Promise.race heartbeat timeout could leave the inner picker task alive. Recovery could close the picker and the stale task could later report a false commit. V14 gives the internal operation strict deadline headroom and removes selection-transition false-pass logic.
+5) Picker closure must now be stable for 3 consecutive checks and browser page must answer ping.
+6) Commit candidates exclude deselect/unselect/preview/cancel/close/selected-state/count nodes.
+7) Pipeline-stage evidence and commit-control JSON are saved per attempt.
+8) File handoff wait increased with timeout headroom; after real commit the existing deep File probe continues through slice/arrayBuffer/FileReader/objectURL/Image/createImageBitmap/DOM state.
+
+Expected observed Android-15 commit control from V13 XML:
+- clickable parent bounds [803,2120][1007,2255]
+- descendant text: 완료
+- center approx (905,2188)
+
+Run:
+node scripts/run-tool-001-real-android-deep-v14.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+Static verify:
+node scripts/verify-tool-001-real-android-deep-v14.mjs
