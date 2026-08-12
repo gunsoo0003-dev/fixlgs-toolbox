@@ -1,0 +1,10 @@
+TOOL001 Android MB-class Photo Picker capture patch
+
+- Product limits unchanged: 20MB/file, 60MB total.
+- Replaced fixed 2.2s provider-read timeout with file-size-aware timeout.
+- Removed non-cancellable file.arrayBuffer()/Response probes while the Android provider handle is live.
+- FileReader timeout now aborts the actual reader.
+- Stream timeout now cancels the actual reader.
+- Provider read primitives run sequentially; no overlap after timeout.
+- First complete snapshot becomes an app-owned File and is used for later preview/conversion.
+- Static verifier: node scripts/verify-tool-001-android-mb-capture.mjs
