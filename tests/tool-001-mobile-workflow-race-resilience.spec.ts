@@ -29,40 +29,46 @@ async function installRuntime(page: Page) {
 test.describe('TOOL001 mobile race/resilience gates V21', () => {
   test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
 
-  test('V25_ATTACH_HEADER_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK', async ({ page }) => {
-    test.setTimeout(20000);
+  test('V27_INPUT_CAPTURE_ALL_READ_PATHS_HANG_HAS_TERMINAL_FEEDBACK', async ({ page }) => {
+    test.setTimeout(12000);
     await page.goto(route); await installRuntime(page);
     await page.evaluate(() => {
+      (window as any).__TOOL001_CAPTURE_TEST_TIMEOUT_MS__ = 350;
       Blob.prototype.arrayBuffer = (() => new Promise<ArrayBuffer>(() => {})) as typeof Blob.prototype.arrayBuffer;
+      Blob.prototype.stream = function() {
+        return new ReadableStream<Uint8Array>({ start() { /* never enqueue or close */ } });
+      } as typeof Blob.prototype.stream;
       FileReader.prototype.readAsArrayBuffer = function() {} as typeof FileReader.prototype.readAsArrayBuffer;
     });
-    await select(page, { name: 'hang.jpg', mimeType: 'image/jpeg', buffer: sample });
-    await expect(page.locator('.toolbox-workbench-notice')).toBeVisible({ timeout: 15000 });
+    await select(page, { name: 'capture-all-hang.jpg', mimeType: 'image/jpeg', buffer: sample });
+    await expect(page.locator('.toolbox-workbench-notice')).toBeVisible({ timeout: 7000 });
     await expect(page.getByTestId('converter-file-card')).toHaveCount(0);
   });
 
-  test('V21_CREATEIMAGEBITMAP_HANG_MUST_NOT_LEAVE_SELECTION_STUCK_FOREVER', async ({ page }) => {
-    test.setTimeout(12000);
+  test('V27_WORKER_CREATEIMAGEBITMAP_HANG_MUST_TERMINATE_WITH_ERROR', async ({ page }) => {
+    test.setTimeout(15000);
     await page.goto(route); await installRuntime(page);
-    await page.evaluate(() => {
-      (window as any).createImageBitmap = () => new Promise(() => {});
-    });
-    await select(page, { name: 'bitmap-hang.jpg', mimeType: 'image/jpeg', buffer: sample });
-    await expect(page.locator('.toolbox-workbench-notice')).toBeVisible({ timeout: 7000 });
+    await select(page, { name: 'worker-bitmap-hang.jpg', mimeType: 'image/jpeg', buffer: sample }); await expectReady(page);
+    await page.evaluate(() => { (window as any).__TOOL001_WORKER_DIAGNOSTIC__ = { fault: 'bitmap-hang', timeoutMs: 1200 }; });
+    await page.getByTestId('converter-run').tap();
+    const card = page.getByTestId('converter-file-card').first();
+    await expect(card).toHaveAttribute('data-status', 'error', { timeout: 10000 });
+    await expect(page.locator('.toolbox-workbench-notice')).toContainText(/메모리|크거나|작은 이미지/, { timeout: 10000 });
   });
 
-  test('V21_IMG_FALLBACK_HANG_MUST_TERMINATE', async ({ page }) => {
-    test.setTimeout(12000);
+  test('V27_MAINTHREAD_IMG_FALLBACK_HANG_MUST_TERMINATE_WHEN_WORKER_UNAVAILABLE', async ({ page }) => {
+    test.setTimeout(20000);
     await page.goto(route); await installRuntime(page);
+    await select(page, { name: 'img-fallback-hang.jpg', mimeType: 'image/jpeg', buffer: sample }); await expectReady(page);
     await page.evaluate(() => {
+      (window as any).Worker = undefined;
       (window as any).createImageBitmap = async () => { throw new Error('force-fallback'); };
       const NativeImage = window.Image;
-      (window as any).Image = class extends NativeImage {
-        set src(_value: string) { /* intentionally never load/error */ }
-      };
+      (window as any).Image = class extends NativeImage { set src(_value: string) { /* never load/error */ } };
     });
-    await select(page, { name: 'img-hang.jpg', mimeType: 'image/jpeg', buffer: sample });
-    await expect(page.locator('.toolbox-workbench-notice')).toBeVisible({ timeout: 7000 });
+    await page.getByTestId('converter-run').tap();
+    await expect(page.getByTestId('converter-file-card').first()).toHaveAttribute('data-status', 'error', { timeout: 15000 });
+    await expect(page.getByTestId('converter-run')).toBeEnabled();
   });
 
   test('V21_UNMOUNT_DURING_DELAYED_SELECTION_MUST_NOT_CRASH_ON_RETURN', async ({ page }) => {
@@ -153,13 +159,17 @@ test.describe('TOOL001 mobile race/resilience gates V21', () => {
     await expect(page.locator('.toolbox-workbench-notice')).toBeVisible();
   });
 
-  test('V21_ZERO_BYTE_RESULT_BLOB_MUST_NOT_BE_TREATED_AS_SUCCESS', async ({ page }) => {
+  test('V27_WORKER_ZERO_BYTE_RESULT_IS_REJECTED_AND_SAFE_FALLBACK_USED', async ({ page }) => {
     await page.goto(route); await select(page, { name: 'zero-result.jpg', mimeType: 'image/jpeg', buffer: sample }); await expectReady(page);
     await page.evaluate(() => {
-      HTMLCanvasElement.prototype.toBlob = function(cb: BlobCallback, type?: string) { setTimeout(() => cb(new Blob([], { type: type || 'image/webp' })), 0); } as typeof HTMLCanvasElement.prototype.toBlob;
+      (window as any).__TOOL001_WORKER_DIAGNOSTIC__ = { fault: 'export-zero' };
+      (window as any).__TOOL001_WORKER_LAST_ERROR__ = undefined;
     });
     await page.getByTestId('converter-run').tap();
-    await expect(page.getByTestId('converter-file-card').first()).toHaveAttribute('data-status', 'error', { timeout: 15000 });
+    const card = page.getByTestId('converter-file-card').first();
+    await expect(card).toHaveAttribute('data-status', 'done', { timeout: 30000 });
+    const workerError = await page.evaluate(() => (window as any).__TOOL001_WORKER_LAST_ERROR__);
+    expect(workerError).toContain('worker-empty-result');
   });
 
   test('V21_CONVERT_DOUBLE_TAP_DOES_NOT_DOUBLE_PROCESS', async ({ page }) => {

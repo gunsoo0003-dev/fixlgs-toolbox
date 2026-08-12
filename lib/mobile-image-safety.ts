@@ -61,7 +61,7 @@ export async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, cod
 export function isMobileMemorySafetyError(error: unknown) {
   if (error instanceof RangeError) return true;
   const message = error instanceof Error ? error.message : String(error ?? "");
-  return /bitmap-timeout|image-timeout|file-read-timeout|memory|allocation|out of memory|canvas/i.test(message);
+  return /bitmap-timeout|image-timeout|file-read-timeout|capture-timeout|worker-timeout|memory|allocation|out of memory|canvas/i.test(message);
 }
 
 export function mobileMemoryErrorMessage(locale: "ko" | "en" | "ja") {

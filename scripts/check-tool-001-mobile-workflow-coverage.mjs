@@ -16,7 +16,8 @@ const edge = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-workflow-
 const race = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-workflow-race-resilience.spec.ts'), 'utf8');
 const memory = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-memory-safety.spec.ts'), 'utf8');
 const attachment = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-attachment-lightweight.spec.ts'), 'utf8');
-const corpus = `${workflow}\n${cause}\n${lifecycle}\n${deep}\n${loadLimit}\n${limit}\n${limitFeedback}\n${edge}\n${race}\n${memory}\n${attachment}`;
+const captureWorker = fs.readFileSync(path.join(root, 'tests', 'tool-001-mobile-input-capture-worker.spec.ts'), 'utf8');
+const corpus = `${workflow}\n${cause}\n${lifecycle}\n${deep}\n${loadLimit}\n${limit}\n${limitFeedback}\n${edge}\n${race}\n${memory}\n${attachment}\n${captureWorker}`;
 
 const risks = [
   ['PICKER_TRIGGER_VISIBLE', '.toolbox-upload-focus button', '01_INITIAL_UPLOAD_ZONE_VISIBLE'],
@@ -67,11 +68,11 @@ const risks = [
   ['ORIENTATION_VIEWPORT_CHANGE', 'toolbox-workbench-upload', 'portrait to landscape'],
   ['LOCALE_EN_WORKFLOW', 'converter-run', 'en mobile route'],
   ['LOCALE_JA_WORKFLOW', 'converter-run', 'ja mobile route'],
-  ['CANVAS_TOBLOB_NULL', 'canvasToBlob', 'canvas export returning null'],
+  ['WORKER_AND_FALLBACK_EXPORT_FAILURE', 'canvasToBlob', 'V27_WORKER_EXPORT_FAILURE_PLUS_FALLBACK_NULL_TERMINATES_AS_VISIBLE_ERROR'],
   ['DOWNLOAD_OBJECTURL_FAILURE', 'downloadBlob', 'download URL creation failure'],
-  ['ATTACH_HEADER_READ_BOTH_PATHS_HANG_TIMEOUT', 'readAttachHeader', 'V25_ATTACH_HEADER_ARRAYBUFFER_AND_FILEREADER_HANG_HAS_TERMINAL_FEEDBACK'],
-  ['BITMAP_PROMISE_HANG_TIMEOUT', 'createImageBitmap', 'V21_CREATEIMAGEBITMAP_HANG_MUST_NOT_LEAVE_SELECTION_STUCK_FOREVER'],
-  ['IMG_FALLBACK_HANG_TIMEOUT', 'new Image()', 'V21_IMG_FALLBACK_HANG_MUST_TERMINATE'],
+  ['INPUT_CAPTURE_ALL_READ_PATHS_HANG_TIMEOUT', 'capturePickerFile', 'V27_INPUT_CAPTURE_ALL_READ_PATHS_HANG_HAS_TERMINAL_FEEDBACK'],
+  ['WORKER_BITMAP_PROMISE_HANG_TIMEOUT', 'runTool001WorkerConversion', 'V27_WORKER_CREATEIMAGEBITMAP_HANG_MUST_TERMINATE_WITH_ERROR'],
+  ['IMG_FALLBACK_HANG_TIMEOUT', 'new Image()', 'V27_MAINTHREAD_IMG_FALLBACK_HANG_MUST_TERMINATE_WHEN_WORKER_UNAVAILABLE'],
   ['UNMOUNT_DURING_PENDING_ADD', 'addFiles(selectedFiles)', 'V21_UNMOUNT_DURING_DELAYED_SELECTION_MUST_NOT_CRASH_ON_RETURN'],
   ['RELOAD_DURING_PROCESSING', 'convertAll(false)', 'V21_RELOAD_DURING_PROCESSING_RECOVERS_TO_USABLE_PAGE'],
   ['HISTORY_BACK_FORWARD', 'converter-file-input', 'V21_BACK_FORWARD_AFTER_SELECTION_RETURNS_USABLE'],
@@ -79,15 +80,18 @@ const risks = [
   ['DELETE_STALE_ASYNC_RACE', 'removeItem', 'V21_DELETE_DURING_ASYNC_CONVERT_MUST_NOT_RESURRECT_REMOVED_ITEM'],
   ['OUT_OF_ORDER_SELECTION_RACE', 'addFiles', 'V21_FAST_SECOND_SELECTION_MUST_NOT_BE_OVERWRITTEN_BY_SLOW_FIRST'],
   ['ANCHOR_CLICK_FAILURE', 'a.click()', 'V21_DOWNLOAD_ANCHOR_CLICK_FAILURE_IS_HANDLED'],
-  ['ZERO_BYTE_RESULT_BLOB', 'canvasToBlob', 'V21_ZERO_BYTE_RESULT_BLOB_MUST_NOT_BE_TREATED_AS_SUCCESS'],
+  ['WORKER_ZERO_BYTE_RESULT_BLOB', 'runTool001WorkerConversion', 'V27_WORKER_ZERO_BYTE_RESULT_IS_REJECTED_AND_SAFE_FALLBACK_USED'],
   ['CONVERT_DOUBLE_TAP', 'processing', 'V21_CONVERT_DOUBLE_TAP_DOES_NOT_DOUBLE_PROCESS'],
   ['DELETE_THEN_READD_AT_MAX', 'MAX_FILES', 'V21_DELETE_FROM_FULL_10_THEN_READD_REOPENS_CAPACITY'],
   ['SPECIAL_LONG_FILENAME', 'baseName', 'V21_SPECIAL_AND_LONG_FILENAME_SURVIVES_END_TO_END'],
   ['NARROW_DARK_MOBILE', 'toolbox-workbench-upload', 'V21_NARROW_320PX_DARKMODE_NO_HORIZONTAL_ESCAPE'],
   ['REPEAT_UPLOAD_RESET_LEAK_SENTINEL', 'safeRevokeObjectUrl', 'V21_REPEAT_UPLOAD_RESET_30X_HAS_NO_RUNTIME_ERROR'],
-  ['ATTACHMENT_HEADER_ONLY_READ', 'ATTACH_HEADER_BYTES', 'V24_SELECTION_USES_SMALL_HEADER_AND_DEFERS_CREATEIMAGEBITMAP_UNTIL_CONVERT'],
-  ['ATTACHMENT_DECODE_DEFERRED', 'Do not force createImageBitmap', 'V24_SELECTION_USES_SMALL_HEADER_AND_DEFERS_CREATEIMAGEBITMAP_UNTIL_CONVERT'],
-  ['MOBILE_DOWNSCALED_BITMAP_DECODE', 'resizeWidth', 'V25_MOBILE_CREATEIMAGEBITMAP_REQUESTS_DOWNSCALED_DECODE'],
+  ['ATTACHMENT_CAPTURE_BEFORE_ASYNC', 'capturePickerFile', 'V27_SELECTION_CAPTURES_OWNED_FILE_AND_DEFERS_WORKER_UNTIL_CONVERT'],
+  ['ATTACHMENT_CONVERSION_WORKER_DEFERRED', 'runTool001WorkerConversion', 'V27_SELECTION_CAPTURES_OWNED_FILE_AND_DEFERS_WORKER_UNTIL_CONVERT'],
+  ['MOBILE_DOWNSCALED_WORKER_BITMAP_DECODE', 'resizeWidth', 'V27_WORKER_CREATEIMAGEBITMAP_REQUESTS_DOWNSCALED_DECODE'],
+  ['PICKER_APP_OWNED_CAPTURE', 'capturePickerFile', 'V26_SAME_CAPTURED_IMAGE_SURVIVES_INPUT_CLEAR_AND_DELAY'],
+  ['PREVIEW_FAILURE_DATAURL_FALLBACK', 'previewFallbackAttempted', 'V26_PREVIEW_BLOBURL_FAILURE_FALLS_BACK_TO_APP_OWNED_DATAURL'],
+  ['WORKER_IMAGE_ENGINE', 'runTool001WorkerConversion', 'V26_WORKER_ENGINE_IS_USED_FOR_CONVERSION_WHEN_AVAILABLE'],
 ];
 
 const rows = risks.map(([id, sourceNeedle, testNeedle]) => ({
@@ -101,7 +105,7 @@ const missing = rows.filter((r) => r.sourcePresent && !r.coveragePresent);
 const report = { generatedAt: new Date().toISOString(), riskCount: rows.length, missingCount: missing.length, rows };
 fs.writeFileSync(path.join(out, 'tool001-mobile-workflow-coverage.json'), JSON.stringify(report, null, 2));
 fs.writeFileSync(path.join(out, 'tool001-mobile-workflow-coverage.txt'), [
-  'TOOL001 MOBILE WORKFLOW COVERAGE V25',
+  'TOOL001 MOBILE WORKFLOW COVERAGE V27',
   `RISK_COUNT=${rows.length}`,
   `COVERAGE_MISSING=${missing.length}`,
   ...rows.map((r) => `${r.id}\tsource=${r.sourcePresent ? 'YES' : 'NO'}\tcoverage=${r.coveragePresent ? 'YES' : 'NO'}\ttest=${r.testNeedle}`),

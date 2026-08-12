@@ -5,6 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
 import { MOBILE_FILE_READ_STAGE_TIMEOUT_MS, MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileImageSafetyActive, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
+import { capturePickerFile } from "@/lib/image-input-capture";
+import { canUseTool001WorkerEngine, runTool001WorkerConversion } from "@/lib/tool001-image-worker-client";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -34,6 +36,7 @@ type FileItem = {
   transparency?: boolean;
   outputName?: string;
   isNew?: boolean;
+  previewFallbackAttempted?: boolean;
 };
 
 const outputOptions: { value: OutputFormat; label: Record<Locale, string> }[] = [
@@ -394,6 +397,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   const removedItemIdsRef = useRef(new Set<string>());
 
   const itemsRef = useRef<FileItem[]>([]);
+  const attachmentQueueRef = useRef<Promise<void>>(Promise.resolve());
 
   useEffect(() => {
     itemsRef.current = items;
@@ -430,18 +434,19 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
     return qualityPresets[qualityMode][locale];
   }, [customQuality, globalFormat, locale, qualityMode]);
 
-  const addFiles = async (fileList: FileList | File[]) => {
+  const addFilesInternal = async (fileList: FileList | File[]) => {
     const incoming = Array.from(fileList);
-    const existing = new Set(items.map((item) => duplicateKey(item.file)));
+    const baseItems = itemsRef.current;
+    const existing = new Set(baseItems.map((item) => duplicateKey(item.file)));
     const accepted: FileItem[] = [];
-    let total = items.reduce((sum, item) => sum + item.originalSize, 0);
+    let total = baseItems.reduce((sum, item) => sum + item.originalSize, 0);
     let rejected = 0;
     let duplicate = 0;
     let animated = 0;
     let memoryRejected = 0;
 
     for (const file of incoming) {
-      if (items.length + accepted.length >= MAX_FILES || file.size > MAX_FILE_BYTES || total + file.size > MAX_TOTAL_BYTES) {
+      if (baseItems.length + accepted.length >= MAX_FILES || file.size > MAX_FILE_BYTES || total + file.size > MAX_TOTAL_BYTES) {
         rejected += 1;
         continue;
       }
@@ -451,24 +456,24 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         continue;
       }
       try {
-        const inspection = await inspectImageFile(file);
+        // V26: capture the picker-backed File exactly once while the input is still alive.
+        // Every later preview/conversion uses this app-owned File, never the Android provider handle.
+        const ownedFile = await capturePickerFile(file);
+        const inspection = await inspectImageFile(ownedFile);
         if (inspection.animated) {
           animated += 1;
           continue;
         }
-        // Do not force createImageBitmap/<img> decoding during attachment.
-        // Mobile gallery/content-provider files should become visible immediately;
-        // the heavier decode/pixel validation belongs to the explicit conversion step.
         existing.add(key);
-        total += file.size;
-        const previewUrl = await createBlobUrlOrDataUrl(file);
+        total += ownedFile.size;
+        const previewUrl = await createBlobUrlOrDataUrl(ownedFile);
         accepted.push({
           id: createFileItemId(),
-          file,
+          file: ownedFile,
           previewUrl,
           status: "idle",
           outputFormat: globalFormat,
-          originalSize: file.size,
+          originalSize: ownedFile.size,
           sourceWidth: inspection.width,
           sourceHeight: inspection.height,
           isNew: true,
@@ -496,6 +501,16 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         : "",
     ].filter(Boolean);
     setMessage(parts.join(" ") || (locale === "ko" ? "추가할 수 있는 이미지가 없습니다." : locale === "en" ? "No valid images were added." : "追加できる画像がありません。"));
+  };
+
+  const addFiles = (fileList: FileList | File[]) => {
+    const snapshot = Array.from(fileList);
+    const run = attachmentQueueRef.current.then(
+      () => addFilesInternal(snapshot),
+      () => addFilesInternal(snapshot),
+    );
+    attachmentQueueRef.current = run.catch(() => undefined);
+    return run;
   };
 
   const removeItem = (id: string) => {
@@ -612,32 +627,63 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         if (item.sourceWidth && item.sourceHeight && item.sourceWidth * item.sourceHeight > MAX_PIXELS) {
           throw new Error("Image dimensions exceed the safe processing limit");
         }
-        loaded = await loadImageSource(item.file, { width: item.sourceWidth, height: item.sourceHeight });
-        if (!runIsCurrent()) { loaded.dispose?.(); return; }
-        if (removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); continue; }
-        if (!loaded.width || !loaded.height || loaded.width * loaded.height > MAX_PIXELS) {
-          throw new Error("Image dimensions exceed the safe processing limit");
-        }
-        const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
-        if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); if (!runIsCurrent()) return; continue; }
-        const canvas = document.createElement("canvas");
-        const target = constrainForMobileMemory(loaded.width, loaded.height);
-        canvas.width = target.width; canvas.height = target.height;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) throw new Error("Canvas 2D context unavailable");
-        if (format === "image/jpeg") { ctx.fillStyle = backgroundColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-        else ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(loaded.source, 0, 0, canvas.width, canvas.height);
-        const resultWidth = canvas.width;
-        const resultHeight = canvas.height;
         let blob: Blob | null = null;
-        try {
-          blob = await withTimeout(canvasToBlob(canvas, getMimeForFormat(format), quality), 12_000, "canvas-export-timeout");
-        } finally {
-          releaseCanvas(canvas);
+        let resultWidth = 0;
+        let resultHeight = 0;
+        let transparency = false;
+        let workerCompleted = false;
+
+        // V26 primary path: image work is physically isolated from React/FilePicker in a Worker.
+        // The Worker receives only our captured Blob and returns a finished Blob/result size.
+        if (canUseTool001WorkerEngine()) {
+          try {
+            const workerResult = await runTool001WorkerConversion({
+              blob: item.file,
+              outputFormat: format,
+              quality,
+              backgroundColor,
+              sourceWidth: item.sourceWidth,
+              sourceHeight: item.sourceHeight,
+              maxPixels: MAX_PIXELS,
+              mobile: isMobileImageSafetyActive(),
+            });
+            blob = workerResult.blob;
+            resultWidth = workerResult.width;
+            resultHeight = workerResult.height;
+            workerCompleted = true;
+          } catch (workerError) {
+            const workerMessage = workerError instanceof Error ? workerError.message : String(workerError);
+            if (/worker-timeout|memory|allocation|pixel-limit/i.test(workerMessage)) throw workerError;
+          }
         }
-        loaded.dispose?.();
-        loaded = null;
+
+        if (!workerCompleted) {
+          loaded = await loadImageSource(item.file, { width: item.sourceWidth, height: item.sourceHeight });
+          if (!runIsCurrent()) { loaded.dispose?.(); return; }
+          if (removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); continue; }
+          if (!loaded.width || !loaded.height || loaded.width * loaded.height > MAX_PIXELS) {
+            throw new Error("Image dimensions exceed the safe processing limit");
+          }
+          transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
+          if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); if (!runIsCurrent()) return; continue; }
+          const canvas = document.createElement("canvas");
+          const target = constrainForMobileMemory(loaded.width, loaded.height);
+          canvas.width = target.width; canvas.height = target.height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) throw new Error("Canvas 2D context unavailable");
+          if (format === "image/jpeg") { ctx.fillStyle = backgroundColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+          else ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(loaded.source, 0, 0, canvas.width, canvas.height);
+          resultWidth = canvas.width;
+          resultHeight = canvas.height;
+          try {
+            blob = await withTimeout(canvasToBlob(canvas, getMimeForFormat(format), quality), 12_000, "canvas-export-timeout");
+          } finally {
+            releaseCanvas(canvas);
+          }
+          loaded.dispose?.();
+          loaded = null;
+        }
         if (!runIsCurrent()) return;
         if (removedItemIdsRef.current.has(item.id)) continue;
         if (!blob || blob.size <= 0) throw new Error("Failed to export image");
@@ -766,6 +812,18 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
                       const height = image.naturalHeight;
                       if (!width || !height) return;
                       setItems((current) => current.map((entry) => entry.id === item.id ? { ...entry, width, height } : entry));
+                    }}
+                    onError={() => {
+                      if (item.previewFallbackAttempted) return;
+                      void readBlobAsDataUrl(item.file).then((dataUrl) => {
+                        setItems((current) => current.map((entry) => {
+                          if (entry.id !== item.id) return entry;
+                          safeRevokeObjectUrl(entry.previewUrl);
+                          return { ...entry, previewUrl: dataUrl, previewFallbackAttempted: true };
+                        }));
+                      }).catch(() => {
+                        setItems((current) => current.map((entry) => entry.id === item.id ? { ...entry, previewFallbackAttempted: true } : entry));
+                      });
                     }}
                   />
                 </div>

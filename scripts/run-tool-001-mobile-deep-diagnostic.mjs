@@ -191,9 +191,9 @@ if (!playwrightCli) {
   cacheReport(['tool001-mobile-cause-matrix.json', 'tool001-mobile-cause-matrix.txt', 'tool001-mobile-cause-playwright.log.txt']);
 
   const workflowRun = await runStreaming(
-    '001 MOBILE WORKFLOW GATE + EDGE/RACE/RESILIENCE + MEMORY + ATTACHMENT - V25',
+    '001 MOBILE WORKFLOW GATE + EDGE/RACE/RESILIENCE + MEMORY + CAPTURE/WORKER - V27',
     process.execPath,
-    [playwrightCli, 'test', 'tests/tool-001-mobile-workflow-gate.spec.ts', 'tests/tool-001-mobile-limit-feedback.spec.ts', 'tests/tool-001-mobile-workflow-edge.spec.ts', 'tests/tool-001-mobile-workflow-race-resilience.spec.ts', 'tests/tool-001-mobile-memory-safety.spec.ts', 'tests/tool-001-mobile-attachment-lightweight.spec.ts', '--workers=1', '--project=mobile-chromium', '--output=test-results/tool001-mobile-workflow-artifacts', '--reporter=list,./tests/reporters/tool001-workflow-diagnostic-reporter.ts'],
+    [playwrightCli, 'test', 'tests/tool-001-mobile-workflow-gate.spec.ts', 'tests/tool-001-mobile-limit-feedback.spec.ts', 'tests/tool-001-mobile-workflow-edge.spec.ts', 'tests/tool-001-mobile-workflow-race-resilience.spec.ts', 'tests/tool-001-mobile-memory-safety.spec.ts', 'tests/tool-001-mobile-attachment-lightweight.spec.ts', 'tests/tool-001-mobile-input-capture-worker.spec.ts', '--workers=1', '--project=mobile-chromium', '--output=test-results/tool001-mobile-workflow-artifacts', '--reporter=list,./tests/reporters/tool001-workflow-diagnostic-reporter.ts'],
     path.join(outDir, 'tool001-mobile-workflow-gate-playwright.log.txt'),
     180_000,
   );
@@ -293,7 +293,7 @@ const workflowGateComplete = workflowSuite?.code === 0 && workflowTestCount > 0 
 const browserRuntimeValid = coverage.code === 0 && workflowCoverage.code === 0 && workflowGateComplete && browser.code === 0 && browserExecuted && completeScenarioSet && normalEvidencePresent && !reportError && androidComplete && !androidReportError && causeComplete && !causeReportError && !causeCoverageError;
 
 const statusLines = [
-  'TOOL001 MOBILE DEEP DIAGNOSTIC V25',
+  'TOOL001 MOBILE DEEP DIAGNOSTIC V27',
   `CAUSE_COVERAGE_EXIT=${coverage.code}`,
   `SOURCE_EXIT=${source.code}`,
   `WORKFLOW_COVERAGE_EXIT=${workflowCoverage.code}`,
@@ -324,7 +324,7 @@ console.log(statusLines.join('\n'));
 
 if (!browserRuntimeValid) {
   const failure = [
-    'TOOL001 MOBILE DEEP DIAGNOSTIC V25 - BROWSER RUNTIME FAILURE',
+    'TOOL001 MOBILE DEEP DIAGNOSTIC V27 - BROWSER RUNTIME FAILURE',
     ...statusLines,
     '',
     '브라우저 심층검수가 끝까지 실행되지 않았거나 정상 JPG/PNG 증거가 부족합니다.',
@@ -361,7 +361,7 @@ fs.writeFileSync(path.join(staging, 'REAL_DEVICE_STATUS.txt'), [
 ].join('\n') + '\n');
 
 if (process.platform === 'win32') {
-  const zip = path.join(desktop, 'TOOLBOX_001_모바일심층진단_V25_축소디코드메모리방어_검수결과.zip');
+  const zip = path.join(desktop, 'TOOLBOX_001_모바일심층진단_V27_WORKER실경로동기화_검수결과.zip');
   fs.rmSync(zip, { force: true });
   const ps = `Compress-Archive -Path '${staging.replaceAll("'", "''")}\\*' -DestinationPath '${zip.replaceAll("'", "''")}' -Force`;
   const z = spawnSync('powershell.exe', ['-NoProfile', '-Command', ps], { cwd: root, encoding: 'utf8' });

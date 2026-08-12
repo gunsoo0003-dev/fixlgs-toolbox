@@ -74,11 +74,12 @@ test.describe('TOOL001 mobile workflow edge gates V18', () => {
     });
   }
 
-  test('canvas export returning null must terminate as visible error, never hang processing', async ({ page }) => {
+  test('V27_WORKER_EXPORT_FAILURE_PLUS_FALLBACK_NULL_TERMINATES_AS_VISIBLE_ERROR', async ({ page }) => {
     await page.goto(ko, { waitUntil: 'domcontentloaded' });
-    await select(page, { name: 'toblob-null.jpg', mimeType: 'image/jpeg', buffer: sample });
+    await select(page, { name: 'worker-and-fallback-export-fail.jpg', mimeType: 'image/jpeg', buffer: sample });
     await expectAcceptedPreview(page);
     await page.evaluate(() => {
+      (window as any).__TOOL001_WORKER_DIAGNOSTIC__ = { fault: 'export-throw' };
       HTMLCanvasElement.prototype.toBlob = function(callback: BlobCallback) { setTimeout(() => callback(null), 0); } as typeof HTMLCanvasElement.prototype.toBlob;
     });
     await page.getByTestId('converter-run').tap();

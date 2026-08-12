@@ -1,0 +1,28 @@
+TOOL001 MOBILE V26 - INPUT CAPTURE + WORKER ENGINE
+Date: 2026-08-12
+
+Purpose
+- Stop depending on Android/Samsung content-provider-backed File objects after picker close.
+- Separate preview/input ownership from image conversion work.
+- Move the primary conversion path off the React/UI thread into a dedicated Worker.
+
+New architecture
+1) Picker File is captured immediately while the input selection is still alive.
+2) An app-owned File/Blob copy is created and the original picker File is discarded.
+3) Preview uses only the app-owned copy.
+4) If preview Blob URL decoding fails, Data URL is used once as a fallback.
+5) Conversion primary path uses /public/workers/tool001-image-worker.js.
+6) Worker uses createImageBitmap + OffscreenCanvas and returns only the result Blob and dimensions.
+7) Older browsers without the required Worker/OffscreenCanvas features fall back to the proven V25 main-thread engine.
+
+Safety retained
+- Mobile 2048px maximum dimension policy.
+- Pixel/file/count/aggregate limits.
+- Timeout/error feedback.
+- stale async/reset/delete protections.
+- zero-byte result rejection.
+- ObjectURL/Canvas/ImageBitmap cleanup.
+
+No new npm package dependency was added.
+- Attachment requests are serialized so rapid mobile picker returns cannot race each other.
+- Workflow coverage after V26 additions: 72 risks, missing=0 (static coverage audit).
