@@ -1,0 +1,23 @@
+{
+  "version": "V17",
+  "date": "2026-08-13",
+  "base": "V16_FLOW_RECOVERY_DOWNLOAD_ZIP",
+  "scope": "validator-only",
+  "productModified": false,
+  "changes": [
+    "android-download-shell-command-fix",
+    "chrome-redownload-confirmation-user-flow",
+    "hard-deny-open-after-download-and-picker-commit",
+    "download-stage-classification-and-blocked-count-fix",
+    "tool003-visible-unsupported-input-detection",
+    "tool005-current-result-user-branch",
+    "tool023-visible-upload-button-mapping",
+    "browser-and-android-device-cleanup-with-timeouts",
+    "explicit-normal-process-exit",
+    "download-storage-diagnostics"
+  ],
+  "tool015": "normal-product-test-target-no-limit-bypass",
+  "tool016": "normal-product-test-target-no-limit-bypass",
+  "tool018": "special-fail-classification",
+  "realDeviceVerification": "required"
+}

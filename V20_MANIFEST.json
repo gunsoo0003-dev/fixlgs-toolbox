@@ -1,0 +1,21 @@
+{
+  "version": "V20",
+  "date": "2026-08-13",
+  "scope": [
+    "TOOL005 harness flow",
+    "TOOL015 diagnostics",
+    "TOOL016 diagnostics"
+  ],
+  "product_code_modified": false,
+  "preserved": [
+    "TOOL013 V18 PASS flow",
+    "common picker",
+    "common download",
+    "Open/열기 deny",
+    "cleanup"
+  ],
+  "notes": [
+    "fix variable-width case id parsing",
+    "passive diagnostics only; no file byte reads"
+  ]
+}

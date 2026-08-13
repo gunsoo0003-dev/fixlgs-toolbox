@@ -1,0 +1,21 @@
+{
+  "version": "V14",
+  "date": "2026-08-13",
+  "purpose": "001-024 real Android Chrome full-flow validator with actual download verification",
+  "changes": [
+    "001-007 now click the first individual result download after successful processing",
+    "008 verifies ZIP download after result screen",
+    "009-017 download actions verify Android Download file creation where applicable",
+    "019-022 download actions verify Android Download file creation",
+    "023 generates assets then verifies All ZIP download",
+    "024 verifies selected-results ZIP download",
+    "TOOL018 remains metadata special-case and has no mandatory download step",
+    "download PASS requires a changed/new non-temporary file in /sdcard/Download with size > 0"
+  ],
+  "static_checks": {
+    "node_check": "PASS",
+    "validator_self_check": "PASS",
+    "source_audit_tools": 24,
+    "source_audit_failures": 0
+  }
+}

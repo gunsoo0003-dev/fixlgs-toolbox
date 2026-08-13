@@ -1,0 +1,6 @@
+{
+  "version": "V15",
+  "date": "2026-08-13",
+  "purpose": "Use Gallery > Camera > first photo as the stable real-photo input for TOOL001-024; repeat the same first photo for multi-image tools; retain full E2E download verification.",
+  "productCodeModified": false
+}

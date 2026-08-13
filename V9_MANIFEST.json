@@ -1,0 +1,40 @@
+{
+  "version": "V9_SOURCE_AUDITED_RUNTIME_UI_DISCOVERY",
+  "files": [
+    {
+      "path": "docs/MOBILE_REALPHOTO_001_024_FLOW_CHECKLIST.md",
+      "bytes": 288,
+      "sha256": "17bbad422d355f32d7cd4c24862244ae241f41e2523a3e0fd9ad76db82bff605"
+    },
+    {
+      "path": "docs/MOBILE_REALPHOTO_001_024_SOURCE_AUDITED_CHECKLIST.md",
+      "bytes": 5787,
+      "sha256": "85ecc3a6fbe37e2d8f08f0673ae588ff33cbbf0d4aac8789f0096936df165930"
+    },
+    {
+      "path": "docs/MOBILE_REALPHOTO_001_024_TOOL_WORKFLOWS.md",
+      "bytes": 201,
+      "sha256": "d5e7d846c0f0abf3870c10a8ab0b7a3a4b49be593f2d6c837d015fd61c48f2d0"
+    },
+    {
+      "path": "docs/MOBILE_REALPHOTO_001_024_VALIDATOR_README.md",
+      "bytes": 1276,
+      "sha256": "8ffb418c80bddecdd4ba9148620b74e5d4fb14ac74f4a2a2edeb73880c81dcac"
+    },
+    {
+      "path": "scripts/audit-mobile-real-photo-source-map.mjs",
+      "bytes": 5931,
+      "sha256": "b522dfecfdbd8feb71a4064f2a616e718ca312fc768cdbaf8c08f5e16ad61771"
+    },
+    {
+      "path": "scripts/check-mobile-real-photo-validator.mjs",
+      "bytes": 1931,
+      "sha256": "33e39e03eafff8aaa60230bebe7045d1a1659f2c0fd27022d5bbcda9c0ca3863"
+    },
+    {
+      "path": "scripts/run-mobile-real-photo-001-024.mjs",
+      "bytes": 46069,
+      "sha256": "4fdcf175fb89ea56ff07abfbd7d1e1f207da99dda5afc8874b1c59254a4b7e96"
+    }
+  ]
+}

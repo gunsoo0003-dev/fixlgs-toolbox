@@ -1,0 +1,20 @@
+{
+  "version": "V16",
+  "date": "2026-08-13",
+  "base": "V15_CAMERA_FIRST_PHOTO",
+  "scope": "validator-only",
+  "productModified": false,
+  "changes": [
+    "start-state-recovery",
+    "runtime-picker-state-proof",
+    "tool-specific-visible-upload-controls",
+    "download-snapshot-verification",
+    "no-open-after-download",
+    "blocked-step-recording",
+    "retest-preserves-original-product-fail",
+    "desktop-auto-result-zip"
+  ],
+  "tool016": "normal-product-test-target",
+  "tool018": "special-fail-classification",
+  "staticSelfCheck": "pending-run"
+}
