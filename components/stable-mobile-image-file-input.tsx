@@ -17,6 +17,59 @@ type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
   mobileCaptureMode?: MobileCaptureMode;
 };
 
+type Tool016PipelineDiag = {
+  stage: string;
+  selected?: { name: string; size: number; type: string; lastModified: number };
+  bitmap?: { width: number; height: number };
+  canvas?: { width: number; height: number };
+  owned?: { name: string; size: number; type: string; lastModified: number };
+  ownedBitmap?: { width: number; height: number };
+  error?: string;
+  at: string;
+};
+
+function isTool016Input(input: HTMLInputElement) {
+  return Boolean(input.closest('[data-testid="tool016-root"]'));
+}
+
+function publishTool016PipelineDiag(diag: Tool016PipelineDiag) {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  try {
+    (window as typeof window & { __tool016PipelineDiag?: Tool016PipelineDiag }).__tool016PipelineDiag = diag;
+    window.localStorage.setItem("TOOL016_PIPELINE_DIAG", JSON.stringify(diag));
+  } catch {
+    // Diagnostic persistence must never alter the product flow.
+  }
+
+  let overlay = document.getElementById("tool016-pipeline-diag-overlay");
+  if (!overlay) {
+    overlay = document.createElement("pre");
+    overlay.id = "tool016-pipeline-diag-overlay";
+    overlay.setAttribute("data-testid", "tool016-pipeline-diag-overlay");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      left: "8px",
+      right: "8px",
+      bottom: "8px",
+      zIndex: "2147483647",
+      maxHeight: "48vh",
+      overflow: "auto",
+      margin: "0",
+      padding: "12px",
+      border: "2px solid #f3c400",
+      borderRadius: "10px",
+      background: "#0b0b0b",
+      color: "#fff",
+      fontSize: "12px",
+      lineHeight: "1.45",
+      whiteSpace: "pre-wrap",
+      wordBreak: "break-word",
+    });
+    document.body.appendChild(overlay);
+  }
+  overlay.textContent = `[TOOL016 INPUT PIPELINE DIAG]\n${JSON.stringify(diag, null, 2)}`;
+}
+
 function canvasToBlob(canvas: HTMLCanvasElement, mime: string) {
   return new Promise<Blob | null>((resolve) => {
     canvas.toBlob(resolve, mime, mime === "image/png" ? undefined : 0.98);
@@ -34,13 +87,18 @@ function baseName(name: string) {
   return dot > 0 ? name.slice(0, dot) : name;
 }
 
-async function createOwnedPixelFile(file: File) {
+async function createOwnedPixelFile(
+  file: File,
+  onDiag?: (patch: Partial<Tool016PipelineDiag>) => void,
+) {
   // TOOL001 V57R2 golden boundary: provider File -> createImageBitmap -> canvas -> app-owned File.
   const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+  onDiag?.({ stage: "BITMAP_DECODED", bitmap: { width: bitmap.width, height: bitmap.height } });
   const canvas = document.createElement("canvas");
   try {
     canvas.width = bitmap.width;
     canvas.height = bitmap.height;
+    onDiag?.({ stage: "CANVAS_SIZED", canvas: { width: canvas.width, height: canvas.height } });
     const context = canvas.getContext("2d");
     if (!context) throw new Error("canvas-context");
 
@@ -54,10 +112,15 @@ async function createOwnedPixelFile(file: File) {
     context.drawImage(bitmap, 0, 0);
     const blob = await canvasToBlob(canvas, requestedMime);
     if (!blob || blob.size <= 0) throw new Error("snapshot-export");
-    return new File([blob], `${baseName(file.name)}.${extensionFor(requestedMime)}`, {
+    const owned = new File([blob], `${baseName(file.name)}.${extensionFor(requestedMime)}`, {
       type: requestedMime,
       lastModified: file.lastModified || Date.now(),
     });
+    onDiag?.({
+      stage: "OWNED_FILE_CREATED",
+      owned: { name: owned.name, size: owned.size, type: owned.type, lastModified: owned.lastModified },
+    });
+    return owned;
   } finally {
     bitmap.close();
     canvas.width = 1;
@@ -112,10 +175,52 @@ export const StableMobileImageFileInput = forwardRef<HTMLInputElement, Props>(fu
       return;
     }
 
+    const tool016DiagEnabled = isTool016Input(input);
+    let tool016Diag: Tool016PipelineDiag | null = tool016DiagEnabled ? {
+      stage: "PICKER_FILE_RECEIVED",
+      selected: {
+        name: first.name,
+        size: first.size,
+        type: first.type,
+        lastModified: first.lastModified,
+      },
+      at: new Date().toISOString(),
+    } : null;
+    const updateTool016Diag = (patch: Partial<Tool016PipelineDiag>) => {
+      if (!tool016Diag) return;
+      tool016Diag = { ...tool016Diag, ...patch, at: new Date().toISOString() };
+      publishTool016PipelineDiag(tool016Diag);
+    };
+    if (tool016Diag) publishTool016PipelineDiag(tool016Diag);
+
     try {
-      const owned = await createOwnedPixelFile(first);
+      const owned = await createOwnedPixelFile(first, tool016Diag ? updateTool016Diag : undefined);
+      if (tool016Diag) {
+        try {
+          const ownedBitmap = await createImageBitmap(owned, { imageOrientation: "from-image" });
+          try {
+            updateTool016Diag({
+              stage: "OWNED_FILE_REDECODED",
+              ownedBitmap: { width: ownedBitmap.width, height: ownedBitmap.height },
+            });
+          } finally {
+            ownedBitmap.close();
+          }
+        } catch (diagError) {
+          updateTool016Diag({
+            stage: "OWNED_FILE_REDECODE_DIAG_ERROR",
+            error: diagError instanceof Error ? `${diagError.name}: ${diagError.message}` : String(diagError),
+          });
+        }
+      }
       onChange?.(eventWithFiles(event, input, [owned]));
-    } catch {
+    } catch (captureError) {
+      if (tool016Diag) {
+        updateTool016Diag({
+          stage: "CAPTURE_FAILED_FALLBACK_ORIGINAL",
+          error: captureError instanceof Error ? `${captureError.name}: ${captureError.message}` : String(captureError),
+        });
+      }
       // Do not add retries/fallback reader chains. One direct pass only; existing tool validation owns the error state.
       onChange?.(eventWithFiles(event, input, [first]));
     }
