@@ -1,0 +1,22 @@
+FIXLGS TOOLBOX 교체용 전체본
+기준: 2026-08-13
+
+구성 기준
+- 사용자 제공 fixlgs-toolbox_필수파일(2).zip 전체 기준
+- TOOL015 서비스 상한: 20,000,000px (20MP)
+- TOOL016 서비스 상한: 20,000,000px (20MP)
+- TOOL016 임시 [TOOL016 HARD DIAG] UI 제거
+- TOOL018 PC 카메라 원본 JPEG 정상화
+  · Samsung Camera #1 3024x4032 진단에서 EOI trailing-data 오판 수정
+  · 기존 EXIF 파서 유지
+  · 신규 ExifReader 의존성 없음
+- TOOL018 모바일: 카메라 원본 메타정보 제한 안내 유지
+- TOOL001 GOLDEN / 공통 입력부 추가 수정 없음
+
+교체 방법
+1) 기존 프로젝트에서 .git만 별도 보관
+2) 기존 fixlgs-toolbox 폴더를 백업명으로 변경
+3) 이 압축본의 fixlgs-toolbox 폴더를 WebProjects에 배치
+4) 기존 .git을 새 fixlgs-toolbox에 이식
+5) npm install
+6) git status 확인

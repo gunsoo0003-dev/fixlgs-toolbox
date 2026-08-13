@@ -63,3 +63,7 @@
   .metadataGuide :global(.toolbox-tool-result-grid p),
   .useCases :global(.toolbox-tool-result-grid p){white-space:nowrap;}
 }
+
+.mobileCameraNote{display:none;margin:8px 0 0;padding:10px 12px;border:1px solid var(--tb-line);border-radius:12px;background:var(--tb-panel);color:var(--tb-muted);font-size:11px;line-height:1.55}
+@media(max-width:720px){.mobileCameraNote{display:block}}
+

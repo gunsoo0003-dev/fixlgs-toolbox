@@ -12,7 +12,22 @@ type LayoutMode = "horizontal" | "vertical";
 type LabelPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
 type OutputFormat = "png" | "jpg" | "webp";
 
-const LIMITS = { fileBytes:15*1024*1024, totalBytes:30*1024*1024, sourcePixels:12_000_000, maxSide:3000, maxPixels:9_000_000, labelLength:24 } as const;
+type StableMobileOwnedFile = File & {
+  __stableMobileOriginalInfo?: {
+    name: string;
+    size: number;
+    type: string;
+    lastModified: number;
+  };
+};
+
+function getServiceValidationSize(file: File | null) {
+  if (!file) return 0;
+  const original = (file as StableMobileOwnedFile).__stableMobileOriginalInfo;
+  return original?.size ?? file.size;
+}
+
+const LIMITS = { fileBytes:15*1024*1024, totalBytes:30*1024*1024, sourcePixels:20_000_000, maxSide:3000, maxPixels:9_000_000, labelLength:24 } as const;
 
 type SlotState = {
   key: SlotKey;
@@ -59,7 +74,7 @@ const copy = {
   ko: {
     workspace:"전후 비교 이미지 작업장", intro:"Before와 After 이미지 두 장을 선택하면 바로 비교 미리보기가 만들어집니다.", local:"이미지는 서버로 전송되지 않으며 현재 브라우저에서만 처리됩니다.",
     step1:"1. Before·After 이미지 선택", step1Desc:"비교할 이전 사진과 이후 사진을 각각 한 장씩 넣어 주세요.", step2:"2. 비교 방식 선택", step2Desc:"좌우 또는 상하 비교와 두 사진의 분할 비율을 정합니다.", step3:"3. 이미지 위치·크기 맞춤", step3Desc:"미리보기를 보면서 각 사진의 보이는 범위와 확대율을 맞춥니다.", step4:"4. 문구·구분선 설정", step4Desc:"필요한 경우 Before·After 문구와 중앙 구분선을 꾸밉니다.", step5:"5. 결과 확인·다운로드", step5Desc:"결과 크기와 파일 형식을 확인한 뒤 완성 이미지를 저장합니다.",
-    before:"Before 이미지", after:"After 이미지", choose:"이미지 선택", replace:"이미지 교체", remove:"삭제", selectTwo:"두 이미지 선택", support:"JPG, JPEG, PNG, WebP · 정확히 두 이미지 · 파일당 15 MiB · 최대 12MP", tooMany:"이미지는 두 장만 선택할 수 있습니다.", tooBigFile:"개별 파일은 15 MiB 이하만 사용할 수 있습니다.", tooBigTotal:"두 이미지의 총 용량은 30 MiB 이하만 사용할 수 있습니다.", tooBigSource:"12MP를 초과하는 이미지는 기본 서비스에서 사용할 수 없습니다.", outputLimit:"결과 이미지는 한 변 3000px, 총 900만 픽셀까지 지원합니다.", unsupported:"지원하지 않는 이미지 형식입니다.", unreadable:"이미지를 읽을 수 없습니다.", empty:"빈 파일은 사용할 수 없습니다.",
+    before:"Before 이미지", after:"After 이미지", choose:"이미지 선택", replace:"이미지 교체", remove:"삭제", selectTwo:"두 이미지 선택", support:"JPG, JPEG, PNG, WebP · 정확히 두 이미지 · 파일당 15 MiB · 최대 20MP", tooMany:"이미지는 두 장만 선택할 수 있습니다.", tooBigFile:"개별 파일은 15 MiB 이하만 사용할 수 있습니다.", tooBigTotal:"두 이미지의 총 용량은 30 MiB 이하만 사용할 수 있습니다.", tooBigSource:"20MP를 초과하는 이미지는 기본 서비스에서 사용할 수 없습니다.", outputLimit:"결과 이미지는 한 변 3000px, 총 900만 픽셀까지 지원합니다.", unsupported:"지원하지 않는 이미지 형식입니다.", unreadable:"이미지를 읽을 수 없습니다.", empty:"빈 파일은 사용할 수 없습니다.",
     preview:"결과 미리보기", needTwo:"Before와 After 이미지 두 장을 선택해 주세요.", layout:"비교 방향", horizontal:"좌우 비교", vertical:"상하 비교", swap:"Before·After 바꾸기", split:"분할 비율", center:"중앙으로", selected:"선택 이미지", fit:"이미지 맞춤", together:"두 이미지 함께 설정", separate:"개별 설정", cover:"채우기", contain:"전체 보기", zoom:"확대율", linkZoom:"확대율 연결", resetFit:"맞춤 초기화", resetBefore:"Before 맞춤 초기화", resetAfter:"After 맞춤 초기화", resetBoth:"두 이미지 맞춤 초기화",
     labels:"Before·After 문구", showLabels:"라벨 전체 표시", showBeforeLabel:"Before 라벨 표시", showAfterLabel:"After 라벨 표시", beforeLabel:"Before 문구", afterLabel:"After 문구", position:"라벨 위치", topLeft:"왼쪽 위", topCenter:"위 중앙", topRight:"오른쪽 위", bottomLeft:"왼쪽 아래", bottomCenter:"아래 중앙", bottomRight:"오른쪽 아래", fontSize:"글자 크기", textColor:"글자 색상", labelBg:"라벨 배경", opacity:"배경 투명도", bold:"굵게",
     divider:"중앙 구분선", showDivider:"구분선 표시", thickness:"두께", dividerColor:"색상", gap:"이미지 사이 간격", padding:"외곽 여백", background:"배경", transparent:"투명", backgroundColor:"배경색",
@@ -68,7 +83,7 @@ const copy = {
   en: {
     workspace:"Before & After workspace", intro:"Choose Before and After images to build the comparison preview immediately.", local:"Images stay in this browser and are never uploaded to a server.",
     step1:"1. Choose Before & After Images", step1Desc:"Add one earlier image and one later image to compare.", step2:"2. Choose the Comparison Layout", step2Desc:"Pick side-by-side or top-and-bottom and set the split ratio.", step3:"3. Fit and Position the Images", step3Desc:"Use the preview to adjust each image's crop, position, and zoom.", step4:"4. Set Labels and Divider", step4Desc:"Optionally customize the Before/After labels and center divider.", step5:"5. Review and Download", step5Desc:"Check the result size and file format, then save the finished image.",
-    before:"Before Image", after:"After Image", choose:"Select Image", replace:"Replace Image", remove:"Remove", selectTwo:"Select Two Images", support:"JPG, JPEG, PNG, WebP · exactly two images · 15 MiB each · up to 12 MP", tooMany:"You can select only two images.", tooBigFile:"Each file must be 15 MiB or smaller.", tooBigTotal:"The two images must total 30 MiB or less.", tooBigSource:"Images over 12 MP are outside the basic service limit.", outputLimit:"Output is limited to 3000 px per side and 9 million total pixels.", unsupported:"This image format is not supported.", unreadable:"The image could not be read.", empty:"Empty files cannot be used.",
+    before:"Before Image", after:"After Image", choose:"Select Image", replace:"Replace Image", remove:"Remove", selectTwo:"Select Two Images", support:"JPG, JPEG, PNG, WebP · exactly two images · 15 MiB each · up to 20 MP", tooMany:"You can select only two images.", tooBigFile:"Each file must be 15 MiB or smaller.", tooBigTotal:"The two images must total 30 MiB or less.", tooBigSource:"Images over 20 MP are outside the basic service limit.", outputLimit:"Output is limited to 3000 px per side and 9 million total pixels.", unsupported:"This image format is not supported.", unreadable:"The image could not be read.", empty:"Empty files cannot be used.",
     preview:"Result Preview", needTwo:"Select both Before and After images.", layout:"Comparison Layout", horizontal:"Side by Side", vertical:"Top & Bottom", swap:"Swap Before & After", split:"Split Ratio", center:"Reset to Center", selected:"Selected Image", fit:"Image Fit", together:"Adjust Together", separate:"Adjust Separately", cover:"Fill", contain:"Fit Entire Image", zoom:"Zoom", linkZoom:"Link Zoom", resetFit:"Reset Image Fit", resetBefore:"Reset Before Fit", resetAfter:"Reset After Fit", resetBoth:"Reset Both Fits",
     labels:"Before & After Labels", showLabels:"Show All Labels", showBeforeLabel:"Show Before Label", showAfterLabel:"Show After Label", beforeLabel:"Before Label", afterLabel:"After Label", position:"Label Position", topLeft:"Top Left", topCenter:"Top Center", topRight:"Top Right", bottomLeft:"Bottom Left", bottomCenter:"Bottom Center", bottomRight:"Bottom Right", fontSize:"Font Size", textColor:"Text Color", labelBg:"Label Background", opacity:"Background Opacity", bold:"Bold",
     divider:"Center Divider", showDivider:"Show Divider", thickness:"Thickness", dividerColor:"Color", gap:"Image Gap", padding:"Outer Padding", background:"Background", transparent:"Transparent", backgroundColor:"Background Color",
@@ -77,7 +92,7 @@ const copy = {
   ja: {
     workspace:"ビフォー・アフター比較ワークスペース", intro:"比較前と比較後の画像を選ぶと、すぐに比較プレビューを作成します。", local:"画像はサーバーに送信されず、現在のブラウザ内だけで処理されます。",
     step1:"1. 比較前・比較後の画像を選択", step1Desc:"比較する前の画像と後の画像を1枚ずつ追加します。", step2:"2. 比較方法を選択", step2Desc:"左右または上下の比較方法と分割比率を決めます。", step3:"3. 画像の位置と大きさを調整", step3Desc:"プレビューを見ながら表示範囲と拡大率を調整します。", step4:"4. ラベルと区切り線を設定", step4Desc:"必要に応じて比較前・比較後の文字と中央の区切り線を設定します。", step5:"5. 結果を確認してダウンロード", step5Desc:"結果サイズとファイル形式を確認して完成画像を保存します。",
-    before:"比較前の画像", after:"比較後の画像", choose:"画像を選択", replace:"画像を変更", remove:"削除", selectTwo:"2枚の画像を選択", support:"JPG・JPEG・PNG・WebP · 画像は2枚 · 1ファイル15 MiB · 最大12MP", tooMany:"画像は2枚だけ選択できます。", tooBigFile:"1ファイル15 MiB以下の画像を使用してください。", tooBigTotal:"2枚の合計は30 MiB以下にしてください。", tooBigSource:"12MPを超える画像は基本サービスの対象外です。", outputLimit:"出力画像は一辺3000px、合計900万画素まで対応します。", unsupported:"対応していない画像形式です。", unreadable:"画像を読み込めませんでした。", empty:"空のファイルは使用できません。",
+    before:"比較前の画像", after:"比較後の画像", choose:"画像を選択", replace:"画像を変更", remove:"削除", selectTwo:"2枚の画像を選択", support:"JPG・JPEG・PNG・WebP · 画像は2枚 · 1ファイル15 MiB · 最大20MP", tooMany:"画像は2枚だけ選択できます。", tooBigFile:"1ファイル15 MiB以下の画像を使用してください。", tooBigTotal:"2枚の合計は30 MiB以下にしてください。", tooBigSource:"20MPを超える画像は基本サービスの対象外です。", outputLimit:"出力画像は一辺3000px、合計900万画素まで対応します。", unsupported:"対応していない画像形式です。", unreadable:"画像を読み込めませんでした。", empty:"空のファイルは使用できません。",
     preview:"結果プレビュー", needTwo:"比較前と比較後の画像を2枚選択してください。", layout:"比較方向", horizontal:"左右比較", vertical:"上下比較", swap:"比較前・比較後を\n入れ替え", split:"分割比率", center:"中央に戻す", selected:"選択中の画像", fit:"画像の表示方法", together:"2枚を一緒に\n調整", separate:"個別に調整", cover:"枠いっぱいに表示", contain:"画像全体を\n表示", zoom:"拡大率", linkZoom:"拡大率を連動", resetFit:"表示設定をリセット", resetBefore:"比較前をリセット", resetAfter:"比較後をリセット", resetBoth:"2枚ともリセット",
     labels:"比較前・比較後のラベル", showLabels:"ラベル全体を表示", showBeforeLabel:"比較前ラベルを表示", showAfterLabel:"比較後ラベルを表示", beforeLabel:"比較前の文字", afterLabel:"比較後の文字", position:"ラベル位置", topLeft:"左上", topCenter:"上中央", topRight:"右上", bottomLeft:"左下", bottomCenter:"下中央", bottomRight:"右下", fontSize:"文字サイズ", textColor:"文字色", labelBg:"ラベル背景", opacity:"背景の不透明度", bold:"太字",
     divider:"中央の区切り線", showDivider:"区切り線を表示", thickness:"太さ", dividerColor:"色", gap:"画像間隔", padding:"外側余白", background:"背景", transparent:"透明", backgroundColor:"背景色",
@@ -155,10 +170,11 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
 
   const decode=useCallback(async(file:File,key:SlotKey)=>{
     try{
-      if(!file.size)throw new Error(t.empty); if(!supported(file))throw new Error(t.unsupported);
-      if(file.size>LIMITS.fileBytes)throw new Error(t.tooBigFile);
+      const serviceBytes=getServiceValidationSize(file);
+      if(!serviceBytes)throw new Error(t.empty); if(!supported(file))throw new Error(t.unsupported);
+      if(serviceBytes>LIMITS.fileBytes)throw new Error(t.tooBigFile);
       const other=key==="before"?afterRef.current.file:beforeRef.current.file;
-      if(file.size+(other?.size??0)>LIMITS.totalBytes)throw new Error(t.tooBigTotal);
+      if(serviceBytes+getServiceValidationSize(other)>LIMITS.totalBytes)throw new Error(t.tooBigTotal);
       const url=URL.createObjectURL(file); let source:CanvasImageSource,width=0,height=0;
       try{if(typeof createImageBitmap==="function"){const b=await createImageBitmap(file,{imageOrientation:"from-image"});source=b;width=b.width;height=b.height}else{const img=new Image();img.decoding="async";img.src=url;await img.decode();source=img;width=img.naturalWidth;height=img.naturalHeight}}catch(e){URL.revokeObjectURL(url);throw e}
       if(!width||!height){closeSource(source);URL.revokeObjectURL(url);throw new Error(t.unreadable)}

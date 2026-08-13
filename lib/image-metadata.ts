@@ -435,7 +435,36 @@ function readJpeg(bytes: Uint8Array) {
     if (pos >= bytes.length) break;
     const marker = bytes[pos++];
     if (marker === 0xd9) { sawEoi = true; break; }
-    if (marker === 0xda) { sawScan = true; break; }
+    if (marker === 0xda) {
+      sawScan = true;
+      // SOS is followed by entropy-coded scan data. A valid JPEG may contain
+      // trailing bytes after the EOI marker, so do not require FF D9 to be
+      // the final two bytes of the file. Walk the scan stream and accept an
+      // EOI marker wherever it actually terminates the JPEG codestream.
+      if (isRange(bytes, pos, 2)) {
+        const scanHeaderLength = readU16BE(bytes, pos);
+        let cursor = scanHeaderLength >= 2 && isRange(bytes, pos, scanHeaderLength)
+          ? pos + scanHeaderLength
+          : pos;
+        while (cursor + 1 < bytes.length) {
+          if (bytes[cursor] !== 0xff) { cursor++; continue; }
+          let markerPos = cursor + 1;
+          while (markerPos < bytes.length && bytes[markerPos] === 0xff) markerPos++;
+          if (markerPos >= bytes.length) break;
+          const scanMarker = bytes[markerPos];
+          if (scanMarker === 0x00 || (scanMarker >= 0xd0 && scanMarker <= 0xd7)) {
+            cursor = markerPos + 1;
+            continue;
+          }
+          if (scanMarker === 0xd9) {
+            sawEoi = true;
+            break;
+          }
+          cursor = markerPos + 1;
+        }
+      }
+      break;
+    }
     if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
     if (!isRange(bytes, pos, 2)) break;
     const length = readU16BE(bytes, pos);
@@ -479,7 +508,6 @@ function readJpeg(bytes: Uint8Array) {
     }
     pos += length;
   }
-  if (sawScan) sawEoi = bytes.length >= 2 && bytes[bytes.length - 2] === 0xff && bytes[bytes.length - 1] === 0xd9;
   return { width, height, bitsPerSample, hasAlpha: false, resolution, exif, hasExif, hasXmp, hasIptc, hasIcc, entries, warnings, validStructure: sawSof && sawScan && sawEoi };
 }
 

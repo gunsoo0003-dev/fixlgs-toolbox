@@ -17,6 +17,36 @@ type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
   mobileCaptureMode?: MobileCaptureMode;
 };
 
+type StableMobileOriginalInfo = {
+  name: string;
+  size: number;
+  type: string;
+  lastModified: number;
+};
+
+type StableMobileOwnedFile = File & {
+  __stableMobileOriginalInfo?: StableMobileOriginalInfo;
+};
+
+function attachStableMobileOriginalInfo(owned: File, original: File) {
+  try {
+    Object.defineProperty(owned, "__stableMobileOriginalInfo", {
+      value: {
+        name: original.name,
+        size: original.size,
+        type: original.type,
+        lastModified: original.lastModified,
+      } satisfies StableMobileOriginalInfo,
+      configurable: true,
+      enumerable: false,
+      writable: false,
+    });
+  } catch {
+    // Metadata attachment must never break the product flow.
+  }
+  return owned as StableMobileOwnedFile;
+}
+
 type Tool016PipelineDiag = {
   stage: string;
   selected?: { name: string; size: number; type: string; lastModified: number };
@@ -41,33 +71,6 @@ function publishTool016PipelineDiag(diag: Tool016PipelineDiag) {
     // Diagnostic persistence must never alter the product flow.
   }
 
-  let overlay = document.getElementById("tool016-pipeline-diag-overlay");
-  if (!overlay) {
-    overlay = document.createElement("pre");
-    overlay.id = "tool016-pipeline-diag-overlay";
-    overlay.setAttribute("data-testid", "tool016-pipeline-diag-overlay");
-    Object.assign(overlay.style, {
-      position: "fixed",
-      left: "8px",
-      right: "8px",
-      bottom: "8px",
-      zIndex: "2147483647",
-      maxHeight: "48vh",
-      overflow: "auto",
-      margin: "0",
-      padding: "12px",
-      border: "2px solid #f3c400",
-      borderRadius: "10px",
-      background: "#0b0b0b",
-      color: "#fff",
-      fontSize: "12px",
-      lineHeight: "1.45",
-      whiteSpace: "pre-wrap",
-      wordBreak: "break-word",
-    });
-    document.body.appendChild(overlay);
-  }
-  overlay.textContent = `[TOOL016 INPUT PIPELINE DIAG]\n${JSON.stringify(diag, null, 2)}`;
 }
 
 function canvasToBlob(canvas: HTMLCanvasElement, mime: string) {
@@ -112,10 +115,10 @@ async function createOwnedPixelFile(
     context.drawImage(bitmap, 0, 0);
     const blob = await canvasToBlob(canvas, requestedMime);
     if (!blob || blob.size <= 0) throw new Error("snapshot-export");
-    const owned = new File([blob], `${baseName(file.name)}.${extensionFor(requestedMime)}`, {
+    const owned = attachStableMobileOriginalInfo(new File([blob], `${baseName(file.name)}.${extensionFor(requestedMime)}`, {
       type: requestedMime,
       lastModified: file.lastModified || Date.now(),
-    });
+    }), file);
     onDiag?.({
       stage: "OWNED_FILE_CREATED",
       owned: { name: owned.name, size: owned.size, type: owned.type, lastModified: owned.lastModified },

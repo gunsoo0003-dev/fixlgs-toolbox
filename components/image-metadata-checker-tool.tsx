@@ -53,6 +53,7 @@ const copy = {
     removeFile: '목록에서 제거', waiting: '대기', cleanComplete: '제거 완료', cleanFailed: '제거 실패', ppiInvalid: 'PPI는 1~2400 사이의 값을 입력해 주세요.', clear: '전체 초기화', retry: '다시 시도',
     errors: { tooMany: `이미지는 최대 ${TOOL018_LIMITS.maxFiles}개까지 선택할 수 있습니다.`, total: `전체 파일 용량이 ${MAX_TOTAL_MB}MB를 넘었습니다.`, file: `파일당 ${MAX_FILE_MB}MB까지 지원합니다.`, unsupported: '지원하지 않는 이미지 형식입니다.', unreadable: '이미지를 읽을 수 없습니다.', pixels: '이미지 해상도가 기본 서비스 범위를 넘었습니다.', metadata: '메타데이터를 읽는 중 오류가 발생했습니다.', clean: '메타데이터를 제거하지 못했습니다.', clipboard: '클립보드에 복사하지 못했습니다.', zip: 'ZIP 파일을 만들지 못했습니다.', download: '파일을 다운로드하지 못했습니다.' },
     local: '이미지와 메타데이터는 서버로 전송되지 않으며 현재 브라우저에서만 확인합니다.',
+    mobileCameraNote: '일부 모바일 브라우저에서는 카메라 원본 사진의 메타정보를 읽지 못할 수 있습니다. 카메라 원본 메타정보 확인이 필요한 경우 PC에서 이용해 주세요.',
   },
   en: {
     title: 'Image metadata inspection workspace', intro: 'Select images to analyze basic information and metadata automatically.',
@@ -70,6 +71,7 @@ const copy = {
     removeFile: 'Remove from list', waiting: 'Waiting', cleanComplete: 'Removal Complete', cleanFailed: 'Removal Failed', ppiInvalid: 'Enter a PPI value from 1 to 2400.', clear: 'Reset All', retry: 'Try Again',
     errors: { tooMany: `You can select up to ${TOOL018_LIMITS.maxFiles} images.`, total: `Total file size exceeds ${MAX_TOTAL_MB} MB.`, file: `Each file must be ${MAX_FILE_MB} MB or smaller.`, unsupported: 'Unsupported image format.', unreadable: 'The image cannot be read.', pixels: 'Image resolution exceeds the basic service range.', metadata: 'An error occurred while reading metadata.', clean: 'Could not remove metadata.', clipboard: 'Could not copy to the clipboard.', zip: 'Could not create the ZIP file.', download: 'Could not download the file.' },
     local: 'Your images and metadata are analyzed only in this browser and are not uploaded to a server.',
+    mobileCameraNote: 'Some mobile browsers may not be able to read metadata from original camera photos. Use a PC when you need to inspect metadata from an original camera photo.',
   },
   ja: {
     title: '画像メタデータ確認ワークスペース', intro: '画像を選択すると、基本情報とメタデータを自動で解析します。',
@@ -87,6 +89,7 @@ const copy = {
     removeFile: '一覧から削除', waiting: '待機', cleanComplete: '削除完了', cleanFailed: '削除失敗', ppiInvalid: 'PPIは1〜2400の範囲で入力してください。', clear: 'すべてリセット', retry: '再試行',
     errors: { tooMany: `画像は最大${TOOL018_LIMITS.maxFiles}枚まで選択できます。`, total: `合計ファイルサイズが${MAX_TOTAL_MB}MBを超えています。`, file: `1ファイル${MAX_FILE_MB}MBまで対応します。`, unsupported: '対応していない画像形式です。', unreadable: '画像を読み込めません。', pixels: '画像解像度が基本サービス範囲を超えています。', metadata: 'メタデータの読み取り中にエラーが発生しました。', clean: 'メタデータを削除できませんでした。', clipboard: 'クリップボードにコピーできませんでした。', zip: 'ZIPファイルを作成できませんでした。', download: 'ファイルをダウンロードできませんでした。' },
     local: '画像とメタデータはサーバーに送信されず、このブラウザ内でのみ解析されます。',
+    mobileCameraNote: '一部のモバイルブラウザでは、カメラ原本写真のメタデータを読み取れない場合があります。カメラ原本のメタデータ確認が必要な場合はPCをご利用ください。',
   },
 } as const;
 
@@ -328,6 +331,7 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
           </div>
         )}
         <p className={styles.localNote}>{t.local}</p>
+        <p className={styles.mobileCameraNote} role="note">{t.mobileCameraNote}</p>
       </div>
 
       <div className={`${styles.content} ${items.length === 0 && !globalError ? styles.contentEmpty : ''} ${drag ? styles.contentDragging : ''}`}>
