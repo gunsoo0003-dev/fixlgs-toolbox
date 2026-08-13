@@ -1,0 +1,26 @@
+TOOL001 V41 PLATFORM PICKER A/B
+
+목표:
+Android/Chrome 파일 접근 공통 경계를 더 쪼개지 않고, 실제 파일 선택 경로 자체를 3개로 분리해 비교한다.
+
+경로:
+A PATH_A_FS_IMAGE_FILTERED
+  - showOpenFilePicker + 이미지 MIME/확장자 필터
+B PATH_B_FS_ACCEPT_ALL
+  - showOpenFilePicker + accept-all (문서/파일 선택 경로 유도)
+C PATH_C_LEGACY_IMAGE_INPUT
+  - 기존 input[type=file] + 이미지 필터
+
+검수:
+- PHOTO_01 기준 각 경로 10회, 총 30회
+- 실제 카드 + 실제 이미지 미리보기 load까지 성공해야 PASS
+- NotReadableError 수집
+- picker UI package(com.google.android.photopicker / documentsui / myfiles 등) 기록
+- 10/10만 100_PERCENT_CANDIDATE
+
+실행:
+node scripts/verify-tool-001-v41-platform-picker-ab.mjs
+node scripts/run-tool-001-v41-platform-picker-ab.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+핵심 결과:
+v41-platform-picker-summary.txt

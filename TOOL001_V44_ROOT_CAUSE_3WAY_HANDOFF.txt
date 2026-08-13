@@ -1,0 +1,88 @@
+TOOL001 V44 ROOT CAUSE 3-WAY ISOLATION
+기준: V43 실기기 결과 분석 후 검수기 자체 오류를 제거한 재검수본
+
+[왜 V43 자동 결론을 폐기했는가]
+- Chrome 7회 중 유효 1회 / HARNESS_FAIL 6회.
+- Native 7회 중 유효 판정 3회로 기록됐지만, 그중 NATIVE_RESULT_TIMEOUT 2회는 실제 byte-read FAIL이 아니었음.
+- 네이티브 3/6회 화면은 진단 앱이 아니라 Chrome 최소 HTML로 돌아와 있었음.
+- 따라서 V43의 ANDROID_PROVIDER_OR_LOWER_NATIVE_BOUNDARY_STRONGLY_SUSPECTED 자동 판정은 증거 부족으로 폐기.
+
+[V43에서 유효하게 확보된 증거]
+- Chrome 최소 HTML 유효 1회:
+  - TOOL001 / React / Next.js 미사용.
+  - PHOTO01: 457,776 bytes.
+  - file.arrayBuffer() 1회.
+  - NotReadableError 발생.
+- Android native 유효 1회:
+  - 같은 457,776 bytes를 ContentResolver.openFileDescriptor()로 정상 read.
+- 의미:
+  - TOOL001 제품 코드 자체가 주원인일 가능성은 크게 낮아짐.
+  - 다만 Chrome 브리지 vs GET_CONTENT URI grant vs Provider 하위층은 아직 분리되지 않음.
+
+[V43 검수기 오류]
+1) Chrome 최소 HTML에서 같은 page를 계속 재사용한 뒤 2회차부터 picker 자체가 다시 열리지 않음.
+2) waitStablePickerOpen 원본 함수는 3회 연속 picker 감지를 요구하는데, V43 timeout 6500ms는 일부 실기기 uiautomator 속도에서 부족.
+3) Native 반복에서 외부 Photo Picker가 진단 앱 task에 남은 상태가 생겨 다음 round가 새 MainActivity callback 없이 stale picker/task로 이어짐.
+4) NATIVE_RESULT_TIMEOUT을 플랫폼 byte-read FAIL처럼 유효 집계한 분류 오류.
+
+[V44 변경]
+- 제품 코드 수정 없음.
+- Samsung Internet 없음.
+- V39 원본 picker 함수 9개 본문 그대로 유지.
+- 사진탐색 fallback 없음.
+- PHOTO01 1회 선택 / byte read 1회 / retry 없음.
+- HARNESS_FAIL은 플랫폼 FAIL로 계산하지 않음.
+- 어느 경로든 7/7 유효가 아니면 자동 root-cause 결론은 INCONCLUSIVE.
+
+[3-WAY]
+A. Chrome 최소 HTML
+- TOOL001/React/Next.js 없음.
+- visible input[type=file] 직접 클릭.
+- 각 round마다 fresh page 생성.
+- file.arrayBuffer() 1회.
+
+B. Android Native ACTION_GET_CONTENT
+- Chrome 실기기 로그에서 실제 HTML file input이 ACTION_GET_CONTENT로 Photo Picker compatibility activity를 여는 사실에 맞춘 대조군.
+- type=*/* + EXTRA_MIME_TYPES=image/*.
+- 반환 content URI를 ContentResolver.openFileDescriptor(uri,"r") 1회 read.
+
+C. Android Native ACTION_PICK_IMAGES
+- MediaStore.ACTION_PICK_IMAGES.
+- 반환 content URI를 동일하게 1회 direct read.
+
+[판정]
+A fail + B/C all-pass
+=> CHROME_FILE_BRIDGE_STRONGLY_SUSPECTED
+
+A/B fail + C all-pass
+=> GET_CONTENT_URI_GRANT_OR_COMPAT_PATH_STRONGLY_SUSPECTED
+
+A/B/C 모두 fail
+=> ANDROID_PROVIDER_OR_LOWER_NATIVE_BOUNDARY_STRONGLY_SUSPECTED
+
+모두 pass
+=> 이번 실행에서 재현 안 됨. 방식 변경 없이 같은 검수 반복.
+
+[검수 안정성 수정]
+- picker wait 함수 본문은 V39 원본 그대로.
+- 호출 timeout만 12,000ms로 확장하여 3회 연속 uiautomator 감지 가능 시간 확보.
+- Native round 시작 시 새 task + clear task.
+- NATIVE_APP_START 로그를 확인한 뒤에만 picker 선택 진행.
+- result timeout은 HARNESS_FAIL.
+- Chrome 각 round fresh page.
+- 매 round full/filtered logcat + screenshot + JSON.
+- URI permission WM-lock 메시지 횟수도 증거로 기록하되, 이 메시지만으로 원인 확정하지 않음.
+
+[실행]
+node scripts/run-tool-001-v44-root-cause-isolation.mjs
+
+[정적검수]
+node scripts/verify-tool-001-v44-root-cause-isolation.mjs
+
+[기본 반복]
+각 경로 7회:
+A 7 + B 7 + C 7 = 총 21회.
+
+[결과]
+Windows Desktop:
+TOOLBOX_001_V44_ROOT_CAUSE_3WAY_REAL_DEVICE_YYYYMMDDhhmmss.zip

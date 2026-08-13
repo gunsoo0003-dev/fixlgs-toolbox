@@ -1,0 +1,7 @@
+TOOL001 REAL USER PHOTO DIAGNOSTIC V20
+- Synthetic MediaStore test images are NOT created.
+- User manually selects known-good / known-bad real Galaxy photos/screenshots.
+- Observer never reads the original picker File.
+- Product capture helper emits diagnostic-only events for reader start/pass/fail and picker-file pass/fail.
+- Default cases: GOOD_1, BAD_1, GOOD_2, BAD_2.
+- Result ZIP is created on Windows Desktop.

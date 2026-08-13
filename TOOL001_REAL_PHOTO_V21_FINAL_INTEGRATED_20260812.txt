@@ -1,0 +1,23 @@
+TOOL001 REAL PHOTO V21 FINAL-INTEGRATED
+
+Purpose
+- Diagnose real Galaxy user photos/screenshots that are inconsistently accepted.
+- No synthetic test media is created or inserted into the Galaxy gallery.
+
+Integrated fixes
+1. V19 verified Android 15 Photo Picker commit path restored.
+2. User only taps the requested GOOD/BAD photo; V21 detects selected state and taps only verified Done/Add/Open clickable parent controls.
+3. Deselect/Unselect/Preview/Cancel/Close controls are explicitly excluded.
+4. Single-select picker auto-close is supported.
+5. Picker close is considered successful only after stable close + healthy Playwright page.
+6. If commit succeeds but no trusted file input change arrives, the case hard-fails with full XML/device/page evidence.
+7. All four GOOD_1/BAD_1/GOOD_2/BAD_2 cases continue independently.
+8. Product capture diagnostics include reader start/pass/fail, provider failure, captured byte signature, EXIF marker presence, metadata, card creation, preview decode/dimensions, and UI messages.
+9. Browser observer never reads the original provider-backed File.
+10. Device screenshots are streamed directly to the PC and do not pollute MediaStore.
+11. TOOL001 public support text is synchronized to actual product limits: 10 files, 20MB/file, 60MB total.
+12. Existing 20MB/file product safety limit and V17 provider capture engine remain unchanged except passive diagnostics.
+
+Run
+node scripts/verify-tool-001-real-photo-diagnostic-v21.mjs
+node scripts/run-tool-001-real-photo-diagnostic-v21.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"

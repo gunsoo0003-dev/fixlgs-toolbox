@@ -4,9 +4,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
-import { MOBILE_FILE_READ_STAGE_TIMEOUT_MS, MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileImageSafetyActive, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
-import { capturePickerFile } from "@/lib/image-input-capture";
-import { canUseTool001WorkerEngine, runTool001WorkerConversion } from "@/lib/tool001-image-worker-client";
+import { MOBILE_IMAGE_DECODE_TIMEOUT_MS, constrainForMobileMemory, isMobileImageSafetyActive, isMobileMemorySafetyError, mobileMemoryErrorMessage, releaseCanvas, safeRevokeObjectUrl, withTimeout } from "@/lib/mobile-image-safety";
+import { tool001SquooshDecodeImage } from "@/lib/tool001-squoosh-browser-decode";
 
 type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 type QualityMode = "auto" | "high" | "balanced" | "space" | "custom";
@@ -18,10 +17,17 @@ const MAX_TOTAL_BYTES = 60 * 1024 * 1024;
 const MAX_PIXELS = 40_000_000;
 // 001 운영 안전선: 10개, 파일당 20MB, 전체 60MB, 이미지당 40MP. 한계·경계검수 통과값.
 
+function emitTool001Diagnostic(detail: Record<string, unknown>) {
+  try {
+    window.dispatchEvent(new CustomEvent("tool001:capture-diagnostic", { detail: { at: Date.now(), ...detail } }));
+  } catch { /* diagnostics must never affect product behavior */ }
+}
+
 type FileItem = {
   id: string;
   file: File;
   previewUrl: string;
+  sourceImageData?: ImageData;
   resultUrl?: string;
   resultBlob?: Blob;
   status: Status;
@@ -99,37 +105,6 @@ function formatPercent(delta: number, original: number) {
   return `${percent > 0 ? "+" : ""}${percent.toFixed(1)}%`;
 }
 
-type DetectedImageKind = "jpeg" | "png" | "webp";
-
-function ascii(bytes: Uint8Array, start: number, length: number) {
-  return String.fromCharCode(...bytes.slice(start, start + length));
-}
-
-function includesAsciiToken(bytes: Uint8Array, token: string) {
-  if (!token || bytes.length < token.length) return false;
-  const codes = Array.from(token, (char) => char.charCodeAt(0));
-  outer: for (let index = 0; index <= bytes.length - codes.length; index += 1) {
-    for (let offset = 0; offset < codes.length; offset += 1) {
-      if (bytes[index + offset] !== codes[offset]) continue outer;
-    }
-    return true;
-  }
-  return false;
-}
-
-function readBlobWithFileReader(blob: Blob): Promise<ArrayBuffer> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.result instanceof ArrayBuffer) resolve(reader.result);
-      else reject(new Error("filereader-result"));
-    };
-    reader.onerror = () => reject(reader.error ?? new Error("filereader"));
-    reader.onabort = () => reject(new Error("filereader-abort"));
-    reader.readAsArrayBuffer(blob);
-  });
-}
-
 function readBlobAsDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -162,100 +137,6 @@ function createFileItemId() {
   } catch {
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
   }
-}
-
-const ATTACH_HEADER_BYTES = 256 * 1024;
-
-async function readAttachHeader(file: File): Promise<Uint8Array> {
-  // Android content providers can make a full-file read unexpectedly slow or flaky.
-  // Attachment only needs enough bytes to validate the container signature/animation marker.
-  const headerBlob = file.slice(0, Math.min(file.size, ATTACH_HEADER_BYTES));
-  try {
-    return new Uint8Array(await withTimeout(headerBlob.arrayBuffer(), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout"));
-  } catch (firstError) {
-    try {
-      return new Uint8Array(await withTimeout(readBlobWithFileReader(headerBlob), MOBILE_FILE_READ_STAGE_TIMEOUT_MS, "file-read-timeout"));
-    } catch {
-      throw firstError;
-    }
-  }
-}
-
-function readU16BE(bytes: Uint8Array, offset: number) {
-  return (bytes[offset] << 8) | bytes[offset + 1];
-}
-
-function readU24LE(bytes: Uint8Array, offset: number) {
-  return bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
-}
-
-function parseHeaderDimensions(bytes: Uint8Array, kind: DetectedImageKind): { width: number; height: number } | null {
-  if (kind === "png" && bytes.length >= 24 && ascii(bytes, 12, 4) === "IHDR") {
-    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    const width = view.getUint32(16, false);
-    const height = view.getUint32(20, false);
-    return width > 0 && height > 0 ? { width, height } : null;
-  }
-  if (kind === "jpeg") {
-    const sof = new Set([0xc0,0xc1,0xc2,0xc3,0xc5,0xc6,0xc7,0xc9,0xca,0xcb,0xcd,0xce,0xcf]);
-    let offset = 2;
-    while (offset + 8 < bytes.length) {
-      if (bytes[offset] !== 0xff) { offset += 1; continue; }
-      while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
-      if (offset >= bytes.length) break;
-      const marker = bytes[offset++];
-      if (marker === 0xd8 || marker === 0xd9) continue;
-      if (offset + 1 >= bytes.length) break;
-      const length = readU16BE(bytes, offset);
-      if (length < 2 || offset + length > bytes.length) break;
-      if (sof.has(marker) && length >= 7) {
-        const height = readU16BE(bytes, offset + 3);
-        const width = readU16BE(bytes, offset + 5);
-        return width > 0 && height > 0 ? { width, height } : null;
-      }
-      offset += length;
-    }
-    return null;
-  }
-  if (kind === "webp" && bytes.length >= 30) {
-    const chunk = ascii(bytes, 12, 4);
-    if (chunk === "VP8X" && bytes.length >= 30) {
-      return { width: readU24LE(bytes, 24) + 1, height: readU24LE(bytes, 27) + 1 };
-    }
-    if (chunk === "VP8 " && bytes.length >= 30 && bytes[23] === 0x9d && bytes[24] === 0x01 && bytes[25] === 0x2a) {
-      const width = (bytes[26] | (bytes[27] << 8)) & 0x3fff;
-      const height = (bytes[28] | (bytes[29] << 8)) & 0x3fff;
-      return width > 0 && height > 0 ? { width, height } : null;
-    }
-    if (chunk === "VP8L" && bytes.length >= 25 && bytes[20] === 0x2f) {
-      const b1 = bytes[21], b2 = bytes[22], b3 = bytes[23], b4 = bytes[24];
-      const width = 1 + ((b1 | (b2 << 8)) & 0x3fff);
-      const height = 1 + (((b2 >> 6) | (b3 << 2) | (b4 << 10)) & 0x3fff);
-      return { width, height };
-    }
-  }
-  return null;
-}
-
-async function inspectImageFile(file: File): Promise<{ kind: DetectedImageKind; animated: boolean; width?: number; height?: number }> {
-  if (file.size === 0) throw new Error("empty");
-  const bytes = await readAttachHeader(file);
-  let kind: DetectedImageKind | null = null;
-  let animated = false;
-  // Filename/MIME metadata from Android content providers is advisory only.
-  // Keep attachment validation lightweight; full decoding is deferred until conversion.
-  if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xd8) {
-    kind = "jpeg";
-  } else if (bytes.length >= 8 && bytes[0] === 0x89 && ascii(bytes, 1, 3) === "PNG" && bytes[4] === 0x0d && bytes[5] === 0x0a && bytes[6] === 0x1a && bytes[7] === 0x0a) {
-    kind = "png";
-    animated = includesAsciiToken(bytes, "acTL");
-  } else if (bytes.length >= 12 && ascii(bytes, 0, 4) === "RIFF" && ascii(bytes, 8, 4) === "WEBP") {
-    kind = "webp";
-    animated = includesAsciiToken(bytes, "ANIM") || includesAsciiToken(bytes, "ANMF");
-  }
-  if (!kind) throw new Error("signature");
-  const dimensions = parseHeaderDimensions(bytes, kind);
-  return { kind, animated, width: dimensions?.width, height: dimensions?.height };
 }
 
 function duplicateKey(file: File) {
@@ -292,7 +173,12 @@ async function loadImageSource(file: File, headerDimensions?: { width?: number; 
     }
   }
 
-  const sourceUrl = await createBlobUrlOrDataUrl(file);
+  let sourceUrl = "";
+  try {
+    sourceUrl = URL.createObjectURL(file);
+  } catch {
+    throw new Error("blob-url-create-failed");
+  }
   return new Promise((resolve, reject) => {
     const image = new Image();
     let settled = false;
@@ -360,6 +246,59 @@ async function canvasToBlob(canvas: HTMLCanvasElement, mime: string, quality?: n
   });
 }
 
+async function createOwnedDecodedImageFile(file: File, headerDimensions?: { width?: number; height?: number }) {
+  let loaded: Awaited<ReturnType<typeof loadImageSource>> | null = null;
+  const canvas = document.createElement("canvas");
+  try {
+    loaded = await loadImageSource(file, headerDimensions);
+    if (!loaded.width || !loaded.height || loaded.width * loaded.height > MAX_PIXELS) {
+      throw new Error("Image dimensions exceed the safe processing limit");
+    }
+
+    const transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
+    const preferredMime: OutputFormat = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/webp"
+      ? file.type
+      : (transparency ? "image/png" : "image/jpeg");
+    const normalizedMime: OutputFormat = preferredMime === "image/jpeg" && transparency ? "image/png" : preferredMime;
+
+    canvas.width = loaded.width;
+    canvas.height = loaded.height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Canvas 2D context unavailable");
+    if (normalizedMime === "image/jpeg") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    ctx.drawImage(loaded.source, 0, 0, canvas.width, canvas.height);
+
+    const blob = await withTimeout(
+      canvasToBlob(canvas, normalizedMime, normalizedMime === "image/png" ? undefined : 0.98),
+      12_000,
+      "snapshot-export-timeout",
+    );
+    if (!blob || blob.size <= 0) throw new Error("Failed to snapshot image");
+
+    const extension = normalizedMime === "image/jpeg" ? "jpg" : normalizedMime === "image/png" ? "png" : "webp";
+    const ownedFile = new File([blob], `${baseName(file.name)}.${extension}`, {
+      type: normalizedMime,
+      lastModified: file.lastModified || Date.now(),
+    });
+
+    return {
+      file: ownedFile,
+      width: loaded.width,
+      height: loaded.height,
+      transparency,
+      mime: normalizedMime,
+    };
+  } finally {
+    loaded?.dispose?.();
+    releaseCanvas(canvas);
+  }
+}
+
 
 function getQualityPresetLabel(mode: QualityMode, locale: Locale) {
   if (mode === "custom") return locale === "ko" ? "직접 설정" : locale === "en" ? "Custom" : "手動設定";
@@ -376,6 +315,28 @@ function qualityFor(mode: QualityMode, format: OutputFormat) {
     space: { "image/jpeg": 0.76, "image/webp": 0.72 },
   };
   return defaults[mode][format];
+}
+
+function Tool001ImageDataPreview({ data, label }: { data: ImageData; label: string }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    canvas.width = data.width;
+    canvas.height = data.height;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.putImageData(data, 0, 0);
+  }, [data]);
+  return <canvas ref={canvasRef} role="img" aria-label={label} className="h-full w-full object-cover" />;
+}
+
+function imageDataHasTransparency(data: ImageData) {
+  const pixels = data.data;
+  for (let index = 3; index < pixels.length; index += 16) {
+    if (pixels[index] < 255) return true;
+  }
+  return false;
 }
 
 export function ImageConverterTool({ locale }: { locale: Locale }) {
@@ -447,6 +408,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
 
     for (const file of incoming) {
       if (baseItems.length + accepted.length >= MAX_FILES || file.size > MAX_FILE_BYTES || total + file.size > MAX_TOTAL_BYTES) {
+        emitTool001Diagnostic({ phase: "product-limit-reject", name: file.name, type: file.type, size: file.size, reason: baseItems.length + accepted.length >= MAX_FILES ? "MAX_FILES" : file.size > MAX_FILE_BYTES ? "MAX_FILE_BYTES" : "MAX_TOTAL_BYTES", maxFiles: MAX_FILES, maxFileBytes: MAX_FILE_BYTES, maxTotalBytes: MAX_TOTAL_BYTES });
         rejected += 1;
         continue;
       }
@@ -456,29 +418,37 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         continue;
       }
       try {
-        // V26: capture the picker-backed File exactly once while the input is still alive.
-        // Every later preview/conversion uses this app-owned File, never the Android provider handle.
-        const ownedFile = options?.alreadyOwned ? file : await capturePickerFile(file);
-        const inspection = await inspectImageFile(ownedFile);
-        if (inspection.animated) {
-          animated += 1;
-          continue;
+        // V57: mirror Squoosh's actual browser path.
+        // Keep the picker File as source metadata, immediately sniff only 16 bytes via
+        // Response(blob).arrayBuffer(), then use browser createImageBitmap and convert
+        // the decoded drawable to ImageData. All preview/conversion work uses ImageData.
+        const selectedFile = file;
+        emitTool001Diagnostic({ phase: "v57-squoosh-decode-start", name: selectedFile.name, type: selectedFile.type, size: selectedFile.size, lastModified: selectedFile.lastModified });
+        const decoded = await tool001SquooshDecodeImage(selectedFile);
+        if (!decoded.data.width || !decoded.data.height || decoded.data.width * decoded.data.height > MAX_PIXELS) {
+          throw new Error("Image dimensions exceed the safe processing limit");
         }
+        const transparency = imageDataHasTransparency(decoded.data);
+        emitTool001Diagnostic({ phase: "v57-squoosh-decode-pass", name: selectedFile.name, sourceType: selectedFile.type || null, sniffedType: decoded.mime, sourceSize: selectedFile.size, width: decoded.data.width, height: decoded.data.height, transparency });
         existing.add(key);
-        total += ownedFile.size;
-        const previewUrl = await createBlobUrlOrDataUrl(ownedFile);
+        total += selectedFile.size;
         accepted.push({
           id: createFileItemId(),
-          file: ownedFile,
-          previewUrl,
+          file: selectedFile,
+          previewUrl: "",
+          sourceImageData: decoded.data,
           status: "idle",
           outputFormat: globalFormat,
-          originalSize: ownedFile.size,
-          sourceWidth: inspection.width,
-          sourceHeight: inspection.height,
+          originalSize: selectedFile.size,
+          sourceWidth: decoded.data.width,
+          sourceHeight: decoded.data.height,
+          width: decoded.data.width,
+          height: decoded.data.height,
+          transparency,
           isNew: true,
         });
       } catch (error) {
+        emitTool001Diagnostic({ phase: "product-add-fail", name: file.name, type: file.type, size: file.size, error: error instanceof Error ? `${error.name}:${error.message}` : String(error) });
         rejected += 1;
         if (isMobileMemorySafetyError(error)) memoryRejected += 1;
       }
@@ -514,52 +484,18 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   };
 
   const addPickerFiles = (fileList: FileList | File[]) => {
-    const snapshot = Array.from(fileList);
-    const current = itemsRef.current;
-    const remainingSlots = Math.max(0, MAX_FILES - current.length);
-    let remainingBytes = Math.max(0, MAX_TOTAL_BYTES - current.reduce((sum, item) => sum + item.originalSize, 0));
-    let preRejected = 0;
-    const captureCandidates: File[] = [];
+    const snapshot = Array.from(fileList).slice(0, 1);
+    snapshot.forEach((file) => {
+      emitTool001Diagnostic({ phase: "picker-selection-received", name: file.name, type: file.type, size: file.size, lastModified: file.lastModified });
+    });
+    // Squoosh passes the first selected File straight to its editor/decode path.
+    return addFilesInternal(snapshot);
+  };
 
-    // Start provider-backed reads during the same change turn. Do not wait for the
-    // attachment queue: on Android/Samsung the content URI can become unreadable
-    // while a previous selection is still being validated.
-    for (const file of snapshot) {
-      if (captureCandidates.length >= remainingSlots || file.size > MAX_FILE_BYTES || file.size > remainingBytes) {
-        preRejected += 1;
-        continue;
-      }
-      captureCandidates.push(file);
-      remainingBytes -= file.size;
-    }
 
-    // Calling capturePickerFile here creates every first read immediately. Promise.allSettled
-    // keeps a bad provider handle from blocking the other selected files.
-    const capturePromise = Promise.allSettled(captureCandidates.map((file) => capturePickerFile(file)));
-    const run = attachmentQueueRef.current.then(
-      async () => {
-        const settled = await capturePromise;
-        const ownedFiles: File[] = [];
-        let captureRejected = 0;
-        for (const result of settled) {
-          if (result.status === "fulfilled") ownedFiles.push(result.value);
-          else captureRejected += 1;
-        }
-        return addFilesInternal(ownedFiles, { alreadyOwned: true, preRejected: preRejected + captureRejected });
-      },
-      async () => {
-        const settled = await capturePromise;
-        const ownedFiles: File[] = [];
-        let captureRejected = 0;
-        for (const result of settled) {
-          if (result.status === "fulfilled") ownedFiles.push(result.value);
-          else captureRejected += 1;
-        }
-        return addFilesInternal(ownedFiles, { alreadyOwned: true, preRejected: preRejected + captureRejected });
-      },
-    );
-    attachmentQueueRef.current = run.catch(() => undefined);
-    return run;
+  const openImagePicker = async () => {
+    emitTool001Diagnostic({ phase: "v57-picker-route", mode: "SQUOOSH_SINGLE_FILE_INPUT" });
+    fileInputRef.current?.click();
   };
 
   const removeItem = (id: string) => {
@@ -679,34 +615,39 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
         let blob: Blob | null = null;
         let resultWidth = 0;
         let resultHeight = 0;
-        let transparency = false;
-        let workerCompleted = false;
+        let transparency = item.transparency ?? false;
 
-        // V26 primary path: image work is physically isolated from React/FilePicker in a Worker.
-        // The Worker receives only our captured Blob and returns a finished Blob/result size.
-        if (canUseTool001WorkerEngine()) {
+        if (item.sourceImageData) {
+          const sourceData = item.sourceImageData;
+          const target = constrainForMobileMemory(sourceData.width, sourceData.height);
+          const sourceCanvas = document.createElement("canvas");
+          const outputCanvas = document.createElement("canvas");
           try {
-            const workerResult = await runTool001WorkerConversion({
-              blob: item.file,
-              outputFormat: format,
-              quality,
-              backgroundColor,
-              sourceWidth: item.sourceWidth,
-              sourceHeight: item.sourceHeight,
-              maxPixels: MAX_PIXELS,
-              mobile: isMobileImageSafetyActive(),
-            });
-            blob = workerResult.blob;
-            resultWidth = workerResult.width;
-            resultHeight = workerResult.height;
-            workerCompleted = true;
-          } catch (workerError) {
-            const workerMessage = workerError instanceof Error ? workerError.message : String(workerError);
-            if (/worker-timeout|memory|allocation|pixel-limit/i.test(workerMessage)) throw workerError;
-          }
-        }
+            sourceCanvas.width = sourceData.width;
+            sourceCanvas.height = sourceData.height;
+            const sourceContext = sourceCanvas.getContext("2d");
+            if (!sourceContext) throw new Error("Canvas 2D context unavailable");
+            sourceContext.putImageData(sourceData, 0, 0);
 
-        if (!workerCompleted) {
+            outputCanvas.width = target.width;
+            outputCanvas.height = target.height;
+            const outputContext = outputCanvas.getContext("2d");
+            if (!outputContext) throw new Error("Canvas 2D context unavailable");
+            if (format === "image/jpeg") {
+              outputContext.fillStyle = backgroundColor;
+              outputContext.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
+            } else {
+              outputContext.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+            }
+            outputContext.drawImage(sourceCanvas, 0, 0, outputCanvas.width, outputCanvas.height);
+            resultWidth = outputCanvas.width;
+            resultHeight = outputCanvas.height;
+            blob = await withTimeout(canvasToBlob(outputCanvas, getMimeForFormat(format), quality), 12_000, "canvas-export-timeout");
+          } finally {
+            releaseCanvas(sourceCanvas);
+            releaseCanvas(outputCanvas);
+          }
+        } else {
           loaded = await loadImageSource(item.file, { width: item.sourceWidth, height: item.sourceHeight });
           if (!runIsCurrent()) { loaded.dispose?.(); return; }
           if (removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); continue; }
@@ -714,10 +655,10 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             throw new Error("Image dimensions exceed the safe processing limit");
           }
           transparency = await detectTransparency(loaded.source, loaded.width, loaded.height);
-          if (!runIsCurrent() || removedItemIdsRef.current.has(item.id)) { loaded.dispose?.(); if (!runIsCurrent()) return; continue; }
           const canvas = document.createElement("canvas");
           const target = constrainForMobileMemory(loaded.width, loaded.height);
-          canvas.width = target.width; canvas.height = target.height;
+          canvas.width = target.width;
+          canvas.height = target.height;
           const ctx = canvas.getContext("2d");
           if (!ctx) throw new Error("Canvas 2D context unavailable");
           if (format === "image/jpeg") { ctx.fillStyle = backgroundColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
@@ -807,20 +748,14 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
           data-testid="converter-file-input"
           ref={fileInputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
-          multiple
           className="hidden"
           onChange={(event) => {
             const input = event.currentTarget;
-            const selectedFiles: File[] = input.files ? Array.from(input.files) : [];
-            if (selectedFiles.length > 0) {
-              // Android/Samsung file pickers can expose content-provider-backed Files.
-              // Keep the input selection alive until async read/decode has finished;
-              // clearing it immediately can release the underlying file handle too early.
-              void addPickerFiles(selectedFiles).finally(() => {
-                input.value = "";
-              });
-            }
+            const selectedFile = input.files?.[0];
+            if (!selectedFile) return;
+            // Squoosh clears the input value before handing the File to the editor.
+            input.value = "";
+            void addPickerFiles([selectedFile]);
           }}
         />
         {items.length === 0 ? (
@@ -828,7 +763,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>
             <h2>{locale === "ko" ? "이미지를 여기에 놓으세요" : locale === "en" ? "Drop images here" : "画像をここにドロップ"}</h2>
             <p>{locale === "ko" ? "여러 파일을 한 번에 추가하거나 아래 버튼으로 선택할 수 있습니다." : locale === "en" ? "Add several files at once, or choose them with the button below." : "複数ファイルをまとめて追加するか、下のボタンから選択できます。"}</p>
-            <button type="button" onClick={() => fileInputRef.current?.click()}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
+            <button data-testid="converter-upload-button" type="button" onClick={() => { void openImagePicker(); }}>{locale === "ko" ? "이미지 선택" : locale === "en" ? "Choose images" : "画像を選択"}</button>
             <small>{supportedLabel}</small>
           </div>
         ) : (
@@ -844,37 +779,22 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
                   <span>{aggregate.done} done</span>
                   <span>{aggregate.failed} failed</span>
                 </div>
-                <button type="button" onClick={() => fileInputRef.current?.click()}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
+                <button data-testid="converter-add-button" type="button" onClick={() => { void openImagePicker(); }}>＋ {locale === "ko" ? "이미지 추가" : locale === "en" ? "Add images" : "画像を追加"}</button>
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {items.map((item, index) => (
               <article key={item.id} data-testid="converter-file-card" data-status={item.status} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">
                 <div className="aspect-[4/3] bg-black/5 dark:bg-white/5">
-                  <img
-                    src={item.previewUrl}
-                    alt={item.file.name}
-                    className="h-full w-full object-cover"
-                    onLoad={(event) => {
-                      const image = event.currentTarget;
-                      const width = image.naturalWidth;
-                      const height = image.naturalHeight;
-                      if (!width || !height) return;
-                      setItems((current) => current.map((entry) => entry.id === item.id ? { ...entry, width, height } : entry));
-                    }}
-                    onError={() => {
-                      if (item.previewFallbackAttempted) return;
-                      void readBlobAsDataUrl(item.file).then((dataUrl) => {
-                        setItems((current) => current.map((entry) => {
-                          if (entry.id !== item.id) return entry;
-                          safeRevokeObjectUrl(entry.previewUrl);
-                          return { ...entry, previewUrl: dataUrl, previewFallbackAttempted: true };
-                        }));
-                      }).catch(() => {
-                        setItems((current) => current.map((entry) => entry.id === item.id ? { ...entry, previewFallbackAttempted: true } : entry));
-                      });
-                    }}
-                  />
+                  {item.sourceImageData ? (
+                    <Tool001ImageDataPreview data={item.sourceImageData} label={item.file.name} />
+                  ) : (
+                    <img
+                      src={item.previewUrl}
+                      alt={item.file.name}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
                 </div>
                 <div className="space-y-3 p-4">
                   <div className="flex items-start justify-between gap-3">

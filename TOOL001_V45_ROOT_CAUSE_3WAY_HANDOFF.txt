@@ -1,0 +1,112 @@
+TOOL001 V45 ROOT CAUSE 3-WAY ISOLATION
+기준: V44 실기기 결과 분석 후 Native 진입 HARNESS 오류 수정본
+
+[V44 실제 결과]
+A. Chrome 최소 HTML
+- VALID 7/7
+- PASS 2/7
+- FAIL 5/7
+- HARNESS_FAIL 0
+- 실패 5회 모두 동일:
+  NotReadableError: The requested file could not be read...
+- 동일 PHOTO01: 1000008695.jpg / 457,776 bytes
+- TOOL001 / React / Next.js 없이 visible input[type=file] + file.arrayBuffer() 1회만 사용.
+
+B. Android Native GET_CONTENT
+- VALID 0/7
+- HARNESS_FAIL 7/7
+
+C. Android Native PICK_IMAGES
+- VALID 0/7
+- HARNESS_FAIL 7/7
+
+[V44 Native HARNESS 원인]
+- `adb shell am start`에 사용한 long-form activity option을 이 Android 15 기기의 `am`이 인식하지 못함.
+- 실제 오류:
+  java.lang.IllegalArgumentException: Unknown option: --activity-new-task
+- 따라서 B/C 14회는 제품/Android byte-read FAIL이 아니며 원인 판정에 사용 금지.
+- V44 자동 결론 INCONCLUSIVE_HARNESS_FAILURE가 맞음.
+
+[V44에서 새로 확정된 강한 증거]
+- Chrome 최소 HTML 7회가 전부 정상 검수됐고 5/7에서 NotReadableError가 재현됨.
+- 따라서 TOOL001 제품 코드, React, Next.js, 미리보기/변환 로직이 없어도 실패함.
+- TOOL001 제품 코드 자체가 주원인일 가능성은 크게 낮아짐.
+- Chrome/Android 파일 전달 경계 이하가 핵심 조사 영역으로 유지됨.
+
+[V44 수동 로그 비교에서 보인 상관관계 - 원인 확정 아님]
+- Chrome PASS 회차 2,4:
+  MediaProvider `Open with lower FS` 로그가 각 8회.
+- Chrome FAIL 회차 1,3,5,6,7:
+  동일 로그가 각 5회.
+- 모든 Chrome 회차 공통:
+  `Unable to check Uri permission because caller is holding WM lock` = 4회
+  `cr_SelectFileDialog: No persisted write permission ...` = 1회
+- 따라서 위 두 공통 경고는 PASS/FAIL 분리 신호가 아님.
+- 반면 실제 성공 회차에만 lower-FS open이 3회 더 발생한 패턴은 관찰됨.
+- 이 패턴은 실패가 lower filesystem 자체보다 앞선 URI/grant/browser bridge에서 끊길 가능성과 양립하지만,
+  Native 대조군이 아직 유효하지 않으므로 원인 확정 금지.
+
+[V45 변경]
+1) Native activity 시작 HARNESS 수정
+- 지원되지 않는 long-form activity option 제거.
+- 표준 `am start -W -S -f 0x10008000` 사용.
+- 0x10008000 = NEW_TASK | CLEAR_TASK.
+- 기존 round별 force-stop 유지.
+- NATIVE_APP_START 로그 확인 후에만 Photo Picker 선택.
+
+2) 기존 3-WAY 구조 유지
+A. Chrome 최소 HTML x7
+B. Android Native ACTION_GET_CONTENT x7
+C. Android Native ACTION_PICK_IMAGES x7
+
+3) 검수 철학 유지
+- 한 회차 = picker 1회 open -> PHOTO01 1회 선택 -> byte read 1회.
+- retry 없음.
+- recovery 없음.
+- 다른 사진 fallback 없음.
+- grid/좌표 fallback 없음.
+- HARNESS_FAIL은 제품 FAIL로 계산하지 않음.
+- 어느 경로든 7/7 VALID가 아니면 자동 root-cause 판정 INCONCLUSIVE.
+- Samsung Internet 사용 안 함.
+
+4) Passive evidence 추가
+- uriPermissionWmLockErrors
+- mediaProviderLowerFsOpens
+- chromeNoPersistedWritePermission
+- 기존 full/filtered logcat 저장 유지.
+- 관찰만 하며 제품/Picker 동작에는 개입하지 않음.
+
+5) 진단 APK 자동 삭제
+- 결과 JSON / 로그 / 요약 파일 생성 완료
+- Windows Desktop 결과 ZIP 생성 완료
+- 그 다음 마지막 단계에서:
+  adb uninstall com.fixlgs.tool001_native_provider_diag
+- 정상 종료뿐 아니라 FATAL 종료에서도 증거 ZIP을 먼저 만든 뒤 삭제 시도.
+- PC의 빌드 cache APK는 재빌드 비용 절감을 위해 유지하며, 휴대폰 설치본만 제거.
+
+[판정]
+A fail + B/C all-pass
+=> CHROME_FILE_BRIDGE_STRONGLY_SUSPECTED
+
+A/B fail + C all-pass
+=> GET_CONTENT_URI_GRANT_OR_COMPAT_PATH_STRONGLY_SUSPECTED
+
+A/B/C 모두 fail
+=> ANDROID_PROVIDER_OR_LOWER_NATIVE_BOUNDARY_STRONGLY_SUSPECTED
+
+모두 pass
+=> 이번 실행에서 재현 안 됨. 검수방식 변경 없이 같은 harness 반복.
+
+[실행]
+node scripts/run-tool-001-v45-root-cause-isolation.mjs
+
+[정적검수]
+node scripts/verify-tool-001-v45-root-cause-isolation.mjs
+
+[기본 반복]
+각 경로 7회:
+A 7 + B 7 + C 7 = 총 21회.
+
+[결과]
+Windows Desktop:
+TOOLBOX_001_V45_ROOT_CAUSE_3WAY_REAL_DEVICE_YYYYMMDDhhmmss.zip

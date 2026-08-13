@@ -1,0 +1,67 @@
+TOOL001 V43 ROOT CAUSE ISOLATION
+기준: 2026-08-12
+
+목적
+- Samsung Internet 검수 완전 제외.
+- TOOL001 제품 코드를 건드리지 않고 원인을 아래 두 경로로 격리.
+  A) Chrome 최소 HTML: input[type=file] -> PHOTO01 1회 선택 -> file.arrayBuffer() 1회
+  B) Android 네이티브: Photo Picker -> PHOTO01 1회 선택 -> ContentResolver.openFileDescriptor(uri,"r") 1회
+- 각 경로 기본 7회.
+- 각 회차 full logcat + filtered logcat + screenshot + JSON 저장.
+
+절대 원칙
+- 검수기는 검수만 한다.
+- 사진 선택 실패 복구 없음.
+- 다른 사진 선택 없음.
+- read retry 없음.
+- delay로 제품 실패를 복구하지 않음.
+- HARNESS_FAIL은 제품/플랫폼 FAIL로 계산하지 않음.
+- V39 원본 Photo Picker 선택 함수 유지.
+
+Chrome 최소 HTML
+- toolbox.fixlgs.com / Next.js / React / TOOL001 코드 로드 안 함.
+- about:blank 컨텍스트에 최소 HTML만 setContent.
+- 실제 테스트는 File 객체의 arrayBuffer() 1회 성공 여부.
+- 여기서 NotReadable이 재현되면 TOOL001 상위 코드는 원인에서 거의 제외 가능.
+
+Android 네이티브
+- 최초 실행에서 Flutter가 설치돼 있으면 진단 APK를 자동 생성/빌드/설치.
+- 이후 동일 템플릿이면 임시 캐시 APK 재사용.
+- 별도 외부 Flutter 플러그인 없음.
+- Android MediaStore.ACTION_PICK_IMAGES 사용.
+- 결과 content:// URI를 ContentResolver.openFileDescriptor(uri,"r")로 1회 직접 읽음.
+
+해석
+1) Chrome minimal FAIL + Android native 7/7 PASS
+   => CHROME_ANDROID_FILE_BRIDGE_STRONGLY_SUSPECTED
+   => Chrome이 Android provider-backed URI/File을 Web File로 넘기는 경계가 가장 강한 후보.
+
+2) Chrome minimal FAIL + Android native도 FAIL
+   => ANDROID_PROVIDER_OR_LOWER_NATIVE_BOUNDARY_STRONGLY_SUSPECTED
+   => Android Photo Picker / MediaProvider / URI grant / 파일 open 하위 경계 쪽 강하게 의심.
+
+3) 둘 다 7/7 PASS
+   => 이번 회차 미재현. 검수 방식 바꾸지 말고 같은 방식 횟수만 추가.
+
+4) HARNESS_FAIL 발생
+   => 해당 회차는 제품/플랫폼 결과에서 제외하고 검수기 진입 문제로만 처리.
+
+실행
+node scripts/run-tool-001-v43-root-cause-isolation.mjs
+
+정적검수
+node scripts/verify-tool-001-v43-root-cause-isolation.mjs
+
+선택 옵션
+--repeats 7
+--rebuild-native   네이티브 진단 APK 캐시를 무시하고 다시 빌드할 때만 사용
+
+결과
+Windows Desktop:
+TOOLBOX_001_V43_ROOT_CAUSE_ISOLATION_REAL_DEVICE_YYYYMMDDhhmmss\
+TOOLBOX_001_V43_ROOT_CAUSE_ISOLATION_REAL_DEVICE_YYYYMMDDhhmmss.zip
+
+주의
+- 첫 실행은 Android 네이티브 진단 APK를 만들기 때문에 flutter 명령이 PATH에 있어야 함.
+- 기존 사용자 환경에서 flutter run이 가능한 상태면 그대로 사용 가능.
+- 제품 소스 수정 없음.

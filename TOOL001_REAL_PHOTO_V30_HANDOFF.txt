@@ -1,0 +1,17 @@
+TOOL001 REAL PHOTO V30 - FULLY AUTOMATED
+
+INTENT LOCK
+- User does nothing after starting the runner.
+- Harness opens TOOL001 upload -> Android Photo Picker -> selects a safe media grid cell ->
+  confirms selection -> taps positive Done/Add/Select once -> observes Chrome return/change ->
+  provider read -> validation -> preview.
+- No ACTION REQUIRED prompts.
+- Media tap excludes top toolbar, bottom action area, drag handle and tiny controls.
+- Repeat cases reuse deterministic visible media indices.
+- If safe media-cell selection cannot be confirmed, collect XML/screenshot and classify AUTO_MEDIA_SELECTION.
+
+Product code unchanged.
+
+Run:
+node scripts/verify-tool-001-real-photo-diagnostic-v30.mjs
+node scripts/run-tool-001-real-photo-diagnostic-v30.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"

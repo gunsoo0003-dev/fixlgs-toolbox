@@ -1,0 +1,32 @@
+TOOL001 V40 NOTREADABLE 3-CANDIDATE A/B REAL DEVICE
+Date: 2026-08-12
+
+Purpose
+- Do not expand subcategories.
+- Test the three remaining practical hypotheses by changing the actual File acquisition condition.
+- Same PHOTO_01, 10 runs each, interleaved by round. Total 30.
+
+Modes
+A CAUSE_A_FIRST_REFERENCE
+  first handle.getFile() -> immediate arrayBuffer read
+B CAUSE_B_FRESH_REACQUIRE
+  first handle.getFile() discarded -> second getFile() -> immediate read
+C CAUSE_C_STABILIZED_REACQUIRE
+  first getFile() -> wait 500ms -> second getFile() -> read
+
+Success truth
+- actual new product card AND loaded visible image preview.
+- 10/10 only is a 100_PERCENT_CANDIDATE.
+
+Interpretation
+- A 10/10: first provider reference can be stable under isolated one-read path.
+- B 10/10 while A is not: fresh File reacquisition is the key.
+- C 10/10 while B is not: return/read timing stabilization is the key.
+- none 10/10: the common Android provider <-> Chrome file-open boundary remains.
+
+Run
+node scripts/verify-tool-001-v40-three-cause-ab.mjs
+node scripts/run-tool-001-v40-three-cause-ab.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+Key result
+v40-three-cause-summary.txt

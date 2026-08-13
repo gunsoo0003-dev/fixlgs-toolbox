@@ -248,7 +248,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
         { number: "01", title: "화질과 파일 용량", description: "JPG와 WebP는 품질을 낮추면 용량이 줄지만 압축 흔적이 보일 수 있습니다. PNG는 무손실 저장에 적합하지만 결과 용량이 더 커질 수도 있습니다." },
         { number: "02", title: "투명 배경 처리", description: "투명도를 유지하려면 PNG 또는 WebP를 선택하세요. JPG는 투명 배경을 지원하지 않아 선택한 배경색으로 채워집니다." },
         { number: "03", title: "일괄 변환과 다운로드", description: "여러 파일을 한 번에 추가하고 파일별 출력 형식을 선택할 수 있습니다. 결과는 개별 다운로드하거나 성공한 파일을 ZIP으로 받을 수 있습니다." },
-        { number: "04", title: "개인정보 보호와 지원 범위", description: "파일은 서버에 업로드되지 않고 브라우저에서 처리됩니다. JPG·JPEG·PNG·WebP를 최대 10개, 파일당 10MB, 전체 50MB까지 지원하며 애니메이션 WebP는 제외됩니다." }
+        { number: "04", title: "개인정보 보호와 지원 범위", description: "파일은 서버에 업로드되지 않고 브라우저에서 처리됩니다. JPG·JPEG·PNG·WebP를 최대 10개, 파일당 20MB, 전체 60MB까지 지원하며 애니메이션 WebP는 제외됩니다." }
       ]
     },
     trust: "이미지는 브라우저에서 직접 처리되며 서버에 저장되지 않습니다."
@@ -281,7 +281,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
         { number: "01", title: "Quality and file size", description: "Lower JPG or WebP quality can reduce file size but may introduce visible compression. PNG is lossless, although the output can be larger than the source." },
         { number: "02", title: "Transparent backgrounds", description: "Choose PNG or WebP to preserve transparency. JPG cannot store transparency and fills transparent areas with the selected background color." },
         { number: "03", title: "Batch conversion and downloads", description: "Add multiple files, choose an output format for each file, download results individually, or download successful conversions together as a ZIP file." },
-        { number: "04", title: "Privacy and supported limits", description: "Files stay in your browser and are not uploaded to a server. The tool supports JPG, JPEG, PNG, and WebP: up to 10 files, 10 MB each, 50 MB total. Animated WebP is not supported." }
+        { number: "04", title: "Privacy and supported limits", description: "Files stay in your browser and are not uploaded to a server. The tool supports JPG, JPEG, PNG, and WebP: up to 10 files, 20 MB each, 60 MB total. Animated WebP is not supported." }
       ]
     },
     trust: "Images are processed directly in your browser and are not stored on our server."
@@ -314,7 +314,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
         { number: "01", title: "画質とファイル容量", description: "JPGとWebPは画質を下げると容量を減らせますが、圧縮跡が見える場合があります。PNGは可逆保存に適していますが、結果容量が大きくなることもあります。" },
         { number: "02", title: "透明背景の扱い", description: "透明度を維持する場合はPNGまたはWebPを選びます。JPGは透明背景に対応していないため、選択した背景色で塗りつぶされます。" },
         { number: "03", title: "一括変換とダウンロード", description: "複数ファイルを追加し、ファイルごとに出力形式を選択できます。結果は個別保存、または成功したファイルをZIPでまとめて保存できます。" },
-        { number: "04", title: "プライバシーと対応範囲", description: "ファイルはサーバーへ送信されずブラウザ内で処理されます。JPG・JPEG・PNG・WebPを最大10件、1件10MB、合計50MBまで処理でき、アニメーションWebPは対象外です。" }
+        { number: "04", title: "プライバシーと対応範囲", description: "ファイルはサーバーへ送信されずブラウザ内で処理されます。JPG・JPEG・PNG・WebPを最大10件、1件20MB、合計60MBまで処理でき、アニメーションWebPは対象外です。" }
       ]
     },
     trust: "画像はブラウザ内で直接処理され、サーバーには保存されません。"

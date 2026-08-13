@@ -1,0 +1,60 @@
+TOOL001 V48 CHROME vs ANDROID SYSTEM WEBVIEW FILE-BRIDGE A/B
+
+목적
+- V47에서 Chrome을 매 회차 완전 종료하고 새 PID로 시작해도 4/7 PASS, 3/7 NotReadableError가 남았다.
+- 따라서 Chrome 프로세스 내부 잔류 상태 가설은 약화/탈락.
+- V48은 Chrome 앱 고유 파일선택 브리지 문제인지, Android System WebView까지 공유되는 Chromium 계열 웹 File 브리지 문제인지 분리한다.
+
+검사 구성
+A. Chrome 최소 HTML 7회
+- 매 회차 Chrome force-stop -> 새 프로세스
+- TOOL001/React/Next.js 없음
+- PHOTO01 1회 선택
+- file.arrayBuffer() 1회
+- retry/fallback 없음
+
+B. Android System WebView 최소 HTML 7회
+- 임시 진단 APK가 Android System WebView만 호스팅
+- 웹 화면의 OPEN_WEB_FILE 버튼을 실제 ADB 탭 1회
+- ACTION_GET_CONTENT -> Photo Picker
+- PHOTO01 1회 선택
+- 선택된 URI는 WebView 콜백으로 딱 1회 반환
+- 진단 APK가 ContentResolver/openFileDescriptor로 파일을 직접 읽지 않음
+- WebView JavaScript의 file.arrayBuffer()만 1회 실행
+- retry/fallback 없음
+
+판정
+- Chrome 랜덤 FAIL + WebView 7/7 PASS
+  -> Chrome 앱의 SelectFileDialog/content URI -> web File 브리지 쪽을 강하게 의심
+- Chrome 랜덤 FAIL + WebView도 랜덤 FAIL
+  -> Android의 Chromium 계열 웹 File 브리지 공통층을 강하게 의심
+- 둘 다 7/7 PASS
+  -> 과거 랜덤성 때문에 동일 방식 반복 필요
+- HARNESS_FAIL 발생
+  -> 해당 회차를 제품/브라우저 FAIL로 계산하지 않음
+
+검수기 원칙
+- 검수기는 제품 실패를 복구하지 않음
+- 다른 사진 재선택 없음
+- read retry 없음
+- 좌표/grid fallback 없음
+- V39 Photo Picker 원본 함수 9개 그대로 유지
+- 제품 코드 수정 없음
+- 삼성인터넷 없음
+
+임시 APK
+- 패키지: com.fixlgs.tool001_webview_diag
+- Flutter는 APK 빌드 껍데기용으로만 사용
+- 외부 Flutter 플러그인 추가 없음
+- 결과 ZIP 생성이 끝난 뒤 자동 uninstall
+- 임시 빌드 폴더도 자동 삭제
+
+실행
+node scripts/run-tool-001-v48-chrome-webview-ab.mjs
+
+정적검수(사용자는 매번 할 필요 없음)
+node scripts/verify-tool-001-v48-chrome-webview-ab.mjs
+
+결과 ZIP
+Windows Desktop:
+TOOLBOX_001_V48_CHROME_WEBVIEW_AB_REAL_DEVICE_날짜시간.zip

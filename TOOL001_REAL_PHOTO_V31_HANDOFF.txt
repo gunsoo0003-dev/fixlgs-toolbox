@@ -1,0 +1,14 @@
+TOOL001 REAL PHOTO HARNESS V31
+
+검수기 역할만 수행:
+- GOOD/BAD 사전 가정 없음
+- 사용자 입력 없음
+- Photo Picker 실제 미디어 그리드 1~7번을 순서대로 자동 클릭
+- 드래그핸들/상단탭/더보기 제외
+- picker close/change/files/read/capture/preview 사실만 기록
+- HARNESS_* 오류는 제품 오류와 분리
+- 원인 추론은 결과 ZIP 분석 단계에서만 수행
+
+RUN:
+node scripts/verify-tool-001-real-photo-harness-v31.mjs
+node scripts/run-tool-001-real-photo-harness-v31.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"

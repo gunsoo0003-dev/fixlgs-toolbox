@@ -1,0 +1,7 @@
+TOOL001 V42R2 browser boundary comparison - verifier only.
+PRODUCT CODE: UNCHANGED.
+RULE: verifier only observes actual user flow.
+One round = one upload action -> one PHOTO01 tap -> at most one picker commit -> wait 5-8 sec -> record actual attach/preview PASS or FAIL.
+No alternate photo taps. No coordinate fallback loops. No read retry introduced by verifier.
+HARNESS_FAIL is separate from product FAIL.
+Default repeats: Chrome 20 + alternate browser 20.

@@ -1,0 +1,60 @@
+TOOL001 V47 CHROME FRESH-PROCESS A/B DIAGNOSTICS
+기준: V46에서 Chrome 최소 HTML 7회 모두 유효, 같은 브라우저 프로세스가 유지되는 동안 랜덤 NotReadableError 재현.
+
+[V47 목적]
+- Chrome 프로세스 내부의 이전 파일선택/backing 상태 누적 여부를 A/B로 분리한다.
+- 제품 수정은 하지 않는다.
+- Samsung Internet / Native 진단 APK는 사용하지 않는다.
+- V46의 Chrome 최소 HTML, V39 원본 사진선택, byte read 1회 방식은 유지한다.
+- 단 하나의 의도적 실험변수: 각 회차 시작 전에 Chrome을 완전 force-stop하고 새 Chrome 프로세스로 시작한다.
+
+[한 회차]
+1) com.android.chrome force-stop
+2) Chrome PID가 실제로 사라졌는지 확인
+3) logcat clear
+4) Playwright로 Chrome 새 프로세스 시작
+5) 새 PID + /proc start time 기록
+6) 최소 HTML input 클릭
+7) Photo Picker에서 PHOTO01 1회 선택
+8) file.arrayBuffer() 1회
+9) PASS / NotReadableError / HARNESS_FAIL 기록
+10) CDP/page/logcat/process/URI-grant 증거 저장
+11) context 종료
+
+[금지]
+- 실패 후 Chrome 재시작으로 성공 복구 금지
+- read retry 금지
+- 같은 File 재획득 금지
+- 다른 사진 선택 금지
+- grid/좌표 fallback 금지
+- TOOL001/React/Next.js 제품 코드 사용 금지
+- Chrome command-line/debug flag 주입 금지
+
+[중요]
+- Chrome force-stop은 각 회차가 시작되기 전에 동일하게 수행되는 A/B 실험조건이다.
+- 실패가 발생한 뒤 복구 목적으로 수행하지 않는다.
+- force-stop 실패, 새 Chrome process 미관찰, 동일 process identity 재사용 등은 HARNESS_FAIL이며 browser byte-read FAIL로 계산하지 않는다.
+- process identity는 PID와 /proc/<pid>/stat start time을 함께 기록한다.
+
+[기본 반복]
+Chrome fresh-process 7회.
+
+[판정]
+A) VALID 7/7 + PASS 7/7
+   -> 기존 V46의 동일 프로세스 연속 선택 상태/lifecycle 누적 문제가 강하게 의심됨.
+
+B) VALID 7/7 + 새 프로세스에서도 NotReadable 랜덤 재현
+   -> 프로세스 누적 상태보다 각 GET_CONTENT/content URI -> Chrome Web File 변환 순간 자체의 문제 가능성이 강해짐.
+
+C) HARNESS_FAIL 존재
+   -> 그 회차는 제품/Chrome byte-read 실패 통계에서 제외.
+
+[실행]
+node scripts/run-tool-001-v47-chrome-fresh-process-ab.mjs
+
+[정적검수 - 수정본 확인용, 실기기 실행 때 매번 할 필요 없음]
+node scripts/verify-tool-001-v47-chrome-fresh-process-ab.mjs
+
+[결과]
+Windows Desktop:
+TOOLBOX_001_V47_CHROME_DEEP_DIAG_REAL_DEVICE_YYYYMMDDhhmmss.zip

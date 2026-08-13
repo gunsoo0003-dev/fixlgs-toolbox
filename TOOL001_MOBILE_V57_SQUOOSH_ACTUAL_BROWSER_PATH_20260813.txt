@@ -1,0 +1,21 @@
+TOOL001 MOBILE V57 — SQUOOSH ACTUAL BROWSER PATH ALIGNMENT (2026-08-13)
+
+기준: GoogleChromeLabs/squoosh 공개 dev 소스의 실제 입력/디코드 경로.
+
+V57 정렬 항목:
+- input[type=file] 단일 파일, accept 없음, multiple 없음.
+- change 시 첫 File만 취득.
+- input.value를 즉시 비운 뒤 File을 처리 경로로 전달.
+- 최초 형식 확인은 Blob 첫 16바이트만 Response(blob.slice(0,16)).arrayBuffer()로 sniff.
+- 브라우저 decode 지원 여부를 picture/source currentSrc 방식으로 확인.
+- 지원 형식은 createImageBitmap(blob) 우선; API 자체가 없을 때만 objectURL + HTMLImageElement 경로.
+- decoded drawable을 Canvas로 그린 뒤 ImageData 확보.
+- 원본 File은 이름/원본용량 메타데이터로 유지하고, 미리보기/변환의 중심 데이터는 ImageData.
+- 미리보기는 ImageData를 canvas에 직접 렌더링.
+- 변환도 ImageData에서 시작하므로 provider-backed File을 다시 읽지 않음.
+- read retry / FileReader / stream / FileSystemHandle / 재획득 로직 없음.
+
+주의:
+- Squoosh는 브라우저가 디코드하지 못하는 AVIF/WebP/JXL 등 일부 형식을 WASM worker decoder로 보낸다.
+- TOOL001 대상은 JPG/PNG/WebP이며, 이번 Android Chrome 기준점에서는 세 형식의 브라우저 decode 경로를 사용한다.
+- 이 패치는 Squoosh UI/디자인 복제가 아니라 파일 입력 및 브라우저 decode 흐름 정렬용이다.

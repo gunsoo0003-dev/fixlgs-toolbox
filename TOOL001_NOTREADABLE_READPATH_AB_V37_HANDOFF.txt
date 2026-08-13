@@ -1,0 +1,12 @@
+TOOL001 V37 - NotReadable read path A/B diagnostic
+
+Goal: stop broad root-cause expansion. Compare native read paths on the same real Android Photo Picker file.
+PHOTO_01 only. Default 10 repeats per mode, interleaved by round.
+Modes: FileReader.readAsArrayBuffer / Blob.arrayBuffer / Blob.stream.
+During each experimental change event, product change handling is stopped so product code does not create duplicate reads. The harness performs exactly one selected native read path.
+PASS = selected native path returns >0 bytes. FAIL records exact exception, including NotReadableError.
+Core output: read-path-ab-comparison.txt
+
+Run:
+node scripts/run-tool-001-notreadable-readpath-ab-v37.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+Optional repeats per mode: --repeats 10

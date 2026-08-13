@@ -1,0 +1,8 @@
+TOOL001 REAL PHOTO DIAGNOSTIC V23
+- Product capture engine unchanged from V22 base.
+- V23 fixes diagnostic activation/session control only.
+- User selection prompt is emitted only after stable Photo Picker detection (3 consecutive detections).
+- Primary physical activation uses UIAutomator Chrome accessibility bounds for the actual upload button.
+- Fallbacks: visualViewport-mapped ADB tap, CDP pointer, Playwright force click, fresh UIAutomator retry.
+- If picker closes before user selection, V23 automatically reopens it up to 3 rounds.
+- GOOD/BAD real-photo diagnostics, capture-reader telemetry, preview validation, failure XML/screenshots, Desktop ZIP remain enabled.

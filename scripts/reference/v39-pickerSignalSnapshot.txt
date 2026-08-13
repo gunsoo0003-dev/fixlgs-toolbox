@@ -1,0 +1,15 @@
+function pickerSignalSnapshot(){
+  let xml='';try{xml=dumpUi();}catch{}
+  const fg=foregroundSnapshot();
+  const nodes=parseUiNodes(xml);
+  const uiPackages=[...new Set(nodes.map(n=>n.package).filter(Boolean))];
+  const resumedPackage=resumedPackageFromForeground(fg);
+  const uiIsPicker=uiPackages.some(p=>/com\.google\.android\.photopicker|documentsui|myfiles|filepicker/i.test(p));
+  const resumedIsPicker=/com\.google\.android\.photopicker|documentsui|myfiles|filepicker/i.test(resumedPackage);
+  const detected=uiIsPicker || resumedIsPicker;
+  const text=nodes.map(nodeHay).join('\\n');
+  return{
+    detected,xml,fg,uiPackages,resumedPackage,uiIsPicker,resumedIsPicker,
+    textSample:text.slice(0,1000)
+  };
+}

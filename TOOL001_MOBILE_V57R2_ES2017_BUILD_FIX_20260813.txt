@@ -1,0 +1,21 @@
+TOOL001 V57R2 - ES2017 BUILD FIX
+Date: 2026-08-13
+
+Purpose:
+- Preserve V57 Squoosh-aligned input/decode path that passed real-device testing.
+- Fix build failure caused by ES2018-only RegExp dotAll (/s) while project tsconfig target is ES2017.
+
+Change:
+- WebP signature regex:
+  BEFORE: /^RIFF....WEBPVP8[LX ]/s
+  AFTER : /^RIFF[\s\S]{4}WEBPVP8[LX ]/
+- No product-flow/input/decode ordering change.
+- Keeps V57R1 import-name correction (isMobileMemorySafetyError).
+
+Checks performed in artifact environment:
+- decoder TypeScript compile with target ES2017: PASS
+- decoder TS transpile target ES2017: PASS
+- image-converter-tool.tsx TSX transpile target ES2017: PASS
+- scan for RegExp dotAll /s in modified files: PASS (none)
+
+Local full Next.js build must be rerun in the user's project after overlay because the artifact sandbox does not contain complete npm dependency files.

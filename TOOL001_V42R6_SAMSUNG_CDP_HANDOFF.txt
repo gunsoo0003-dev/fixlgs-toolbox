@@ -1,0 +1,28 @@
+TOOL001 V42R6 BROWSER BOUNDARY A/B
+
+목적
+- Chrome 7회: 기존 Playwright Android 정밀 경로 유지
+- Samsung Internet 7회: uiautomator 웹 DOM 미노출 문제를 제거하고 ADB/CDP로 실제 페이지의 이미지 선택 버튼을 1회 클릭
+- Photo Picker 사진 선택은 V39 원본 함수 9개 그대로 유지
+- 검수기는 실패 복구/다른 사진 탐색/재선택을 하지 않음
+- HARNESS_FAIL은 제품 FAIL에서 제외
+
+실행
+node scripts/run-tool-001-v42r6-browser-boundary-ab.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+정적검수
+node scripts/verify-tool-001-v42r6-browser-boundary-ab.mjs
+
+기본 반복
+Chrome 7회 + Samsung Internet 7회
+
+V42R5 결과에서 확인된 사실
+- Chrome: 검수 흐름 정상, 실제 PASS 3/7, FAIL 4/7
+- Samsung: 7/7 모두 HARNESS_FAIL:UPLOAD_CONTROL_NOT_FOUND
+- Samsung 0/7은 제품 실패율이 아니라 검수기 진입 실패
+
+V42R6 변경 범위
+- 제품 코드 수정 없음
+- V39 Photo Picker 선택 함수 수정 없음
+- Samsung Internet의 업로드 버튼 진입 방식만 ADB/CDP 정밀 클릭으로 변경
+- 결과 집계에서 HARNESS_FAIL을 제품 FAIL과 분리

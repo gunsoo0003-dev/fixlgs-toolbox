@@ -1,0 +1,28 @@
+TOOL001 V52 CHROME NATIVE MULTIPART BYPASS VALIDATION
+
+목적
+- V51에서 Chrome과 Android System WebView 모두 동일하게 랜덤 NotReadableError가 재현되어,
+  Android 원본/Native read가 아니라 Chromium Android의 웹 File byte-read 공통 경계가 강하게 의심됨.
+- V52는 해결 후보로 'JavaScript가 파일 bytes를 직접 읽지 않고 브라우저 native multipart/form-data 전송 엔진에 맡기는 경로'가 100%인지 검증.
+
+검수 원칙
+- Chrome만 검사
+- 7회
+- 각 회차 PHOTO01 1회 선택
+- JavaScript arrayBuffer/FileReader/stream byte read 없음
+- 선택 후 HTML form multipart/form-data submit 1회
+- 로컬 Node 서버는 adb reverse를 통해 업로드 bytes만 수신/계수
+- 서버/검수기가 Android Provider 원본을 별도 read하지 않음
+- retry/recovery/다른 사진/fallback 없음
+- HARNESS_FAIL은 제품/브라우저 FAIL과 분리
+- TOOL001/React/Next.js 제품 코드 없음
+
+판정
+- 7/7 exact 457,776 bytes 수신 => native multipart가 유효한 100% 우회 후보
+- 랜덤 실패 => multipart도 같은 하위 브리지 영향을 받으므로 다른 경로 탐색
+
+실행
+node scripts/run-tool-001-v52-chrome-native-multipart-bypass.mjs
+
+정적검수
+node scripts/verify-tool-001-v52-chrome-native-multipart-bypass.mjs

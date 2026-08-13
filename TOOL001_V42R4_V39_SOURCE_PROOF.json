@@ -1,0 +1,74 @@
+[
+  {
+    "function": "parseUiTree",
+    "sha256": "a2e288df2bb4e6573b19319e409c7d2d232d76510c27136c7457ea2ef8346e5f",
+    "source_range": [
+      46,
+      46
+    ]
+  },
+  {
+    "function": "descendantText",
+    "sha256": "9226d9a4559d913c3d0e90d50e363101afb009ee9a99a343b876ae983077b44a",
+    "source_range": [
+      47,
+      47
+    ]
+  },
+  {
+    "function": "photoPickerActionControls",
+    "sha256": "28c4f5ad1425e910ce7a4a1d59e0a06585b3a9c0dca7ed525d3fb1b189c0d5fb",
+    "source_range": [
+      61,
+      61
+    ]
+  },
+  {
+    "function": "foregroundSnapshot",
+    "sha256": "416b85466cb36169c07dbc6db2855dfeb5b92e752ce1a38efb61f6eeea81f7c7",
+    "source_range": [
+      134,
+      146
+    ]
+  },
+  {
+    "function": "resumedPackageFromForeground",
+    "sha256": "df46409fcfb24a94e113ef405348403fe26fe93050621fe540ce76c2d9d5ffd8",
+    "source_range": [
+      148,
+      152
+    ]
+  },
+  {
+    "function": "pickerSignalSnapshot",
+    "sha256": "aa223550d1668848ac6badda8b9d83edc60e68c78fa88f24f49142b6d9bb7b2a",
+    "source_range": [
+      217,
+      231
+    ]
+  },
+  {
+    "function": "waitStablePickerOpen",
+    "sha256": "1e4821d62c688289b2a444c86d00374650fd60803bc1652e1ed4ad2f00976648",
+    "source_range": [
+      232,
+      249
+    ]
+  },
+  {
+    "function": "pickerMediaCandidates",
+    "sha256": "8da8258c328d6c546c25afb53817cd48445e06f3973971d14c19d4d681b0c8ec",
+    "source_range": [
+      334,
+      359
+    ]
+  },
+  {
+    "function": "autoSelectPickerMediaV38",
+    "sha256": "35741691046c3cf91e9a097c6385095409caeabfe770ed923c95979bb6ccfdce",
+    "source_range": [
+      365,
+      384
+    ]
+  }
+]

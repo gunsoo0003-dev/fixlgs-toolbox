@@ -1,0 +1,18 @@
+TOOL001 REAL PHOTO V29
+
+INTENT LOCK
+- User action: tap exactly one real photo.
+- Harness action: automatically detect the selected state, live-rescan Android Photo Picker,
+  locate the positive Done/Add/Select action, revalidate it, tap it exactly once,
+  then observe picker close -> Chrome input.files/change -> provider read -> preview.
+- Never ask the user to tap Done/Add/Select.
+- Never tap a commit action twice.
+- If picker auto-closes after photo selection, do not tap anything.
+- If no safe commit control is exposed after live rescan, save XML/screenshot/timeline and classify it.
+
+Broad GOOD/BAD cause sweep remains enabled.
+Product code is unchanged.
+
+Run:
+node scripts/verify-tool-001-real-photo-diagnostic-v29.mjs
+node scripts/run-tool-001-real-photo-diagnostic-v29.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"

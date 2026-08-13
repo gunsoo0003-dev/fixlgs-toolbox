@@ -1,0 +1,5 @@
+TOOL001 V57R1 BUILD FIX
+- Product behavior unchanged from V57.
+- Fix only: wrong import name in components/image-converter-tool.tsx
+  isMobileImageSafetyError -> isMobileMemorySafetyError
+- lib/mobile-image-safety.ts exports isMobileMemorySafetyError.

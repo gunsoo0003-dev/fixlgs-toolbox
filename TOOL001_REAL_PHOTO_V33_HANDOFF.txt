@@ -1,0 +1,30 @@
+TOOL001 REAL PHOTO V33 - SAME PHOTO x5 FIRST-DIVERGENCE DIAGNOSTIC
+
+목적
+- PHOTO_01 동일 사진을 5회 연속 실제 Android Photo Picker에서 자동 선택한다.
+- 회차별 실제 사용자 결과(카드+미리보기)를 SUCCESS/FAIL로 기록한다.
+- 성공/실패가 갈리는 최초 지점을 change -> file -> native read -> snapshot -> state/preview 순으로 비교한다.
+
+중요
+- 검수기는 Android provider File을 추가로 읽지 않는다.
+- 제품이 실제 호출한 FileReader.readAsArrayBuffer / Blob.stream 호출과 FileReader terminal event만 관찰한다.
+- 배포본에 tool001:capture-diagnostic 이벤트가 없어도 native read와 logcat 증거를 수집한다.
+- NotReadableError / ERR_UPLOAD_FILE_CHANGED / net::ERR_* 관련 로그를 케이스별 별도 저장한다.
+- 제품 SUCCESS 판정은 제품 내부 진단 이벤트 유무와 무관하게 실제 카드+미리보기 생성으로 판정한다.
+- 실패는 8초 사용자 체감 창에서 기록하고 다음 회차로 진행한다.
+
+정적검증
+node scripts/verify-tool-001-real-photo-harness-v33.mjs
+
+실기기 집중진단
+node scripts/run-tool-001-real-photo-harness-v33.mjs --url "https://toolbox.fixlgs.com/ko/jpg-png-webp-image-converter"
+
+기본 반복
+PHOTO_01 x 5
+
+결과 핵심
+- REPEAT_RESULT=PASS:n FAIL:n
+- FIRST_DIVERGENCE=...
+- case-N-PHOTO_01-native-reads.json
+- case-N-PHOTO_01-logcat-evidence.txt
+- summary.txt / verdict.json / result.json

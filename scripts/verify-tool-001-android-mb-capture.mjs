@@ -16,7 +16,7 @@ const checks = {
   no_provider_arraybuffer_probe: !capture.includes("file.arrayBuffer()"),
   no_response_provider_probe: !capture.includes("new Response(file).arrayBuffer()"),
   sequential_provider_readers: capture.includes("for (const [name, read] of readers)"),
-  app_owned_snapshot: capture.includes("const ownedBlob = new Blob([buffer]") && capture.includes("return new File([ownedBlob]"),
+  app_owned_snapshot: capture.includes("const ownedBlob = new Blob([buffer]") && (capture.includes("return new File([ownedBlob]") || (capture.includes("const owned = new File([ownedBlob]") && capture.includes("return owned"))),
   product_file_limit_20mb_unchanged: /const MAX_FILE_BYTES\s*=\s*20\s*\*\s*1024\s*\*\s*1024/.test(component),
   product_total_limit_60mb_unchanged: /const MAX_TOTAL_BYTES\s*=\s*60\s*\*\s*1024\s*\*\s*1024/.test(component),
   immediate_picker_capture_preserved: component.includes("Promise.allSettled(captureCandidates.map((file) => capturePickerFile(file)))"),

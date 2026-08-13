@@ -1,0 +1,16 @@
+TOOL001 MOBILE V55 SQUOOSH-STYLE PRODUCT B PATCH (2026-08-13)
+
+핵심 변경:
+1) 모바일/브라우저 제품 경로를 Squoosh식 INPUT[type=file] 직접 선택 경로로 단순화.
+2) showOpenFilePicker / FileSystemHandle 우선 경로를 제품에서 제거.
+3) 파일 선택 직후 원본 File을 바로 decode하고, 그 시점에 앱 소유 snapshot File을 생성.
+4) 이후 미리보기/변환은 원본 provider-backed File이 아니라 snapshot File만 사용.
+5) accept 값을 image/* 중심으로 완화.
+
+변경 파일:
+- components/image-converter-tool.tsx
+
+의도:
+- Android 사진 선택 직후 File lifetime 불안정성 완화
+- Squoosh 기준점과 최대한 유사한 제품 경로로 비교
+- “선택 직후 안전한 원본 확보 → 이후 독립 데이터 처리” 구조 반영

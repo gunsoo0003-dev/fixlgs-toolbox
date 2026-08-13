@@ -1,0 +1,13 @@
+function foregroundSnapshot(){
+  const windowTxt=adbText('shell','dumpsys','window','windows');
+  const activityTxt=adbText('shell','dumpsys','activity','activities');
+  const activityTopTxt=adbText('shell','dumpsys','activity','top');
+  const lines=[
+    ...windowTxt.split(/\r?\n/).filter(x=>/mCurrentFocus|mFocusedApp/i.test(x)).slice(0,8),
+    ...activityTxt.split(/\r?\n/).filter(x=>/mResumedActivity|topResumedActivity|ResumedActivity/i.test(x)).slice(0,8),
+    ...activityTopTxt.split(/\r?\n/).filter(x=>/ACTIVITY |mResumedActivity|topResumedActivity/i.test(x)).slice(0,8)
+  ];
+  const joined=lines.join(' || ');
+  const packages=[...new Set((joined.match(/[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+){1,}/g)||[]))];
+  return{lines,joined,packages};
+}

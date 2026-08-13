@@ -1,0 +1,5 @@
+function resumedPackageFromForeground(fg){
+  const joined=String(fg?.joined||'');
+  const m=joined.match(/(?:topResumedActivity|mResumedActivity|ResumedActivity)[^{}]*\{[^}]*\s([a-zA-Z0-9_.]+)\/[a-zA-Z0-9_.$]+/);
+  return m?.[1]||'';
+}
