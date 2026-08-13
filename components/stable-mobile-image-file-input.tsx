@@ -65,12 +65,23 @@ async function createOwnedPixelFile(file: File) {
   }
 }
 
-function eventWithFiles(event: ChangeEvent<HTMLInputElement>, files: File[]) {
+function eventWithFiles(
+  event: ChangeEvent<HTMLInputElement>,
+  input: HTMLInputElement,
+  files: File[],
+) {
   const transfer = new DataTransfer();
   files.forEach((file) => transfer.items.add(file));
-  event.currentTarget.files = transfer.files;
-  event.target.files = transfer.files;
-  return event;
+  input.files = transfer.files;
+
+  // React clears ChangeEvent.currentTarget after the synchronous handler returns.
+  // Mobile pixel capture awaits createImageBitmap/canvas, so preserve the actual
+  // input element and hand downstream handlers a stable ChangeEvent shape.
+  return {
+    ...event,
+    target: input,
+    currentTarget: input,
+  } as ChangeEvent<HTMLInputElement>;
 }
 
 export const StableMobileImageFileInput = forwardRef<HTMLInputElement, Props>(function StableMobileImageFileInput(
@@ -89,23 +100,24 @@ export const StableMobileImageFileInput = forwardRef<HTMLInputElement, Props>(fu
       return;
     }
 
-    const selected = Array.from(event.currentTarget.files ?? []);
+    const input = event.currentTarget;
+    const selected = Array.from(input.files ?? []);
     // Release the native picker selection immediately, before any provider read/retry path can retain it.
-    event.currentTarget.value = "";
+    input.value = "";
     if (!selected.length) return;
 
     const first = selected[0];
     if (mobileCaptureMode === "original") {
-      onChange?.(eventWithFiles(event, [first]));
+      onChange?.(eventWithFiles(event, input, [first]));
       return;
     }
 
     try {
       const owned = await createOwnedPixelFile(first);
-      onChange?.(eventWithFiles(event, [owned]));
+      onChange?.(eventWithFiles(event, input, [owned]));
     } catch {
       // Do not add retries/fallback reader chains. One direct pass only; existing tool validation owns the error state.
-      onChange?.(eventWithFiles(event, [first]));
+      onChange?.(eventWithFiles(event, input, [first]));
     }
   }
 
