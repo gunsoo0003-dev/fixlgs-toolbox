@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import styles from "./app-store-screenshot-maker-tool.module.css";
 import { createStoredZip } from "@/lib/zip";
 import type { Locale } from "@/lib/site";
@@ -252,7 +253,7 @@ export function AppStoreScreenshotMakerTool({ locale }: { locale: Locale }) {
   return <div className={styles.wrapper} data-testid="tool024-root">
     <div className={styles.localNote}><strong>LOCAL</strong><span>{t.local}</span></div>
     <section className={`${styles.dropzone} ${hasSlides ? styles.dropzoneReady : ""} ${(dragging || workspaceDragging) ? styles.dragging : ""}`} onDragOver={(e) => { e.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(e) => { e.preventDefault(); setDragging(false); void addFiles(e.dataTransfer.files); }} data-testid="tool024-dropzone">
-      <h2>{t.drop}</h2><p>{t.noStretch}</p><button className={styles.primary} onClick={() => inputRef.current?.click()}>{t.select}</button><input ref={inputRef} className={styles.hidden} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(e) => e.currentTarget.files && void addFiles(e.currentTarget.files)} />
+      <h2>{t.drop}</h2><p>{t.noStretch}</p><button className={styles.primary} onClick={() => inputRef.current?.click()}>{t.select}</button><StableMobileImageFileInput ref={inputRef} className={styles.hidden} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(e) => e.currentTarget.files && void addFiles(e.currentTarget.files)} />
     </section>
 
     {status && <p className={styles.status} role="status">{status}</p>}

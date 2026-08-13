@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 
 type OutputFormat = "png" | "jpg" | "webp";
@@ -75,7 +76,7 @@ export function ImageCollageMakerTool({locale}:{locale:Locale}){
   <section className="tool014-workbench toolbox-workbench" data-testid="tool014-workbench">
    <div className={`toolbox-workbench-upload${externalDrag?" is-dragging":""}`} data-testid="tool014-upload" onDragEnter={e=>{if(Array.from(e.dataTransfer.types).includes("Files")){e.preventDefault();setExternalDrag(true)}}} onDragOver={e=>{if(Array.from(e.dataTransfer.types).includes("Files")){e.preventDefault();setExternalDrag(true)}}} onDragLeave={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setExternalDrag(false)}} onDrop={e=>{if(e.dataTransfer.files.length){e.preventDefault();e.stopPropagation();setExternalDrag(false);addFiles(e.dataTransfer.files)}}}>
     <div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{locale==="ko"?"콜라주 작업장":locale==="en"?"Collage workspace":"コラージュ作業エリア"}</strong></div></div>
-    <input ref={inputRef} hidden multiple type="file" accept="image/jpeg,image/png,image/webp" data-testid="tool014-file-input" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.target.value=""}}/><input ref={replaceRef} hidden multiple={false} type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files?.[0]){const f=e.target.files[0];addFiles([f]);setTimeout(()=>{const newest=itemsRef.current.at(-1);if(newest)selectImageForCell(newest.id)},0)}e.target.value=""}}/>
+    <StableMobileImageFileInput ref={inputRef} hidden multiple type="file" accept="image/jpeg,image/png,image/webp" data-testid="tool014-file-input" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.target.value=""}}/><StableMobileImageFileInput ref={replaceRef} hidden multiple={false} type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files?.[0]){const f=e.target.files[0];addFiles([f]);setTimeout(()=>{const newest=itemsRef.current.at(-1);if(newest)selectImageForCell(newest.id)},0)}e.target.value=""}}/>
     {items.length===0?(
      <div className="toolbox-upload-focus">
       <span className="toolbox-upload-icon" aria-hidden="true">＋</span>

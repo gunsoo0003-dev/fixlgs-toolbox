@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
 import { createStoredZip } from "@/lib/zip";
@@ -186,7 +187,7 @@ export function ImageCropperRotatorTool({ locale }: { locale: Locale }) {
 
   return <div className="toolbox-tool-workflow cropper-tool-shell">
     <section className="toolbox-workbench cropper-workbench" data-testid="cropper-workbench" onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();addFiles(e.dataTransfer.files);}}>
-      <div className="toolbox-workbench-upload"><div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div><input ref={inputRef} data-testid="cropper-file-input" type="file" hidden multiple accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.currentTarget.value="";}}/>
+      <div className="toolbox-workbench-upload"><div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div><StableMobileImageFileInput ref={inputRef} data-testid="cropper-file-input" type="file" hidden multiple accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.currentTarget.value="";}}/>
       {items.length===0?<div className="toolbox-upload-focus cropper-upload-focus"><div className="toolbox-upload-icon" aria-hidden="true">✦</div><h2>{t.drop}</h2><p>{t.support}</p><button type="button" className="toolbox-upload-primary" onClick={()=>inputRef.current?.click()}>{t.choose}</button></div>:<div className="toolbox-upload-summary cropper-upload-summary"><div><strong>{items.length}</strong><span>{t.current}</span></div><button type="button" onClick={()=>inputRef.current?.click()}>{t.add}</button></div>}</div>
       {message&&<p className="cropper-message" role="alert" data-testid="cropper-message">{message}</p>}
       {items.length>0&&view==="edit"&&active&&<div className="cropper-editor-wrap"><div className="cropper-progress-bar"><button onClick={()=>go(-1)} disabled={index===0}>{t.previous}</button><div><strong>{index+1} / {items.length} · {edited} {t.edited}</strong><span>{active.file.name}</span></div><button onClick={()=>go(1)} disabled={index===items.length-1}>{t.next}</button></div>

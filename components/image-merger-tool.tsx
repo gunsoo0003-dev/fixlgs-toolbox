@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 
 type Direction = "vertical" | "horizontal";
@@ -269,8 +270,8 @@ export function ImageMergerTool({ locale }: { locale: Locale }) {
     <section className="merger-workbench toolbox-workbench" data-testid="tool013-workbench">
       <div className={`toolbox-workbench-upload${externalDragOver?" is-dragging":""}`} data-testid="tool013-upload" onDragEnter={e=>{if(Array.from(e.dataTransfer.types).includes("Files")){e.preventDefault();setExternalDragOver(true)}}} onDragOver={e=>{if(Array.from(e.dataTransfer.types).includes("Files")){e.preventDefault();if(!externalDragOver)setExternalDragOver(true)}}} onDragLeave={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setExternalDragOver(false)}} onDrop={e=>{if(e.dataTransfer.files.length===0)return;e.preventDefault();e.stopPropagation();setExternalDragOver(false);addFiles(e.dataTransfer.files)}}>
         <div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div>
-        <input ref={inputRef} data-testid="tool013-file-input" hidden multiple type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.target.value=""}}/>
-        <input ref={retryInputRef} hidden type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{const file=e.target.files?.[0];if(file)retryFailedFile(file);e.target.value=""}}/>
+        <StableMobileImageFileInput ref={inputRef} data-testid="tool013-file-input" hidden multiple type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{if(e.target.files)addFiles(e.target.files);e.target.value=""}}/>
+        <StableMobileImageFileInput ref={retryInputRef} hidden type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{const file=e.target.files?.[0];if(file)retryFailedFile(file);e.target.value=""}}/>
         {items.length===0 ? (
           <div className="toolbox-upload-focus">
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>

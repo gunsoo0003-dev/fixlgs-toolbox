@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 import { createStoredZip } from "@/lib/zip";
 
@@ -1151,7 +1152,7 @@ export function WebImageOptimizerTool({ locale }: { locale: Locale }) {
           <div className="toolbox-workbench-topline">
             <div><span>WORKSPACE</span><strong>{t.workspace}</strong></div>
           </div>
-          <input
+          <StableMobileImageFileInput
             ref={inputRef}
             data-testid="optimizer-file-input"
             type="file"

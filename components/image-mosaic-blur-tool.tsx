@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 
 type Method = "mosaic" | "blur" | "solid";
@@ -296,7 +297,7 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
             <div className="mosaic-upload-actions"><button data-testid="tool010-select" type="button" onClick={()=>input.current?.click()}>{t.select}</button><button className="mosaic-paste" type="button" onClick={pasteFromClipboard}>{t.paste}</button></div>
             <small>{t.support}</small>
           </div>
-          <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>
+          <StableMobileImageFileInput ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>
         </div>
         {error&&<p className="mosaic-error" role="alert" data-testid="tool010-error">{error}</p>}
       </section>
@@ -314,7 +315,7 @@ export function ImageMosaicBlurTool({locale}:{locale:Locale}){
               <div className="toolbox-upload-active-actions"><div className="toolbox-file-stats"><span>{dimensions.width} × {dimensions.height}px</span><span>{formatBytes(file.size)}</span><span>{file.type.replace("image/","").toUpperCase()}</span></div><button type="button" onClick={()=>input.current?.click()}>＋ {t.replace}</button></div>
             </div>
             <div className="toolbox-upload-selected-file"><strong title={file.name}>{file.name}</strong><span>{status}</span></div>
-            <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>
+            <StableMobileImageFileInput ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile}/>
           </div>
         </div>
         <div className="mosaic-editor-grid toolbox-workbench-editor-grid">

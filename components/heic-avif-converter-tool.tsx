@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 import { createStoredZip } from "@/lib/zip";
 
@@ -78,7 +79,7 @@ export function HeicAvifConverterTool({locale}:{locale:Locale}){
       </div>
      </div>
 
-     <input data-testid="heic-file-input" ref={inputRef} type="file" hidden multiple accept=".heic,.heif,.avif,.jpg,.jpeg,.png,image/heic,image/heif,image/avif,image/jpeg,image/png" onChange={e=>{if(e.target.files)void addFiles(e.target.files);e.currentTarget.value=""}}/>
+     <StableMobileImageFileInput mobileCaptureMode="original" data-testid="heic-file-input" ref={inputRef} type="file" hidden multiple accept=".heic,.heif,.avif,.jpg,.jpeg,.png,image/heic,image/heif,image/avif,image/jpeg,image/png" onChange={e=>{if(e.target.files)void addFiles(e.target.files);e.currentTarget.value=""}}/>
 
      {items.length===0 ? (
       <div className="toolbox-upload-focus">

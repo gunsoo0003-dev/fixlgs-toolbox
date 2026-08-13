@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import { createStoredZip } from "@/lib/zip";
 import type { Locale } from "@/lib/site";
 
@@ -104,7 +105,7 @@ export function SvgBmpTiffConverterTool({locale}:{locale:Locale}){
  return <div className="toolbox-tool-runtime"><section className="toolbox-workbench">
   <div className={`toolbox-workbench-upload ${drag?"is-dragging":""}`} onDragOver={e=>{e.preventDefault();setDrag(true)}} onDragLeave={()=>setDrag(false)} onDrop={e=>{e.preventDefault();setDrag(false);void addFiles(e.dataTransfer.files)}}>
    <div className="toolbox-workbench-topline"><div><span>WORKSPACE</span><strong>{t.workspace}</strong></div></div>
-   <input data-testid="svg-file-input" ref={inputRef} hidden type="file" multiple accept=".svg,.bmp,.tif,.tiff,image/svg+xml,image/bmp,image/tiff" onChange={e=>{if(e.target.files)void addFiles(e.target.files);e.currentTarget.value=""}}/>
+   <StableMobileImageFileInput mobileCaptureMode="original" data-testid="svg-file-input" ref={inputRef} hidden type="file" multiple accept=".svg,.bmp,.tif,.tiff,image/svg+xml,image/bmp,image/tiff" onChange={e=>{if(e.target.files)void addFiles(e.target.files);e.currentTarget.value=""}}/>
    {items.length===0?<div className="toolbox-upload-focus"><span className="toolbox-upload-icon">＋</span><h2>{t.drop}</h2><p>{t.help}</p><button type="button" onClick={()=>inputRef.current?.click()}>{t.select}</button><small>{t.supported}<br/>{t.limit}</small></div>:<div className="toolbox-upload-active">
     <div className="toolbox-upload-active-head"><div><span>{items.length} FILES</span><p>{t.local}</p></div><div className="toolbox-upload-active-actions"><button type="button" onClick={()=>inputRef.current?.click()}>＋ {t.add}</button></div></div>
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{items.map((i,index)=><article key={i.id} data-testid="svg-file-card" data-status={i.status} className="overflow-hidden rounded-[1.5rem] border border-border bg-surface-2">

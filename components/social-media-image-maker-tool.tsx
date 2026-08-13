@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import styles from "./social-media-image-maker-tool.module.css";
 import { createStoredZip } from "@/lib/zip";
 import type { Locale } from "@/lib/site";
@@ -1159,7 +1160,7 @@ export function SocialMediaImageMakerTool({ locale }: { locale: Locale }) {
               <h2>{t.chooseBg}</h2>
               <p>{t.dropHint}</p>
               <label className={styles.workspaceUploadButton}>
-                <input
+                <StableMobileImageFileInput
                   data-testid="tool021-background-input"
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
@@ -1193,7 +1194,7 @@ export function SocialMediaImageMakerTool({ locale }: { locale: Locale }) {
               <p>{background ? background.fileName : t.noBg}</p>
               <div className={styles.inlineActions}>
                 <label className={styles.uploadButton}>
-                  <input
+                  <StableMobileImageFileInput
                     data-testid="tool021-background-input"
                     type="file"
                     accept="image/jpeg,image/png,image/webp"
@@ -1219,7 +1220,7 @@ export function SocialMediaImageMakerTool({ locale }: { locale: Locale }) {
               <p>{logo ? logo.fileName : t.none}</p>
               <div className={styles.inlineActions}>
                 <label className={styles.uploadButton}>
-                  <input
+                  <StableMobileImageFileInput
                     data-testid="tool021-logo-input"
                     type="file"
                     accept="image/jpeg,image/png,image/webp"

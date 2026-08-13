@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 
 type WatermarkKind = "text" | "logo";
@@ -1420,8 +1421,8 @@ export function ImageWatermarkTool({ locale }: { locale: Locale }) {
         )}
       </div>
       {error && items.length === 0 ? <p className="tool017-error tool017-upload-error" role="alert" data-testid="tool017-error">{error}</p> : null}
-      <input ref={inputRef} data-testid="tool017-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(event) => { if (event.target.files) void addFiles(event.target.files); event.currentTarget.value = ""; }} />
-      <input ref={logoInputRef} data-testid="tool017-logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void loadLogo(file); event.currentTarget.value = ""; }} />
+      <StableMobileImageFileInput ref={inputRef} data-testid="tool017-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(event) => { if (event.target.files) void addFiles(event.target.files); event.currentTarget.value = ""; }} />
+      <StableMobileImageFileInput ref={logoInputRef} data-testid="tool017-logo-input" type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void loadLogo(file); event.currentTarget.value = ""; }} />
       {items.length > 0 ? <>
       <div
         className={`tool017-editor toolbox-workbench-editor-grid ${externalDrag ? "is-dragging" : ""}`}

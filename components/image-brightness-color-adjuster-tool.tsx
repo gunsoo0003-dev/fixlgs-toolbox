@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 
 type Effect = "none" | "grayscale" | "sepia";
@@ -82,7 +83,7 @@ export function ImageBrightnessColorAdjusterTool({locale}:{locale:Locale}){
           <button type="button" onClick={()=>input.current?.click()} data-testid="tool009-select">{t.select}</button>
           <small>{t.support}</small>
         </div>
-        <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile}/>
+        <StableMobileImageFileInput ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile}/>
       </div>
       {status&&<p className="adjuster-status" aria-live="polite">{status}</p>}
       {error&&<div className="adjuster-error" role="alert" data-testid="tool009-error"><p>{error}</p>{errorKind==="format"&&<div className="adjuster-error-links"><Link href={`/${locale}/heic-avif-image-converter`}>HEIC·AVIF</Link><Link href={`/${locale}/svg-bmp-tiff-image-converter`}>SVG·BMP·TIFF</Link></div>}</div>}
@@ -120,7 +121,7 @@ export function ImageBrightnessColorAdjusterTool({locale}:{locale:Locale}){
           <strong title={file.name}>{file.name}</strong>
           <span>{info}</span>
         </div>
-        <input ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile}/>
+        <StableMobileImageFileInput ref={input} className="hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile}/>
       </div>
     </div>
 

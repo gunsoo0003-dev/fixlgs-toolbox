@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent } from 'react';
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import styles from './image-metadata-checker-tool.module.css';
 import { createStoredZip } from '@/lib/zip';
 import {
@@ -300,7 +301,7 @@ export function ImageMetadataCheckerTool({ locale }: { locale: Locale }) {
         <div className="toolbox-workbench-topline">
           <div><span>WORKSPACE</span><strong>{t.title}</strong></div>
         </div>
-        <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple hidden data-testid="tool018-input" onChange={(event: ChangeEvent<HTMLInputElement>) => { if (event.target.files) void addFiles(event.target.files); event.currentTarget.value = ''; }}/>
+        <StableMobileImageFileInput mobileCaptureMode="original" ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple hidden data-testid="tool018-input" onChange={(event: ChangeEvent<HTMLInputElement>) => { if (event.target.files) void addFiles(event.target.files); event.currentTarget.value = ''; }}/>
         {items.length === 0 ? (
           <div className="toolbox-upload-focus">
             <span className="toolbox-upload-icon" aria-hidden="true">＋</span>

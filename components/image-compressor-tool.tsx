@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { Locale } from "@/lib/site";
 import { createStoredZip } from "@/lib/zip";
 
@@ -186,7 +187,7 @@ export function ImageCompressorTool({locale}:{locale:Locale}){
           </div>
         </div>
 
-        <input
+        <StableMobileImageFileInput
           ref={inputRef}
           data-testid="compressor-file-input"
           type="file"

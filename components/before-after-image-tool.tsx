@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Locale } from "@/lib/site";
 import styles from "./before-after-image-tool.module.css";
@@ -210,7 +211,7 @@ export function BeforeAfterImageTool({locale}:{locale:Locale}){
   const posOptions:[[LabelPosition,string],[LabelPosition,string],[LabelPosition,string],[LabelPosition,string],[LabelPosition,string],[LabelPosition,string]]=[["top-left",t.topLeft],["top-center",t.topCenter],["top-right",t.topRight],["bottom-left",t.bottomLeft],["bottom-center",t.bottomCenter],["bottom-right",t.bottomRight]];
 
   return <div className={styles.shell} data-testid="tool015-workbench">
-    <input ref={beforeInput} hidden data-testid="tool015-before-input" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseOne(e.target.files,"before")}/><input ref={afterInput} hidden data-testid="tool015-after-input" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseOne(e.target.files,"after")}/><input ref={bothInput} hidden data-testid="tool015-both-input" type="file" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseMany(e.target.files)}/>
+    <StableMobileImageFileInput ref={beforeInput} hidden data-testid="tool015-before-input" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseOne(e.target.files,"before")}/><StableMobileImageFileInput ref={afterInput} hidden data-testid="tool015-after-input" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseOne(e.target.files,"after")}/><StableMobileImageFileInput ref={bothInput} hidden data-testid="tool015-both-input" type="file" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onChange={e=>chooseMany(e.target.files)}/>
     <div className={styles.head}><div><span>WORKSPACE</span><h2>{t.workspace}</h2></div><p>{t.intro}<br/>{t.local}</p></div>
     <section className={styles.stepCard} data-step="1">
       <div className={styles.stepHead}><div><span>STEP 01</span><h3>{t.step1}</h3></div><p>{t.step1Desc}</p></div>

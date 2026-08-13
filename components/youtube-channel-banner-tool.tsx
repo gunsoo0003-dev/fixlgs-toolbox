@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StableMobileImageFileInput } from "@/components/stable-mobile-image-file-input";
 import styles from "./youtube-channel-banner-tool.module.css";
 import { YOUTUBE_BANNER_GUIDELINES, TOOL020_DEVICE_PREVIEWS, TOOL020_SERVICE_LIMITS, scaledSafeArea, validateImageFile, isAnimatedImage, sanitizeDownloadName, clampNormalized, type DevicePreviewMode } from "@/lib/tool-020-youtube-banner";
 import { calculateTool020LogoBounds, clampTool020CenterToSafe, drawTool020Banner, isTool020RectInside, measureTool020TitleBounds } from "@/lib/tool-020-renderer";
@@ -46,7 +47,7 @@ export function YoutubeChannelBannerTool({locale}:{locale:Locale}){
  const outputTitle=locale==='ko'?'출력':locale==='ja'?'出力':'Output';
  const guideTitle=locale==='ko'?'가이드':locale==='ja'?'ガイド':'Guide';
  return <div className={styles.root} data-testid="tool020-root">
-   <input ref={bgInput} className={styles.hiddenInput} data-testid="tool020-background-input" type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{pick(e.target.files?.[0],"background");e.currentTarget.value=""}}/>
+   <StableMobileImageFileInput ref={bgInput} className={styles.hiddenInput} data-testid="tool020-background-input" type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>{pick(e.target.files?.[0],"background");e.currentTarget.value=""}}/>
    <p className={styles.muted}>{t.local}</p>
 
    {!(started||bg)&&<section className={`toolbox-workbench ${styles.card}`}>
@@ -119,7 +120,7 @@ export function YoutubeChannelBannerTool({locale}:{locale:Locale}){
            <div className={styles.controlStack}>
              <section className={styles.section}>
                <h3>{t.logo}</h3>
-               <label className={styles.uploadButton}>{t.addLogo}<input className={styles.hiddenInput} data-testid="tool020-logo-input" type="file" onClick={()=>setSelected("logo")} accept="image/jpeg,image/png,image/webp" onChange={e=>pick(e.target.files?.[0],"logo")}/></label>
+               <label className={styles.uploadButton}>{t.addLogo}<StableMobileImageFileInput className={styles.hiddenInput} data-testid="tool020-logo-input" type="file" onClick={()=>setSelected("logo")} accept="image/jpeg,image/png,image/webp" onChange={e=>pick(e.target.files?.[0],"logo")}/></label>
                {logo&&<><div className={styles.row}><label className={styles.label}>X<input type="range" min="0" max="100" value={design.logoX*100} onChange={e=>setD({logoX:+e.target.value/100})}/></label><label className={styles.label}>Y<input type="range" min="0" max="100" value={design.logoY*100} onChange={e=>setD({logoY:+e.target.value/100})}/></label></div><label className={styles.label}>{t.logoSize}<input type="range" min="5" max="50" value={design.logoScale*100} onChange={e=>setD({logoScale:+e.target.value/100})}/></label><label className={styles.label}>{t.opacity}<input type="range" min="10" max="100" value={design.logoOpacity*100} onFocus={()=>setSelected("logo")} onChange={e=>setD({logoOpacity:+e.target.value/100})}/></label><div className={styles.inlineActions}><button className={styles.button} type="button" onClick={moveLogoInside}>{safeLogo}</button><button className={styles.button} onClick={()=>{releaseImage(logo);setLogo(null)}}>{t.removeLogo}</button></div></>}
              </section>
              <section className={styles.section}>
