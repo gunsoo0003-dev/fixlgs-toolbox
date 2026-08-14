@@ -1,0 +1,143 @@
+FIXLGS TOOLBOX WEB TOOL 026 HANDOFF
+==================================
+Tool: 026 이미지 PDF 변환기 / Image to PDF Converter / 画像 PDF 変換ツール
+Category: D. PDF 도구
+Recommended slug: image-to-pdf
+URLs: /ko/image-to-pdf /en/image-to-pdf /ja/image-to-pdf
+Sub-workshop status: READY (static/code/package scope). Final browser/build/regression/deploy remain main-workshop integration verification.
+
+1. Implemented product scope
+- JPG/JPEG and PNG input with real signature + browser decode check.
+- One or multiple images -> one PDF, one image per page.
+- Stable internal IDs and preserved selection order.
+- Desktop drag reorder; first/up/down/last buttons provide full non-drag/mobile reorder path.
+- Individual remove, remove all, full reset, add more images.
+- A4 and US Letter page sizes.
+- Portrait / Landscape / Auto per-image orientation.
+- Contain / No Stretch placement, centered horizontally and vertically.
+- Margin presets 0/5/10/20 mm plus 0~50 mm custom value.
+- White PDF page composition for transparent PNG input.
+- Page thumbnail preview and expected page count.
+- Create, create again, download, keep editing state.
+- Actual result page count (same as successful ordered input count) and Blob size shown after creation.
+- Real page-based progress count, no fake time progress.
+- Local browser processing only; no fetch/API/server upload code in 026 files.
+- KO/EN/JA UI, help, notes, FAQ, WebApplication/BreadcrumbList/FAQPage JSON-LD.
+- Dedicated route component at app/[locale]/image-to-pdf/page.tsx with canonical/hreflang metadata.
+
+2. Service limits applied from delivery-document initial priority
+- max files: 30
+- max per file: 15 MiB
+- max total input: 80 MiB
+- max pixels per image: 30,000,000
+- margin: 0~50 mm
+All values are centralized in lib/tool-026-pdf.ts PDF_LIMITS. Main workshop must run limit-only on integrated project/device set before final service-limit signoff.
+
+3. PDF implementation
+No new npm dependency was added. The implementation uses a small 026-dedicated PDF 1.4 writer in lib/tool-026-pdf.ts.
+Browser decode/canvas normalizes JPG/PNG to opaque JPEG page image data, then embeds it as DCTDecode XObject. This intentionally avoids server conversion and avoids adding a package when the confirmed 026 scope can be satisfied locally.
+A4/Letter point constants and mm->pt conversion live in PDF_PAGE_PRESETS/mmToPt. Preview/layout and PDF drawing use the same orientation/margin/contain model.
+
+4. Design baseline and transplant result
+MAIN: TOOL 024 App Store Screenshot Maker
+- Outer page continues to reuse the official common shell/hero/NEXT WORK/HOW TO/guide/notes/FAQ/related-tool classes.
+- Work-area CSS was reworked by direct code comparison with TOOL024, not visual approximation: --tb-line, --tb-panel, --tb-muted, --tb-inverse, --tb-inverse-fg, --blue; 18px panel/dropzone grammar; dashed blue dropzone + circular plus; 44px pill CTA; 54px thumbnail cards; 42px/12px controls; responsive mobile stacking.
+SUB: TOOL 013 Image Merger
+- Only the ordered multi-image workflow is applied: stable ordered cards, drag reorder, and complete first/up/down/last/delete mobile alternative controls.
+- TOOL013 legacy sealed selectors/CSS were NOT copied or referenced.
+026-only page-preview/margin/result behavior remains scoped to image-to-pdf-tool.module.css. The prior private --toolbox-* variable family was removed completely. No 026 selectors were added to protected global CSS.
+
+5. New implementation files to transplant 1:1
+- app/[locale]/image-to-pdf/page.tsx
+- components/image-to-pdf-page.tsx
+- components/image-to-pdf-tool.tsx
+- components/image-to-pdf-tool.module.css
+- lib/tool-026-pdf.ts
+
+6. New validation files
+- playwright.tool026.config.ts
+- tests/tool-026-preflight.spec.ts
+- tests/tool-026-core.spec.ts
+- tests/tool-026-boundary.spec.ts
+- tests/tool-026-regression.spec.ts
+- tests/tool-026-limit.spec.ts
+- scripts/tool-026/check-source.mjs
+- scripts/tool-026/check-logic.mjs
+- scripts/tool-026/run-validation.mjs
+- test-fixtures/tool-026/sample.jpg
+- test-fixtures/tool-026/transparent.png
+
+7. Documentation/evidence files
+- docs/tool-026/HANDOFF_026.txt
+- docs/tool-026/CHECKLIST_026_FINAL.txt
+- docs/tool-026/CHANGE_MAP_026.txt
+- docs/tool-026/FAILURE_RESPONSE_MAP_026.txt
+- docs/tool-026/SERVICE_LIMIT_CANDIDATES_026.txt
+- docs/tool-026/REQ_MASTER_026.txt
+- docs/tool-026/INTEGRATION_026.txt
+- docs/tool-026/STATIC_EVIDENCE_026.txt
+- docs/tool-026/FIXLGS_TOOLBOX_026_이미지_PDF_변환기_최종제작전달서_원본.pdf
+- docs/tool-026/ORIGINAL_PLAN_SHA256.txt
+
+8. Existing common files changed by sub-workshop
+NONE.
+Protected global CSS files were scanned and contain no tool026/image-to-pdf selector additions.
+No legacy sealed CSS was imported/copied/extended.
+No existing completed-tool source or validator was modified.
+No package.json/package-lock dependency registration is required.
+
+9. Main-workshop integration work (do NOT overwrite whole common files from this package)
+- Add 026 tool metadata/card to the D/PDF category registry in lib/site.ts using current integrated structure.
+- Confirm /[locale]/category/pdf lists 026 in the correct order.
+- Add KO/EN/JA /image-to-pdf URLs to app/sitemap.ts using current integrated sitemap pattern.
+- Confirm robots does not block the route; do not change robots without a real need.
+- If main project uses a central tool registry/validation catalog, register 026 additively without changing completed tool contracts.
+- Keep the dedicated app/[locale]/image-to-pdf route; no dynamic [toolSlug] common dispatch change is required unless the main workshop intentionally standardizes it.
+
+10. Main-workshop integration verification
+- actual Chrome/Edge/Android Chrome/iPhone Safari where available
+- PC/mobile, KO/EN/JA, Japanese mobile, light/dark
+- actual drag/touch/button reorder and scrolling
+- actual downloaded PDF opens in a viewer
+- PDF header, page count, page order, A4/Letter MediaBox, margin draw bounds
+- Auto orientation with mixed portrait/landscape inputs
+- transparent PNG white page result
+- Korean/Japanese filename download
+- repeated generation reflects newest settings; no stale result
+- preflight -> core-only -> boundary-only -> regression-only -> apply/finalize service limit -> limit-only -> TypeScript/build -> FINAL
+- FINAL FAIL 0 / SKIP 0
+
+11. Known design/technical intent
+026 is not OCR, PDF editing, merging existing PDFs, encryption, compression, signing, or PDF-to-image. Those belong to adjacent PDF tools.
+The JPEG-normalization strategy preserves visible appearance and PNG transparency against a white PDF page, but it is not lossless original-image embedding. This matches the delivery scope focused on document creation and stable local processing; main-workshop visual/file-size tests should confirm acceptable output quality.
+
+
+12. Final package-harness correction (2026-08-14)
+- Fixed scripts/tool-026/check-source.mjs so the delivery ZIP can validate itself without protected common CSS files being physically present.
+- Standalone package behavior: protected global CSS absence is treated as intentional packaging protection and reported as PASS protected-not-packaged.
+- Integrated-project behavior: when run from the full project root, or with TOOLBOX_PROJECT_ROOT set, the same validator scans the actual protected global CSS and fails if tool026/image-to-pdf contamination is found.
+- Re-run results: full-project source-contract PASS, standalone-package source-contract PASS, pure logic PASS in both contexts.
+- This correction changes only the 026-dedicated validator and documentation; product files and protected common files remain unchanged.
+
+13. Design transplant correction and final re-application (2026-08-14)
+- A prewritten 20-item design transplant checklist was created and applied against MAIN 024 / SUB 013.
+- Product design patch scope: components/image-to-pdf-tool.module.css + class bindings in components/image-to-pdf-tool.tsx only.
+- No feature/limit/PDF algorithm/translation content was changed by this correction.
+- Re-applied design checklist result: PASS 19, FAIL 0, NOT VERIFIED (sub-workshop required) 0, MAIN-WORKSHOP INTEGRATION 1 category.
+- Standalone source-contract PASS, integrated protected-CSS source-contract PASS, pure logic PASS after correction.
+
+14. Final HOW TO / real-example / EXPERT POST completion pass (2026-08-14)
+- A checklist-first content pass was performed because 026 is the first tool in the PDF category and should establish a reusable long-form page standard.
+- HOW TO remains the exact 4-step product flow in KO/EN/JA.
+- Added a separate USE CASES section using the verified common editorial class pattern from completed TOOL023/019.
+- Added the three representative scenarios from the 026 final production document:
+  1) receipt JPG 6 -> A4 PDF,
+  2) PNG guide images 3 -> US Letter + 10mm,
+  3) mixed portrait/landscape 10 -> Auto orientation.
+- Replaced the former 6-card workflow/feature summary with an 8-topic EXPERT POST covering actual decision standards: A4 vs Letter, orientation, margin meaning, contain/No Stretch, transparent PNG, high-resolution file-size/memory impact, image PDF vs OCR, and final order/page-count/size verification.
+- IMPORTANT NOTES and FAQ remain independent sections rather than being merged into the expert post.
+- New static validator: scripts/tool-026/check-content.mjs.
+- New evidence documents: CONTENT_COMPLETION_CHECKLIST_026.txt / CONTENT_APPLY_REPORT_026.txt.
+- No PDF logic, service limit, reorder logic, route, global CSS, sealed CSS, or existing completed tool was changed by this content pass.
+- Validation after final content pass: source-contract PASS / content PASS / pure logic PASS / TypeScript parser PASS / integrated protected-CSS scan PASS.
+- Actual PC/mobile KO/EN/JA line wrapping and visual height balance remain main-workshop integration verification under the current top-level rules.

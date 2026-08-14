@@ -1,0 +1,78 @@
+WEB TOOL 026 - DESIGN TRANSPLANT CHECKLIST / APPLIED
+=====================================================
+Basis: 1st/2nd/3rd sub-workshop instructions (2026-08-11)
+MAIN baseline: TOOL 024 App Store Screenshot Maker
+SUB baseline: TOOL 013 Image Merger (multi-image order/reorder interaction only)
+Judgement: PASS / FAIL / NOT VERIFIED / MAIN-WORKSHOP INTEGRATION / N/A
+
+01 [PASS] MAIN baseline exists and is explicitly numbered.
+   Method: compare current project components/app-store-screenshot-maker-tool.tsx + .module.css.
+   Evidence: TOOL024 module panel/dropzone/button/control/card vocabulary used as direct transplant source.
+
+02 [PASS] SUB baseline is limited to functionality absent/less direct in MAIN.
+   Method: compare TOOL013 image-merger-tool.tsx ordered multi-image interaction.
+   Evidence: stable ordered cards + drag reorder + mobile complete move controls retained; no legacy sealed CSS copied.
+
+03 [PASS] Official common outer-page structure is reused, not recreated.
+   Method: inspect image-to-pdf-page.tsx DOM classes.
+   Evidence: ToolboxSubpageShell, toolbox-tool-detail-hero/body, toolbox-next-work, toolbox-tool-guide, expert/format, info-band, FAQ.
+
+04 [PASS] MAIN 024 work-area visual system is transplanted, not merely approximated.
+   Method: compare module CSS tokens and patterns.
+   Evidence: --tb-line / --tb-panel / --tb-muted / --tb-inverse / --tb-inverse-fg / --blue; 18px panel radius; dashed blue dropzone; pill CTA; panel/card/control geometry.
+
+05 [PASS] Nonexistent/private --toolbox-* token family removed from TOOL026 module.
+   Method: grep image-to-pdf-tool.module.css for --toolbox-.
+   Evidence: 0 matches.
+
+06 [PASS] Dropzone geometry and interaction are transplanted from MAIN 024.
+   Evidence: 28px desktop padding, 18px radius, dashed blue-mix border, blue circular plus marker, drag-over ring/background; 22x16 mobile padding.
+
+07 [PASS] Primary/secondary button hierarchy is transplanted from MAIN 024.
+   Evidence: 44px minimum height, pill radius, primary uses --tb-inverse/--tb-inverse-fg, secondary uses --tb-line/--tb-panel.
+
+08 [PASS] Panel/card/control geometry is transplanted from MAIN 024.
+   Evidence: panel 18px padding/radius; item 54px thumbnail, 14px card radius; inputs/selects 42px min height + 12px radius.
+
+09 [PASS] Multi-image order UI preserves SUB 013 workflow without importing sealed CSS.
+   Evidence: draggable ordered cards + first/up/down/last/delete controls; mobile controls expand to five equal columns.
+
+10 [PASS] 026-specific PDF-only UI remains in local module CSS.
+   Evidence: page preview aspect ratio, margin presets, result layout are in image-to-pdf-tool.module.css only.
+
+11 [PASS] app/globals.css and official global styles are not modified or packaged.
+   Method: full-project source contract + package contents.
+   Evidence: protected globals scanned contamination-free; delivery contains no protected global CSS.
+
+12 [PASS] legacy-site-sealed.css / legacy-tools-sealed.css are not referenced or copied by TOOL026.
+   Method: source grep.
+   Evidence: 0 TOOL026 source references.
+
+13 [PASS] No tool-number-specific global selector was introduced.
+   Evidence: TOOL026 styling is CSS module scoped; outer sections reuse official common classes.
+
+14 [PASS] Desktop layout follows MAIN's responsive panel grammar.
+   Evidence: two-column work area at desktop, one-column <=900px; panel/card hierarchy matches MAIN vocabulary.
+
+15 [PASS] Mobile is a dedicated vertical flow rather than squeezed desktop.
+   Evidence: <=720px single column, full-width actions, five equal move controls, 2->1 preview grid at narrow width.
+
+16 [PASS] KO/EN/JA strings remain structurally identical after design transplant.
+   Evidence: design patch does not alter translation object or language branches.
+
+17 [PASS] Light/dark compatibility uses official theme variables rather than hardcoded light-only card tokens.
+   Evidence: --tb-panel/line/muted/inverse variables used for all major surfaces/actions.
+
+18 [PASS] Design patch does not change limits, PDF logic, ordering, signature validation, or output rules.
+   Evidence: only image-to-pdf-tool.module.css and class-name bindings changed in product files.
+
+19 [PASS] Validator/handoff docs are synchronized to final design state.
+   Evidence: checklist, HANDOFF, STATIC_EVIDENCE, manifest updated after patch.
+
+20 [MAIN-WORKSHOP INTEGRATION] Actual browser visual comparison: PC/mobile, KO/EN/JA, light/dark, hover/touch/scroll/overflow.
+   Reason: explicitly transferred to main-workshop by 2026-08-11 top-level instructions.
+
+DESIGN-CODE RESULT: PASS
+FAIL: 0
+NOT VERIFIED (sub-workshop required): 0
+MAIN-WORKSHOP INTEGRATION: 1 category

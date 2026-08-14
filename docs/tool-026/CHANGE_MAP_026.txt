@@ -1,0 +1,29 @@
+026 CHANGE MAP
+NEW PRODUCT: app/[locale]/image-to-pdf/page.tsx; components/image-to-pdf-page.tsx; components/image-to-pdf-tool.tsx; components/image-to-pdf-tool.module.css; lib/tool-026-pdf.ts
+NEW VALIDATION: playwright.tool026.config.ts; tests/tool-026-*.spec.ts; scripts/tool-026/*; test-fixtures/tool-026/*
+NEW DOCS: docs/tool-026/*
+EXISTING COMMON FILE MODIFICATION: NONE
+PACKAGE DEPENDENCY CHANGE: NONE
+
+FINAL DESIGN TRANSPLANT PATCH: components/image-to-pdf-tool.module.css; components/image-to-pdf-tool.tsx (class binding only); docs/tool-026/DESIGN_TRANSPLANT_CHECKLIST_026.txt; docs/tool-026/DESIGN_APPLY_REPORT_026.txt
+DESIGN PATCH COMMON FILE MODIFICATION: NONE
+
+FINAL CONTENT COMPLETION PATCH 2026-08-14
+-----------------------------------------
+Modified:
+- components/image-to-pdf-page.tsx
+  * retained accurate KO/EN/JA HOW TO
+  * added separate USE CASES with scenarios A/B/C from final production document
+  * upgraded EXPERT POST to 8 practical guidance topics
+- scripts/tool-026/check-source.mjs
+  * added static tokens for use cases and expert-content anchors
+Added:
+- scripts/tool-026/check-content.mjs
+- docs/tool-026/CONTENT_COMPLETION_CHECKLIST_026.txt
+- docs/tool-026/CONTENT_APPLY_REPORT_026.txt
+Documentation synchronized:
+- CHECKLIST_026_FINAL.txt
+- HANDOFF_026.txt
+- STATIC_EVIDENCE_026.txt
+- PACKAGE_MANIFEST_026.txt
+Protected common files modified: NONE.

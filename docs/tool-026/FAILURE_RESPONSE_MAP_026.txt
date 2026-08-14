@@ -1,0 +1,11 @@
+026 FAILURE RESPONSE MAP
+- Route/root missing after integration -> inspect route transplant and locale validity before product logic.
+- Input fixture fails -> verify real fixture decode/signature and browser file transfer before downstream assertions.
+- PDF not generated -> inspect first failed image decode/canvas conversion, then PDF writer; do not weaken assertions.
+- Wrong page count/order -> inspect ordered state and page loop; never accept async completion order as page order.
+- Wrong page size -> inspect PDF_PAGE_PRESETS/resolvePageBox; do not patch test expected values to current output.
+- Wrong margins/aspect -> inspect containBox and mmToPt single-source values.
+- Transparent PNG black -> inspect white canvas fill before drawImage.
+- Browser download fails -> distinguish Blob/object URL/user-gesture/browser-policy from PDF bytes.
+- Test selector fail while manual state exists -> HARNESS_ERROR candidate first, do not distort product DOM without evidence.
+- Integrated regression/common CSS issue -> main workshop integration issue; do not edit sealed/global CSS in 026 package.

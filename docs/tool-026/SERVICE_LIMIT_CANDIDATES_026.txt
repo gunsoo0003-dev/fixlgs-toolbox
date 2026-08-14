@@ -1,0 +1,26 @@
+026 SERVICE LIMIT DECISION - MAIN WORKSHOP
+==========================================
+Date: 2026-08-14
+Status: APPROVED FOR TOOL026 INTEGRATION
+
+Public comparison reviewed before limit checker synchronization:
+- iLovePDF free Image to PDF: 20 files / 40 MB per task.
+- Adobe Acrobat online JPG to PDF: up to 100 MB upload.
+- PDF24 / Smallpdf: public numeric image-count limits not consistently stated on the conversion pages; used only as secondary UX references.
+
+Current TOOL026 production policy:
+- Max files: 20
+- Per file: 15 MiB
+- Total input: 80 MiB
+- Pixels per file: 24 MP
+- Margin: 0~50 mm
+
+Decision rationale:
+- 20 files matches a mainstream free-service public count while keeping browser-local multi-image decode/PDF generation bounded.
+- 15 MiB per file is sufficient for ordinary phone/camera JPG/PNG input and remains consistent with existing TOOLBOX browser-stability practice.
+- 80 MiB total allows multiple ordinary photos while avoiding the earlier 100 MiB candidate as the default guaranteed browser-local workload.
+- 24 MP covers common smartphone/camera images while reducing mobile memory pressure compared with 30/40 MP candidates.
+- Margin 0~50 mm is more than sufficient for A4/Letter document layout.
+
+Synchronization requirement:
+The product constants, visible copy, fixtures, boundary/limit specs, validators and FINAL expectations must all use exactly these values.

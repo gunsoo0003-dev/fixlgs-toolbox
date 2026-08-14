@@ -1,0 +1,45 @@
+026 STATIC / INTEGRATION EVIDENCE
+=================================
+Date: 2026-08-14
+Baseline: TOOL001~025 protected
+Target: TOOL026 Image to PDF Converter
+
+CURRENT LIMIT CONTRACT
+- maxFiles: 20
+- maxFileBytes: 15 * 1024 * 1024
+- maxTotalBytes: 80 * 1024 * 1024
+- maxPixelsPerFile: 24_000_000
+- maxMarginMm: 50
+
+MAIN-WORKSHOP STATIC CHECKS
+PASS scripts/tool-026/check-source.mjs
+PASS scripts/tool-026/check-logic.mjs
+PASS scripts/tool-026/check-content.mjs
+PASS scripts/tool-026/check-integration.mjs
+PASS scripts/tool-026/check-design-transplant.mjs
+PASS scripts/tool-026/check-runner-contract.mjs
+PASS scripts/check-mobile-real-photo-001-026-validator.mjs
+
+SOURCE / PRODUCT CONTRACT CONFIRMED
+- dedicated /{ko|en|ja}/image-to-pdf route
+- PDF category LIVE registry entry and 026 numbering
+- sitemap KO/EN/JA entries
+- canonical/hreflang/OpenGraph metadata
+- canonical file selector: tool026-file-input
+- create/result/download selectors synchronized
+- A4 / Letter, auto/portrait/landscape, 0~50mm margins
+- multi-image list/order flow and PDF output writer
+- KO/EN/JA HOW TO, use cases, expert content, FAQ structured data
+
+REPEATED-FAILURE GATES CONFIRMED
+- stale tool026-file-input selector removed from current 026 validation path
+- stale 30 files / 100 MiB / 20 MP expectations removed from product/test contract
+- local Playwright/Next/TypeScript CLI contract only; no interactive npx path
+- validation runner writes result ZIP on PASS/FAIL and reports current stage / pass / fail / remaining
+- mobile 001~025 runner preserved and 001~026 extension adds TOOL026 only
+
+RUNTIME VALIDATION STATUS IN THIS ARTIFACT ENVIRONMENT
+- Static/source/logic/integration/design/runner/mobile self-checks: PASS.
+- Full Playwright/TypeScript/Next build execution was not marked PASS in the extracted artifact environment because the supplied essential-file bundle intentionally does not contain complete node_modules executable payloads.
+- The runner correctly classified that condition as ENVIRONMENT_FAIL and still produced a result ZIP.
+- Windows runner smoke and Android real-device Photo Picker verification remain user-side gates before FINAL completion is declared.

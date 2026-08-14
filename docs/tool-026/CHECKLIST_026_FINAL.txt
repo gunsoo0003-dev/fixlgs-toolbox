@@ -1,0 +1,60 @@
+WEB TOOL 026 - SUB-WORKSHOP 1/2/3 FINAL CHECKLIST
+=================================================
+Judgement: PASS / FAIL / NOT VERIFIED / MAIN-WORKSHOP INTEGRATION / N/A
+Design baseline: MAIN 024, SUB 013
+
+[PASS] Tool number/name/category/slug derived from final delivery document.
+[PASS] Core 5 fixed functions: JPG·PNG->PDF / multi-image PDF / reorder / A4·Letter / margins.
+[PASS] Portrait/Landscape/Auto, No Stretch contain, centering, thumbnail preview, result pages/size, re-edit/recreate.
+[PASS] 20 files / 15MiB each / 80MiB total / 24MP each / 0~50mm centralized limits.
+[PASS] Real image signature and decode validation.
+[PASS] Stable IDs and order-preserving page builder.
+[PASS] Desktop drag and complete button-based reorder alternative.
+[PASS] Transparent PNG composited on white.
+[PASS] Real per-page progress count.
+[PASS] Object URLs revoked on remove/clear; generated download URL revoked after click.
+[PASS] KO/EN/JA product UI and long-form page content.
+[PASS] Canonical/hreflang metadata in dedicated route.
+[PASS] WebApplication/BreadcrumbList/FAQPage JSON-LD.
+[PASS] Accessibility labels/aria-live/error role on key flow.
+[PASS] MAIN 024 work-area design system physically transplanted: official --tb-* / --blue tokens, dropzone, panels, cards, controls, pill actions, responsive grammar.
+[PASS] SUB 013 ordered multi-image workflow applied only for reorder interaction; legacy sealed CSS not copied.
+[PASS] 026-only PDF preview/margin/result styles isolated in image-to-pdf-tool.module.css; no private --toolbox-* token family remains.
+[PASS] app/globals.css and all styles/*.css protected from 026 additions.
+[PASS] legacy-site-sealed.css / legacy-tools-sealed.css not referenced by 026 source.
+[PASS] Existing completed tool components/tests untouched.
+[PASS] No new npm dependency/package mutation.
+[PASS] Preflight/core/boundary/regression/limit spec files prepared.
+[PASS] Dedicated Playwright config and runner prepared.
+[PASS] Source-contract static check PASS.
+[PASS] Page-size/mm/contain pure logic check PASS.
+[PASS] Original production PDF copied byte-identically and SHA256 recorded.
+[PASS] HANDOFF transplant list equals implementation/validation/doc package map.
+[MAIN-WORKSHOP INTEGRATION] Actual browser, PC/mobile, KO/EN/JA, light/dark rendering.
+[MAIN-WORKSHOP INTEGRATION] Actual Playwright run on integrated current project.
+[MAIN-WORKSHOP INTEGRATION] Actual PDF viewer reopen and page geometry/content assertions.
+[MAIN-WORKSHOP INTEGRATION] TypeScript/production build and full regression.
+[MAIN-WORKSHOP INTEGRATION] Category card/site registry/sitemap integration.
+[MAIN-WORKSHOP INTEGRATION] Final service-limit confirmation across target browsers/devices.
+
+Sub-workshop gate: CODE PASS / FUNCTION-STATIC PASS / DESIGN-CODE PASS / HARNESS-STRUCTURE PASS / PACKAGE PASS / COMMON FILE PROTECTION PASS.
+
+[PASS] Delivery ZIP standalone source-contract validator no longer requires absent protected global CSS files.
+[PASS] Full-project source-contract validator still scans all protected global CSS files and reports contamination-free PASS.
+[PASS] Final package-harness correction touched only 026-dedicated validator/docs; product/common files unchanged.
+
+FINAL CONTENT COMPLETION RE-APPLICATION (2026-08-14)
+----------------------------------------------------
+[PASS] HOW TO retained as accurate 4-step product flow in KO/EN/JA.
+[PASS] Separate USE CASES section added with all three delivery-document scenarios A/B/C.
+[PASS] EXPERT POST upgraded from feature-summary cards to 8 practical decision guides.
+[PASS] A4/Letter, orientation, margins, contain/No Stretch, transparent PNG, high-resolution size/memory, OCR boundary, final verification all covered.
+[PASS] IMPORTANT NOTES and FAQ remain distinct; visible FAQ remains synchronized with FAQPage JSON-LD.
+[PASS] Official common content classes reused; no global CSS addition needed.
+[PASS] Static content validator PASS.
+[PASS] TypeScript parser/transpile PASS for final image-to-pdf-page.tsx.
+[PASS] Integrated protected-CSS scan PASS after content upgrade.
+[MAIN-WORKSHOP INTEGRATION] Actual browser line-wrap/height balance of expanded KO/EN/JA long-form content.
+
+Final sub-workshop gate after content re-application:
+CODE PASS / FUNCTION-STATIC PASS / DESIGN-CODE PASS / CONTENT-CODE PASS / HARNESS-STRUCTURE PASS / PACKAGE PASS / COMMON FILE PROTECTION PASS.

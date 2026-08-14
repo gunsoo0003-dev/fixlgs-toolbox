@@ -1,0 +1,12 @@
+import fs from "node:fs";
+const read=(p)=>fs.readFileSync(p,"utf8");
+let fail=0;const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)fail++;};
+const site=read("lib/site.ts"), sm=read("app/sitemap.ts"), cat=read("app/[locale]/category/[categorySlug]/page.tsx"), route=read("app/[locale]/image-to-pdf/page.tsx");
+need(site.includes('tool026Slug = "image-to-pdf"'),"site slug");
+need(site.includes('"pdf": [')&&site.includes('title: tool026Titles'),"PDF category registry");
+need(site.includes('1개 사용 가능')&&site.includes('1 available')&&site.includes('1件利用可能'),"PDF category count labels");
+need(sm.includes('tool026Slug')&&sm.includes('${baseUrl}/${locale}/${tool026Slug}'),"sitemap KO/EN/JA route");
+need(cat.includes('categorySlug === "pdf" ? index + 26'),"PDF card numbering starts 026");
+need(route.includes('alternates:{canonical,languages:')&&route.includes('"x-default"'),"canonical/hreflang");
+need(route.includes('openGraph:'),"OpenGraph metadata");
+process.exitCode=fail?1:0;

@@ -1,0 +1,17 @@
+026 REQUIREMENT TRACE MASTER
+R01 JPG/JPEG input -> image-to-pdf-tool signature/decode -> core spec.
+R02 PNG input/alpha -> white canvas composition -> core + integrated transparent fixture.
+R03 multiple files -> ordered Item[] -> core/integrated N-page assertion.
+R04 reorder -> drag + first/up/down/last -> integrated order/page assertion.
+R05 A4/Letter -> PDF_PAGE_PRESETS -> geometry logic + integrated MediaBox assertion.
+R06 margins -> PDF_LIMITS + containBox -> boundary/logic + integrated bounds assertion.
+R07 Portrait/Landscape/Auto -> resolvePageBox -> integrated mixed orientation assertion.
+R08 No Stretch/center -> containBox -> logic + integrated image bounding box assertion.
+R09 page preview -> pagePreview DOM using same orientation setting -> browser visual verification.
+R10 result page count/size -> result card -> core + integrated downloaded file assertion.
+R11 re-edit/recreate -> state retained, result invalidated on relevant edits -> integrated repeated generation.
+R12 limits/errors -> addFiles centralized checks -> limit/boundary.
+R13 KO/EN/JA -> page/tool copy -> regression/browser locale.
+R14 SEO/schema -> dedicated route metadata + page JSON-LD -> regression/integrated SEO.
+R15 local processing/privacy -> no network call in 026 source -> source check + browser network observation.
+R16 common protection -> new files only + global contamination scan -> source check/package audit.

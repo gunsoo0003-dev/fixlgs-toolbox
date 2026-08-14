@@ -1,0 +1,39 @@
+FIXLGS TOOLBOX 026 FINAL DELIVERY PACKAGE MANIFEST
+================================================
+Tool: 026 이미지 PDF 변환기 / Image to PDF Converter
+Package status: SUB-WORKSHOP READY - DESIGN + CONTENT COMPLETION REAPPLIED
+
+Files excluding this manifest: 31
+Files including this manifest: 32
+
+01. app/[locale]/image-to-pdf/page.tsx
+02. components/image-to-pdf-page.tsx
+03. components/image-to-pdf-tool.module.css
+04. components/image-to-pdf-tool.tsx
+05. docs/tool-026/CHANGE_MAP_026.txt
+06. docs/tool-026/CHECKLIST_026_FINAL.txt
+07. docs/tool-026/CONTENT_APPLY_REPORT_026.txt
+08. docs/tool-026/CONTENT_COMPLETION_CHECKLIST_026.txt
+09. docs/tool-026/DESIGN_APPLY_REPORT_026.txt
+10. docs/tool-026/DESIGN_TRANSPLANT_CHECKLIST_026.txt
+11. docs/tool-026/FAILURE_RESPONSE_MAP_026.txt
+12. docs/tool-026/FIXLGS_TOOLBOX_026_이미지_PDF_변환기_최종제작전달서_원본.pdf
+13. docs/tool-026/HANDOFF_026.txt
+14. docs/tool-026/INTEGRATION_026.txt
+15. docs/tool-026/ORIGINAL_PLAN_SHA256.txt
+16. docs/tool-026/REQ_MASTER_026.txt
+17. docs/tool-026/SERVICE_LIMIT_CANDIDATES_026.txt
+18. docs/tool-026/STATIC_EVIDENCE_026.txt
+19. lib/tool-026-pdf.ts
+20. playwright.tool026.config.ts
+21. scripts/tool-026/check-content.mjs
+22. scripts/tool-026/check-logic.mjs
+23. scripts/tool-026/check-source.mjs
+24. scripts/tool-026/run-validation.mjs
+25. test-fixtures/tool-026/sample.jpg
+26. test-fixtures/tool-026/transparent.png
+27. tests/tool-026-boundary.spec.ts
+28. tests/tool-026-core.spec.ts
+29. tests/tool-026-limit.spec.ts
+30. tests/tool-026-preflight.spec.ts
+31. tests/tool-026-regression.spec.ts

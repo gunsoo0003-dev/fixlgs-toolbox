@@ -117,7 +117,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
         </div>
         <div className="toolbox-subpage-card-grid">
           {toolCards.map((tool, index) => {
-            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : index + 1;
+            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : categorySlug === "pdf" ? index + 26 : index + 1;
             const imageEditTitleLines: Record<Locale, string[][]> = {
               ko: [
                 ["이미지 자르기", "회전 도구"],
@@ -168,6 +168,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                   : currentLocale === "en"
                     ? <>App Store Screenshot<br />Maker</>
                     : <>アプリストア<br />スクリーンショット作成ツール</>
+              : categorySlug === "pdf" && toolNumber === 26
+                ? currentLocale === "ko"
+                  ? <>이미지 PDF<br />변환기</>
+                  : currentLocale === "en"
+                    ? <>Image to PDF<br />Converter</>
+                    : <>画像 PDF<br />変換ツール</>
               : currentLocale === "ko" && categorySlug === "content-image" && toolNumber === 20
                 ? <>유튜브 채널<br />배너 제작기</>
               : currentLocale === "ko" && categorySlug === "image-convert" && index === 1
@@ -179,7 +185,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                     : tool.title[currentLocale];
             const body = (
               <>
-                <div className="toolbox-subpage-card-top"><span>{categorySlug === "content-image" ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
+                <div className="toolbox-subpage-card-top"><span>{(categorySlug === "content-image" || categorySlug === "pdf") ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
                 <div><h2>{cardTitle}</h2>{tool.description[currentLocale] ? <p>{tool.description[currentLocale]}</p> : null}</div>
                 <div className="toolbox-subpage-card-foot"><b>{tool.active ? open : preparing}</b><i>↗</i></div>
               </>

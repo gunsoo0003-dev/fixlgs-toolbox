@@ -1,0 +1,8 @@
+026 MAIN-WORKSHOP INTEGRATION NOTES
+1) Copy new implementation files without replacing current common files.
+2) Add 026 to current D/PDF category registry in lib/site.ts using current integrated card structure. Recommended slug image-to-pdf.
+3) Ensure /ko|en|ja/image-to-pdf direct route stays reachable.
+4) Add three URLs to current sitemap additively.
+5) Register tool in current validation/tool registry only if required by integrated framework; preserve existing contracts.
+6) Run current-project static/type/build, then real-browser staged validation.
+7) Do not add 026 selectors to globals.css or sealed CSS. If an actual common visual gap exists, treat it as a separate main-workshop common-change decision.

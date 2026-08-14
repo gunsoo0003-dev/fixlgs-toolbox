@@ -1,0 +1,40 @@
+WEB TOOL 026 - CONTENT CHECKLIST APPLICATION REPORT
+===================================================
+Date: 2026-08-14
+Scope: HOW TO / real examples / EXPERT POST / notes / FAQ content-completion rework.
+
+1. Reason for rework
+The prior 026 page had a valid 4-step HOW TO and FAQ, but its section labeled as expert content was effectively a six-card feature/behavior summary. The final delivery document also defined three representative user scenarios that were not presented as a separate real-example section. Because 026 is the first PDF-category tool, the content pattern was upgraded to a reusable category baseline before final handoff.
+
+2. Checklist-first execution
+CONTENT_COMPLETION_CHECKLIST_026.txt was defined from the final production delivery document and the current 1st/3rd sub-workshop rules, then applied to the page. The page was modified only where checklist gaps existed.
+
+3. Applied product changes
+- HOW TO: retained the existing accurate 4-step product flow in KO/EN/JA.
+- USE CASES: added an official common editorial use-case section.
+  A. Receipt JPG 6 -> A4 PDF.
+  B. PNG guide images 3 -> US Letter + 10mm.
+  C. Mixed portrait/landscape 10 -> Auto orientation.
+- EXPERT POST: replaced the former six-card feature summary with eight practical decision guides:
+  A4 vs Letter / orientation / margins / contain+No Stretch / transparent PNG / high-resolution size+memory / image PDF vs OCR / final verification.
+- IMPORTANT NOTES and FAQ were retained as separate sections to avoid repeating the same role.
+- All new content is available in KO/EN/JA.
+
+4. Design-system application
+No new global design was invented. Real examples reuse toolbox-tool-use-cases--editorial and toolbox-tool-format-grid, already used by completed TOOL023/019. Expert content reuses toolbox-tool-expert-post / toolbox-tool-practical-grid. No global CSS change was required.
+
+5. Re-application result
+CONTENT checklist: PASS 24 / FAIL 0 / NOT VERIFIED 0 / MAIN-WORKSHOP INTEGRATION 1 category.
+Existing DESIGN transplant checklist: no design-system violation introduced by the content patch.
+Core product logic/limits/PDF writer: unchanged.
+Protected common CSS: unchanged.
+
+6. Validation evidence
+- scripts/tool-026/check-source.mjs: PASS after content tokens added.
+- scripts/tool-026/check-content.mjs: PASS.
+- scripts/tool-026/check-logic.mjs: PASS.
+- TypeScript transpile/parser check for components/image-to-pdf-page.tsx: PASS.
+- Integrated protected-CSS scan with current project root: PASS.
+
+Final content judgement: SUB-WORKSHOP CONTENT-CODE PASS.
+Actual PC/mobile KO/EN/JA visual wrapping remains main-workshop integration verification under the current top-level instructions.

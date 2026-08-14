@@ -1,0 +1,36 @@
+TOOL026 MAIN-WORKSHOP INTEGRATION REPORT
+========================================
+Date: 2026-08-14
+Baseline protected range: TOOL001~025
+Target: TOOL026 Image to PDF Converter
+
+1. Product integration
+- Integrated dedicated route /{ko|en|ja}/image-to-pdf.
+- Added PDF category LIVE card and sitemap entries.
+- Added dedicated component/module CSS/PDF writer without adding TOOL026 CSS to globals.css or legacy sealed CSS.
+
+2. Service policy approved for integration
+- Max images: 20
+- Max file size: 15 MiB each
+- Max total input: 80 MiB
+- Max pixels per image: 24 MP
+- Margin: 0~50 mm
+- One centralized PDF_LIMITS contract drives product copy and validator expectations.
+
+3. Repeated-failure gates applied before main validation
+- Removed stale tool026-file-input selector; canonical input is tool026-file-input.
+- Removed stale 30/80MiB/24MP validator expectations.
+- Added local-CLI runner contract: no npx path, Desktop result ZIP even on failure, stage/progress logging.
+- Added dedicated runtime workspace on port 3026 to avoid shared .next/dev-lock contamination.
+- Added feature/design-state checks for multi-image reorder, real PDF download, reset, 024-style dropzone state, mobile overflow.
+- Added current registry/sitemap/canonical/hreflang integration checker.
+
+4. Mobile real-device registration
+- Existing 001~025 real-photo runner was preserved.
+- Added 001~026 extension with TOOL026 slug, tool026-file-input, tool026-item attach state, create/result/download selectors.
+- Added dedicated --only 26 npm command and static validator contract.
+
+5. Completion boundary
+- Linux/container static/TypeScript/build/runtime validation may be executed in main-workshop environment.
+- Windows-specific spawn/.cmd behavior and Android real-device Photo Picker cannot be truthfully marked PASS until the user runs the provided Windows/mobile commands.
+- Therefore any delivery before those user-side runs is an integrated validation candidate, not a claimed Windows/mobile FINAL PASS.

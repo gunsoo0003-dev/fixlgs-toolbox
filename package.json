@@ -240,7 +240,19 @@
     "test:toolbox:025-final": "node scripts/tool-025/run-validation.mjs final",
     "check:toolbox:mobile-real-photo": "node scripts/check-mobile-real-photo-validator.mjs",
     "test:toolbox:mobile-real-photo-001-025": "node scripts/run-mobile-real-photo-001-025.mjs",
-    "test:toolbox:025-mobile-real": "node scripts/run-mobile-real-photo-001-025.mjs --only 25"
+    "test:toolbox:025-mobile-real": "node scripts/run-mobile-real-photo-001-025.mjs --only 25",
+    "check:toolbox:026-runner": "node scripts/tool-026/check-runner-contract.mjs",
+    "check:toolbox:026-design-transplant": "node scripts/tool-026/check-design-transplant.mjs",
+    "test:toolbox:026-preflight": "node scripts/tool-026/run-validation.mjs preflight",
+    "test:toolbox:026-core-only": "node scripts/tool-026/run-validation.mjs core-only",
+    "test:toolbox:026-boundary-only": "node scripts/tool-026/run-validation.mjs boundary-only",
+    "test:toolbox:026-feature-only": "node scripts/tool-026/run-validation.mjs feature-only",
+    "test:toolbox:026-regression-only": "node scripts/tool-026/run-validation.mjs regression-only",
+    "test:toolbox:026-limit-only": "node scripts/tool-026/run-validation.mjs limit-only",
+    "test:toolbox:026-final": "node scripts/tool-026/run-validation.mjs final",
+    "check:toolbox:mobile-real-photo-001-026": "node scripts/check-mobile-real-photo-001-026-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-026": "node scripts/run-mobile-real-photo-001-026.mjs",
+    "test:toolbox:026-mobile-real": "node scripts/run-mobile-real-photo-001-026.mjs --only 26"
   },
   "dependencies": {
     "next": "16.2.12",

@@ -1,0 +1,67 @@
+WEB TOOL 026 - CONTENT COMPLETION CHECKLIST / PREWRITTEN + APPLIED
+==================================================================
+Basis:
+- 026 final production delivery document: representative flow, HOW TO / examples / cautions / FAQ, scenarios A/B/C.
+- Final stamp list: title, one-line description, usage instructions, real examples, standards, cautions, FAQ, related tools.
+- Sub-workshop 1st/3rd instructions: common HOW TO / expert-post / caution / FAQ sections must not be omitted; completed common classes are reused.
+Judgement: PASS / FAIL / NOT VERIFIED / MAIN-WORKSHOP INTEGRATION / N/A
+
+01 [PASS] HOW TO exists in KO/EN/JA.
+   Required: select images -> reorder -> A4/Letter/orientation/margin -> create/check/download.
+   Applied evidence: 4 explicit steps in all three locales.
+
+02 [PASS] HOW TO matches the actual 026 product flow instead of generic PDF instructions.
+   Evidence: reorder, page size, orientation, margins, preview, page count/size, download all match implemented controls.
+
+03 [PASS] Real example section exists as a separate common content section.
+   Evidence: official toolbox-tool-use-cases--editorial / toolbox-tool-format-grid common structure reused.
+
+04 [PASS] Delivery-document Scenario A is present.
+   Evidence: receipt JPG 6 images -> A4 PDF, one image per page, ordered document output.
+
+05 [PASS] Delivery-document Scenario B is present.
+   Evidence: PNG guide images 3 -> US Letter + 10mm margins.
+
+06 [PASS] Delivery-document Scenario C is present.
+   Evidence: mixed portrait/landscape 10 images -> Auto orientation.
+
+07 [PASS] Real examples are localized to KO/EN/JA with the same scenario meaning.
+
+08 [PASS] EXPERT POST is a real long-form guidance section, not a renamed feature list.
+   Evidence: 8 decision-oriented guidance articles with practical explanations.
+
+09 [PASS] Expert topic: A4 vs Letter selection standard.
+10 [PASS] Expert topic: Portrait/Landscape/Auto selection standard.
+11 [PASS] Expert topic: margin meaning and 0/5/10/20/custom usage.
+12 [PASS] Expert topic: No Stretch / contain and aspect-ratio preservation.
+13 [PASS] Expert topic: transparent PNG on white PDF page.
+14 [PASS] Expert topic: high-resolution image -> PDF size/browser memory relationship.
+15 [PASS] Expert topic: image PDF vs OCR PDF boundary.
+16 [PASS] Expert topic: final order/page-count/file-size verification.
+
+17 [PASS] Expert content does not add out-of-scope OCR/compression/editing functions.
+   Evidence: those functions are explained only as boundaries or adjacent-tool follow-up.
+
+18 [PASS] IMPORTANT NOTES remains separate from expert content and contains operational cautions/service limits.
+
+19 [PASS] FAQ remains separate and covers multi-image, reorder, A4/Letter, aspect ratio, local processing, OCR boundary, re-generation.
+
+20 [PASS] FAQPage JSON-LD remains synchronized with visible FAQ data.
+
+21 [PASS] Common content design classes are reused; no new global CSS is required for use cases or expert post.
+   Evidence: toolbox-tool-use-cases--editorial and toolbox-tool-expert-post classes already exist in official toolbox-detail-common.css and completed tools.
+
+22 [PASS] No new 026-specific content CSS was added to app/globals.css or styles/*.css.
+
+23 [PASS] Content change does not alter PDF generation logic, limits, reorder behavior, route, or download rules.
+
+24 [PASS] Static content validator checks HOW TO, exact scenarios, expert section, expert topics, common classes, KO/EN/JA branches.
+
+25 [MAIN-WORKSHOP INTEGRATION] Actual browser rendering/line-wrap/height balance for the expanded KO/EN/JA content.
+   Reason: current top-level sub-workshop instructions transfer actual browser/viewport/locale rendering to main-workshop integration.
+
+CONTENT RESULT
+PASS: 24
+FAIL: 0
+NOT VERIFIED (sub-workshop required): 0
+MAIN-WORKSHOP INTEGRATION: 1 category

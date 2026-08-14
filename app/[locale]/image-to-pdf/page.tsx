@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ImageToPdfPage } from "@/components/image-to-pdf-page";
+import { locales, type Locale } from "@/lib/site";
+const titles:Record<Locale,string>={ko:"이미지 PDF 변환기 - JPG·PNG를 PDF로 | FIXLGS TOOLBOX",en:"Image to PDF Converter - JPG & PNG to PDF | FIXLGS TOOLBOX",ja:"画像 PDF 変換ツール - JPG・PNGをPDFへ | FIXLGS TOOLBOX"};
+const descriptions:Record<Locale,string>={ko:"JPG·PNG 이미지를 원하는 순서로 정리해 A4·Letter PDF로 만드세요. 페이지 방향과 여백을 설정하고 브라우저에서 바로 PDF를 다운로드할 수 있습니다.",en:"Arrange JPG and PNG images in any order, choose A4 or Letter, orientation and margins, then create and download one PDF directly in your browser.",ja:"JPG・PNG画像を好きな順番に並べ、A4・Letter、向き、余白を設定してブラウザ内でPDFを作成・ダウンロードできます。"};
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))notFound();const l=locale as Locale;const canonical=`https://toolbox.fixlgs.com/${l}/image-to-pdf`;return{title:titles[l],description:descriptions[l],alternates:{canonical,languages:{ko:"https://toolbox.fixlgs.com/ko/image-to-pdf",en:"https://toolbox.fixlgs.com/en/image-to-pdf",ja:"https://toolbox.fixlgs.com/ja/image-to-pdf","x-default":"https://toolbox.fixlgs.com/en/image-to-pdf"}},openGraph:{title:titles[l],description:descriptions[l],url:canonical,type:"website"}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <ImageToPdfPage locale={locale as Locale}/>}

@@ -78,7 +78,7 @@ export const categories: Category[] = [
       en: "Image/PDF conversion, merge, split, and page cleanup.",
       ja: "画像・PDF変換、結合、分割、ページ整理。",
     },
-    toolCountLabel: { ko: "제작 예정", en: "Planned", ja: "制作予定" },
+    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -218,6 +218,8 @@ export const tool024Slug = "app-store-screenshot-maker" as const;
 
 export const tool025Slug = "id-passport-photo-maker" as const;
 
+export const tool026Slug = "image-to-pdf" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -252,6 +254,8 @@ export const tool024Titles: Record<Locale, string> = { ko: "앱스토어 스크�
 export const tool024Descriptions: Record<Locale, string> = { ko: "실제 앱 화면 여러 장을 App Store·Google Play 등록용 홍보 스크린샷 세트로 제작하세요.", en: "Turn multiple real app screens into promotional screenshot sets for App Store and Google Play.", ja: "実際のアプリ画面を複数追加し、App Store・Google Play登録用のプロモーション画像セットを作成できます。" };
 export const tool025Titles: Record<Locale, string> = { ko: "증명사진·여권사진 제작기", en: "ID & Passport Photo Maker", ja: "証明写真・パスポート写真作成ツール" };
 export const tool025Descriptions: Record<Locale, string> = { ko: "국가별 규격과 얼굴 위치를 확인해 증명·여권·취업사진과 A4 인쇄 배치를 만드세요.", en: "Create ID, passport and employment photos with country presets, face guides and A4 print layouts.", ja: "国別規格と顔位置を確認し、証明・パスポート・就職写真とA4印刷配置を作成します。" };
+export const tool026Titles: Record<Locale, string> = { ko: "이미지 PDF 변환기", en: "Image to PDF Converter", ja: "画像 PDF 変換ツール" };
+export const tool026Descriptions: Record<Locale, string> = { ko: "JPG·PNG 이미지를 원하는 순서로 정리해 A4·Letter PDF로 만들고 브라우저에서 바로 저장하세요.", en: "Arrange JPG and PNG images, choose A4 or Letter, and create one PDF directly in your browser.", ja: "JPG・PNG画像を好きな順番に並べ、A4・Letter PDFをブラウザ内で作成・保存できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -630,6 +634,15 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
   ],
+  "pdf": [
+    {
+      title: tool026Titles,
+      description: tool026Descriptions,
+      href: `/${"ko"}/${tool026Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+  ],
   "image-edit": [
     {
       title: tool008Titles,
@@ -747,6 +760,10 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
 
   if (categorySlug === "content-image") {
     return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool019Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool020Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool021Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool022Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool023Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool024Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool025Slug}` } : item);
+  }
+
+  if (categorySlug === "pdf") {
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool026Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

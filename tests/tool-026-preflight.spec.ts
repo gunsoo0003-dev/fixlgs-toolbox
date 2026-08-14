@@ -1,0 +1,2 @@
+import { test, expect } from "@playwright/test";
+test("026 preflight route/root and core controls", async({page})=>{await page.goto("/ko/image-to-pdf");await expect(page.getByTestId("tool026-root")).toBeVisible();await expect(page.getByTestId("tool026-file-input")).toHaveAttribute("multiple","");await expect(page.getByText("A4 · 210×297mm")).toBeAttached();await expect(page.getByText("Letter · 8.5×11in")).toBeAttached();});

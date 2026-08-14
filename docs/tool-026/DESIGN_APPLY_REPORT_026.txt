@@ -1,0 +1,44 @@
+WEB TOOL 026 - DESIGN CHECKLIST APPLICATION REPORT
+===================================================
+Target: 026 이미지 PDF 변환기
+MAIN transplant baseline: 024 앱스토어 스크린샷 제작기
+SUB baseline: 013 이미지 합치기 (reorder interaction only)
+
+A. Issue found before correction
+- Work-area styling used a private --toolbox-* variable family not present in the current official post-split design system.
+- This meant the workbench could not be certified as an actual MAIN-baseline transplant.
+
+B. Correction applied from checklist
+- Replaced private work-area token vocabulary with MAIN024's official --tb-* / --blue theme variables.
+- Transplanted MAIN024 dropzone treatment: dashed blue-mix border, circular blue plus, drag-over focus ring, 18px radius.
+- Transplanted MAIN024 action hierarchy: 44px pill primary/secondary controls using inverse/panel tokens.
+- Transplanted MAIN024 panel/card/control density: 18px panels, 54px thumbnail cards, 14px card radius, 42px controls with 12px radius.
+- Preserved SUB013 ordered-image behavior: drag reorder plus first/up/down/last/delete controls.
+- Added dedicated mobile flow: single-column panels, full-width actions, five equal move controls, preview grid collapse.
+- Kept PDF-only preview/margin/result rules in the 026 CSS module.
+- Did not copy/import any legacy sealed CSS and did not modify protected global styles.
+
+C. Checklist re-application result
+- PASS: 19
+- FAIL: 0
+- NOT VERIFIED in sub-workshop required scope: 0
+- MAIN-WORKSHOP INTEGRATION: actual browser visual verification category only
+
+D. Static/logic recheck after correction
+- Standalone delivery source-contract: PASS
+- Integrated project protected global CSS scan: PASS
+- PDF page-size/mm/contain logic: PASS
+- Private --toolbox-* token references in TOOL026 module: 0
+- Legacy sealed references in TOOL026 product source: 0
+
+E. Final sub-workshop design judgement
+DESIGN-CODE PASS.
+The work area is now based on actual MAIN024 code/token/geometry transplant, with SUB013 used only where its multi-image reorder workflow is needed.
+Actual PC/mobile/KO/EN/JA/light/dark visual rendering remains MAIN-WORKSHOP INTEGRATION under the 2026-08-11 top-level instruction.
+
+FINAL CONTENT-PASS DESIGN IMPACT CHECK 2026-08-14
+- Added USE CASES using existing official toolbox-tool-use-cases--editorial structure already present in completed tools.
+- EXPERT POST continues to use existing toolbox-tool-expert-post / toolbox-tool-practical-grid common structure.
+- No new global CSS, sealed selector, or 026-specific long-form content override was added.
+- Therefore the content upgrade preserves the previously established MAIN024/SUB013 design-system transplant and does not reopen a design-system divergence.
+- Actual expanded-text wrapping remains main-workshop browser integration verification.
