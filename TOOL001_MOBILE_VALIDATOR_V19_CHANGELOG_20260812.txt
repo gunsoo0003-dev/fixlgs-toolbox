@@ -1,8 +1,0 @@
-TOOL001 MOBILE VALIDATOR V19
-- V18의 workflow 실패 상세 유실 문제 수정.
-- workflow 전용 reporter 추가: 각 테스트 PASS/FAIL/SKIP, duration, 전체 error, attachment 경로를 JSON/TXT로 보존.
-- workflow Playwright outputDir을 test-results/tool001-mobile-workflow-artifacts 로 격리.
-- 실패 screenshot / trace / video / error-context 등 Playwright 산출물을 결과 ZIP에 재귀 포함.
-- WORKFLOW_GATE_TEST_COUNT 고정값 제거. 실제 실행 테스트 수를 reporter 결과에서 계산.
-- PASS/FAIL/SKIP 실측 카운트 및 WORKFLOW_DETAIL_ERROR를 runner status에 기록.
-- 실기기 테스트는 포함하지 않음. REAL_DEVICE_NOT_VERIFIED 유지.

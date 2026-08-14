@@ -99,7 +99,7 @@ export const validationTools: readonly ToolValidationDefinition[] = [
     name: "이미지 자르기·회전 도구",
     slug: "image-cropper-rotator",
     locales: ["ko", "en", "ja"],
-    expectedH1: { ko: "이미지 자르기·회전 도구", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" },
+    expectedH1: { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" },
   },
   {
     id: "tool-009",
@@ -107,7 +107,7 @@ export const validationTools: readonly ToolValidationDefinition[] = [
     name: "이미지 밝기·색상 보정기",
     slug: "image-brightness-color-adjuster",
     locales: ["ko", "en", "ja"],
-    expectedH1: { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像明るさ・色補正ツール" },
+    expectedH1: { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" },
   },
   {
     id: "tool-010",

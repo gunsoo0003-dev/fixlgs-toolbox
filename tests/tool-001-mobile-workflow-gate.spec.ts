@@ -107,16 +107,18 @@ test.describe('TOOL 001 mobile observable workflow gate', () => {
       return { pass: /sample\.jpg/i.test(text) && !!dimensions && !/-×-/.test(text), detail: `card=${text.slice(0, 240)}` };
     });
 
-    const preview = card.locator('img').first();
-    await expect(preview, 'preview image element must be visible').toBeVisible();
-    await expect.poll(async () => preview.evaluate((img: HTMLImageElement) => ({ complete: img.complete, w: img.naturalWidth, h: img.naturalHeight })), {
-      message: 'preview must decode to non-zero natural dimensions', timeout: 15_000,
-    }).toMatchObject({ complete: true });
-    const natural = await preview.evaluate((img: HTMLImageElement) => ({ w: img.naturalWidth, h: img.naturalHeight }));
-    expect(natural.w, 'preview naturalWidth').toBeGreaterThan(0);
-    expect(natural.h, 'preview naturalHeight').toBeGreaterThan(0);
+    const preview = card.getByRole('img').first();
+    await expect(preview, 'preview visual must be visible').toBeVisible();
+    await expect.poll(async () => preview.evaluate((el) => {
+      if (el instanceof HTMLCanvasElement) return { ready: el.width > 0 && el.height > 0, w: el.width, h: el.height };
+      if (el instanceof HTMLImageElement) return { ready: el.complete && el.naturalWidth > 0 && el.naturalHeight > 0, w: el.naturalWidth, h: el.naturalHeight };
+      return { ready: false, w: 0, h: 0 };
+    }), { message: 'preview must decode to non-zero dimensions', timeout: 15_000 }).toMatchObject({ ready: true });
+    const dims = await preview.evaluate((el) => el instanceof HTMLCanvasElement ? { w: el.width, h: el.height } : el instanceof HTMLImageElement ? { w: el.naturalWidth, h: el.naturalHeight } : { w: 0, h: 0 });
+    expect(dims.w, 'preview width').toBeGreaterThan(0);
+    expect(dims.h, 'preview height').toBeGreaterThan(0);
 
-    await evidence(page, '05_PREVIEW_DECODED', async () => ({ pass: natural.w > 0 && natural.h > 0, detail: `${natural.w}x${natural.h}` }));
+    await evidence(page, '05_PREVIEW_DECODED', async () => ({ pass: dims.w > 0 && dims.h > 0, detail: `${dims.w}x${dims.h}` }));
 
     const geometry = await page.evaluate(() => ({
       innerWidth: window.innerWidth,

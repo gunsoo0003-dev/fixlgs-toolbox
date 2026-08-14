@@ -1,3 +1,0 @@
-TOOL 020 category card line-break fix
-- Korean content-image category card: 유튜브 채널 / 배너 제작기
-- No other card titles changed.

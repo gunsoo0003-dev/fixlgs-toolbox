@@ -111,7 +111,7 @@ test.describe('TOOL001 exhaustive locally reproducible mobile cause matrix',()=>
       await choose(page,{name:payloadName,mimeType:mime,buffer}); selected=true;
     }
     if(mode==='CLEAR_DURING'||mode==='REMOVE_DURING'){
-      await page.evaluate((m)=>{const input=document.querySelector('[data-testid="converter-file-input"]') as HTMLInputElement|null;if(!input)return;if(m==='CLEAR_DURING')input.value='';else input.remove();},mode);
+      await page.evaluate((m:string)=>{const input=document.querySelector('[data-testid="converter-file-input"]') as HTMLInputElement|null;if(!input)return;if(m==='CLEAR_DURING')input.value='';else input.remove();},mode);
     }
     if(mode==='VISIBILITY') await page.evaluate(()=>{window.dispatchEvent(new Event('blur'));document.dispatchEvent(new Event('visibilitychange'));window.dispatchEvent(new Event('focus'));});
     if(mode==='DELAY10') await page.waitForTimeout(10000);

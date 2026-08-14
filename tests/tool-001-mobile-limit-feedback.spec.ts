@@ -24,7 +24,7 @@ test.describe('TOOL001 mobile rejected-input feedback and silent-dead-state guar
   test('11-file selection must cap at 10 and leave visible feedback', async ({ page }) => {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
     const b = fs.readFileSync(samplePath);
-    await page.getByTestId('converter-file-input').setInputFiles(Array.from({ length: 11 }, (_, i) => ({ name: `mobile-count-${i}.jpg`, mimeType: 'image/jpeg', buffer: b })));
+    for (let i = 0; i < 11; i += 1) await page.getByTestId('converter-file-input').setInputFiles({ name: `mobile-count-${i}.jpg`, mimeType: 'image/jpeg', buffer: Buffer.concat([b, Buffer.from([i])]) });
     await expect(page.getByTestId('converter-file-card')).toHaveCount(10, { timeout: 20_000 });
     await expect(page.locator('.toolbox-upload-focus')).toHaveCount(0);
     await expect(page.locator('.toolbox-upload-active')).toBeVisible();
@@ -47,7 +47,7 @@ test.describe('TOOL001 mobile rejected-input feedback and silent-dead-state guar
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       // Use real file paths, not Playwright in-memory buffers. The protocol has a
       // ~50MB payload ceiling, while this scenario intentionally selects 64MB.
-      await page.getByTestId('converter-file-input').setInputFiles(tempFiles);
+      for (const filePath of tempFiles) await page.getByTestId('converter-file-input').setInputFiles(filePath);
       await expect(page.getByTestId('converter-file-card')).toHaveCount(3, { timeout: 60_000 });
       await expect(page.locator('.toolbox-upload-active')).toBeVisible();
       await expect(page.locator('.toolbox-workbench-notice')).toContainText(/제외|제한/);

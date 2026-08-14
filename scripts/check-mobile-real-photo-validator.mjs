@@ -9,7 +9,7 @@ const errors=[];
 const must=[
   'A1 CHOOSER_OPEN','A2 MEDIA_ACTION_SELECTED','A3 GALLERY_SELECTED','A4 CAMERA_SELECTED','A5 CAMERA_GRID_READY','A6 PHOTO_SLOT_','A7 RETURN_TO_WEB',
   'W4 IMMEDIATE_SMALL_SCROLL','discoverPhotoGrid','snapshotNative','TOOL018_SPECIAL_FAIL','INPUT_NOT_APPLICABLE',
-  'uploads:2','tool013-select','tool014-select','tool015-before-slot','tool015-after-slot','tool016-content','tool017-select','tool017-process-all','tool020-drop','tool023-generate','tool024-export-zip',
+  'uploads:2','tool013-select','tool014-select','tool015-before-slot','tool015-after-slot','tool016-addbar','tool016-content','tool017-select','tool017-process-all','tool020-drop','tool023-generate','tool024-export-zip',
   'recoverToChrome','HARNESS_DOWNLOAD_FILE_NOT_OBSERVED','DOWNLOAD_BEFORE.json','DOWNLOAD_REDOWNLOAD_CONFIRM','TOOL005 CURRENT_RESULT_USE','TOOL003_UNSUPPORTED_INPUT','tool023-dropzone','cleanupAndroidResources','ANDROID_DEVICE_CLOSE','[EXIT] NORMAL','BLOCKED_STEPS','archiveResultFolder','RESULT ZIP TARGET','RETEST_HARNESS_INVALID_ORIGINAL_PRODUCT_FAIL_PRESERVED'
 ];
 for(const x of must)if(!script.includes(x))errors.push(`missing flow token: ${x}`);

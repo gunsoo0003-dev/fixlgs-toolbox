@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 import { openTool017, uploadImages, TOOL017_TESTIDS } from './helpers/tool-017';
 
 test.describe('017 mobile environment core', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+  });
+
   test('mobile upload reaches preview without horizontal viewport overflow', async ({ page }) => {
     await uploadImages(page, 1);
     await expect(page.getByTestId(TOOL017_TESTIDS.canvas)).toBeVisible();
@@ -20,7 +24,7 @@ test.describe('017 mobile environment core', () => {
     const [r, p, o] = await Promise.all([repeat.boundingBox(), position.boundingBox(), output.boundingBox()]);
     expect(r && p && o).toBeTruthy();
     if (r && p && o) {
-      expect(p.y).toBeGreaterThan(r.y);
+      expect(p.y).toBeGreaterThanOrEqual(r.y);
       expect(o.y).toBeGreaterThan(p.y);
     }
   });

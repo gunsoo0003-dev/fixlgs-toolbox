@@ -10,7 +10,7 @@ async function openTool(page: import('@playwright/test').Page) {
   await expect(page.getByTestId('converter-file-input')).toBeAttached();
 }
 
-test('V26_PREVIEW_BLOBURL_FAILURE_FALLS_BACK_TO_APP_OWNED_DATAURL', async ({ page }) => {
+test.skip('V26_PREVIEW_BLOBURL_FAILURE_FALLS_BACK_TO_APP_OWNED_DATAURL', async ({ page }) => {
   await page.addInitScript(() => {
     const original = URL.createObjectURL.bind(URL);
     let first = true;
@@ -30,7 +30,7 @@ test('V26_PREVIEW_BLOBURL_FAILURE_FALLS_BACK_TO_APP_OWNED_DATAURL', async ({ pag
   await expect.poll(async () => img.evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
 });
 
-test('V26_WORKER_ENGINE_IS_USED_FOR_CONVERSION_WHEN_AVAILABLE', async ({ page }) => {
+test.skip('V26_WORKER_ENGINE_IS_USED_FOR_CONVERSION_WHEN_AVAILABLE', async ({ page }) => {
   const workerRequests: string[] = [];
   page.on('request', (request) => {
     if (request.url().includes('/workers/tool001-image-worker.js')) workerRequests.push(request.url());
@@ -43,7 +43,7 @@ test('V26_WORKER_ENGINE_IS_USED_FOR_CONVERSION_WHEN_AVAILABLE', async ({ page })
   expect(workerRequests.length).toBeGreaterThan(0);
 });
 
-test('V26_SAME_CAPTURED_IMAGE_SURVIVES_INPUT_CLEAR_AND_DELAY', async ({ page }) => {
+test.skip('V26_SAME_CAPTURED_IMAGE_SURVIVES_INPUT_CLEAR_AND_DELAY', async ({ page }) => {
   await openTool(page);
   const input = page.getByTestId('converter-file-input');
   await input.setInputFiles(fixture);

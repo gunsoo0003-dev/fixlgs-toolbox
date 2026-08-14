@@ -1,1 +1,0 @@
-V15: each Android/cause scenario runs in an isolated browser context. Timeout closes only that context, preventing detached DOM/page-close contamination. Rapid reselect and two-fast-selection use the stable file input directly. Product code unchanged.

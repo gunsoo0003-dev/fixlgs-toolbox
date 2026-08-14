@@ -14,9 +14,9 @@ async function setRange(page: Page, key: string, value: number) {
   const locator = page.locator(`[data-testid="tool009-${key}"]`);
   await locator.fill(String(value));
   await expect(locator).toHaveValue(String(value));
-  // The component commits slider history on blur/pointer-up. Blurring mirrors a
-  // completed keyboard or pointer interaction without bypassing React events.
-  await locator.blur();
+  // The actual range control commits history on pointer-up / key-up.
+  // Dispatch pointerup after fill so the validator follows the product event contract.
+  await locator.dispatchEvent("pointerup", { pointerId: 1, pointerType: "mouse", button: 0, buttons: 0, bubbles: true });
   await expect(page.locator('[data-testid="tool009-undo"]')).toBeEnabled();
   await page.waitForTimeout(50);
 }

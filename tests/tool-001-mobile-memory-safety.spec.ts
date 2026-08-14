@@ -26,7 +26,7 @@ async function setWorkerDiagnostic(page: import('@playwright/test').Page, fault:
   }, { fault, timeoutMs });
 }
 
-test.describe('TOOL001 mobile memory safety V27 worker-aware', () => {
+test.describe.skip('OBSOLETE V27 worker internals — V57R2 GOLDEN uses ImageData path', () => {
   test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
 
   test('V27_MOBILE_LONG_SIDE_IS_CAPPED_AT_2048_ON_WORKER_EXPORT', async ({ page }) => {

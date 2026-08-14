@@ -37,7 +37,7 @@ test.describe("001 확정 운영 안전선·경계 검수", () => {
     test.skip(!projectMatches(testInfo, "desktop"), "desktop 전용 경계 검수");
     await page.goto("/ko/jpg-png-webp-image-converter");
     const sample = await makeRasterBuffer(page, 256, 256, "image/jpeg");
-    await page.getByTestId("converter-file-input").setInputFiles(Array.from({ length: 11 }, (_, i) => ({ name: `count-${i}.jpg`, mimeType: "image/jpeg", buffer: sample })));
+    for (let i = 0; i < 11; i += 1) await page.getByTestId("converter-file-input").setInputFiles({ name: `count-${i}.jpg`, mimeType: "image/jpeg", buffer: Buffer.concat([sample, Buffer.from([i])]) });
     await expect(page.getByTestId("converter-file-card")).toHaveCount(10);
     await page.reload();
     const oversized = await makeOversizedJpeg(20 * 1024 * 1024 + 1);

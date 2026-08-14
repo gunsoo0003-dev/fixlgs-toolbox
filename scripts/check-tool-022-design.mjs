@@ -2,7 +2,7 @@ import fs from 'node:fs';
 const css=fs.readFileSync('components/blog-open-graph-image-maker.module.css','utf8');
 const tool=fs.readFileSync('components/blog-open-graph-image-maker-tool.tsx','utf8');
 const page=fs.readFileSync('components/blog-open-graph-image-maker-page.tsx','utf8');
-const globals=fs.readFileSync('app/globals.css','utf8');
+const globals=[fs.readFileSync('app/globals.css','utf8'),fs.readFileSync('styles/toolbox-common.css','utf8'),fs.readFileSync('styles/toolbox-detail-common.css','utf8')].join('\n');
 const checks={
   detailHero:page.includes('toolbox-tool-detail-hero')&&page.includes('toolbox-subpage-back')&&page.includes('toolbox-subpage-eyebrow')&&page.includes('toolbox-tool-detail-heading')&&page.includes('toolbox-tool-detail-badge'),
   detailBody:page.includes('toolbox-tool-detail-body'),
@@ -23,7 +23,7 @@ const checks={
   cards:css.includes('border-radius:22px'),
   mobileTabs:tool.includes('mobileTabs'),
   jaCopy:tool.includes('選択した画像を ZIP でダウンロード'),
-  workspace021:css.includes('.localLine')&&css.includes('.workspaceCard')&&css.includes('.workspaceUploadButton')&&css.includes('.blankStartRow'),
+  workspace021:css.includes('.localLine')&&css.includes('.workspaceDropFocus')&&css.includes('.workspaceUploadButton')&&css.includes('.blankStartRow')&&tool.includes('toolbox-workbench'),
   dragDrop:tool.includes('tool022-drop-zone')&&tool.includes('onDragEnter')&&tool.includes('onDragOver')&&tool.includes('onDrop')&&tool.includes("dropEffect='copy'"),
   howToSharedGrid:page.includes('toolbox-tool-guide--five')&&globals.includes('.toolbox-tool-guide--five ol')&&globals.includes('33.333333%')&&globals.includes('66.666667%'),
   howToNoToolOverride:!page.includes('pageStyles.howTo')&&!globals.includes('.tool022-howTo')&&!globals.includes('.tool022-guide'),

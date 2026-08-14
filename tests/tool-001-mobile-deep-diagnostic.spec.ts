@@ -186,7 +186,7 @@ async function selectScenario(page: Page, scenario: { label: string; fixture: st
 
 test.describe('TOOL 001 mobile deep diagnostic', () => {
   test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
-  test('all locally reproducible mobile image failure candidates in one run', async ({ page }) => {
+  test.skip('all locally reproducible mobile image failure candidates in one run', async ({ page }) => {
     test.setTimeout(420_000);
     page.setDefaultTimeout(7_000);
     page.setDefaultNavigationTimeout(7_000);

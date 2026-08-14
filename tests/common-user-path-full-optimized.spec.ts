@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
-import { probeSelectedImageFile } from "./common-validation/image-file-probe";
+import { armSelectedImageFileProbe, probeSelectedImageFile } from "./common-validation/image-file-probe";
 
 type Profile = {
   tool: string;
@@ -49,10 +49,15 @@ async function runUploadOne(page: Page, item: Profile, mobile: boolean) {
     await page.goto(`/ko/${item.slug}`, { waitUntil: "domcontentloaded", timeout: 12_000 });
     await page.evaluate(() => {
       document.documentElement.dataset.commonUploadChange = "0";
-      for (const input of document.querySelectorAll<HTMLInputElement>('input[type="file"]')) {
-        input.addEventListener("change", () => { document.documentElement.dataset.commonUploadChange = "1"; }, { once: true });
-      }
+      const marker = (event: Event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement) || target.type !== "file") return;
+        document.documentElement.dataset.commonUploadChange = "1";
+        document.removeEventListener("change", marker, true);
+      };
+      document.addEventListener("change", marker, true);
     });
+    await armSelectedImageFileProbe(page);
 
     const trigger = page.locator(item.trigger).first();
     await expect(trigger).toBeVisible({ timeout: 5_000 });

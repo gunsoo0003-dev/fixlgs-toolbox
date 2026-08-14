@@ -13,7 +13,7 @@ test.describe('008 comprehensive validation',()=>{
       await expect(page.getByText('008 · IMAGE EDIT')).toBeVisible();
       await expect(page.locator('a[href$="/category/image-edit"]').first()).toBeVisible();
       await expect(page.getByTestId('cropper-workbench')).toBeVisible();
-      await expect(page.locator('.toolbox-tool-format-guide')).toBeVisible();
+      await expect(page.locator('.toolbox-tool-format-guide').first()).toBeVisible();
     }
   });
 

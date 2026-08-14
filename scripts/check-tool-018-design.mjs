@@ -5,7 +5,7 @@ const tool001 = read('components/image-converter-tool.tsx');
 const tool018 = read('components/image-metadata-checker-tool.tsx');
 const page018 = read('components/image-metadata-checker-page.tsx');
 const css018 = read('components/image-metadata-checker-tool.module.css');
-const globalCss = read('app/globals.css');
+const globalCss = [read('app/globals.css'), read('styles/toolbox-common.css'), read('styles/toolbox-detail-common.css')].join('\n');
 const page015 = read('components/before-after-image-page.tsx');
 
 const checks = [];

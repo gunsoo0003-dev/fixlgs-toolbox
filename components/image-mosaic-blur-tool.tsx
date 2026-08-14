@@ -21,7 +21,7 @@ type Region = {
   color: string;
 };
 type Snapshot = { regions: Region[]; pixelateAll: boolean; pixelStrength: number };
-const MAX_PIXELS = 67_108_864;
+const MAX_PIXELS = 19_200_000;
 const MAX_SIDE = 8192;
 const MAX_HISTORY = 60;
 const MAX_REGIONS = 75;

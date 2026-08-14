@@ -1,5 +1,0 @@
-TOOL 020 workspace layout fix
-- Reworked pre-upload workspace to follow TOOL 019 structure.
-- Reworked post-upload workspace grid to reduce empty space and unify section grouping.
-- Standardized secondary/primary buttons closer to TOOL 019.
-- Kept lower safe-area and notes sections unchanged.

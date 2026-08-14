@@ -1,5 +1,0 @@
-TOOL001 REAL ANDROID DEEP DIAGNOSTIC V5
-- V4 defect fixed: hidden file input no longer waits for visibility.
-- Preferred selector: [data-testid="converter-file-input"], fallback input[type=file].
-- File input only needs state=attached.
-- Progress heartbeat retained.

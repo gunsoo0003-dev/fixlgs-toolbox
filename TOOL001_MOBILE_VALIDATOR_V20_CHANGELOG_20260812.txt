@@ -1,9 +1,0 @@
-TOOL001 MOBILE VALIDATOR V20
-
-V19 result-driven fixes:
-1. 60MB aggregate mobile limit scenario now uploads four real temporary JPG files by path, avoiding Playwright in-memory protocol payload ceiling.
-2. TOOL001 downloadBlob now catches URL.createObjectURL / anchor-download failures and surfaces localized UI feedback instead of leaking pageerror.
-3. ZIP download state reflects download start failure.
-4. V20 runner output/result ZIP naming updated.
-
-Real-device test remains outside automation and is still the final post-deployment check.

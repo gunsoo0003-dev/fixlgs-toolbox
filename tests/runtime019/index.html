@@ -1,6 +1,0 @@
-<!doctype html><meta charset="utf-8"><title>019 isolated runtime</title><body><canvas id="c"></canvas><pre id="out"></pre><script>
-const W=1280,H=720;
-function render(res='standard',guides=false){const m=res==='high'?3:1,c=document.querySelector('#c');c.width=W*m;c.height=H*m;const x=c.getContext('2d');x.scale(m,m);x.fillStyle='#111111';x.fillRect(0,0,W,H);x.fillStyle='#fff';x.font='700 86px sans-serif';x.fillText('오늘 꼭 알아야 할 5가지',80,250);x.strokeStyle='#000';x.lineWidth=7;x.strokeText('오늘 꼭 알아야 할 5가지',80,250);if(guides){x.strokeStyle='#0868d7';x.strokeRect(64,36,1152,648);x.beginPath();x.moveTo(W/3,0);x.lineTo(W/3,H);x.stroke()}return c}
-function pngBlob(c){return new Promise(r=>c.toBlob(r,'image/png'))}
-async function run(){let r={};let c=render('standard',false),b=await pngBlob(c);r.standard=[c.width,c.height,b.size];c=render('high',false);b=await pngBlob(c);r.high=[c.width,c.height,b.size];c=render('standard',false);let x=c.getContext('2d');r.guidePixel=Array.from(x.getImageData(64,36,1,1).data);document.querySelector('#out').textContent=JSON.stringify(r);window.__RESULT=r}run();
-</script></body>

@@ -1,8 +1,0 @@
-TOOL001 REAL PHOTO V24
-- V23 result-driven commit/result-return diagnostic
-- live commit control rescan after selection
-- 12s commit-control timeout (no 110s wait)
-- PICKER_CLOSED_NO_CHANGE hard classification
-- URL/origin/path guard with automatic TOOL001 restore
-- file input/page focus snapshot on return failures
-- GOOD/BAD real-user-photo cases continue independently

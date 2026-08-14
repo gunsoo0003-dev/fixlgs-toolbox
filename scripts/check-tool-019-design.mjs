@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-const read=(p)=>readFileSync(p,'utf8');const tool=read('components/youtube-thumbnail-maker-tool.tsx');const page=read('components/youtube-thumbnail-maker-page.tsx');const css=read('components/youtube-thumbnail-maker-tool.module.css');const global=read('app/globals.css');const category=read('app/[locale]/category/[categorySlug]/page.tsx');
+const read=(p)=>readFileSync(p,'utf8');const tool=read('components/youtube-thumbnail-maker-tool.tsx');const page=read('components/youtube-thumbnail-maker-page.tsx');const css=read('components/youtube-thumbnail-maker-tool.module.css');const global=[read('app/globals.css'),read('styles/toolbox-common.css'),read('styles/toolbox-detail-common.css')].join('\n');const category=read('app/[locale]/category/[categorySlug]/page.tsx');
 const checks=[];const add=(n,ok)=>checks.push([n,ok]);
 for(const cls of ['toolbox-workbench','toolbox-workbench-topline','toolbox-upload-focus','toolbox-upload-icon'])add(`common workbench ${cls}`,tool.includes(cls)&&global.includes(`.${cls}`));
 add('desktop preview full-width first row',css.includes('"preview preview preview"'));

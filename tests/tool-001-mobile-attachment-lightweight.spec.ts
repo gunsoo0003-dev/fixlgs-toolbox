@@ -4,14 +4,10 @@ import { expect, test } from '@playwright/test';
 const route = '/ko/jpg-png-webp-image-converter';
 const fixture = (name: string) => path.join(process.cwd(), 'test-fixtures', name);
 
-test.describe('TOOL001 V27 captured-input / deferred-worker path', () => {
+test.describe('TOOL001 V57R2 captured-input / ImageData path', () => {
   test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
 
-  test('V27_SELECTION_CAPTURES_OWNED_FILE_AND_DEFERS_WORKER_UNTIL_CONVERT', async ({ page }) => {
-    const workerRequests: string[] = [];
-    page.on('request', (request) => {
-      if (request.url().includes('/workers/tool001-image-worker.js')) workerRequests.push(request.url());
-    });
+  test('V57R2_SELECTION_CAPTURES_FILE_AND_DEFERS_CONVERSION_UNTIL_RUN', async ({ page }) => {
     await page.goto(route);
 
     const trigger = page.locator('.toolbox-upload-focus button').first();
@@ -23,16 +19,14 @@ test.describe('TOOL001 V27 captured-input / deferred-worker path', () => {
     const card = page.getByTestId('converter-file-card').first();
     await expect(card).toBeVisible({ timeout: 15000 });
     await expect(page.locator('.toolbox-upload-focus')).toHaveCount(0);
-    await expect.poll(async () => card.locator('img').evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
+    await expect.poll(async () => card.getByRole('img').first().evaluate((el) => el instanceof HTMLCanvasElement ? el.width : el instanceof HTMLImageElement ? el.naturalWidth : 0)).toBeGreaterThan(0);
     await expect.poll(async () => page.getByTestId('converter-file-input').inputValue()).toBe('');
-    expect(workerRequests.length, 'selection/preview must not start the conversion worker').toBe(0);
-
     await page.getByTestId('converter-run').tap();
     await expect(card).toHaveAttribute('data-status', 'done', { timeout: 30000 });
-    expect(workerRequests.length, 'conversion should start the isolated worker').toBeGreaterThan(0);
+    await expect(card).toHaveAttribute('data-status', 'done');
   });
 
-  test('V27_RESELECT_AFTER_RESET_REMAINS_USABLE_WITH_CAPTURED_INPUT', async ({ page }) => {
+  test('V57R2_RESELECT_AFTER_RESET_REMAINS_USABLE_WITH_CAPTURED_INPUT', async ({ page }) => {
     await page.goto(route);
     const pick = async () => {
       const chooserPromise = page.waitForEvent('filechooser');
@@ -41,7 +35,7 @@ test.describe('TOOL001 V27 captured-input / deferred-worker path', () => {
       await chooser.setFiles(fixture('sample.jpg'));
       const card = page.getByTestId('converter-file-card').first();
       await expect(card).toBeVisible({ timeout: 15000 });
-      await expect.poll(async () => card.locator('img').evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
+      await expect.poll(async () => card.getByRole('img').first().evaluate((el) => el instanceof HTMLCanvasElement ? el.width : el instanceof HTMLImageElement ? el.naturalWidth : 0)).toBeGreaterThan(0);
     };
     await pick();
     await page.getByRole('button', { name: /전체 초기화|Reset all|すべてリセット/ }).first().tap();

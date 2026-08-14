@@ -2,7 +2,7 @@ import fs from 'node:fs';
 const page=fs.readFileSync('components/app-icon-favicon-generator-page.tsx','utf8');
 const tool=fs.readFileSync('components/app-icon-favicon-generator-tool.tsx','utf8');
 const css=fs.readFileSync('components/app-icon-favicon-generator-tool.module.css','utf8');
-const globals=fs.readFileSync('app/globals.css','utf8');
+const globals=[fs.readFileSync('app/globals.css','utf8'),fs.readFileSync('styles/toolbox-common.css','utf8'),fs.readFileSync('styles/toolbox-detail-common.css','utf8')].join('\n');
 const checks={
   hero:page.includes('toolbox-tool-detail-hero'),
   heroSingleLine:page.includes('toolbox-tool-detail-hero--single-line-description')&&globals.includes('.toolbox-tool-detail-hero--single-line-description'),

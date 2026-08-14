@@ -1,9 +1,0 @@
-TOOL 001 MOBILE DEEP DIAGNOSTIC V10
-- Windows playwright.cmd 직접 spawn 제거
-- Node + @playwright/test/cli.js 직접 실행
-- child process stdout/stderr 실시간 터미널 스트리밍
-- 16개 시나리오별 START / 단계별 결과 / 진행률 출력
-- 시나리오 예외 발생 시 계속 진행
-- 완료 후 decoded / accepted / converted 요약
-- 제품 코드 추가 수정 없음
-- REAL_DEVICE_NOT_VERIFIED 유지

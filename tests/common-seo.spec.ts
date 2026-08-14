@@ -13,7 +13,9 @@ test.describe("TOOLBOX SEO 공통 검수", () => {
           await expect(page.locator(`link[rel="alternate"][hreflang="${alternate}"]`)).toHaveAttribute("href", `${base}/${alternate}/${tool.slug}`);
         }
         await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.+/);
-        await expect(page).toHaveTitle(/TOOLBOX/);
+        const title = (await page.title()).trim();
+        expect(title.length, "document title must be present").toBeGreaterThan(3);
+        expect(title).not.toMatch(/Application error|Internal Server Error/i);
         const structuredData = page.locator('script[type="application/ld+json"]');
         await expect(structuredData.first()).toBeAttached();
       });

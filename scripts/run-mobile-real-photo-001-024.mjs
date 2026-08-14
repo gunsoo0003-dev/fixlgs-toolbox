@@ -51,7 +51,7 @@ const TOOLS = [
   t(2,'heic-avif-image-converter','[data-testid="heic-file-input"]',['[data-testid="heic-file-card"]'],{kind:'status',run:'[data-testid="heic-run"]',card:'[data-testid="heic-file-card"]',terminal:/done|error|cancelled/,pass:/done/,downloadInCard:true}),
   t(3,'svg-bmp-tiff-image-converter','[data-testid="svg-file-input"]',['[data-testid="svg-file-card"]'],{kind:'status',run:'[data-testid="svg-run"]',card:'[data-testid="svg-file-card"]',terminal:/done|error|cancelled/,pass:/done/,downloadInCard:true},{fixedGalleryInputUnsupported:true}),
   t(4,'image-compressor','[data-testid="compressor-file-input"]',['[data-testid="compressor-file-card"]'],{kind:'status',run:'[data-testid="compressor-run"]',card:'[data-testid="compressor-file-card"]',terminal:/done|kept|failed|cancelled/,pass:/done|kept/,downloadInCard:true}),
-  t(5,'target-size-image-compressor','[data-testid="target-file-input"]',['[data-testid="target-file-card"]'],{kind:'status',run:'[data-testid="target-compress-button"]',card:'[data-testid="target-file-card"]',terminal:/reached|already|unreached|failed|cancelled/,pass:/reached|already/,downloadInCard:true,acceptUnreached:/^(현재 결과 사용|Use current result|現在の結果を使用)$/i}),
+  t(5,'target-size-image-compressor','[data-testid="target-file-input"]',['[data-testid="target-file-card"]'],{kind:'status',run:'[data-testid="target-compress-button"]',card:'[data-testid="target-file-card"]',terminal:/^(reached|already|unreached|failed|cancelled)$/,pass:/^(reached|already)$/,downloadInCard:true,acceptUnreached:/^(현재 결과 사용|Use current result|現在の結果を使用)$/i}),
   t(6,'image-resizer','[data-testid="resizer-file-input"]',['[data-testid="resizer-file-card"]'],{kind:'status',run:'[data-testid="resizer-run"]',card:'[data-testid="resizer-file-card"]',terminal:/done|kept|failed|cancelled/,pass:/done|kept/,downloadInCard:true}),
   t(7,'web-image-optimizer','[data-testid="optimizer-file-input"]',['[data-testid="optimizer-file-card"]'],{kind:'status',run:'[data-testid="optimizer-run"]',card:'[data-testid="optimizer-file-card"]',terminal:/done|kept|failed|cancelled/,pass:/done|kept/,downloadInCard:true}),
   t(8,'image-cropper-rotator','[data-testid="cropper-file-input"]',['[data-testid="cropper-stage"]'],{kind:'cropper'}),
@@ -765,10 +765,19 @@ async function handleChromeDownloadConfirmation(caseId, maxWaitMs=2200){
     const confirm=/파일.{0,20}다시.{0,20}다운로드|다시\s*다운로드.{0,20}(하시겠|할까요)|download.{0,30}again|re-?download/i.test(text);
     if(confirm){
       write(`${caseId}_DOWNLOAD_REDOWNLOAD_CONFIRM.xml`,xml);
-      const target=nativeExactAction(xml,[/^(다시\s*다운로드|Download\s*again|Re-?download|もう一度ダウンロード)$/i]);
+      let target=nativeExactAction(xml,[/^(다시\s*다운로드|Download\s*again|Re-?download|もう一度ダウンロード)$/i]);
+      if(!target){
+        // Chrome duplicate-download dialog exposes the affirmative action with a stable
+        // resource id even when accessibility text matching misses it. Use this only
+        // after the duplicate-dialog title itself has already been positively identified.
+        const nodes=parseUiTree(xml);
+        const positive=nodes.find(n=>/com\.android\.chrome:id\/positive_button$/.test(n['resource-id']||'') && n.clickable==='true' && n.enabled!=='false');
+        const b=positive?parseBounds(positive.bounds):null;
+        if(positive&&b)target={n:positive,b,h:normalizeVisible(positive.text)||normalizeVisible(positive['content-desc'])||'positive_button',rank:0,clickable:true};
+      }
       if(!target)throw new Error('HARNESS_DOWNLOAD_REDOWNLOAD_ACTION_NOT_FOUND');
       tapTarget(target);
-      log(`[DOWNLOAD] ${caseId} duplicate confirmation -> 다시 다운로드 TAP`);
+      log(`[DOWNLOAD] ${caseId} duplicate confirmation -> 다시 다운로드 TAP (${target.h})`);
       await sleep(250);
       return {handled:true,label:target.h};
     }
@@ -1003,7 +1012,19 @@ async function runToolWorkflow(page,tool,caseId){
     await clickDownloadLike(page,'[data-testid="tool015-download"]',caseId); return {kind:w.kind,before,after};
   }
   if(w.kind==='text'){
-    const input=page.locator('[data-testid="tool016-content"]'); await input.fill('TEST'); await assertVisible(page,'[data-testid="tool016-preview-canvas"]'); await clickDownloadLike(page,'[data-testid="tool016-download"]',caseId); return {kind:w.kind};
+    // Real TOOL016 user flow: attach image -> add a text layer -> content textarea appears.
+    const addbar=page.locator('[data-testid="tool016-addbar"]');
+    await addbar.waitFor({state:'visible',timeout:SAFETY_RESULT_MS});
+    const addButton=addbar.locator('button').first();
+    if(!(await addButton.isVisible().catch(()=>false)) || !(await addButton.isEnabled().catch(()=>false))) throw new Error('HARNESS_TOOL016_ADD_TEXT_ACTION_NOT_FOUND');
+    await addButton.click({timeout:7000});
+    log(`[FLOW] ${caseId} TOOL016 ADD_TEXT_LAYER PASS`);
+    const input=page.locator('[data-testid="tool016-content"]');
+    await input.waitFor({state:'visible',timeout:SAFETY_RESULT_MS});
+    await input.fill('TEST');
+    await assertVisible(page,'[data-testid="tool016-preview-canvas"]');
+    await clickDownloadLike(page,'[data-testid="tool016-download"]',caseId);
+    return {kind:w.kind};
   }
   if(w.kind==='watermark'){
     const text=page.locator('[data-testid="tool017-text-input"]'); await text.fill('TEST'); await clickReady(page,'[data-testid="tool017-process-all"]');
