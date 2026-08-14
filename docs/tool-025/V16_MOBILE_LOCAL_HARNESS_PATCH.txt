@@ -1,0 +1,22 @@
+TOOL025 MOBILE REAL-DEVICE VALIDATOR V16
+
+Purpose
+- Fix v15 pre-deploy Page Not Found caused by production URL use.
+- TOOL025-only mobile test defaults to local Next.js server + adb reverse.
+
+Execution
+npm run test:toolbox:025-mobile-real
+
+Expected preflight flow
+1. Android device detected.
+2. Next.js local server starts at 127.0.0.1:3025 (or reuses a valid existing TOOL025 server).
+3. Host verifies /ko/id-passport-photo-maker is HTTP 200 and not a 404 page.
+4. adb reverse tcp:3025 tcp:3025 is installed and verified.
+5. Galaxy Chrome opens http://127.0.0.1:3025/ko/id-passport-photo-maker.
+6. Only TOOL025 real-device flow runs.
+7. Cleanup removes adb reverse and stops only the server started by this validator.
+8. Result ZIP is written to Windows Desktop even on fatal harness failure.
+
+Classification
+- 404 / Page not found => HARNESS_FAIL, never PRODUCT_FAIL.
+- Expected TOOL025 DOM missing in local pre-deploy mode => HARNESS_FAIL.

@@ -1,0 +1,666 @@
+{
+  "createdAt": "2026-08-14T07:05:38.455Z",
+  "report": [
+    {
+      "tool": "001",
+      "source": "components/image-converter-tool.tsx",
+      "checks": [
+        {
+          "id": "converter-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "converter-upload-button",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "converter-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "converter-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "002",
+      "source": "components/heic-avif-converter-tool.tsx",
+      "checks": [
+        {
+          "id": "heic-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "heic-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "heic-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "003",
+      "source": "components/svg-bmp-tiff-converter-tool.tsx",
+      "checks": [
+        {
+          "id": "svg-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "svg-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "svg-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "004",
+      "source": "components/image-compressor-tool.tsx",
+      "checks": [
+        {
+          "id": "compressor-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "compressor-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "compressor-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "005",
+      "source": "components/target-size-compressor-tool.tsx",
+      "checks": [
+        {
+          "id": "target-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "target-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "target-compress-button",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "006",
+      "source": "components/image-resizer-tool.tsx",
+      "checks": [
+        {
+          "id": "resizer-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "resizer-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "resizer-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "007",
+      "source": "components/web-image-optimizer-tool.tsx",
+      "checks": [
+        {
+          "id": "optimizer-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "optimizer-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "optimizer-run",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "008",
+      "source": "components/image-cropper-rotator-tool.tsx",
+      "checks": [
+        {
+          "id": "cropper-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "cropper-stage",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "cropper-download-zip",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "009",
+      "source": "components/image-brightness-color-adjuster-tool.tsx",
+      "checks": [
+        {
+          "id": "tool009-select",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool009-editor",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool009-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool009-auto",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool009-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "010",
+      "source": "components/image-mosaic-blur-tool.tsx",
+      "checks": [
+        {
+          "id": "tool010-select",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool010-editor",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool010-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool010-applied-count",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool010-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "011",
+      "source": "components/image-padding-background-tool.tsx",
+      "checks": [
+        {
+          "id": "tool011-file",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool011-editor",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool011-canvas-wrap",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool011-download",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool011-result",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "012",
+      "source": "components/image-border-rounded-tool.tsx",
+      "checks": [
+        {
+          "id": "tool012-file",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool012-editor",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool012-border-toggle",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool012-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "013",
+      "source": "components/image-merger-tool.tsx",
+      "checks": [
+        {
+          "id": "tool013-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool013-file-card",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool013-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "014",
+      "source": "components/image-collage-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool014-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool014-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool014-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "015",
+      "source": "components/before-after-image-tool.tsx",
+      "checks": [
+        {
+          "id": "tool015-before-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool015-after-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool015-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool015-state",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool015-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "016",
+      "source": "components/add-text-to-image-tool.tsx",
+      "checks": [
+        {
+          "id": "tool016-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool016-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool016-content",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool016-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "017",
+      "source": "components/image-watermark-tool.tsx",
+      "checks": [
+        {
+          "id": "tool017-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool017-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool017-text-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool017-process-all",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool017-download-current",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "018",
+      "source": "components/image-metadata-checker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool018-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool018-result",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool018-basic-info",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "019",
+      "source": "components/youtube-thumbnail-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool019-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool019-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool019-title-text",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool019-output",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool019-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "020",
+      "source": "components/youtube-channel-banner-tool.tsx",
+      "checks": [
+        {
+          "id": "tool020-background-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool020-preview-canvas",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool020-title",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool020-output",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool020-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "021",
+      "source": "components/social-media-image-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool021-background-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool021-interactive-preview",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool021-download-current",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool021-status",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "022",
+      "source": "components/blog-open-graph-image-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool022-background-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool-022-root",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool022-download-current",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool022-status",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "023",
+      "source": "components/app-icon-favicon-generator-tool.tsx",
+      "checks": [
+        {
+          "id": "tool023-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool023-preview",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool023-generate",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool023-file-list",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool023-status",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "024",
+      "source": "components/app-store-screenshot-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool024-dropzone",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool024-preview",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool024-result-count",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool024-export-zip",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    },
+    {
+      "tool": "025",
+      "source": "components/id-passport-photo-maker-tool.tsx",
+      "checks": [
+        {
+          "id": "tool025-file-input",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-dropzone",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-workspace-dropzone",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-preview",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-output-size",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-a4-count",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-download",
+          "sourceOk": true,
+          "runnerOk": true
+        },
+        {
+          "id": "tool025-a4-download",
+          "sourceOk": true,
+          "runnerOk": true
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

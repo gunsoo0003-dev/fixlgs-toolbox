@@ -1,0 +1,60 @@
+[NEW]
+app/[locale]/id-passport-photo-maker/page.tsx
+components/id-passport-photo-maker-page.tsx
+components/id-passport-photo-maker-tool.tsx
+components/id-passport-photo-maker-tool.module.css
+lib/tool-025-id-photo-policy.ts
+tests/tool-025-core.spec.ts
+tests/tool-025-boundary.spec.ts
+tests/tool-025-regression.spec.ts
+tests/tool-025-limit.spec.ts
+scripts/tool-025/check-source.mjs
+scripts/tool-025/check-harness.mjs
+scripts/tool-025/check-integration.mjs
+scripts/tool-025/check-runner-contract.mjs
+docs/tool-025/REQ_025.md
+docs/tool-025/HANDOFF_025.md
+docs/tool-025/CHANGE_MAP_025.txt
+
+[MINIMAL INTEGRATION CHANGE]
+lib/site.ts
+app/sitemap.ts
+
+[UNCHANGED]
+app/globals.css
+styles/global-base.css
+styles/toolbox-common.css
+styles/toolbox-detail-common.css
+styles/theme.css
+styles/toolbox-compat.css
+styles/legacy-site-sealed.css
+styles/legacy-tools-sealed.css
+all existing TOOL 001-024 implementation/test files
+package.json
+package-lock.json
+2026-08-14 v2: components/id-passport-photo-maker-tool.tsx - V57R2 stable mobile image input reuse + original metadata limit handling + KR online 500KB JPG encoder/format lock
+2026-08-14 v2: components/id-passport-photo-maker-tool.module.css - 44px preset targets + Japanese/long-text wrapping hardening + disabled format state
+2026-08-14 v2: tests/tool-025-feature.spec.ts - actual KR online download JPG/500KB verification
+2026-08-14 v2: scripts/tool-025/run-validation.mjs - feature-only stage and FINAL feature gate
+2026-08-14 v2: scripts/tool-025/check-{source,syntax,runner-contract}.mjs + package.json - feature contract synchronization
+
+2026-08-14 detail correction v8
+- Removed the separate upper Dropzone card.
+- Made the left 2/3 PREVIEW panel itself the TOOL025 drag/drop workspace, matching TOOL024 workspace-drop behavior.
+- Empty preview shows choose/drop instructions; loaded preview remains droppable for photo replacement.
+- Added TOOL024-style drag highlight around the preview workspace.
+- Preserved lower EXPORT / A4 PRINT / ALIGN layout and EXPORT action grouping.
+
+[v9 detail correction]
+- Restored the visible TOOL024-style upload/dropzone instead of replacing it with the preview.
+- Desktop top grid is now: visible DROPZONE 2 columns + PRESET 1 column, then PREVIEW 2 columns + PRESET continuing on the right.
+- The PREVIEW workspace independently keeps drag/drop replacement support after upload.
+- The visible dropzone compacts after an image is loaded and remains available for New Photo/replacement.
+- Lower row remains EXPORT / A4 PRINT / ALIGN with equal-height stretch.
+
+[v12 - TOOL024 drag/drop exact state transplant]
+- Restored the visible full-width dropzone as an always-mounted element, matching TOOL024.
+- After an image is loaded, the same dropzone becomes neutral/compact via dropzoneReady; it is not deleted.
+- Dragging over either the dropzone or the workspace shares the same drag highlight state, as in TOOL024.
+- Replaced the custom workspace overlay element with TOOL024 CSS ::after workspace dragging overlay and panel-border tint.
+- Workspace remains PREVIEW 2 columns + PRESET 1 column; lower EXPORT/A4/ALIGN stays separate.

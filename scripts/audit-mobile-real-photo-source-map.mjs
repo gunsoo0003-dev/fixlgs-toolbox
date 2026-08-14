@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const root=process.cwd();
-const scriptPath=path.join(root,'scripts','run-mobile-real-photo-001-024.mjs');
+const scriptPath=path.join(root,'scripts','run-mobile-real-photo-001-025.mjs');
 const runner=fs.readFileSync(scriptPath,'utf8');
 const specs=[
   ['001','components/image-converter-tool.tsx',['converter-file-input','converter-upload-button','converter-file-card','converter-run']],
@@ -30,6 +30,7 @@ const specs=[
   ['022','components/blog-open-graph-image-maker-tool.tsx',['tool022-background-input','tool-022-root','tool022-download-current','tool022-status']],
   ['023','components/app-icon-favicon-generator-tool.tsx',['tool023-file-input','tool023-preview','tool023-generate','tool023-file-list','tool023-status']],
   ['024','components/app-store-screenshot-maker-tool.tsx',['tool024-dropzone','tool024-preview','tool024-result-count','tool024-export-zip']],
+  ['025','components/id-passport-photo-maker-tool.tsx',['tool025-file-input','tool025-dropzone','tool025-workspace-dropzone','tool025-preview','tool025-output-size','tool025-a4-count','tool025-download','tool025-a4-download']],
 ];
 const failures=[]; const report=[];
 for(const [tool,rel,ids] of specs){
@@ -58,8 +59,8 @@ if(!runner.includes('snapshotNative')) failures.push('native UI evidence capture
 if(!runner.includes('TOOL018_SPECIAL_FAIL')) failures.push('TOOL018 special classification missing');
 if(!runner.includes("uploads:2") || !runner.includes('tool015-before-input') || !runner.includes('tool015-after-input')) failures.push('multi-image source workflow missing');
 
-fs.writeFileSync(path.join(root,'docs','MOBILE_REALPHOTO_001_024_SOURCE_AUDIT.json'),JSON.stringify({createdAt:new Date().toISOString(),report,failures},null,2));
+fs.writeFileSync(path.join(root,'docs','MOBILE_REALPHOTO_001_025_SOURCE_AUDIT.json'),JSON.stringify({createdAt:new Date().toISOString(),report,failures},null,2));
 console.log(`[SOURCE-AUDIT] tools=${report.length} failures=${failures.length}`);
 for(const f of failures)console.error(`[FAIL] ${f}`);
 if(failures.length)process.exit(1);
-console.log('[PASS] 001~024 source workflow map matches validator');
+console.log('[PASS] 001~025 source workflow map matches validator');

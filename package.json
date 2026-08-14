@@ -229,7 +229,18 @@
     "check:toolbox:common-user-path-coverage": "node scripts/toolbox/check-common-user-path-coverage.mjs",
     "test:toolbox:common-user-path": "node scripts/run-common-user-path-validation.mjs full",
     "test:toolbox:common-user-path-fast": "node scripts/run-common-user-path-validation.mjs fast",
-    "test:toolbox:001-mobile-deep": "node scripts/run-tool-001-mobile-deep-diagnostic.mjs"
+    "test:toolbox:001-mobile-deep": "node scripts/run-tool-001-mobile-deep-diagnostic.mjs",
+    "check:toolbox:025-design-transplant": "node scripts/tool-025/check-design-transplant.mjs",
+    "test:toolbox:025-preflight": "node scripts/tool-025/run-validation.mjs preflight",
+    "test:toolbox:025-core-only": "node scripts/tool-025/run-validation.mjs core-only",
+    "test:toolbox:025-boundary-only": "node scripts/tool-025/run-validation.mjs boundary-only",
+    "test:toolbox:025-feature-only": "node scripts/tool-025/run-validation.mjs feature-only",
+    "test:toolbox:025-regression-only": "node scripts/tool-025/run-validation.mjs regression-only",
+    "test:toolbox:025-limit-only": "node scripts/tool-025/run-validation.mjs limit-only",
+    "test:toolbox:025-final": "node scripts/tool-025/run-validation.mjs final",
+    "check:toolbox:mobile-real-photo": "node scripts/check-mobile-real-photo-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-025": "node scripts/run-mobile-real-photo-001-025.mjs",
+    "test:toolbox:025-mobile-real": "node scripts/run-mobile-real-photo-001-025.mjs --only 25"
   },
   "dependencies": {
     "next": "16.2.12",
