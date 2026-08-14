@@ -1,0 +1,8 @@
+import fs from "node:fs";import path from "node:path";import {spawnSync} from "node:child_process";
+const root=process.cwd();let fail=0;const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)fail++;};
+const files=['scripts/tool-027/run-validation.mjs','scripts/tool-027/runtime-workspace.mjs','playwright.tool027.config.ts','tests/tool-027-preflight.spec.ts','tests/tool-027-core.spec.ts','tests/tool-027-boundary.spec.ts','tests/tool-027-feature.spec.ts','tests/tool-027-design-state.spec.ts','tests/tool-027-regression.spec.ts','tests/tool-027-limit.spec.ts'];
+for(const f of files)need(fs.existsSync(path.join(root,f)),`exists ${f}`);
+for(const f of ['scripts/tool-027/run-validation.mjs','scripts/tool-027/runtime-workspace.mjs'])if(fs.existsSync(f)){const r=spawnSync(process.execPath,['--check',f],{encoding:'utf8'});need(r.status===0,`syntax ${f}`)}
+const runner=fs.existsSync(files[0])?fs.readFileSync(files[0],'utf8'):''; need(!/\bnpx\b/.test(runner),'no npx');need(runner.includes('zipDirectory')&&runner.includes('Desktop'),'Desktop result ZIP');need(runner.includes('RUNNING')&&runner.includes('remaining='),'progress contract');need(runner.includes('package-lock is not synchronized for pdfjs-dist')&&runner.includes('installed pdfjs-dist must be')&&runner.includes('5.4.54'),'dependency lock guard');
+const cfg=fs.existsSync('playwright.tool027.config.ts')?fs.readFileSync('playwright.tool027.config.ts','utf8'):'';need(cfg.includes('desktop-027')&&cfg.includes('mobile-027'),'PC + mobile viewport projects');need(!runner.includes('--project=desktop-027'),'not desktop-only');
+process.exitCode=fail?1:0;

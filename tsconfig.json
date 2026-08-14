@@ -46,7 +46,9 @@
     ".next-tool018-runtime/types/**/*.ts",
     ".next-tool018-runtime/dev/types/**/*.ts",
     ".next-tool019-runtime/types/**/*.ts",
-    ".next-tool019-runtime/dev/types/**/*.ts"
+    ".next-tool019-runtime/dev/types/**/*.ts",
+    ".next-tool027-runtime/types/**/*.ts",
+    ".next-tool027-runtime/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

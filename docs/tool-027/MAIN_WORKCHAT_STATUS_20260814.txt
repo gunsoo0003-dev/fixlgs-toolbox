@@ -1,0 +1,40 @@
+FIXLGS TOOLBOX TOOL027 - MAIN WORKCHAT STATUS
+Date: 2026-08-14
+
+PRODUCT / DESIGN
+- TOOL027 PDF -> JPG/PNG implemented.
+- Page selection, range input, resolution selection, JPG quality, individual download, ZIP export implemented.
+- TOOL026 PDF-category design/state baseline transplanted and static checked.
+- Common CSS contamination check PASS; TOOL027-specific rendering/preview CSS stays in module CSS.
+
+APPROVED SERVICE LIMITS
+- PDF file: 50 MiB max
+- PDF pages: 100 max
+- Render scale: 3.0x max
+- Browser canvas safety: 55,000,000 pixels max
+- Thumbnail rendering: first 60 pages
+- Page rendering concurrency: sequential (1)
+
+VALIDATOR / RUNNER
+- Dedicated TOOL027 preflight/core/boundary/feature/design-state/regression/limit specs created.
+- Removed stale TOOL026-spec reuse from TOOL027 runner.
+- PC + mobile viewport projects registered.
+- Mobile real-device runner entry 027 registered; actual phone execution deferred to PDF category batch per control document.
+- Desktop result ZIP is produced on PASS/FAIL/environment failure.
+- package.json / package-lock / installed pdfjs-dist 5.4.54 lock guard added before runtime validation.
+
+STATIC CHECKS COMPLETED IN WORKCHAT
+- source PASS
+- logic PASS
+- integration PASS
+- design transplant PASS
+- content PASS
+- common design PASS
+- runner contract PASS
+- mobile real-device validator self-check PASS
+- 001~026 protected baseline diff checked; no unintended protected-file change retained.
+
+RUNTIME ENVIRONMENT STATUS
+- Workchat container has no project node_modules and cannot reach npm registry (EAI_AGAIN), therefore browser/TypeScript/production build FINAL cannot be truthfully marked PASS here.
+- Run docs/tool-027/RUN_027_INSTALL_AND_FINAL.ps1 on the Windows project host. It synchronizes pdfjs-dist/package-lock, runs preflight, then FINAL.
+- Expected Desktop evidence: 027_preflight_검수결과.zip and 027_final_검수결과.zip.

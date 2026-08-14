@@ -1,0 +1,7 @@
+pdfjs-dist 5.4.54
+Project: Mozilla PDF.js
+Purpose: browser-local PDF parsing and page raster rendering
+License: Apache-2.0
+External API/server/account/key/paid service: none
+User file transmission: none by TOOL027 implementation
+Integration: npm install pdfjs-dist@5.4.54 --save

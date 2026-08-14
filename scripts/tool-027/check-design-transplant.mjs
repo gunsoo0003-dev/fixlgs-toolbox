@@ -1,0 +1,11 @@
+import fs from "node:fs"; const read=p=>fs.readFileSync(p,"utf8");
+const t26=read("components/image-to-pdf-tool.tsx"), c26=read("components/image-to-pdf-tool.module.css"), t27=read("components/pdf-to-image-converter-tool.tsx"), c27=read("components/pdf-to-image-converter-tool.module.css"), p27=read("components/pdf-to-image-converter-page.tsx");
+let fail=0; const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)fail++;};
+for(const token of ['data-testid="tool027-dropzone"','dropzoneReady','data-testid="tool027-workspace"','workspaceDragging','const dragActive = dragging || workspaceDragging','onDrop={dropPdf}','data-testid="tool027-results"']) need(t27.includes(token),`027 state ${token}`);
+need(t26.includes('dropzoneReady') && t26.includes('workspaceDragging') && t26.includes('tool026-workspace-dropzone'),"026 PDF-category upload/post-upload workspace drag reference intact");
+for(const token of ['.wrapper{display:grid;gap:20px}','border-radius:18px','var(--tb-line)','var(--tb-panel)','var(--tb-muted)','var(--blue)']) need(c27.replace(/\s+/g,'').includes(token.replace(/\s+/g,'')),`027 visual token ${token}`);
+need(c27.includes('.workspaceDragging::after') && c27.includes('.workspaceDragging .panel'),"027 workspace drag visual state matches category interaction language");
+need(!/legacy-(site|tools)-sealed/i.test(t27+c27),"no legacy sealed dependency");
+for(const cls of ['toolbox-tool-guide','toolbox-tool-use-cases--editorial','toolbox-tool-expert-post','toolbox-tool-info-band','toolbox-tool-faq']) need(p27.includes(cls),`common content ${cls}`);
+need(/@media\s*\(max-width\s*:\s*(900|720|430)px\)/.test(c27),"mobile breakpoint aligned to 026 category reference");
+process.exitCode=fail?1:0;

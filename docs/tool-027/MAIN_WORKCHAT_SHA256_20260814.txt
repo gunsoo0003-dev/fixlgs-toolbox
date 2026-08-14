@@ -1,0 +1,6 @@
+32e3ed24909e90fd1969736dbebf6452ec407659079a81c7c4b0626364bd3820  components/pdf-to-image-converter-tool.tsx
+212dc24475bdf5b6c9ae3afe3af5c9e1cfe20b5f680c4d7d7a5ac1606b997367  components/pdf-to-image-converter-page.tsx
+f5d25bbaecf166a3f60398a6e3a5ce3cc36a7284b564e7f8e2d97b0292af2e4a  components/pdf-to-image-converter-tool.module.css
+783818fab77ba2318cdcaa4f4875de3cd10efbff1aa07ae5caf3742fb8bf3a7b  lib/tool-027-pdf-image.ts
+7ca5cd5a681800ef21033a369cbd27548ecad24a8615c9a4f664f1b2e9d61454  scripts/tool-027/run-validation.mjs
+7a5347884fbd0c291da2c7aec2965050bf9a375b9b8e119707334d65ce753e81  tests/tool-027-limit.spec.ts

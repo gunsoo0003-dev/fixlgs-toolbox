@@ -1,0 +1,11 @@
+import fs from "node:fs"; const read=p=>fs.readFileSync(p,"utf8");
+let fail=0;const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)fail++;};
+const site=read("lib/site.ts"),sm=read("app/sitemap.ts"),route=read("app/[locale]/pdf-to-image-converter/page.tsx"),cat=read("app/[locale]/category/[categorySlug]/page.tsx");
+need(site.includes('tool027Slug = "pdf-to-image-converter"'),"site slug");
+need(site.includes('title: tool027Titles')&&site.includes('href: `/${"ko"}/${tool027Slug}`'),"PDF registry live 027");
+need(site.includes('if (index === 1) return { ...item, href: `/${locale}/${tool027Slug}` };'),"localized PDF card route");
+need(sm.includes('tool027Slug')&&sm.includes('${baseUrl}/${locale}/${tool027Slug}'),"sitemap 027");
+need(/alternates\s*:\s*\{[\s\S]*canonical[\s\S]*languages\s*:\s*\{[\s\S]*["']x-default["']/.test(route),"canonical hreflang");
+need(route.includes('openGraph:'),"OpenGraph metadata");
+need(cat.includes('categorySlug === "pdf" ? index + 26'),"PDF numbering starts 026");
+process.exitCode=fail?1:0;

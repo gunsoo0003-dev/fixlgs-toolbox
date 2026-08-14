@@ -1,0 +1,107 @@
+PASS exists components/pdf-to-image-converter-tool.tsx
+PASS exists components/pdf-to-image-converter-page.tsx
+PASS exists components/pdf-to-image-converter-tool.module.css
+PASS exists lib/tool-027-pdf-image.ts
+PASS exists app/[locale]/pdf-to-image-converter/page.tsx
+PASS source token TOOL027_LIMITS
+PASS source token maxFileBytes: 50 * 1024 * 1024
+PASS source token maxPages: 100
+PASS source token maxScale: 3
+PASS source token maxCanvasPixels: 55_000_000
+PASS source token pdf-to-image-converter
+PASS source token tool027-root
+PASS source token tool027-dropzone
+PASS source token tool027-file-input
+PASS source token tool027-convert
+PASS source token tool027-results
+PASS source token tool027-export-zip
+PASS source token createStoredZip
+PASS source token pdfjs-dist/webpack.mjs
+PASS source token parseTool027PageRange
+PASS source token tool027OutputName
+PASS source token FAQPage
+PASS source token BreadcrumbList
+PASS source token EXPERT POST
+PASS no common CSS contamination app/globals.css
+PASS no common CSS contamination styles/global-base.css
+PASS no common CSS contamination styles/toolbox-common.css
+PASS no common CSS contamination styles/toolbox-detail-common.css
+PASS no common CSS contamination styles/legacy-site-sealed.css
+PASS no common CSS contamination styles/legacy-tools-sealed.css
+PASS page range parse
+PASS reject bad range 0
+PASS reject bad range 3-2
+PASS reject bad range 1-11
+PASS reject bad range 1,a
+PASS safe basename
+PASS deterministic output name
+PASS sequential render contract
+PASS canvas safety contract
+PASS site slug
+PASS PDF registry live 027
+PASS localized PDF card route
+PASS sitemap 027
+PASS canonical hreflang
+PASS OpenGraph metadata
+PASS PDF numbering starts 026
+PASS 027 state data-testid="tool027-dropzone"
+PASS 027 state dropzoneReady
+PASS 027 state data-testid="tool027-workspace"
+PASS 027 state data-testid="tool027-results"
+PASS 026 PDF-category state reference intact
+PASS 027 visual token .wrapper{display:grid;gap:20px}
+PASS 027 visual token border-radius:18px
+PASS 027 visual token var(--tb-line)
+PASS 027 visual token var(--tb-panel)
+PASS 027 visual token var(--tb-muted)
+PASS 027 visual token var(--blue)
+PASS no legacy sealed dependency
+PASS common content toolbox-tool-guide
+PASS common content toolbox-tool-use-cases--editorial
+PASS common content toolbox-tool-expert-post
+PASS common content toolbox-tool-info-band
+PASS common content toolbox-tool-faq
+PASS mobile breakpoint aligned to 026 category reference
+PASS content PDF 표·도표 → 선명한 PNG
+PASS content 특정 페이지만 JPG로 공유
+PASS content 여러 페이지 → ZIP 전달
+PASS content PDF를 이미지로 바꿀 때 실전 기준
+PASS content PDF 페이지는 고정 픽셀 원본이 아닙니다
+PASS content JPG와 PNG는 용도가 다릅니다
+PASS content 페이지 이미지 변환과 원본 이미지 추출은 다릅니다
+PASS content toolbox-tool-guide
+PASS content toolbox-tool-use-cases--editorial
+PASS content toolbox-tool-expert-post
+PASS content toolbox-tool-info-band
+PASS content toolbox-tool-faq
+PASS KO EN JA content
+PASS shared-guide-grid - established shared 3-column multi-row guide exists
+PASS shared-expert-head - shared expert-post head modifier exists
+PASS shared-info-band - shared important/result information band exists
+PASS shared-split-notes - shared SAFE AREA + IMPORTANT NOTES split section exists
+PASS no-019-020-common-tail - 019/020 common-design selectors no longer duplicated by tool number
+PASS no-future-common-overrides - no 022+ tool-number common-layout CSS detected
+PASS no-024-legacy-shared-dom - 024 uses current shared TOOLBOX DOM classes
+PASS no-important-in-normalized-block - normalized common block adds no !important specificity escalation
+PASS exists scripts/tool-027/run-validation.mjs
+PASS exists scripts/tool-027/runtime-workspace.mjs
+PASS exists playwright.tool027.config.ts
+PASS exists tests/tool-027-preflight.spec.ts
+PASS exists tests/tool-027-core.spec.ts
+PASS exists tests/tool-027-boundary.spec.ts
+PASS exists tests/tool-027-feature.spec.ts
+PASS exists tests/tool-027-design-state.spec.ts
+PASS exists tests/tool-027-regression.spec.ts
+PASS exists tests/tool-027-limit.spec.ts
+PASS syntax scripts/tool-027/run-validation.mjs
+PASS syntax scripts/tool-027/runtime-workspace.mjs
+PASS no npx
+PASS Desktop result ZIP
+PASS progress contract
+PASS dependency lock guard
+PASS PC + mobile viewport projects
+PASS not desktop-only
+[SOURCE-AUDIT] tools=25 failures=0
+[PASS] 001~025 source workflow map matches validator
+[SELF-CHECK] tools=27 errors=0
+[PASS] mobile real-photo 001~027 validator checklist/source/static self-check

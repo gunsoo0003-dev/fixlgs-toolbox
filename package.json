@@ -252,14 +252,28 @@
     "test:toolbox:026-final": "node scripts/tool-026/run-validation.mjs final",
     "check:toolbox:mobile-real-photo-001-026": "node scripts/check-mobile-real-photo-001-026-validator.mjs",
     "test:toolbox:mobile-real-photo-001-026": "node scripts/run-mobile-real-photo-001-026.mjs",
-    "test:toolbox:026-mobile-real": "node scripts/run-mobile-real-photo-001-026.mjs --only 26"
+    "test:toolbox:026-mobile-real": "node scripts/run-mobile-real-photo-001-026.mjs --only 26",
+    "check:toolbox:027-runner": "node scripts/tool-027/check-runner-contract.mjs",
+    "check:toolbox:027-design-transplant": "node scripts/tool-027/check-design-transplant.mjs",
+    "test:toolbox:027-preflight": "node scripts/tool-027/run-validation.mjs preflight",
+    "test:toolbox:027-core-only": "node scripts/tool-027/run-validation.mjs core-only",
+    "test:toolbox:027-boundary-only": "node scripts/tool-027/run-validation.mjs boundary-only",
+    "test:toolbox:027-feature-only": "node scripts/tool-027/run-validation.mjs feature-only",
+    "test:toolbox:027-regression-only": "node scripts/tool-027/run-validation.mjs regression-only",
+    "test:toolbox:027-limit-only": "node scripts/tool-027/run-validation.mjs limit-only",
+    "test:toolbox:027-final": "node scripts/tool-027/run-validation.mjs final",
+    "check:toolbox:mobile-real-photo-001-027": "node scripts/check-mobile-real-photo-001-027-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-027": "node scripts/run-mobile-real-photo-001-027.mjs",
+    "test:toolbox:027-mobile-real": "node scripts/run-mobile-real-photo-001-027.mjs --only 27"
   },
   "dependencies": {
     "next": "16.2.12",
+    "pdfjs-dist": "5.4.54",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -267,7 +281,6 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@playwright/test": "^1.54.2"
+    "typescript": "^5"
   }
 }
