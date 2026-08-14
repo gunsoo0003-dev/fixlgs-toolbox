@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const lock=JSON.parse(fs.readFileSync('package-lock.json','utf8'));
+let fail=0; const check=(ok,msg)=>{console.log(`${ok?'[PASS]':'[FAIL]'} ${msg}`);if(!ok)fail++;};
+check(pkg.dependencies['pdf-lib']==='1.17.1','pdf-lib pinned 1.17.1');
+check(pkg.dependencies['pdfjs-dist']==='5.4.54','protected pdfjs-dist remains 5.4.54 from TOOL027 baseline');
+check(lock.packages[''].dependencies['pdf-lib']==='1.17.1','lock root pdf-lib matches');
+check(lock.packages[''].dependencies['pdfjs-dist']==='5.4.54','lock root pdfjs-dist baseline preserved');
+check(lock.packages['node_modules/pdf-lib']?.version==='1.17.1','lock pdf-lib package entry');
+check(lock.packages['node_modules/pdfjs-dist']?.version==='5.4.54','lock pdfjs-dist protected entry');
+for(const key of ['node_modules/@pdf-lib/standard-fonts','node_modules/@pdf-lib/upng','node_modules/pako','node_modules/pdf-lib/node_modules/tslib']) check(Boolean(lock.packages[key]),`lock dependency entry ${key}`);
+check(!Object.keys(pkg.dependencies).some(x=>/api|server|cloud/i.test(x)&&!['next'].includes(x)),'no new server/API dependency');
+process.exit(fail?1:0);

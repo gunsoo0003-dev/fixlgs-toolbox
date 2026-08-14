@@ -1,0 +1,53 @@
+FIXLGS TOOLBOX 028 - MAIN WORKCHAT STATUS - 2026-08-15
+
+STATUS=MAIN_INTEGRATED_LIMIT_APPROVED_VALIDATOR_READY
+PROTECTED_BASELINE=001-027
+TOOL=028 PDF Merge / merge-pdf
+
+APPROVED LIMITS
+- maxFiles=20
+- maxFileBytes=30 MiB
+- maxTotalBytes=100 MiB
+- maxTotalPages=300
+- previewConcurrency=1
+
+STATIC SELF-CHECK ACTUALLY EXECUTED IN WORKCHAT
+- source: PASS
+- harness exact 028 spec/config/runtime link: PASS
+- design-state transplant 026/027 shared drag: PASS
+- package/lock contract: PASS
+- content KO/EN/JA: PASS
+- approved limit contract: PASS
+- common design / CSS anti-reaccumulation: PASS
+- mobile real-device runner 001-028 registration validator: PASS (errors=0)
+- TypeScript transpile syntax including tool-028-limit.spec.ts: PASS
+
+RUNNER SMOKE ACTUALLY EXECUTED
+- preflight mode: static 7 PASS, then ENVIRONMENT_FAIL because supplied project has no node_modules; result ZIP created successfully.
+- final mode: total stage display=16, static 7 PASS, then ENVIRONMENT_FAIL before product runtime; result ZIP created successfully.
+- This is expected harness behavior and is not a PRODUCT_FAIL.
+
+ENVIRONMENT PENDING
+- Workchat container project has no node_modules and npm registry did not respond during installation probe.
+- Therefore real Playwright, project tsc --noEmit, isolated production build, limit runtime and FINAL cannot truthfully be marked PASS here.
+- Run docs/tool-028/RUN_028_INSTALL_AND_FINAL.ps1 on the Windows project host.
+
+PROTECTION DIFF AGAINST SUPPLIED BASE
+- added files: TOOL028 implementation/validators/fixtures/docs only
+- modified existing files: 5
+  1) app/sitemap.ts
+  2) components/pdf-to-image-converter-page.tsx
+  3) lib/site.ts
+  4) package.json
+  5) package-lock.json
+- deleted existing files: 0
+- app/globals.css: SAME
+- styles/legacy-site-sealed.css: SAME
+- styles/legacy-tools-sealed.css: SAME
+- styles/toolbox-common.css: SAME
+- styles/toolbox-detail-common.css: SAME
+- validator-generated modification to docs/MOBILE_REALPHOTO_001_025_SOURCE_AUDIT.json was detected and reverted before delivery.
+
+FINAL PASS RULE
+- Only after Windows FINAL returns FAIL=0 / SKIP=0.
+- Actual Galaxy runner registration is complete; physical-device execution remains deferred to PDF category-end batch per control policy.
