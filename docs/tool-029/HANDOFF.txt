@@ -1,0 +1,136 @@
+FIXLGS TOOLBOX HANDOFF
+TOOL: 029
+NAME: PDF 분할·페이지 추출기 / Split & Extract PDF / PDF 分割・ページ抽出ツール
+CATEGORY: D. PDF 도구
+SLUG: split-extract-pdf
+EXPECTED URL: /ko/split-extract-pdf /en/split-extract-pdf /ja/split-extract-pdf
+INTEGRATION STATUS: 029 제품/연결/검수기 통합 완료
+FINAL PROJECT STATUS: 제품 정적/self-check PASS, runtime FINAL은 현재 컨테이너 npm DNS EAI_AGAIN으로 ENVIRONMENT BLOCKED
+
+1. 구현 완료 기능
+- PDF 1개 파일 선택 / drag & drop
+- PDF signature + 실제 PDF parse + pageCount 검증
+- 페이지 범위 분할
+- 특정 페이지 추출
+- 특정 페이지 하나의 PDF / 각 페이지 개별 PDF 선택
+- 페이지별 개별 PDF
+- 홀수 / 짝수 / 홀수+짝수 분리
+- 저해상도 순차 페이지 썸네일
+- 썸네일 페이지 선택 / 전체 선택 / 전체 해제 / 선택 반전
+- 범위 parser + 즉시 오류 표시
+- 특정 페이지 dedupe + 오름차순 정책
+- 범위 overlap 경고
+- 실행 전 예상 결과 파일 수 / 페이지 목록
+- 파일명 접두어 + Windows 금지문자/경로조작 정규화
+- 원본 PDF 페이지 객체 copyPages 방식 출력 (rasterize 금지)
+- 결과 생성 직후 실제 PDF 재parse pageCount 검증
+- 개별 다운로드 + 다중 결과 ZIP
+- 진행률 (실제 output plan 진행 기준)
+- 중복 실행 방지 busy gate
+- 새 PDF / 초기화 / 계속 편집
+- KO/EN/JA
+- responsive module CSS
+- metadata / canonical / hreflang / WebApplication / Breadcrumb / FAQPage
+- HOW TO / 실전 기준 / 주의사항 / FAQ
+
+2. 최종 서비스 유효상한
+- PDF 1개
+- 50 MiB
+- 300 pages
+- 300 output files
+- 100 range items
+제품 정책, KO/EN/JA UI 문구, 300/301페이지 fixture, limit spec, source checker를 동일 값으로 동기화했다.
+
+3. 신규 OSS
+pdf-lib 1.17.1
+- 원본 페이지 복사 / PDF 생성
+- MIT
+- 브라우저 로컬
+- 외부 서버/API/key/account/비용/파일전송 없음
+
+pdfjs-dist 5.4.54
+- 저해상도 페이지 썸네일
+- Apache-2.0
+- 브라우저 로컬
+- 외부 서버/API/key/account/비용/파일전송 없음
+- browser path에서 native optional canvas 사용하지 않음
+
+028 최신본에 이미 존재하는 pdf-lib 1.17.1 / pdfjs-dist 5.4.54를 그대로 유지했다. package-lock.json은 변경하지 않았고 package.json에는 TOOL029 validation script만 최소 추가했다.
+
+4. DESIGN-CODE
+MAIN: TOOL 028 PDF 합치기
+PDF CATEGORY LINEAGE: TOOL026~028
+실제 028 최신 source를 직접 대조해 업로드 전/후 workspace와 `dragging || workspaceDragging` shared external drag state를 TOOL029 목적에 맞게 이식했다.
+공통 hero / HOW TO / expert-post / info-band / FAQ class를 재사용했고 기능 고유 작업영역은 split-extract-pdf-tool.module.css에 격리했다.
+
+5. 공통파일 보호
+028 배포완료 ZIP과 현재 작업본을 해시 대조했다.
+의도된 기존 파일 변경은 lib/site.ts / app/sitemap.ts / package.json 3개다.
+app/globals.css / styles 전역 CSS / legacy sealed / package-lock.json / 기존 001~028 제품 source/tests/runner는 보호했다.
+검수 중 자동변경된 docs/MOBILE_REALPHOTO_001_025_SOURCE_AUDIT.json은 028 기준으로 원복했고 tsconfig.tsbuildinfo는 삭제했다.
+
+6. 보조작업장 정적 검증
+PASS:
+- node scripts/tool-029/check-source.mjs
+- node scripts/tool-029/check-harness.mjs
+- node scripts/tool-029/check-design.mjs
+- parser/source contract: 정상 range / reverse / out-of-range / overlap / selection dedupe+sort / filename sanitize / 최종 300p 한도
+- PDF fixture: 1p / 2p / 10p / mixed / KO filename / JA filename / 300p / 301p 경계 fixture
+- package manifest / required entry static consistency
+- 028 배포완료 기준 해시 비교 COMMON PROTECTION PASS
+
+환경 검증:
+- 현재 컨테이너 npm registry ping은 DNS `EAI_AGAIN`으로 dependency 설치가 차단됐다.
+- run-validation.mjs FINAL은 local dependency 부재를 ENVIRONMENT_FAIL로 정확히 분리했고 결과 ZIP 생성까지 확인했다.
+- 제품/검수기 정적 self-check는 PASS이며 runtime TypeScript/build/Playwright FINAL은 정상 npm 접근 가능한 Windows 검수환경에서 수행해야 한다.
+
+7. 전용 검수기 구조
+- tests/tool-029-preflight.spec.ts
+- tests/tool-029-core.spec.ts
+- tests/tool-029-boundary.spec.ts
+- tests/tool-029-regression.spec.ts
+- tests/tool-029-limit.spec.ts
+- tests/helpers/tool-029.ts
+- tests/config/tool-029-limits.ts
+- tests/fixtures/tool-029/*
+- scripts/tool-029/check-source.mjs
+- scripts/tool-029/check-harness.mjs
+- scripts/tool-029/check-design.mjs
+- scripts/tool-029/run-validation.mjs
+
+run-validation은 성공/실패/환경오류와 관계없이 Windows Desktop 기준 029_<mode>_검수결과.zip 생성을 시도하며 단계 진행상황을 출력한다.
+
+8. 주작업장 이식 후 반드시 수행
+A. npm dependency 실제 설치 / lock 검증
+- npm ci
+
+B. 공통 연결 완료
+- lib/site.ts 029 tool registry/slug/category 등록 완료
+- PDF 카테고리 목록/검색/related tools 연결 완료
+- app/sitemap.ts KO/EN/JA URL 반영 완료
+- canonical/hreflang/robots 구조 확인
+- 028 PDF 합치기 related card active link 연결
+
+C. 검수
+- npm run test:toolbox:029-preflight
+- npm run test:toolbox:029-core-only
+- npm run test:toolbox:029-boundary-only
+- npm run test:toolbox:029-regression-only
+- 서비스 상한 확정 후 npm run test:toolbox:029-limit-only
+- TypeScript
+- production build
+- npm run test:toolbox:029-final
+- FINAL FAIL 0 / SKIP 0
+
+D. 모바일
+- 029 모바일 viewport spec 준비 완료
+- 글로벌 모바일 실기기 runner 001~029 확장 및 029 selector/user path/result/download 판정 등록 완료
+- 실제 스마트폰 실테스트는 PDF 카테고리 완료 후 카테고리 단위로 수행
+
+9. 주의
+- 029 기능을 028 병합 / 030 페이지 편집 / 033 압축 / 034 암호 / 035 콘텐츠 추출 영역으로 확장하지 말 것.
+- thumbnail preview 실패와 실제 PDF 추출 실패를 같은 오류로 합치지 말 것.
+- 제품이 정상인데 검수기 selector/expected가 오래되어 실패하면 제품을 검수기에 맞춰 왜곡하지 말 것.
+
+10. 이식 대상 신규/변경 파일
+정확한 파일 목록은 PACKAGE_MANIFEST_029.txt와 전달 ZIP 내부를 1:1 대조할 것.

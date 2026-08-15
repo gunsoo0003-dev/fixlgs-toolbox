@@ -1,0 +1,38 @@
+TOOL 029 CHANGE MAP
+
+[신규 제품 구현]
+app/[locale]/split-extract-pdf/page.tsx
+components/split-extract-pdf-page.tsx
+components/split-extract-pdf-tool.tsx
+components/split-extract-pdf-tool.module.css
+lib/tool-029-pdf-policy.ts
+
+[신규 검수]
+tests/helpers/tool-029.ts
+tests/config/tool-029-limits.ts
+tests/tool-029-preflight.spec.ts
+tests/tool-029-core.spec.ts
+tests/tool-029-boundary.spec.ts
+tests/tool-029-regression.spec.ts
+tests/tool-029-limit.spec.ts
+tests/fixtures/tool-029/*
+scripts/tool-029/check-source.mjs
+scripts/tool-029/check-harness.mjs
+scripts/tool-029/check-design.mjs
+scripts/tool-029/run-validation.mjs
+
+[기존 연결 파일 최소 변경]
+lib/site.ts
+app/sitemap.ts
+package.json
+
+[전달자료]
+docs/tool-029/*
+
+[보호하여 변경하지 않음]
+app/globals.css
+styles/*.css 공통/legacy sealed
+package-lock.json
+공통 layout/shell/component/helper
+기존 001~028 제품 source/tests/runner
+기존 001~028 글로벌 모바일 runner 파일
