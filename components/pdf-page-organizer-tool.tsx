@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { DragEvent } from "react";
+import type { ChangeEvent, DragEvent } from "react";
 import type { Locale } from "@/lib/site";
 import {
   TOOL030_LIMIT_DISPLAY,
@@ -125,6 +125,8 @@ function PdfThumbnail({ doc, item, label }: { doc: PdfJsDocument | null; item: T
 export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
   const t = ui[locale];
   const inputRef = useRef<HTMLInputElement>(null);
+  const previewDocRef = useRef<PdfJsDocument | null>(null);
+  const loadGeneration = useRef(0);
   const lastSelectedIndex = useRef<number | null>(null);
   const dragIds = useRef<string[]>([]);
   const [dragging, setDragging] = useState(false);
@@ -161,10 +163,13 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
 
   const resetAll = useCallback(() => {
     clearResult();
-    void previewDoc?.destroy?.();
+    loadGeneration.current += 1;
+    const currentPreview = previewDocRef.current;
+    previewDocRef.current = null;
+    void currentPreview?.destroy?.();
     setPreviewDoc(null); setSourceBytes(null); setPages([]); setSelected(new Set()); setPast([]); setFuture([]); setFileName(""); setFileSize(0); setSourceCount(0); setError(""); setStatus(""); setBlankOpen(false); setOutputName("");
     if (inputRef.current) inputRef.current.value = "";
-  }, [clearResult, previewDoc]);
+  }, [clearResult]);
 
   useEffect(() => () => { if (resultUrl) URL.revokeObjectURL(resultUrl); }, [resultUrl]);
 
@@ -176,6 +181,7 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
   }, [pages, t.limit, clearResult]);
 
   const loadPdf = useCallback(async (file: File) => {
+    const generation = ++loadGeneration.current;
     setError(""); setStatus(""); clearResult();
     if (file.size <= 0 || file.size > TOOL030_LIMITS.maxFileBytes) { setError(file.size > TOOL030_LIMITS.maxFileBytes ? t.tooLarge : t.invalid); return; }
     if (file.type && file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) { setError(t.invalid); return; }
@@ -199,22 +205,47 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
         const { width, height } = page.getSize();
         return { id: makeId("src"), sourcePageIndex: i, originalPageNumber: i + 1, rotation: normalizeRotation(page.getRotation().angle), isDuplicate: false, isBlank: false, width, height };
       });
-      void previewDoc?.destroy?.();
+
+      const previousPreview = previewDocRef.current;
+      previewDocRef.current = null;
+      setPreviewDoc(null);
+      await previousPreview?.destroy?.();
+      if (generation !== loadGeneration.current) return;
+
       const task = pdfjs.getDocument({ data: bytes.slice() });
       const nextPreviewDoc = await task.promise as unknown as PdfJsDocument;
+      if (generation !== loadGeneration.current) {
+        await nextPreviewDoc.destroy?.();
+        return;
+      }
+      previewDocRef.current = nextPreviewDoc;
       setPreviewDoc(nextPreviewDoc);
       setSourceBytes(bytes); setFileName(file.name); setFileSize(file.size); setSourceCount(pageState.length); setPages(pageState); setSelected(new Set()); setPast([]); setFuture([]); setOutputName(organizedFilename(file.name)); setBlankOpen(false); setStatus(`${file.name} · ${pageState.length} ${t.pages}`);
     } catch (e) {
+      if (generation !== loadGeneration.current) return;
       const message = e instanceof Error ? e.message : String(e);
       if (message === "ENCRYPTED_PDF") setError(t.encrypted);
       else if (message === "ZERO_PAGES") setError(t.zero);
       else if (message === "TOO_MANY_PAGES") setError(t.tooMany);
       else if (message === "INVALID_PDF") setError(t.invalid);
       else setError(t.damaged);
-    } finally { setBusy(false); }
-  }, [clearResult, previewDoc, t]);
+    } finally {
+      if (generation === loadGeneration.current) setBusy(false);
+    }
+  }, [clearResult, t]);
 
   const onFiles = useCallback((files: FileList | File[]) => { const file = Array.from(files)[0]; if (file) void loadPdf(file); }, [loadPdf]);
+  const openFilePicker = useCallback(() => {
+    const input = inputRef.current;
+    if (!input || busy) return;
+    input.value = "";
+    input.click();
+  }, [busy]);
+  const onFileInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.currentTarget.files ?? []);
+    event.currentTarget.value = "";
+    if (files.length) onFiles(files);
+  }, [onFiles]);
 
   const dropPdfFile = (event: DragEvent<HTMLElement>) => {
     if (!Array.from(event.dataTransfer.types).includes("Files")) return;
@@ -341,7 +372,7 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
 
   return <div className={styles.root} data-testid="tool030-root">
     <p className={styles.localNote}><strong>LOCAL ONLY</strong><span>{t.local}</span></p>
-    <input ref={inputRef} className={styles.hiddenInput} type="file" accept="application/pdf,.pdf" onChange={(e) => onFiles(e.target.files ?? [])} data-testid="tool030-file-input" />
+    <input ref={inputRef} className={styles.hiddenInput} type="file" accept="application/pdf,.pdf" onChange={onFileInputChange} data-testid="tool030-file-input" />
     {!hasPdf ? <section className={`${styles.dropzone} ${dragActive ? styles.dragging : ""}`}
       onDragEnter={(e) => { if (Array.from(e.dataTransfer.types).includes("Files")) { e.preventDefault(); if (!busy) setDragging(true); } }}
       onDragOver={(e) => { if (Array.from(e.dataTransfer.types).includes("Files")) { e.preventDefault(); if (!busy) setDragging(true); } }}
@@ -351,7 +382,7 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
       data-testid="tool030-dropzone">
       <strong>{t.drop}</strong>
       <span>{t.dropSub}</span>
-      <button type="button" className={styles.chooseButton} onClick={() => inputRef.current?.click()} disabled={busy}>{t.choose}</button>
+      <button type="button" className={styles.chooseButton} onClick={openFilePicker} disabled={busy}>{t.choose}</button>
     </section> : <section className={`${styles.uploadedFileBar} ${dragActive ? styles.dragging : ""}`}
       onDragEnter={(e) => { if (Array.from(e.dataTransfer.types).includes("Files")) { e.preventDefault(); if (!busy) setDragging(true); } }}
       onDragOver={(e) => { if (Array.from(e.dataTransfer.types).includes("Files")) { e.preventDefault(); if (!busy) setDragging(true); } }}
@@ -360,7 +391,7 @@ export function PdfPageOrganizerTool({ locale }: { locale: Locale }) {
       data-drag-active={dragActive ? "true" : "false"}
       data-testid="tool030-uploaded-file">
       <div className={styles.uploadedFileInfo}><strong>{fileName}</strong><span>{formatBytes(fileSize)} · {sourceCount} {t.pages}</span></div>
-      <button type="button" className={styles.chooseButton} onClick={() => inputRef.current?.click()} disabled={busy}>{t.replace}</button>
+      <button type="button" className={styles.chooseButton} onClick={openFilePicker} disabled={busy}>{t.replace}</button>
     </section>}
     {error ? <div className={styles.error} role="alert" data-testid="tool030-error">{error}</div> : null}
     {status ? <div className={styles.status} aria-live="polite" data-testid="tool030-status">{status}</div> : null}

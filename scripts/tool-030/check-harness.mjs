@@ -15,3 +15,8 @@ need(!featureText.includes('const dropzone = page.getByTestId("tool030-dropzone"
 need(joined.includes('getByTestId("tool030-uploaded-file")'),"post-upload feature targets compact uploaded-file bar");
 need(!/page\.getByText\(\/50MB\/\)/.test(joined),"limit copy is scoped to tool dropzone instead of global page text");
 need(joined.includes('getByRole("checkbox", { name: "Current 2", exact: true })'),"English current-page checkbox locator is role-scoped");
+const toolText=fs.readFileSync("components/pdf-page-organizer-tool.tsx","utf8");
+need(toolText.includes('input.value = ""')&&toolText.includes('event.currentTarget.value = ""'),"same-file picker resets input before click and after change");
+need(toolText.includes("previewDocRef")&&toolText.includes("await previousPreview?.destroy?.()"),"preview lifecycle awaits previous document destroy");
+need(toolText.includes("loadGeneration")&&toolText.includes("generation !== loadGeneration.current"),"stale overlapping PDF loads cannot overwrite latest state");
+need(featureText.includes("same PDF can be selected repeatedly without alternating failure")&&featureText.includes("attempt <= 4"),"feature covers four consecutive same-file selections");

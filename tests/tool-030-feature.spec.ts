@@ -16,6 +16,29 @@ test("030 mixed scenario keeps state identity and can save", async ({ page }) =>
   await expect(page.getByTestId("tool030-download")).toBeEnabled();
 });
 
+test("030 same PDF can be selected repeatedly without alternating failure", async ({ page }) => {
+  await page.goto("/ko/pdf-page-organizer");
+  const root = page.getByTestId("tool030-root");
+  const input = root.getByTestId("tool030-file-input");
+  const fixture = "test-fixtures/tool-030/marker-5.pdf";
+
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    if (attempt > 1) {
+      await root.getByRole("checkbox", { name: "현재 1", exact: true }).check();
+      await root.getByRole("button", { name: "오른쪽 회전", exact: true }).click();
+      await expect(root.getByTestId("tool030-page-card").first()).toHaveAttribute("data-rotation", "90");
+    }
+
+    await input.setInputFiles(fixture);
+    await expect(root.getByTestId("tool030-uploaded-file")).toContainText("marker-5.pdf");
+    await expect(root.getByTestId("tool030-page-card")).toHaveCount(5);
+    await expect(root.getByTestId("tool030-page-card").first()).toHaveAttribute("data-rotation", "0");
+    await expect(root.getByRole("checkbox", { name: "현재 1", exact: true })).not.toBeChecked();
+    await expect(input).toHaveValue("");
+    await expect(root.getByTestId("tool030-error")).toHaveCount(0);
+  }
+});
+
 test("030 post-upload workspace shares external PDF drag state without treating internal reorder as file drag", async ({ page }) => {
   await page.goto("/en/pdf-page-organizer");
   const root = page.getByTestId("tool030-root");
