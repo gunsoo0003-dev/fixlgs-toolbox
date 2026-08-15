@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { PdfPageNumberWatermarkPage } from "@/components/pdf-page-number-watermark-page";
+import { locales, type Locale } from "@/lib/site";
+const titles:Record<Locale,string>={ko:"PDF 페이지 번호·워터마크 넣기 | FIXLGS TOOLBOX",en:"PDF Page Number & Watermark Tool | FIXLGS TOOLBOX",ja:"PDF ページ番号・透かしツール | FIXLGS TOOLBOX"};
+const descriptions:Record<Locale,string>={ko:"PDF에 페이지 번호, 시작 번호, 머리말·꼬리말, 텍스트·로고 워터마크를 브라우저에서 추가하고 새 PDF로 저장하세요.",en:"Add page numbers, starting numbers, headers, footers, text or logo watermarks to a PDF locally in your browser.",ja:"PDFにページ番号、開始番号、ヘッダー・フッター、テキスト・ロゴ透かしをブラウザ内で追加して保存できます。"};
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))notFound();const l=locale as Locale;const canonical=`https://toolbox.fixlgs.com/${l}/pdf-page-number-watermark`;return{title:titles[l],description:descriptions[l],alternates:{canonical,languages:{ko:"https://toolbox.fixlgs.com/ko/pdf-page-number-watermark",en:"https://toolbox.fixlgs.com/en/pdf-page-number-watermark",ja:"https://toolbox.fixlgs.com/ja/pdf-page-number-watermark","x-default":"https://toolbox.fixlgs.com/en/pdf-page-number-watermark"}},openGraph:{title:titles[l],description:descriptions[l],url:canonical,type:"website"}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <PdfPageNumberWatermarkPage locale={locale as Locale}/>}

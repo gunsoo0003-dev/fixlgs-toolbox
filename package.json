@@ -300,7 +300,20 @@
     "test:toolbox:030-final": "node scripts/tool-030/run-validation.mjs final",
     "check:toolbox:mobile-real-photo-001-030": "node scripts/check-mobile-real-photo-001-030-validator.mjs",
     "test:toolbox:mobile-real-photo-001-030": "node scripts/run-mobile-real-photo-001-030.mjs",
-    "test:toolbox:030-mobile-real": "node scripts/run-mobile-real-photo-001-030.mjs --only 30"
+    "test:toolbox:030-mobile-real": "node scripts/run-mobile-real-photo-001-030.mjs --only 30",
+    "check:tool031-source": "node scripts/tool-031/check-source.mjs",
+    "check:tool031-static": "node scripts/tool-031/check-integration.mjs && node scripts/tool-031/check-content.mjs && node scripts/tool-031/check-logic.mjs && node scripts/tool-031/check-harness.mjs && node scripts/tool-031/check-req.mjs && node scripts/tool-031/check-package.mjs",
+    "check:tool031-harness": "node scripts/tool-031/check-harness.mjs",
+    "test:toolbox:031-preflight": "node scripts/tool-031/run-validation.mjs preflight",
+    "test:toolbox:031-core-only": "node scripts/tool-031/run-validation.mjs core-only",
+    "test:toolbox:031-boundary-only": "node scripts/tool-031/run-validation.mjs boundary-only",
+    "test:toolbox:031-feature-only": "node scripts/tool-031/run-validation.mjs feature-only",
+    "test:toolbox:031-regression-only": "node scripts/tool-031/run-validation.mjs regression-only",
+    "test:toolbox:031-limit-only": "node scripts/tool-031/run-validation.mjs limit-only",
+    "test:toolbox:031-final": "node scripts/tool-031/run-validation.mjs final",
+    "check:toolbox:mobile-real-photo-001-031": "node scripts/check-mobile-real-photo-001-031-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-031": "node scripts/run-mobile-real-photo-001-031.mjs",
+    "test:toolbox:031-mobile-real": "node scripts/run-mobile-real-photo-001-031.mjs --only 31"
   },
   "dependencies": {
     "next": "16.2.12",

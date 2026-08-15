@@ -1,0 +1,103 @@
+FIXLGS TOOLBOX 031 - PDF 페이지 번호·워터마크 도구
+상태: 보조작업장 구현/정적검수 완료, 서비스 유효상한 사용자 승인 및 주작업장 통합검증 대기
+카테고리: D. PDF 도구
+slug: pdf-page-number-watermark
+예상 URL: /ko/pdf-page-number-watermark /en/pdf-page-number-watermark /ja/pdf-page-number-watermark
+
+[MAIN DESIGN]
+MAIN: TOOL 026 이미지 PDF 변환기
+기준 요소: ToolboxSubpageShell, hero, LOCAL badge, 업로드 영역, 2열 작업영역, panel/card, primary/secondary action, NEXT WORK, RELATED TOOLS, HOW TO, USE CASES, EXPERT POST, IMPORTANT NOTES, FAQ
+SUB: 없음
+판정: DESIGN-CODE PASS. 신규 기능 고유 UI만 전용 module.css 사용.
+
+[구현 기능]
+- 페이지 번호 ON/OFF
+- 표시 시작 페이지와 시작 번호 분리
+- 번호 형식 1 / 01 / Page 1 / 1 of N 계열
+- 페이지 번호 위치 9-point, 크기, 색상, 여백
+- 머리말/꼬리말 독립 ON/OFF, 텍스트, 좌/중/우
+- 텍스트 워터마크: 크기/색상/투명도/회전 프리셋/위치
+- 로고 워터마크: PNG/JPG/WebP, 비율 유지, 투명도, 크기, 위치
+- 적용 페이지: 전체/첫 페이지 제외/마지막 페이지 제외/홀수/짝수/사용자 범위
+- 대표 페이지 이동 및 실제 PDF 기반 미리보기 생성
+- 결과 PDF 생성, pageCount 재검증, 다운로드, 재생성, 새 PDF, 초기화
+- KO/EN/JA UI/SEO/FAQ/전문가 포스팅
+- 브라우저 로컬 처리 안내
+
+[처리 방식]
+- pdf-lib 1.17.1 신규 로컬 OSS 필요.
+- 원본 전체 페이지 rasterization 금지. 원본 PDF 페이지 객체 위에 overlay를 추가.
+- 한글/일본어/사용자 텍스트는 시스템 글꼴로 투명 PNG overlay만 생성하여 PDF에 삽입. 원본 페이지는 rasterize하지 않음.
+- WebP 로고는 브라우저 Canvas에서 PNG로 변환 후 embed.
+
+[신규 OSS]
+pdf-lib 1.17.1
+용도: 기존 PDF 로드/copyPages/drawImage/save 및 pageCount 재검증
+처리: 브라우저 로컬
+비용/API key/account/server: 없음
+라이선스: MIT
+중요: 현재 제공된 프로젝트 ZIP은 node_modules가 없고 작업환경 DNS가 차단되어 npm 설치를 실행하지 못했음.
+주작업장 이식 시 `npm install pdf-lib@1.17.1 --save` 실행 후 package.json/package-lock.json을 정상 갱신해야 함.
+보조작업장에서는 공통 package 파일을 반쪽 상태로 수정하지 않기 위해 원본 package.json/package-lock.json을 보존함.
+
+[서비스 유효상한 - 승인 전 후보]
+현재 구현 후보값: PDF 1개 / 30MB / 300페이지 / 로고 10MB / 머리말·꼬리말 각 200자 / 워터마크 텍스트 300자
+이 값은 제작전달서 후보 A를 코드 구조에 준비한 상태이며 최종 limit-only 기준으로 확정하지 않음.
+사용자 승인 후 주작업장에서 최종 상수/검수기/FAQ 숫자를 일치시켜야 함.
+
+[모바일 실기기 runner 등록]
+scripts/tool-031/mobile-runner-registration.json 준비 완료
+등록 selector:
+- file input: [data-testid="tool031-file-input"]
+- create: [data-testid="tool031-create"]
+- result: [data-testid="tool031-result"]
+- download: [data-testid="tool031-download"]
+실제 모바일 실기기 테스트는 PDF 카테고리 완료 후 카테고리 일괄 실행.
+
+[보조작업장 정적 검수]
+PASS: scripts/tool-031/check-source.mjs
+PASS: scripts/tool-031/check-harness.mjs
+PASS: scripts/tool-031/check-req.mjs (20/20)
+PASS: scripts/tool-031/check-common-protection.mjs against original upload
+공통 CSS 8개 + package.json + package-lock.json 원본 hash 동일 확인.
+TypeScript parser 실행은 수행했으나 node_modules 부재로 Next/React/pdf-lib module resolution 오류만 발생. 소스 자체 syntax error는 별도 출력되지 않았음.
+
+[주작업장 통합검증]
+- npm install pdf-lib@1.17.1 --save
+- typecheck / production build
+- 실제 브라우저 KO/EN/JA, light/dark, PC/mobile viewport
+- 실제 PDF fixture: 일반, 표지+본문, 홀/짝, A4+Letter, portrait+landscape, rotated page, 손상/암호화
+- 실제 overlay pixel/위치/alpha/비율 및 pageCount/순서/크기
+- preflight/core/boundary/feature/regression/limit/FINAL
+- sitemap/site/category/related route 연결
+- 기존 001~030 전체 영향 및 공통 CSS 회귀
+- 모바일 실기기 runner 중앙 목록에 031 등록 및 PDF 카테고리 일괄 실행
+
+[공통 변경 후보 - 보조작업장 미수정]
+- lib/site.ts: 031 카드/slug/다국어 카테고리 연결
+- app/sitemap.ts: 031 ko/en/ja URL
+- package.json/package-lock.json: pdf-lib 1.17.1 설치 후 lock 갱신
+- 실제 중앙 mobile runner: 031 등록 병합
+위 파일은 보조작업장 공통파일 보호 원칙 때문에 직접 수정하지 않음.
+
+[이식 대상 전용 파일]
+app/[locale]/pdf-page-number-watermark/page.tsx
+components/pdf-page-number-watermark-page.tsx
+components/pdf-page-number-watermark-tool.tsx
+components/pdf-page-number-watermark-tool.module.css
+lib/tool-031-pdf.ts
+scripts/tool-031/check-source.mjs
+scripts/tool-031/check-harness.mjs
+scripts/tool-031/check-req.mjs
+scripts/tool-031/check-common-protection.mjs
+scripts/tool-031/mobile-runner-registration.json
+
+[최종 판정]
+CODE PASS
+FUNCTION-STATIC PASS
+DESIGN-CODE PASS
+HARNESS-STRUCTURE PASS
+COMMON FILE PROTECTION PASS
+PACKAGE PASS (전용 파일 구성 기준)
+SERVICE LIMIT: 사용자 승인 대기
+주작업장 통합 FINAL: 미수행/주작업장 통합검증

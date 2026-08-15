@@ -1,0 +1,10 @@
+{
+  "number": "031",
+  "slug": "pdf-page-number-watermark",
+  "fileInput": "[data-testid=\"tool031-file-input\"]",
+  "create": "[data-testid=\"tool031-create\"]",
+  "result": "[data-testid=\"tool031-result\"]",
+  "download": "[data-testid=\"tool031-download\"]",
+  "workflow": "pdf-upload -> settings -> create -> result -> download",
+  "execution": "PDF category real-device batch after category completion"
+}

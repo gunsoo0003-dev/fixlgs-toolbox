@@ -1,0 +1,25 @@
+# TOOL 031 보조작업장 체크리스트
+
+- [x] 도구 번호/명칭/카테고리/slug 확인
+- [x] 도장깨기 5개 기본 기능 코드 구현
+- [x] 페이지 번호/시작 번호 분리
+- [x] 머리말/꼬리말 독립 슬롯
+- [x] 텍스트/로고 워터마크
+- [x] 9-point 위치 및 투명도
+- [x] 전체/첫 제외/마지막 제외/홀수/짝수/사용자 범위
+- [x] 대표 페이지 미리보기 구조
+- [x] 결과 재생성/다운로드/초기화
+- [x] 원본 페이지 rasterize 금지 구조
+- [x] KO/EN/JA
+- [x] 일본어 긴 라벨을 모바일 1열 구조로 수용하는 CSS
+- [x] MAIN 기준 TOOL026 지정 및 common 구조 이식
+- [x] 신규 기능 CSS module 분리
+- [x] globals.css/styles 전역/legacy sealed 신규 오염 0
+- [x] REQ 정적 추적 20/20 PASS
+- [x] 모바일 runner 등록 manifest/selector 준비
+- [x] 주작업장 통합검증 항목 HANDOFF 기록
+- [ ] 서비스 유효상한 사용자 승인
+- [ ] pdf-lib 실제 설치 후 TypeScript/build
+- [ ] 실제 브라우저/Playwright/실제 PDF 결과 검수
+- [ ] 중앙 mobile real-device runner 실제 병합
+- [ ] 통합 FINAL
