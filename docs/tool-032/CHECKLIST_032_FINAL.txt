@@ -1,0 +1,41 @@
+WEB TOOL 032 - SUB-WORKSHOP 1/2/3 FINAL CHECKLIST
+=================================================
+Judgement: PASS / FAIL / NOT VERIFIED / MAIN-WORKSHOP INTEGRATION / N/A
+Design baseline: MAIN 027, SUB 026
+Approved limits: PDF 1 / 30 MiB / 300 pages; signature 10 MiB / 20 MP; stroke 20,000.
+
+[PASS] Four fixed functions preserved: draw / image / position-size / multiple pages.
+[PASS] Pointer mouse/pen/touch drawing, clear/redraw, width/color presets.
+[PASS] PNG/JPG/WebP image input, alpha preservation, EXIF orientation normalization.
+[PASS] Aspect ratio lock, drag/resize, 3x3 fallback, clamp, -15/0/+15 rotation, undo/redo.
+[PASS] Current/all/odd/even/custom page application with strict range validation/dedup.
+[PASS] Mixed page size/rotation normalized coordinate logic.
+[PASS] PDF.js preview + pdf-lib overlay; no whole-page rasterized writer path.
+[PASS] Result pageCount reparse, applied page summary, safe filename, repeat generation/download/reset.
+[PASS] KO/EN/JA UI/content and visual-vs-PKI legal boundary.
+[PASS] Local-only privacy wording and no backend/API/fetch path.
+[PASS] HOW TO / use cases / expert post / caution / FAQ / related tools.
+[PASS] WebApplication/FAQPage/BreadcrumbList and canonical/hreflang route metadata.
+[PASS] Responsive module CSS; no global CSS or legacy sealed contamination.
+[PASS] MAIN 027 / SUB 026 design-code comparison recorded.
+[PASS] Service-limit user approval applied and pending wording removed.
+[PASS] limit expected values fixed independently rather than reading product values as the answer.
+[PASS] Source/content/design/logic/fixture/package/runner/limit/syntax static validators prepared.
+[PASS] Preflight/core/boundary/regression/limit runtime specs prepared.
+[PASS] Desktop result ZIP fixed filename/failure-evidence/temp-cleanup runner contract.
+[PASS] Mobile real-device category-batch contract prepared.
+[PASS] pdf-lib 1.17.1 MIT local OSS documented; package patch additive only.
+[PASS] Protected/common baseline 21/21 identical.
+[PASS] Original production PDF preserved and SHA256 recorded.
+[PASS] REQ master second-pass reapplication complete.
+[PASS] No stale 027 identity remains in 032 runner summary contract.
+[PASS] HANDOFF/package map generated from final state.
+[MAIN-WORKSHOP INTEGRATION] Merge pdf-lib/script patch into current package.json/package-lock.json and install.
+[MAIN-WORKSHOP INTEGRATION] Add category/site registry, sitemap and common mobile runner registration additively.
+[MAIN-WORKSHOP INTEGRATION] Actual PC/mobile KO/EN/JA light/dark/overflow/touch/drag runtime.
+[MAIN-WORKSHOP INTEGRATION] Actual output PDF viewer/pixel-alpha-bbox checks.
+[MAIN-WORKSHOP INTEGRATION] TypeScript full project, production build, integrated regression, FINAL FAIL 0 / SKIP 0.
+[MAIN-WORKSHOP INTEGRATION] Actual smartphone test at PDF-category batch.
+
+SUB-WORKSHOP GATE
+CODE PASS / FUNCTION-STATIC PASS / DESIGN-CODE PASS / HARNESS-STRUCTURE PASS / PACKAGE PASS / COMMON FILE PROTECTION PASS.

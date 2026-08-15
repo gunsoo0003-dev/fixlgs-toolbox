@@ -1,0 +1,57 @@
+FIXLGS TOOLBOX 032 FINAL DELIVERY PACKAGE MANIFEST
+================================================
+Tool: 032 PDF 서명 넣기 / Add Signature to PDF
+Top folder: fixlgs-toolbox
+Package mode: feature-only sub-workshop transplant package (no protected common overwrite)
+
+Files including this manifest: 49
+
+01. app/[locale]/pdf-signature/page.tsx
+02. components/pdf-signature-page.tsx
+03. components/pdf-signature-tool.module.css
+04. components/pdf-signature-tool.tsx
+05. docs/tool-032/CHANGE_MAP_032.txt
+06. docs/tool-032/CHECKLIST_032_FINAL.txt
+07. docs/tool-032/CHECKLIST_032_PREBUILD.md
+08. docs/tool-032/CHECKLIST_032_RESULT.md
+09. docs/tool-032/DESIGN_CODE_CHECK_032.md
+10. docs/tool-032/FAILURE_RESPONSE_MAP_032.txt
+11. docs/tool-032/FIXLGS_TOOLBOX_032_PDF_서명_넣기_최종제작전달서.pdf
+12. docs/tool-032/HANDOFF_032.txt
+13. docs/tool-032/INTEGRATION_032.txt
+14. docs/tool-032/MOBILE_REAL_DEVICE_CONTRACT_032.md
+15. docs/tool-032/ORIGINAL_PLAN_SHA256.txt
+16. docs/tool-032/OSS_032.md
+17. docs/tool-032/PACKAGE_MANIFEST_032.txt
+18. docs/tool-032/PACKAGE_PATCH_032.json
+19. docs/tool-032/PROTECTED_BASELINE_HASH_032.json
+20. docs/tool-032/REQ_MASTER_032.txt
+21. docs/tool-032/SELECTOR_STATE_INVENTORY_032.md
+22. docs/tool-032/SERVICE_LIMIT_APPROVED_032.md
+23. docs/tool-032/STATIC_EVIDENCE_032.txt
+24. fixtures/tool-032/broken.pdf
+25. fixtures/tool-032/mime-mismatch.pdf
+26. fixtures/tool-032/mime-mismatch.png
+27. fixtures/tool-032/mixed-4page.pdf
+28. fixtures/tool-032/signature.jpg
+29. fixtures/tool-032/signature.webp
+30. fixtures/tool-032/transparent-signature.png
+31. fixtures/tool-032/페이지범위_한글_日本語.txt
+32. lib/tool-032-pdf-signature.ts
+33. playwright.tool032.config.ts
+34. scripts/tool-032/check-content.mjs
+35. scripts/tool-032/check-design-static.mjs
+36. scripts/tool-032/check-fixtures.mjs
+37. scripts/tool-032/check-limit-static.mjs
+38. scripts/tool-032/check-logic.mjs
+39. scripts/tool-032/check-package-static.mjs
+40. scripts/tool-032/check-runner-contract.mjs
+41. scripts/tool-032/check-source.mjs
+42. scripts/tool-032/check-syntax.mjs
+43. scripts/tool-032/run-validation.mjs
+44. scripts/tool-032/runtime-workspace.mjs
+45. tests/tool-032-boundary.spec.ts
+46. tests/tool-032-core.spec.ts
+47. tests/tool-032-limit.spec.ts
+48. tests/tool-032-preflight.spec.ts
+49. tests/tool-032-regression.spec.ts

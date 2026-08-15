@@ -1,0 +1,214 @@
+TOOL 032 SUB-WORKSHOP STATIC FINAL EVIDENCE
+DATE=2026-08-15
+APPROVED_LIMITS=PDF30MiB/PAGES300/SIGNATURE10MiB/20MP/STROKE20000
+
+===== scripts/tool-032/check-runner-contract.mjs =====
+PASS exists scripts/tool-032/run-validation.mjs
+PASS exists scripts/tool-032/runtime-workspace.mjs
+PASS exists playwright.tool032.config.ts
+PASS exists tests/tool-032-preflight.spec.ts
+PASS exists tests/tool-032-core.spec.ts
+PASS exists tests/tool-032-boundary.spec.ts
+PASS exists tests/tool-032-regression.spec.ts
+PASS exists tests/tool-032-limit.spec.ts
+PASS exists docs/tool-032/SELECTOR_STATE_INVENTORY_032.md
+PASS exists docs/tool-032/MOBILE_REAL_DEVICE_CONTRACT_032.md
+PASS exists docs/tool-032/PACKAGE_PATCH_032.json
+PASS syntax scripts/tool-032/run-validation.mjs
+PASS syntax scripts/tool-032/runtime-workspace.mjs
+PASS no interactive npx
+PASS Desktop result ZIP contract
+PASS visible progress contract
+PASS pinned pdf-lib dependency guard
+PASS approved service limits no longer depend on runtime approval env
+PASS PC/mobile isolated runtime config
+EXIT=0
+
+===== scripts/tool-032/check-syntax.mjs =====
+PASS syntax components/pdf-signature-tool.tsx
+PASS syntax components/pdf-signature-page.tsx
+PASS syntax lib/tool-032-pdf-signature.ts
+PASS syntax app/[locale]/pdf-signature/page.tsx
+PASS syntax playwright.tool032.config.ts
+PASS syntax tests/tool-032-preflight.spec.ts
+PASS syntax tests/tool-032-core.spec.ts
+PASS syntax tests/tool-032-boundary.spec.ts
+PASS syntax tests/tool-032-regression.spec.ts
+PASS syntax tests/tool-032-limit.spec.ts
+EXIT=0
+
+===== scripts/tool-032/check-source.mjs =====
+PASS exists components/pdf-signature-tool.tsx
+PASS exists components/pdf-signature-page.tsx
+PASS exists components/pdf-signature-tool.module.css
+PASS exists lib/tool-032-pdf-signature.ts
+PASS exists app/[locale]/pdf-signature/page.tsx
+PASS source token pdf-signature
+PASS source token tool032-root
+PASS source token tool032-file-input
+PASS source token tool032-draw-canvas
+PASS source token tool032-signature-input
+PASS source token tool032-signature-overlay
+PASS source token tool032-create
+PASS source token tool032-result
+PASS source token tool032-download
+PASS source token pdf-lib
+PASS source token pdfjs-dist/webpack.mjs
+PASS source token parseTool032PageRange
+PASS source token visibleBoxToPdfBox
+PASS source token applyTool032Signature
+PASS source token image/png
+PASS source token image/jpeg
+PASS source token image/webp
+PASS source token current
+PASS source token all
+PASS source token odd
+PASS source token even
+PASS source token custom
+PASS source token -15
+PASS source token +15
+PASS source token FAQPage
+PASS source token BreadcrumbList
+PASS source token EXPERT POST
+PASS no forbidden backend/claim token fetch(
+PASS no forbidden backend/claim token axios
+PASS no forbidden backend/claim token firebase
+PASS no forbidden backend/claim token supabase
+PASS no forbidden backend/claim token openai
+PASS no forbidden backend/claim token uploadToServer
+PASS no forbidden backend/claim token PKI signing
+PASS no whole-page rasterized PDF writer path
+PASS no common CSS contamination app/globals.css
+PASS no common CSS contamination styles/global-base.css
+PASS no common CSS contamination styles/toolbox-common.css
+PASS no common CSS contamination styles/toolbox-detail-common.css
+PASS no common CSS contamination styles/theme.css
+PASS no common CSS contamination styles/toolbox-compat.css
+PASS no common CSS contamination styles/legacy-site-sealed.css
+PASS no common CSS contamination styles/legacy-tools-sealed.css
+EXIT=0
+
+===== scripts/tool-032/check-logic.mjs =====
+PASS range dedup/sort
+PASS range rejects 0
+PASS range rejects -1
+PASS range rejects 9
+PASS range rejects 4-2
+PASS range rejects 1-99
+PASS range rejects abc
+PASS odd pages
+PASS even pages
+PASS rotation visible size
+PASS rotation 0 normalized box
+PASS rotation 90 normalized box
+PASS Unicode filename preserved
+PASS unsafe filename chars sanitized
+EXIT=0
+
+===== scripts/tool-032/check-content.mjs =====
+PASS page content ko:
+PASS page content en:
+PASS page content ja:
+PASS page content toolbox-tool-guide
+PASS page content toolbox-tool-use-cases--editorial
+PASS page content toolbox-tool-expert-post
+PASS page content toolbox-tool-info-band
+PASS page content toolbox-tool-faq
+PASS trust/boundary wording 인증서
+PASS trust/boundary wording PKI
+PASS trust/boundary wording legal validity
+PASS trust/boundary wording 法的効力
+PASS trust/boundary wording 서버
+PASS trust/boundary wording current browser
+PASS trust/boundary wording ブラウザ内
+PASS required UI/content 서명 그리기
+PASS required UI/content Draw signature
+PASS required UI/content 署名を描く
+PASS required UI/content 서명 이미지
+PASS required UI/content Signature image
+PASS required UI/content 署名画像
+PASS required UI/content 여러 페이지
+PASS required UI/content multiple pages
+PASS required UI/content 複数ページ
+PASS no legal-effect guarantee
+EXIT=0
+
+===== scripts/tool-032/check-design-static.mjs =====
+PASS common pattern ToolboxSubpageShell
+PASS common pattern toolbox-tool-detail-hero
+PASS common pattern toolbox-next-work
+PASS common pattern ToolboxFaqList
+PASS desktop-to-mobile workspace breakpoint
+PASS small mobile breakpoint
+PASS grid/touch CSS present
+PASS drawing-only touch-action control
+PASS touch resize + preset fallback
+TOOL032 DESIGN-CODE TARGET | MAIN=027 | SUB=026 | CATEGORY=PDF
+EXIT=0
+
+===== scripts/tool-032/check-limit-static.mjs =====
+PASS approved limit PDF 30 MiB is independent in product + test
+PASS approved limit PDF 300 pages is independent in product + test
+PASS approved limit signature 10 MiB is independent in product + test
+PASS approved limit signature 20 MP is independent in product + test
+PASS approved limit stroke 20,000 points is independent in product + test
+PASS KO/EN/JA approved-limit wording
+PASS approval-pending wording removed
+PASS DOM contract data-max-pdf-bytes
+PASS DOM contract data-max-pages
+PASS DOM contract data-max-signature-bytes
+PASS DOM contract data-max-signature-pixels
+PASS DOM contract data-max-stroke-points
+EXIT=0
+
+===== scripts/tool-032/check-fixtures.mjs =====
+PASS fixture mixed-4page.pdf
+PASS fixture broken.pdf
+PASS fixture mime-mismatch.pdf
+PASS fixture transparent-signature.png
+PASS fixture signature.jpg
+PASS fixture signature.webp
+PASS fixture mime-mismatch.png
+PASS fixture 페이지범위_한글_日本語.txt
+PASS normal PDF header
+PASS transparent PNG signature header
+EXIT=0
+
+===== scripts/tool-032/check-package-static.mjs =====
+PASS pdf-lib pinned 1.17.1
+PASS script patch test:toolbox:032-preflight
+PASS script patch test:toolbox:032-core-only
+PASS script patch test:toolbox:032-boundary-only
+PASS script patch test:toolbox:032-regression-only
+PASS script patch test:toolbox:032-limit-only
+PASS script patch test:toolbox:032-final
+PASS OSS record MIT
+PASS OSS record browser/client local
+PASS OSS record server/backend/API key/account: 없음
+PASS OSS record paid API
+PASS OSS record external transmission
+EXIT=0
+
+===== PROTECTED HASH =====
+PASS app/globals.css 8856d74d81c25f7e386ec752a5e7a2ba1c736a0d18815260b2f4b16163e48f67
+PASS styles/global-base.css 0ef2dcc8b5aac5ebae233248d6375a8d6e5bcfa766dcf063fd62b66f96fa4296
+PASS styles/toolbox-common.css 73cb8c2990ccbc3ea383fb57d8bc767992a3058c984153fa0d70d62f228850f7
+PASS styles/toolbox-detail-common.css 07af1885912517330e915cab6606fbc027bd062eaeae7d98974f061b521daa37
+PASS styles/theme.css 9f25a849d1459c649f87fd9741ebdc8659b4570fcd7e7d99edba256cd7a854d8
+PASS styles/toolbox-compat.css 3860b5c64daba0bb7f1e67dab45d7cca7630a8099570c902cc7a86c1da195555
+PASS styles/legacy-site-sealed.css a443cb0d324fb6b794046e4e00e7d0abdd8d71d74430f601e66713b42aafa092
+PASS styles/legacy-tools-sealed.css cbb9ab57797b59d11f23e65811d2e3dc02b2b4cd92454754dbc17b4821b72477
+PASS lib/site.ts 566fe6aabac6fbc32b5390bfab0ae47408a4201a1fcf2f6472adee3b05960955
+PASS app/sitemap.ts d75e3189ac4eeece42a9bfd1964c9e5def2ae935164ccbff301dba380a530393
+PASS app/robots.ts 248af8e657cb600646397418ad0257018964936435806f6e9c99bc0cd1d76b1f
+PASS components/image-to-pdf-tool.tsx feaaea35bf2c9087db55da82d1d6f2dc3bd8ef251dfaef00368800721b8885fb
+PASS components/image-to-pdf-page.tsx cbfabb8a879e222a147959261a72f350659a666596103b54de9b119c3e66ad30
+PASS components/image-to-pdf-tool.module.css eed335c64c4e6071e6b65ff5814744ed4b812587a46dc7455799e11b6d38fa85
+PASS components/pdf-to-image-converter-tool.tsx feff6cab629a560d5f64a7be2836aef5e073745dbffed587c54e5db873361555
+PASS components/pdf-to-image-converter-page.tsx 212dc24475bdf5b6c9ae3afe3af5c9e1cfe20b5f680c4d7d7a5ac1606b997367
+PASS components/pdf-to-image-converter-tool.module.css 8012896f2083f134dd08a37d0fa59385fc3d778e77bbc19021060a922282c67e
+PASS lib/tool-027-pdf-image.ts 783818fab77ba2318cdcaa4f4875de3cd10efbff1aa07ae5caf3742fb8bf3a7b
+PASS app/[locale]/pdf-to-image-converter/page.tsx 5d8dbcca608abbff981d159b2e80d0d7bf9499c3ce5191abbb18e2b99a062f38
+PASS package.json f915386d22406d10fb71a5a4062d9f0df3126b18fa6532793ca431124b4d44a9
+PASS package-lock.json c5d4e847602001e7c375a6fa1a3a2a57f24f2bd7fdfcf13d756966092af90be3
+PROTECTED_SAME=21/21

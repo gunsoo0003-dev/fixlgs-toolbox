@@ -1,0 +1,128 @@
+[
+  {
+    "path": "app/globals.css",
+    "same": true,
+    "pristine_sha256": "8856d74d81c25f7e386ec752a5e7a2ba1c736a0d18815260b2f4b16163e48f67",
+    "work_sha256": "8856d74d81c25f7e386ec752a5e7a2ba1c736a0d18815260b2f4b16163e48f67"
+  },
+  {
+    "path": "styles/global-base.css",
+    "same": true,
+    "pristine_sha256": "0ef2dcc8b5aac5ebae233248d6375a8d6e5bcfa766dcf063fd62b66f96fa4296",
+    "work_sha256": "0ef2dcc8b5aac5ebae233248d6375a8d6e5bcfa766dcf063fd62b66f96fa4296"
+  },
+  {
+    "path": "styles/toolbox-common.css",
+    "same": true,
+    "pristine_sha256": "73cb8c2990ccbc3ea383fb57d8bc767992a3058c984153fa0d70d62f228850f7",
+    "work_sha256": "73cb8c2990ccbc3ea383fb57d8bc767992a3058c984153fa0d70d62f228850f7"
+  },
+  {
+    "path": "styles/toolbox-detail-common.css",
+    "same": true,
+    "pristine_sha256": "07af1885912517330e915cab6606fbc027bd062eaeae7d98974f061b521daa37",
+    "work_sha256": "07af1885912517330e915cab6606fbc027bd062eaeae7d98974f061b521daa37"
+  },
+  {
+    "path": "styles/theme.css",
+    "same": true,
+    "pristine_sha256": "9f25a849d1459c649f87fd9741ebdc8659b4570fcd7e7d99edba256cd7a854d8",
+    "work_sha256": "9f25a849d1459c649f87fd9741ebdc8659b4570fcd7e7d99edba256cd7a854d8"
+  },
+  {
+    "path": "styles/toolbox-compat.css",
+    "same": true,
+    "pristine_sha256": "3860b5c64daba0bb7f1e67dab45d7cca7630a8099570c902cc7a86c1da195555",
+    "work_sha256": "3860b5c64daba0bb7f1e67dab45d7cca7630a8099570c902cc7a86c1da195555"
+  },
+  {
+    "path": "styles/legacy-site-sealed.css",
+    "same": true,
+    "pristine_sha256": "a443cb0d324fb6b794046e4e00e7d0abdd8d71d74430f601e66713b42aafa092",
+    "work_sha256": "a443cb0d324fb6b794046e4e00e7d0abdd8d71d74430f601e66713b42aafa092"
+  },
+  {
+    "path": "styles/legacy-tools-sealed.css",
+    "same": true,
+    "pristine_sha256": "cbb9ab57797b59d11f23e65811d2e3dc02b2b4cd92454754dbc17b4821b72477",
+    "work_sha256": "cbb9ab57797b59d11f23e65811d2e3dc02b2b4cd92454754dbc17b4821b72477"
+  },
+  {
+    "path": "lib/site.ts",
+    "same": true,
+    "pristine_sha256": "566fe6aabac6fbc32b5390bfab0ae47408a4201a1fcf2f6472adee3b05960955",
+    "work_sha256": "566fe6aabac6fbc32b5390bfab0ae47408a4201a1fcf2f6472adee3b05960955"
+  },
+  {
+    "path": "app/sitemap.ts",
+    "same": true,
+    "pristine_sha256": "d75e3189ac4eeece42a9bfd1964c9e5def2ae935164ccbff301dba380a530393",
+    "work_sha256": "d75e3189ac4eeece42a9bfd1964c9e5def2ae935164ccbff301dba380a530393"
+  },
+  {
+    "path": "app/robots.ts",
+    "same": true,
+    "pristine_sha256": "248af8e657cb600646397418ad0257018964936435806f6e9c99bc0cd1d76b1f",
+    "work_sha256": "248af8e657cb600646397418ad0257018964936435806f6e9c99bc0cd1d76b1f"
+  },
+  {
+    "path": "components/image-to-pdf-tool.tsx",
+    "same": true,
+    "pristine_sha256": "feaaea35bf2c9087db55da82d1d6f2dc3bd8ef251dfaef00368800721b8885fb",
+    "work_sha256": "feaaea35bf2c9087db55da82d1d6f2dc3bd8ef251dfaef00368800721b8885fb"
+  },
+  {
+    "path": "components/image-to-pdf-page.tsx",
+    "same": true,
+    "pristine_sha256": "cbfabb8a879e222a147959261a72f350659a666596103b54de9b119c3e66ad30",
+    "work_sha256": "cbfabb8a879e222a147959261a72f350659a666596103b54de9b119c3e66ad30"
+  },
+  {
+    "path": "components/image-to-pdf-tool.module.css",
+    "same": true,
+    "pristine_sha256": "eed335c64c4e6071e6b65ff5814744ed4b812587a46dc7455799e11b6d38fa85",
+    "work_sha256": "eed335c64c4e6071e6b65ff5814744ed4b812587a46dc7455799e11b6d38fa85"
+  },
+  {
+    "path": "components/pdf-to-image-converter-tool.tsx",
+    "same": true,
+    "pristine_sha256": "feff6cab629a560d5f64a7be2836aef5e073745dbffed587c54e5db873361555",
+    "work_sha256": "feff6cab629a560d5f64a7be2836aef5e073745dbffed587c54e5db873361555"
+  },
+  {
+    "path": "components/pdf-to-image-converter-page.tsx",
+    "same": true,
+    "pristine_sha256": "212dc24475bdf5b6c9ae3afe3af5c9e1cfe20b5f680c4d7d7a5ac1606b997367",
+    "work_sha256": "212dc24475bdf5b6c9ae3afe3af5c9e1cfe20b5f680c4d7d7a5ac1606b997367"
+  },
+  {
+    "path": "components/pdf-to-image-converter-tool.module.css",
+    "same": true,
+    "pristine_sha256": "8012896f2083f134dd08a37d0fa59385fc3d778e77bbc19021060a922282c67e",
+    "work_sha256": "8012896f2083f134dd08a37d0fa59385fc3d778e77bbc19021060a922282c67e"
+  },
+  {
+    "path": "lib/tool-027-pdf-image.ts",
+    "same": true,
+    "pristine_sha256": "783818fab77ba2318cdcaa4f4875de3cd10efbff1aa07ae5caf3742fb8bf3a7b",
+    "work_sha256": "783818fab77ba2318cdcaa4f4875de3cd10efbff1aa07ae5caf3742fb8bf3a7b"
+  },
+  {
+    "path": "app/[locale]/pdf-to-image-converter/page.tsx",
+    "same": true,
+    "pristine_sha256": "5d8dbcca608abbff981d159b2e80d0d7bf9499c3ce5191abbb18e2b99a062f38",
+    "work_sha256": "5d8dbcca608abbff981d159b2e80d0d7bf9499c3ce5191abbb18e2b99a062f38"
+  },
+  {
+    "path": "package.json",
+    "same": true,
+    "pristine_sha256": "f915386d22406d10fb71a5a4062d9f0df3126b18fa6532793ca431124b4d44a9",
+    "work_sha256": "f915386d22406d10fb71a5a4062d9f0df3126b18fa6532793ca431124b4d44a9"
+  },
+  {
+    "path": "package-lock.json",
+    "same": true,
+    "pristine_sha256": "c5d4e847602001e7c375a6fa1a3a2a57f24f2bd7fdfcf13d756966092af90be3",
+    "work_sha256": "c5d4e847602001e7c375a6fa1a3a2a57f24f2bd7fdfcf13d756966092af90be3"
+  }
+]

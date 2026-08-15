@@ -1,0 +1,21 @@
+TOOL 032 MAIN WORKSHOP INTEGRATION NOTES
+========================================
+1) Extract/copy only the delivered 032 files into the latest fixlgs-toolbox project.
+2) Do NOT overwrite package.json/package-lock.json from this package (they are not included).
+3) Merge docs/tool-032/PACKAGE_PATCH_032.json additively.
+4) Install dependency: npm install pdf-lib@1.17.1 --save
+5) Add central site/category/sitemap/mobile-runner registrations in the latest common files.
+6) Validation order:
+   npm run test:toolbox:032-preflight
+   npm run test:toolbox:032-core-only
+   npm run test:toolbox:032-boundary-only
+   npm run test:toolbox:032-regression-only
+   npm run test:toolbox:032-limit-only
+   npm run test:toolbox:032-final
+7) Local product confirmation after integration:
+   npm run dev
+   http://localhost:3000/ko/pdf-signature
+   http://localhost:3000/en/pdf-signature
+   http://localhost:3000/ja/pdf-signature
+
+Result ZIP contract: Windows Desktop / 032_<mode>_검수결과.zip, fixed filename per mode, overwrite on rerun, failure evidence retained in ZIP when archive succeeds.

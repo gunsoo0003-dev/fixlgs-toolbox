@@ -230,6 +230,8 @@ export const tool030Slug = "pdf-page-organizer" as const;
 
 export const tool031Slug = "pdf-page-number-watermark" as const;
 
+export const tool032Slug = "pdf-signature" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -276,6 +278,8 @@ export const tool030Titles: Record<Locale, string> = { ko: "PDF 페이지 정리
 export const tool030Descriptions: Record<Locale, string> = { ko: "PDF 페이지를 삭제·순서 변경·복제·회전하고 역순 정렬이나 빈 페이지 추가 후 새 PDF로 저장하세요.", en: "Delete, reorder, duplicate and rotate PDF pages, reverse the order or add blank pages, then save a new PDF.", ja: "PDFページを削除・並べ替え・複製・回転し、逆順や空白ページ追加を行って新しいPDFとして保存できます。" };
 export const tool031Titles: Record<Locale, string> = { ko: "PDF 페이지 번호·워터마크 도구", en: "PDF Page Number & Watermark Tool", ja: "PDF ページ番号・透かしツール" };
 export const tool031Descriptions: Record<Locale, string> = { ko: "PDF에 페이지 번호, 시작 번호, 머리말·꼬리말, 텍스트·로고 워터마크를 원하는 위치와 범위에 추가하세요.", en: "Add page numbers, starting numbers, headers, footers, and text or logo watermarks to selected PDF pages.", ja: "PDFにページ番号、開始番号、ヘッダー・フッター、テキスト・ロゴ透かしを指定した位置と範囲に追加できます。" };
+export const tool032Titles: Record<Locale, string> = { ko: "PDF 서명 넣기", en: "Add Signature to PDF", ja: "PDF 署名追加ツール" };
+export const tool032Descriptions: Record<Locale, string> = { ko: "서명을 직접 그리거나 이미지로 불러와 PDF의 원하는 위치와 여러 페이지에 적용하세요.", en: "Draw a signature or use a signature image, then place it on selected PDF pages.", ja: "署名を描くか画像を読み込み、PDFの指定位置と複数ページに適用できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -697,6 +701,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool032Titles,
+      description: tool032Descriptions,
+      href: `/${"ko"}/${tool032Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -825,6 +836,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
       if (index === 3) return { ...item, href: `/${locale}/${tool029Slug}` };
       if (index === 4) return { ...item, href: `/${locale}/${tool030Slug}` };
       if (index === 5) return { ...item, href: `/${locale}/${tool031Slug}` };
+      if (index === 6) return { ...item, href: `/${locale}/${tool032Slug}` };
       return item;
     });
   }

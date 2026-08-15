@@ -1,0 +1,11 @@
+import fs from "node:fs";
+let fail = 0; const need = (ok, msg) => { console.log(ok ? "PASS" : "FAIL", msg); if (!ok) fail += 1; };
+const patch = JSON.parse(fs.readFileSync("docs/tool-032/PACKAGE_PATCH_032.json", "utf8"));
+need(patch.dependencyPatch?.["pdf-lib"] === "1.17.1", "pdf-lib pinned 1.17.1");
+for (const key of ["test:toolbox:032-preflight", "test:toolbox:032-core-only", "test:toolbox:032-boundary-only", "test:toolbox:032-feature-only", "test:toolbox:032-regression-only", "test:toolbox:032-limit-only", "test:toolbox:032-final", "check:toolbox:mobile-real-photo-001-032", "test:toolbox:032-mobile-real", "check:tool032-static"]) need(Boolean(patch.scriptPatch?.[key]), `script patch ${key}`);
+const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+need(pkg.dependencies?.["pdf-lib"] === "1.17.1", "integrated package pdf-lib 1.17.1");
+for (const key of Object.keys(patch.scriptPatch || {})) need(pkg.scripts?.[key] === patch.scriptPatch[key], `integrated package script ${key}`);
+const oss = fs.readFileSync("docs/tool-032/OSS_032.md", "utf8");
+for (const token of ["MIT", "browser/client local", "server/backend/API key/account: 없음", "paid API", "external transmission"]) need(oss.includes(token), `OSS record ${token}`);
+process.exitCode = fail ? 1 : 0;

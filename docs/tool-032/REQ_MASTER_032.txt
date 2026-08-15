@@ -1,0 +1,62 @@
+FIXLGS TOOLBOX 032 REQ MASTER
+==============================
+Judgement: PASS / FAIL / MAIN-WORKSHOP INTEGRATION / N/A
+Source: final production delivery document, re-read against implementation after build pass.
+
+[PASS] REQ-001 Tool 032 / PDF 서명 넣기 / category D / slug pdf-signature. Evidence: dedicated route/page/tool files.
+[PASS] REQ-002 Fixed feature: draw signature. Evidence: Canvas + Pointer Events.
+[PASS] REQ-003 Fixed feature: signature image. Evidence: PNG/JPG/WebP input + real magic/decode check.
+[PASS] REQ-004 Fixed feature: position/size. Evidence: normalized placement, drag/resize, range size.
+[PASS] REQ-005 Fixed feature: multiple pages. Evidence: current/all/odd/even/custom range parser.
+[PASS] REQ-006 Visual-signature boundary; no PKI/certificate/identity/legal-validity claim. Evidence: KO/EN/JA notices/FAQ/source scan.
+[PASS] REQ-007 Browser-local processing; no server/API/account/key. Evidence: source scan and OSS record.
+[PASS] REQ-008 Keep PDF page objects; do not whole-page rasterize. Evidence: pdf-lib load + drawImage overlay; PDF.js only preview.
+[PASS] REQ-009 Mouse/pen/touch drawing via Pointer Events. Evidence: pointerdown/move/up/cancel handlers.
+[PASS] REQ-010 Drawing clear/redraw. Evidence: clearDrawing actions.
+[PASS] REQ-011 Pen width presets. Evidence: 2/4/7 controls.
+[PASS] REQ-012 Basic black/blue pen colors. Evidence: #111111/#0a66c2 controls.
+[PASS] REQ-013 Drawing exports transparent PNG and trims surrounding empty space. Evidence: alpha scan + canvas PNG blob.
+[PASS] REQ-014 Drawing-only touch-action suppression; normal page scrolling outside canvas. Evidence: drawCanvasActive module CSS.
+[PASS] REQ-015 High-DPI drawing canvas. Evidence: devicePixelRatio sizing capped at 2.
+[PASS] REQ-016 PNG/JPG/WebP signature input. Evidence: accept/MIME/magic/decode.
+[PASS] REQ-017 EXIF orientation normalization. Evidence: createImageBitmap imageOrientation from-image.
+[PASS] REQ-018 Transparent PNG alpha preservation. Evidence: transparent decode -> clear canvas -> PNG normalization.
+[PASS] REQ-019 JPG white background is not automatically removed. Evidence: no background-removal path.
+[PASS] REQ-020 Signature aspect ratio locked. Evidence: placementHeightRatio from source dimensions.
+[PASS] REQ-021 Drag move and corner resize. Evidence: gesture handlers + resize handle.
+[PASS] REQ-022 Non-drag position alternative. Evidence: 3x3 preset controls.
+[PASS] REQ-023 Placement clamped inside page bounds. Evidence: clampPlacement.
+[PASS] REQ-024 Preview zoom/size does not alter normalized PDF coordinates. Evidence: normalized ratios + visibleBoxToPdfBox.
+[PASS] REQ-025 Mixed page sizes and rotation handled by per-page visible size / coordinate conversion. Evidence: visiblePageSize/visibleBoxToPdfBox logic tests.
+[PASS] REQ-026 Current/all/odd/even/custom page scopes. Evidence: resolver + UI.
+[PASS] REQ-027 Custom ranges deduplicate and reject 0/negative/out-of-range/reverse/bad tokens. Evidence: pure logic tests + boundary spec.
+[PASS] REQ-028 Same relative placement applied per target page. Evidence: per-page loop uses normalized placement.
+[PASS] REQ-029 Representative page navigation preview. Evidence: previous/next page controls.
+[PASS] REQ-030 Rotation presets -15/0/+15. Evidence: select and pdf-lib degrees.
+[PASS] REQ-031 Undo/redo placement history. Evidence: 30-state placement history.
+[PASS] REQ-032 Result filename default source-signed.pdf, sanitized Unicode-safe custom filename. Evidence: safeTool032Filename/sanitizeOutputName.
+[PASS] REQ-033 Continue edit / regenerate / redownload / new PDF / reset. Evidence: persistent state and actions.
+[PASS] REQ-034 Real page-progress based on applied page count, no fake timer progress. Evidence: onProgress callback.
+[PASS] REQ-035 Result reparse verifies pageCount; applied-page list recorded. Evidence: applyTool032Signature + result card.
+[PASS] REQ-036 KO/EN/JA core UI and explanatory content. Evidence: page/tool copy.
+[PASS] REQ-037 HOW TO, use cases, caution, expert post, FAQ, related tools. Evidence: common content sections in pdf-signature-page.tsx.
+[PASS] REQ-038 WebApplication + FAQPage + BreadcrumbList JSON-LD. Evidence: page JSON-LD.
+[PASS] REQ-039 Dedicated canonical/hreflang metadata for ko/en/ja/x-default. Evidence: route metadata.
+[PASS] REQ-040 sitemap/central category registry/actual related active routes in latest integrated project. No protected common overwrite in sub-workshop.
+[PASS] REQ-041 Accessibility key labels, aria-live, roles, range aria values, keyboard/button alternatives. Evidence: TSX.
+[PASS] REQ-042 Responsive single-column mobile structure and large touch handle. Evidence: 980/720/430 module CSS.
+[PASS] REQ-043 No new global CSS / no legacy sealed dependency. Evidence: protected hashes + source/design scans.
+[PASS] REQ-044 MAIN design baseline 027, SUB 026 selected because supplied project contains actual integrated PDF implementations only through 027. Evidence: DESIGN_CODE_CHECK_032.md.
+[PASS] REQ-045 Safe local OSS: pdf-lib 1.17.1 MIT, no server/API/key/operating cost. Evidence: OSS_032.md/PACKAGE_PATCH_032.json.
+[PASS] REQ-046 Service limit approved A: 1 PDF, 30 MiB, 300 pages, signature image 10 MiB/20 MP, drawing 20,000 points. Evidence: SERVICE_LIMIT_APPROVED_032.md and independent limit spec.
+[PASS] REQ-047 Product/UI/DOM/limit checker values synchronized after approval. Evidence: check-limit-static PASS.
+[PASS] REQ-048 Fixtures include mixed/rotated/different-size PDF, damaged/mismatch PDF, transparent PNG/JPG/WebP, Unicode range fixture. Evidence: fixtures checker PASS.
+[PASS] REQ-049 Dedicated preflight/core/boundary/regression/limit specs and PC/mobile Playwright config prepared. Evidence: validation files.
+[PASS] REQ-050 Desktop result ZIP contract with fixed 032_<mode>_검수결과.zip and temp cleanup; failure also archives evidence. Evidence: runner contract.
+[PASS] REQ-051 Mobile real-device runner contract prepared for category-batch execution. Evidence: MOBILE_REAL_DEVICE_CONTRACT_032.md.
+[PASS] REQ-052 Common/protected baseline 21/21 hashes unchanged. Evidence: PROTECTED_BASELINE_HASH_032.json.
+[PASS] REQ-053 Original production PDF preserved byte-identically in docs/tool-032 and SHA256 recorded.
+[MAIN-WORKSHOP INTEGRATION] REQ-054 Actual browser Playwright, real downloaded PDF viewer/pixel/alpha/bbox check, TypeScript full project, production build, integrated regression, FINAL FAIL 0 SKIP 0.
+[PASS] REQ-055 Central mobile real-device runner registration must be added to the latest common runner by main workshop; actual smartphone test remains PDF-category batch.
+
+REQ second-pass omission search result: no additional implementable sub-workshop requirement found untracked.

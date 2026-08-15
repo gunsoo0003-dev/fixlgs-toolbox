@@ -1,0 +1,45 @@
+FIXLGS TOOLBOX 032 CHANGE MAP
+===============================
+Tool: 032 PDF 서명 넣기 / Add Signature to PDF / PDF 署名追加ツール
+Category: D. PDF 도구
+Slug: pdf-signature
+
+NEW PRODUCT FILES
+- app/[locale]/pdf-signature/page.tsx
+- components/pdf-signature-page.tsx
+- components/pdf-signature-tool.tsx
+- components/pdf-signature-tool.module.css
+- lib/tool-032-pdf-signature.ts
+
+NEW VALIDATION FILES
+- playwright.tool032.config.ts
+- tests/tool-032-preflight.spec.ts
+- tests/tool-032-core.spec.ts
+- tests/tool-032-boundary.spec.ts
+- tests/tool-032-regression.spec.ts
+- tests/tool-032-limit.spec.ts
+- scripts/tool-032/check-runner-contract.mjs
+- scripts/tool-032/check-syntax.mjs
+- scripts/tool-032/check-source.mjs
+- scripts/tool-032/check-logic.mjs
+- scripts/tool-032/check-content.mjs
+- scripts/tool-032/check-design-static.mjs
+- scripts/tool-032/check-limit-static.mjs
+- scripts/tool-032/check-fixtures.mjs
+- scripts/tool-032/check-package-static.mjs
+- scripts/tool-032/runtime-workspace.mjs
+- scripts/tool-032/run-validation.mjs
+
+NEW FIXTURES
+- fixtures/tool-032/mixed-4page.pdf
+- fixtures/tool-032/broken.pdf
+- fixtures/tool-032/mime-mismatch.pdf
+- fixtures/tool-032/transparent-signature.png
+- fixtures/tool-032/signature.jpg
+- fixtures/tool-032/signature.webp
+- fixtures/tool-032/mime-mismatch.png
+- fixtures/tool-032/페이지범위_한글_日本語.txt
+
+PROTECTED/EXISTING FILES MODIFIED BY SUB-WORKSHOP
+NONE.
+package.json / package-lock.json are intentionally NOT replaced in the sub-workshop copy. The required additive dependency/script merge is recorded in PACKAGE_PATCH_032.json for main-workshop integration.

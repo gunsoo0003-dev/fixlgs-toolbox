@@ -1,0 +1,26 @@
+TOOL 032 FAILURE RESPONSE MAP
+=============================
+PRODUCT_FAIL
+- PDF > 30 MiB, >300 pages, damaged/encrypted/permission-restricted PDF
+- signature image >10 MiB, >20 MP, unsupported MIME or magic mismatch
+- empty drawing, >20,000 stroke points
+- invalid page range: 0/negative/out-of-range/reversed/non-numeric
+- output PDF cannot be created/reparsed or pageCount changes
+Action: fix only 032 product code if the delivery requirement is violated; rerun affected checker/spec then final once.
+
+HARNESS_ERROR
+- selector/state timing mismatch
+- fixture path/type mismatch
+- stale tool number/route/expected value
+- runner/archive/reporting error
+Action: fix only 032 validation files; do not distort a correct product to satisfy the harness. Re-run the smallest invalidated checker/spec and then one final.
+
+ENVIRONMENT
+- pdf-lib 1.17.1 not merged/installed
+- Next/TypeScript/Playwright unavailable
+- browser runtime unavailable in current isolated environment
+Action: main workshop merges PACKAGE_PATCH_032.json, runs npm install, then executes actual runtime/build validation.
+
+COMMON/INTEGRATION
+- category card/site registry/sitemap/mobile common runner registration required
+Action: do not overwrite common files from this package. Additively integrate in the latest main project and run regression.

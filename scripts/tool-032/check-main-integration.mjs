@@ -1,0 +1,17 @@
+import fs from "node:fs";
+let fail = 0;
+const need = (ok, msg) => { console.log(ok ? "PASS" : "FAIL", msg); if (!ok) fail += 1; };
+const read = (f) => fs.readFileSync(f, "utf8");
+const site = read("lib/site.ts");
+const sitemap = read("app/sitemap.ts");
+const pkg = JSON.parse(read("package.json"));
+const mobile = read("scripts/run-mobile-real-photo-001-032.mjs");
+const validator = read("scripts/check-mobile-real-photo-001-032-validator.mjs");
+for (const token of ['tool032Slug = "pdf-signature"', 'tool032Titles', 'tool032Descriptions', 'href: `/${locale}/${tool032Slug}`']) need(site.includes(token), `site/category ${token}`);
+need(sitemap.includes('tool032Slug') && sitemap.includes('${baseUrl}/${locale}/${tool032Slug}'), 'sitemap 032 registration');
+for (const key of ['test:toolbox:032-preflight','test:toolbox:032-core-only','test:toolbox:032-boundary-only','test:toolbox:032-feature-only','test:toolbox:032-regression-only','test:toolbox:032-limit-only','test:toolbox:032-final','check:toolbox:mobile-real-photo-001-032','test:toolbox:032-mobile-real']) need(Boolean(pkg.scripts?.[key]), `package script ${key}`);
+need(pkg.dependencies?.['pdf-lib'] === '1.17.1', 'pdf-lib stays pinned 1.17.1');
+for (const token of ["t(32,'pdf-signature'", "kind:'pdf-signature'", 'tool032-draw-canvas', 'tool032-signature-overlay', 'tool032-create', 'tool032-result', 'tool032-download']) need(mobile.includes(token), `mobile 032 ${token}`);
+need(validator.includes('toolNums.length!==32') && validator.includes('missing TOOL032') === false, 'mobile validator 001~032 contract source present');
+need(!site.includes('tool033Slug'), 'no future TOOL033 central registration');
+process.exitCode = fail ? 1 : 0;

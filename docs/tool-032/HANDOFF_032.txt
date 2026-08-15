@@ -1,0 +1,69 @@
+FIXLGS TOOLBOX WEB TOOL 032 HANDOFF
+==================================
+Tool: 032 PDF 서명 넣기 / Add Signature to PDF / PDF 署名追加ツール
+Category: D. PDF 도구
+Slug: pdf-signature
+URLs: /ko/pdf-signature /en/pdf-signature /ja/pdf-signature
+Sub-workshop status: READY (code/static/design-code/harness-structure/package/common-protection). Actual integrated browser/build/regression/deploy remain main-workshop verification.
+
+1. Implemented scope
+- Draw signature with Pointer Events, clear/redraw, width presets, black/blue, high-DPI canvas, trimmed transparent PNG export.
+- Signature image PNG/JPG/WebP, header magic check, browser decode, EXIF orientation normalization, transparent alpha preservation.
+- Preview on PDF.js, visual drag/resize overlay, locked aspect ratio, page clamp, 3x3 position presets, -15/0/+15 rotation, undo/redo.
+- Apply to current/all/odd/even/custom page ranges; deduplicate and reject invalid/out-of-range/reversed input.
+- Per-page normalized coordinate conversion for different size/rotation pages.
+- pdf-lib overlay writer keeps existing PDF page objects rather than rasterizing every page.
+- Result pageCount reparse, applied-page summary, safe Unicode filename, continue editing/regenerate/redownload/new PDF/reset.
+- KO/EN/JA content, HOW TO, use cases, expert post, caution, FAQ, structured data and route metadata.
+
+2. User-approved service limits (2026-08-15, recommended A)
+- PDF files: 1
+- per-PDF: 30 MiB
+- pages: 300
+- signature image: 10 MiB / 20 MP
+- drawing stroke points: 20,000
+Product/UI/DOM/limit-only values were synchronized after approval.
+
+3. Safe local OSS
+- pdf-lib 1.17.1, MIT
+- browser/client local, no server/API/key/account/recurring cost/external file transmission introduced
+- required because existing pdfjs-dist is preview/parser, not an overlay-saving writer
+- integrate additively using docs/tool-032/PACKAGE_PATCH_032.json; do not replace current package files.
+
+4. Design baseline
+MAIN 027 PDF 이미지 변환기; SUB 026 이미지 PDF 변환기. Supplied project has actual integrated PDF implementations only through 027, so 028~031 were not guessed. Common shell/content grammar is reused; signature-specific work area lives only in pdf-signature-tool.module.css.
+
+5. Product files to transplant 1:1
+- app/[locale]/pdf-signature/page.tsx
+- components/pdf-signature-page.tsx
+- components/pdf-signature-tool.tsx
+- components/pdf-signature-tool.module.css
+- lib/tool-032-pdf-signature.ts
+
+6. Validation files to transplant
+- playwright.tool032.config.ts
+- tests/tool-032-preflight.spec.ts
+- tests/tool-032-core.spec.ts
+- tests/tool-032-boundary.spec.ts
+- tests/tool-032-regression.spec.ts
+- tests/tool-032-limit.spec.ts
+- scripts/tool-032/*
+- fixtures/tool-032/*
+
+7. Existing common files changed by sub-workshop
+NONE. Protected baseline recheck: 21/21 identical, including global CSS, sealed CSS, site/sitemap/robots, 026/027 source, package.json/package-lock.json.
+
+8. Main-workshop additive integration
+- merge dependency `pdf-lib: 1.17.1` and six 032 npm scripts from PACKAGE_PATCH_032.json into the latest package.json, regenerate package-lock via npm install
+- add 032 card/metadata to current D/PDF registry in lib/site.ts without replacing the file
+- add KO/EN/JA pdf-signature URLs to current sitemap pattern
+- confirm robots permits route
+- add 032 to current common mobile real-device runner using MOBILE_REAL_DEVICE_CONTRACT_032.md; actual smartphone test stays PDF-category batch
+- related links should expose only currently active adjacent routes in the integrated latest project
+
+9. Main-workshop validation sequence
+preflight -> core-only -> boundary-only -> regression-only -> limit-only -> TypeScript -> production build -> FINAL.
+Each runner produces fixed Desktop `032_<mode>_검수결과.zip`, overwriting same mode and deleting temporary result folder; failure/validator error still attempts to archive evidence.
+
+10. Known integration gate
+This supplied sub-workshop copy contains no node_modules and package files are deliberately protected, so actual Next/Playwright/production build was not claimed here. After additive package integration/install, execute the prepared runtime specs in the main current project. Product-correct behavior must not be changed merely to satisfy a harness error.

@@ -1,0 +1,14 @@
+import fs from "node:fs";
+let fail = 0; const need = (ok, msg) => { console.log(ok ? "PASS" : "FAIL", msg); if (!ok) fail += 1; };
+const css = fs.readFileSync("components/pdf-signature-tool.module.css", "utf8");
+const page = fs.readFileSync("components/pdf-signature-page.tsx", "utf8");
+const tool = fs.readFileSync("components/pdf-signature-tool.tsx", "utf8");
+for (const x of ["ToolboxSubpageShell", "toolbox-tool-detail-hero", "toolbox-next-work", "ToolboxFaqList"]) need(page.includes(x), `common pattern ${x}`);
+need(/@media\s*\(max-width\s*:\s*900px\)/.test(css), "031 desktop-to-mobile workspace breakpoint");
+need(/@media\s*\(max-width\s*:\s*(720|430)px\)/.test(css), "small mobile breakpoint");
+need(css.includes("grid-template-columns") && css.includes("touch-action"), "grid/touch CSS present");
+need(css.includes(".drawCanvasActive") && /touch-action\s*:\s*none/.test(css), "drawing-only touch-action control");
+need(tool.includes("styles.resizeHandle") && tool.includes("styles.positionButton"), "touch resize + preset fallback");
+for (const x of ["uploadedFileBar", "workspaceDragging", "data-drop-target=\"pdf-replace\"", "dragActive"]) need(tool.includes(x), `031 category state transplant ${x}`);
+console.log("TOOL032 DESIGN-CODE TARGET | LATEST=031 | CATEGORY=PDF | compact file card + shared drag state");
+process.exitCode = fail ? 1 : 0;
