@@ -1,0 +1,69 @@
+TOOL 033 | PDF 압축기 | D. PDF 도구
+Slug: pdf-compressor
+예상 URL: /ko/pdf-compressor /en/pdf-compressor /ja/pdf-compressor
+보조작업장 상태: READY (CODE / FUNCTION-STATIC / DESIGN-CODE / HARNESS-STRUCTURE / PACKAGE / COMMON FILE PROTECTION PASS)
+전체 TOOLBOX FINAL 상태: 주작업장 통합검증 필요
+
+[구현]
+- 기본 압축: pdf-lib 구조 보존 우선 save(useObjectStreams)
+- 강한 압축: PDF.js 페이지 순차 렌더 -> JPEG -> pdf-lib 재구성
+- 이미지 품질: strong mode에만 실제 renderScale/JPEG quality 연결
+- 강한 압축 1차 고화질 튜닝: 기본 JPEG 품질 90%, 기본 renderScale 1.4x, concurrency 1 유지
+- 전후 용량: File.size / Blob.size 실제 byte
+- 결과 검증: 최종 Blob PDF.js 재파싱, pageCount 일치 확인
+- 결과 미리보기: 최종 저장 bytes 재로드
+- 결과 증가/무감소 상태 별도 표시
+- KO/EN/JA, 모바일 1열, 사용방법/워크플로/주의/FAQ/관련도구 포함
+
+[디자인 기준]
+MAIN TOOL032, SUB TOOL031, ORIGIN TOOL028.
+기준 도구의 공통 shell/common class를 재사용하고 기능 고유 UI만 전용 module.css 사용.
+
+[신규 OSS]
+없음. 기존 pdf-lib 1.17.1, pdfjs-dist 5.4.54 재사용. 서버/API/키/과금/외부 파일전송 없음.
+
+[서비스 한도 후보]
+- PDF 1개
+- 파일당 50 MiB
+- 페이지 200
+- 강한 압축 동시 처리 1 page
+사용자 승인 한도: 50 MiB / 200페이지 / 강한 압축 동시 처리 1 page. 제품/limit checker 동기화 완료.
+
+[주작업장 공통 연결 필요 - 보조작업장에서 공통파일 수정 금지 때문에 미수정]
+1) lib/site.ts: tool033Slug/titles/descriptions 등록, PDF category 033 LIVE 카드와 locale href 연결
+2) app/sitemap.ts: ko/en/ja pdf-compressor URL 등록
+3) package.json: TOOL033 preflight/core/boundary/feature/regression/limit/final script 연결
+4) 모바일 실기기 공통 runner: scripts/tool-033/mobile-runner-registration.json 계약을 PDF 카테고리 일괄 runner에 등록
+5) 최신 통합본에서 robots 차단 없음 확인
+
+[주작업장 실제 실행]
+- 실제 브라우저 PC/모바일/KO EN JA/light dark
+- 실제 정상/이미지 중심/스캔/이미 최적화 PDF 압축 결과
+- 강한 압축 quality 높음/낮음 결과 byte/pixel 차이
+- 결과 PDF pageCount/page geometry/render 확인
+- Playwright preflight -> core -> boundary -> feature -> regression -> limit
+- TypeScript -> production build -> 전체 regression -> FINAL
+
+[전용 이식 파일]
+app/[locale]/pdf-compressor/page.tsx
+components/pdf-compressor-page.tsx
+components/pdf-compressor-tool.tsx
+components/pdf-compressor-tool.module.css
+lib/tool-033-pdf-compressor.ts
+scripts/tool-033/check-source.mjs
+scripts/tool-033/check-harness.mjs
+scripts/tool-033/check-limit-contract.mjs
+scripts/tool-033/check-css-protection.mjs
+scripts/tool-033/run-static-validation.mjs
+scripts/tool-033/mobile-runner-registration.json
+tests/tool-033-preflight.spec.ts
+tests/tool-033-core.spec.ts
+tests/tool-033-feature.spec.ts
+tests/tool-033-boundary.spec.ts
+tests/tool-033-regression.spec.ts
+tests/tool-033-limit.spec.ts
+tests/fixtures/tool-033/*
+
+[정적 검수]
+run-static-validation.mjs: PASS 4/4.
+TS/TSX parser syntax 검사: 신규 TS/TSX 10개 파일 0 error.

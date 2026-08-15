@@ -324,7 +324,18 @@
     "check:toolbox:mobile-real-photo-001-032": "node scripts/check-mobile-real-photo-001-032-validator.mjs",
     "test:toolbox:mobile-real-photo-001-032": "node scripts/run-mobile-real-photo-001-032.mjs",
     "test:toolbox:032-mobile-real": "node scripts/run-mobile-real-photo-001-032.mjs --only 32",
-    "check:tool032-static": "node scripts/tool-032/check-runner-contract.mjs && node scripts/tool-032/check-syntax.mjs && node scripts/tool-032/check-source.mjs && node scripts/tool-032/check-logic.mjs && node scripts/tool-032/check-content.mjs && node scripts/tool-032/check-design-static.mjs && node scripts/tool-032/check-limit-static.mjs && node scripts/tool-032/check-fixtures.mjs && node scripts/tool-032/check-package-static.mjs && node scripts/tool-032/check-main-integration.mjs"
+    "check:tool032-static": "node scripts/tool-032/check-runner-contract.mjs && node scripts/tool-032/check-syntax.mjs && node scripts/tool-032/check-source.mjs && node scripts/tool-032/check-logic.mjs && node scripts/tool-032/check-content.mjs && node scripts/tool-032/check-design-static.mjs && node scripts/tool-032/check-limit-static.mjs && node scripts/tool-032/check-fixtures.mjs && node scripts/tool-032/check-package-static.mjs && node scripts/tool-032/check-main-integration.mjs",
+    "check:tool033-static": "node scripts/tool-033/run-static-validation.mjs",
+    "test:toolbox:033-preflight": "node scripts/tool-033/run-validation.mjs preflight",
+    "test:toolbox:033-core-only": "node scripts/tool-033/run-validation.mjs core-only",
+    "test:toolbox:033-boundary-only": "node scripts/tool-033/run-validation.mjs boundary-only",
+    "test:toolbox:033-feature-only": "node scripts/tool-033/run-validation.mjs feature-only",
+    "test:toolbox:033-regression-only": "node scripts/tool-033/run-validation.mjs regression-only",
+    "test:toolbox:033-limit-only": "node scripts/tool-033/run-validation.mjs limit-only",
+    "test:toolbox:033-final": "node scripts/tool-033/run-validation.mjs final",
+    "check:toolbox:mobile-real-photo-001-033": "node scripts/check-mobile-real-photo-001-033-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-033": "node scripts/run-mobile-real-photo-001-033.mjs",
+    "test:toolbox:033-mobile-real": "node scripts/run-mobile-real-photo-001-033.mjs --only 33"
   },
   "dependencies": {
     "next": "16.2.12",
