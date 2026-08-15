@@ -1,0 +1,32 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(p,'utf8'); const fail=[]; const need=(ok,msg)=>{if(!ok)fail.push(msg)};
+const tool=read('components/pdf-password-metadata-tool.tsx');
+const page=read('components/pdf-password-metadata-page.tsx');
+const route=read('app/[locale]/pdf-password-metadata/page.tsx');
+const qpdf=read('lib/tool-034-qpdf.ts'); const meta=read('lib/tool-034-metadata.ts'); const css=read('components/pdf-password-metadata-tool.module.css');
+for(const token of ['tool034-root','tool034-file-input','tool034-dropzone','tool034-file-info','tool034-workspace','tool034-security-status','tool034-current-password','tool034-new-password','tool034-confirm-password','tool034-set-password','tool034-remove-password','tool034-save-metadata','tool034-remove-metadata','tool034-result','tool034-download'])need(tool.includes(token),`missing selector ${token}`);
+for(const token of ['decryptPdf','encryptPdf','inspectEncryption','readTool034Metadata','writeTool034Metadata','passwordStrength'])need(tool.includes(token),`missing product path ${token}`);
+need(qpdf.includes("import('qpdf-wasm-esm-embedded')"),'qpdf embedded WASM import missing');
+need(qpdf.includes("'--decrypt'")&&qpdf.includes("'--encrypt'"),'qpdf encrypt/decrypt args missing');
+need(qpdf.includes('const encrypted=wrong ||'),'encrypted PDF password-error classification contract missing');
+need(tool.includes('onClick={clear}>{t.reset}</button>'),'reset must clear uploaded file and return to pre-upload Dropzone');
+need(/encrypted&&!passwordVerified[\s\S]*tool034-remove-password/.test(tool),'password removal action must be exposed before current-password verification');
+need(!tool.includes('resetWork()'),'legacy partial reset path must not remain');
+
+need(!/localStorage|sessionStorage|analytics|console\.log/.test(qpdf+tool),'password-sensitive persistence/log token found');
+need(tool.includes('TOOL034_SERVICE_LIMITS.maxBytes')&&tool.includes('TOOL034_SERVICE_LIMITS.maxPasswordLength')&&tool.includes('TOOL034_SERVICE_LIMITS.maxMetadataLength'),'approved service-limit UI bindings missing');
+need(tool.includes('new Uint8Array(bytes.byteLength)')&&tool.includes('copy.buffer'),'safe Uint8Array to Blob boundary missing');
+need(meta.includes("doc.catalog.delete(PDFName.of('Metadata'))"),'XMP removal path missing');
+for(const key of ['Title','Author','Subject','Keywords'])need(meta.includes(key),`metadata key missing ${key}`);
+need(page.includes('HOW TO USE')&&page.includes('PRACTICAL GUIDE')&&page.includes('IMPORTANT NOTES')&&page.includes('FAQ'),'common content sections missing');
+need(/toolbox-tool-detail-body[\s\S]*toolbox-next-work[\s\S]*<\/div><\/section><section className="toolbox-tool-guide/.test(page),'TOOL032 full-width guide wrapper contract missing');
+need(route.includes('canonical')&&route.includes('x-default')&&route.includes('pdf-password-metadata'),'SEO alternate contract missing');
+need(css.includes('.dropzone::before')&&css.includes('background:#0868d7')&&css.includes('color-mix(in srgb,#0868d7 3.5%')&&css.includes('.dropzone:hover,.dragging'),'TOOL033 baseline pre-upload blue Dropzone state missing');
+need(css.includes('.activeWorkspace::after')&&css.includes('.workspaceDragging::after')&&css.includes('color-mix(in srgb,#0868d7 5%,transparent)')&&css.includes('color-mix(in srgb,#0868d7 8%,transparent)')&&css.includes('color-mix(in srgb,#0868d7 45%,var(--toolbox-line,#cbd3df))'),'TOOL033 post-upload workspace drag blue-state contract missing');
+need(css.includes('.activeWorkspace{position:relative;display:grid;gap:16px}')&&css.includes('.workspace{display:grid;grid-template-columns:minmax(0,.95fr) minmax(320px,1.05fr);gap:16px}')&&css.includes('.workGrid{display:contents}')&&css.includes('@media(max-width:900px){.workspace{grid-template-columns:1fr}'),'TOOL034 full post-upload single drag-area contract missing');
+need(/styles\.activeWorkspace[\s\S]*styles\.uploadedFileBar[\s\S]*styles\.statusGrid[\s\S]*styles\.tabs[\s\S]*styles\.workspace[\s\S]*styles\.workGrid/.test(tool),'TOOL034 full-width post-upload drag wrapper contract missing');
+need(tool.includes("Array.from(e.dataTransfer.types).includes('Files')")&&tool.includes('e.relatedTarget as Node|null')&&tool.includes('e.currentTarget.contains(next)'),'TOOL033 drag event boundary contract missing');
+need(css.includes('@media(max-width:560px)')&&css.includes('.metadataRow'),'mobile module CSS missing');
+need(!css.includes('!important'),'module CSS contains !important');
+if(fail.length){console.error('TOOL034 SOURCE FAIL');for(const x of fail)console.error(' -',x);process.exit(1)}
+console.log('TOOL034 SOURCE PASS');

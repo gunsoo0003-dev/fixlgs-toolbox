@@ -234,6 +234,8 @@ export const tool032Slug = "pdf-signature" as const;
 
 export const tool033Slug = "pdf-compressor" as const;
 
+export const tool034Slug = "pdf-password-metadata" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -284,6 +286,8 @@ export const tool032Titles: Record<Locale, string> = { ko: "PDF 서명 넣기", 
 export const tool032Descriptions: Record<Locale, string> = { ko: "서명을 직접 그리거나 이미지로 불러와 PDF의 원하는 위치와 여러 페이지에 적용하세요.", en: "Draw a signature or use a signature image, then place it on selected PDF pages.", ja: "署名を描くか画像を読み込み、PDFの指定位置と複数ページに適用できます。" };
 export const tool033Titles: Record<Locale, string> = { ko: "PDF 압축기", en: "PDF Compressor", ja: "PDF 圧縮ツール" };
 export const tool033Descriptions: Record<Locale, string> = { ko: "PDF를 브라우저에서 최고화질·균형·용량 우선·사용자 지정으로 압축하고 실제 전후 용량과 결과 미리보기를 확인하세요.", en: "Compress PDFs locally with quality presets or custom settings and compare actual before/after size with a result preview.", ja: "PDFをブラウザ内で画質プリセットまたはカスタム設定で圧縮し、実際の前後サイズと結果プレビューを確認できます。" };
+export const tool034Titles: Record<Locale, string> = { ko: "PDF 비밀번호·메타데이터 도구", en: "PDF Password & Metadata Tool", ja: "PDF パスワード・メタデータツール" };
+export const tool034Descriptions: Record<Locale, string> = { ko: "PDF 열기 비밀번호를 설정·제거하고 제목·작성자·주제·키워드 메타데이터를 확인·수정·제거하세요.", en: "Set or remove a PDF opening password and inspect, edit, or remove title, author, subject, and keyword metadata.", ja: "PDFの開封パスワードを設定・解除し、タイトル・作成者・件名・キーワードのメタデータを確認・編集・削除できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -719,6 +723,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool034Titles,
+      description: tool034Descriptions,
+      href: `/${"ko"}/${tool034Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -849,6 +860,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
       if (index === 5) return { ...item, href: `/${locale}/${tool031Slug}` };
       if (index === 6) return { ...item, href: `/${locale}/${tool032Slug}` };
       if (index === 7) return { ...item, href: `/${locale}/${tool033Slug}` };
+      if (index === 8) return { ...item, href: `/${locale}/${tool034Slug}` };
       return item;
     });
   }

@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {PdfPasswordMetadataPage} from '@/components/pdf-password-metadata-page';
+import {locales,type Locale} from '@/lib/site';
+const meta={ko:{title:'PDF 비밀번호 설정·제거 및 메타데이터 수정 | FIXLGS TOOLBOX',description:'PDF에 열기 비밀번호를 설정하거나 제거하고 제목·작성자·주제·키워드 메타데이터를 확인·수정·제거하세요. 가능한 처리는 브라우저에서 진행합니다.'},en:{title:'PDF Password & Metadata Tool | FIXLGS TOOLBOX',description:'Set or remove a PDF opening password and inspect, edit, or remove title, author, subject, and keyword metadata locally in your browser.'},ja:{title:'PDF パスワード・メタデータツール | FIXLGS TOOLBOX',description:'PDFの開封パスワードを設定・解除し、タイトル・作成者・件名・キーワードのメタデータをブラウザ内で確認・編集・削除します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale;const path=`/${l}/pdf-password-metadata`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/pdf-password-metadata',en:'/en/pdf-password-metadata',ja:'/ja/pdf-password-metadata','x-default':'/ko/pdf-password-metadata'}}};}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <PdfPasswordMetadataPage locale={locale as Locale}/>}

@@ -1,0 +1,48 @@
+TOOL 034 PACKAGE MANIFEST
+
+DEPENDENCY REGISTRATION
+package.json
+package-lock.json
+
+IMPLEMENTATION
+app/[locale]/pdf-password-metadata/page.tsx
+components/pdf-password-metadata-page.tsx
+components/pdf-password-metadata-tool.tsx
+components/pdf-password-metadata-tool.module.css
+lib/tool-034-pdf-policy.ts
+lib/tool-034-qpdf.ts
+lib/tool-034-metadata.ts
+types/qpdf-wasm-esm-embedded.d.ts
+
+VALIDATION
+scripts/tool-034/check-syntax.mjs
+scripts/tool-034/check-source.mjs
+scripts/tool-034/check-package.mjs
+scripts/tool-034/check-design.mjs
+scripts/tool-034/check-harness.mjs
+scripts/tool-034/run-validation.mjs
+tests/helpers/tool-034.ts
+tests/tool-034-preflight.spec.ts
+tests/tool-034-core.spec.ts
+tests/tool-034-boundary.spec.ts
+tests/tool-034-regression.spec.ts
+tests/tool-034-limit.spec.ts
+tests/fixtures/tool-034/plain-basic.pdf
+tests/fixtures/tool-034/corrupted.pdf
+tests/fixtures/tool-034/not-pdf.pdf
+tests/fixtures/tool-034/한글파일명.pdf
+tests/fixtures/tool-034/日本語ファイル名.pdf
+
+HANDOFF / EVIDENCE
+docs/tool-034/HANDOFF.txt
+docs/tool-034/CHANGE_MAP_034.txt
+docs/tool-034/FAILURE_RESPONSE_MAP_034.txt
+docs/tool-034/DESIGN_TRANSPLANT_CHECK_034.md
+docs/tool-034/FINAL_VALIDATION_CHECKLIST_034.md
+docs/tool-034/MOBILE_REAL_DEVICE_CHECKLIST_034.md
+docs/tool-034/SERVICE_LIMIT_CANDIDATES_034.txt
+docs/tool-034/THIRD_PARTY_OSS_034.md
+docs/tool-034/PACKAGE_MANIFEST_034.txt
+
+ORIGINAL REQUIREMENT
+docs/tool-034/original/FIXLGS_TOOLBOX_034_PDF_비밀번호_메타데이터_도구_최종제작전달서.pdf

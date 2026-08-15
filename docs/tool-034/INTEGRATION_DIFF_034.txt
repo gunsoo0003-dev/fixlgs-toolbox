@@ -1,0 +1,48 @@
+TOOL034 INTEGRATION DIFF VS TOOL033 BASELINE
+
+A app/[locale]/pdf-password-metadata/page.tsx
+M app/sitemap.ts
+A components/pdf-password-metadata-page.tsx
+A components/pdf-password-metadata-tool.module.css
+A components/pdf-password-metadata-tool.tsx
+A docs/tool-034/CHANGE_MAP_034.txt
+A docs/tool-034/DESIGN_TRANSPLANT_CHECK_034.md
+A docs/tool-034/FAILURE_RESPONSE_MAP_034.txt
+A docs/tool-034/FINAL_VALIDATION_CHECKLIST_034.md
+A docs/tool-034/HANDOFF.txt
+A docs/tool-034/MOBILE_REAL_DEVICE_CHECKLIST_034.md
+A docs/tool-034/PACKAGE_MANIFEST_034.txt
+A docs/tool-034/SERVICE_LIMIT_CANDIDATES_034.txt
+A docs/tool-034/THIRD_PARTY_OSS_034.md
+A docs/tool-034/original/FIXLGS_TOOLBOX_034_PDF_비밀번호_메타데이터_도구_최종제작전달서.pdf
+M lib/site.ts
+A lib/tool-034-metadata.ts
+A lib/tool-034-pdf-policy.ts
+A lib/tool-034-qpdf.ts
+M package-lock.json
+M package.json
+A scripts/check-mobile-real-photo-001-034-validator.mjs
+A scripts/run-mobile-real-photo-001-034.mjs
+A scripts/tool-034/check-design.mjs
+A scripts/tool-034/check-harness.mjs
+A scripts/tool-034/check-main-integration.mjs
+A scripts/tool-034/check-package.mjs
+A scripts/tool-034/check-source.mjs
+A scripts/tool-034/check-syntax.mjs
+A scripts/tool-034/mobile-runner-registration.json
+A scripts/tool-034/run-validation.mjs
+A tests/fixtures/tool-034/corrupted.pdf
+A tests/fixtures/tool-034/not-pdf.pdf
+A tests/fixtures/tool-034/plain-basic.pdf
+A tests/fixtures/tool-034/日本語ファイル名.pdf
+A tests/fixtures/tool-034/한글파일명.pdf
+A tests/helpers/tool-034.ts
+A tests/tool-034-boundary.spec.ts
+A tests/tool-034-core.spec.ts
+A tests/tool-034-feature.spec.ts
+A tests/tool-034-limit.spec.ts
+A tests/tool-034-preflight.spec.ts
+A tests/tool-034-regression.spec.ts
+A types/qpdf-wasm-esm-embedded.d.ts
+
+UNEXPECTED_PROTECTED_CHANGE_COUNT=0

@@ -1,0 +1,10 @@
+TOOL 034 SERVICE LIMIT — APPROVED 2026-08-15
+
+Approved service policy
+- Files: 1 PDF
+- File size: 50 MB
+- Password length: 128 characters
+- Editable metadata field length: 2,000 characters each
+- Processing: browser-local WASM
+
+This approved value must remain synchronized across product UI, policy source, limit checker, FINAL runner, KO/EN/JA copy, and handoff records.

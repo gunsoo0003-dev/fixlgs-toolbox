@@ -1,0 +1,26 @@
+TOOL 034 FAILURE RESPONSE MAP
+
+PRODUCT
+- metadata edit does not survive serialize/reload
+- metadata-clean leaves target Document Info/XMP
+- password output is not actually encrypted
+- unlock output still requires password
+- reset/new-file state leaks prior metadata/password state
+Action: modify TOOL034-specific files only, then rerun affected checker/spec and one final integrated pass in main workspace.
+
+HARNESS
+- selector expectation mismatches final DOM
+- fixture or route path mismatch
+- checker service-limit expected value drifts from approved policy
+Action: repair TOOL034 checker/spec only; do not distort valid product behavior.
+
+ENVIRONMENT
+- node_modules missing
+- Playwright/browser unavailable
+- qpdf WASM package not installed in integration workspace
+- production Next build unavailable in auxiliary workspace
+Action: npm ci/install in main workspace and rerun; do not rewrite product to satisfy missing environment.
+
+COMMON/INTEGRATION
+- category card, sitemap, robots, shared mobile real-device runner registration required
+Action: main workspace only. Auxiliary package does not modify protected common files.

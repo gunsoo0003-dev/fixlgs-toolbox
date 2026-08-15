@@ -1,0 +1,33 @@
+TOOL 034 CHANGE MAP
+
+NEW
+app/[locale]/pdf-password-metadata/page.tsx
+components/pdf-password-metadata-page.tsx
+components/pdf-password-metadata-tool.tsx
+components/pdf-password-metadata-tool.module.css
+lib/tool-034-pdf-policy.ts
+lib/tool-034-qpdf.ts
+lib/tool-034-metadata.ts
+types/qpdf-wasm-esm-embedded.d.ts
+tests/helpers/tool-034.ts
+tests/tool-034-preflight.spec.ts
+tests/tool-034-core.spec.ts
+tests/tool-034-boundary.spec.ts
+tests/tool-034-regression.spec.ts
+tests/tool-034-limit.spec.ts
+tests/fixtures/tool-034/*
+scripts/tool-034/*
+docs/tool-034/*
+
+MODIFIED (related dependency/script registration only)
+package.json
+package-lock.json
+
+PROTECTED COMMON FILES MODIFIED: NONE
+app/globals.css: unchanged
+styles/*.css: unchanged
+legacy sealed CSS: unchanged
+common components/layout: unchanged
+existing tools 001-029: unchanged
+common validation engine/selectors: unchanged
+site/category/sitemap/robots: unchanged

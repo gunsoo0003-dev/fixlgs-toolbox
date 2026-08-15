@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
           : ".next",
   turbopack: {
     root: projectRoot,
+    resolveAlias: {
+      fs: { browser: "./lib/browser-empty-module.ts" },
+      path: { browser: "./lib/browser-empty-module.ts" },
+    },
   },
 };
 

@@ -335,14 +335,30 @@
     "test:toolbox:033-final": "node scripts/tool-033/run-validation.mjs final",
     "check:toolbox:mobile-real-photo-001-033": "node scripts/check-mobile-real-photo-001-033-validator.mjs",
     "test:toolbox:mobile-real-photo-001-033": "node scripts/run-mobile-real-photo-001-033.mjs",
-    "test:toolbox:033-mobile-real": "node scripts/run-mobile-real-photo-001-033.mjs --only 33"
+    "test:toolbox:033-mobile-real": "node scripts/run-mobile-real-photo-001-033.mjs --only 33",
+    "check:tool034-source": "node scripts/tool-034/check-source.mjs",
+    "check:tool034-harness": "node scripts/tool-034/check-harness.mjs",
+    "check:tool034-design": "node scripts/tool-034/check-design.mjs",
+    "check:tool034-package": "node scripts/tool-034/check-package.mjs",
+    "test:toolbox:034-preflight": "node scripts/tool-034/run-validation.mjs preflight",
+    "test:toolbox:034-core-only": "node scripts/tool-034/run-validation.mjs core-only",
+    "test:toolbox:034-boundary-only": "node scripts/tool-034/run-validation.mjs boundary-only",
+    "test:toolbox:034-regression-only": "node scripts/tool-034/run-validation.mjs regression-only",
+    "test:toolbox:034-limit-only": "node scripts/tool-034/run-validation.mjs limit-only",
+    "test:toolbox:034-final": "node scripts/tool-034/run-validation.mjs final",
+    "test:toolbox:034-feature-only": "node scripts/tool-034/run-validation.mjs feature-only",
+    "check:toolbox:mobile-real-photo-001-034": "node scripts/check-mobile-real-photo-001-034-validator.mjs",
+    "test:toolbox:mobile-real-photo-001-034": "node scripts/run-mobile-real-photo-001-034.mjs",
+    "test:toolbox:034-mobile-real": "node scripts/run-mobile-real-photo-001-034.mjs --only 34",
+    "check:tool034-main": "node scripts/tool-034/check-main-integration.mjs"
   },
   "dependencies": {
     "next": "16.2.12",
     "pdfjs-dist": "5.4.54",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "pdf-lib": "1.17.1"
+    "pdf-lib": "1.17.1",
+    "qpdf-wasm-esm-embedded": "1.1.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",

@@ -1,0 +1,49 @@
+TOOL: 034
+NAME: PDF 비밀번호·메타데이터 도구 / PDF Password & Metadata Tool
+CATEGORY: D. PDF 도구
+SLUG: pdf-password-metadata
+URLS: /ko/pdf-password-metadata /en/pdf-password-metadata /ja/pdf-password-metadata
+AUXILIARY STATUS: CODE PASS / FUNCTION-STATIC PASS / DESIGN-CODE PASS / HARNESS-STRUCTURE PASS / PACKAGE PASS / COMMON FILE PROTECTION PASS
+FULL TOOLBOX FINAL: NOT CLAIMED — main-workspace integrated browser/build/regression/final remains.
+
+IMPLEMENTED
+- local single-PDF upload
+- security status
+- opening-password set/remove/change using browser-local QPDF WASM
+- current-password verification before protected-document changes
+- local password strength hint + show/hide
+- Title/Author/Subject/Keywords read/edit
+- Creator/Producer/CreationDate/ModDate/XMP presence read-only advanced info
+- full metadata-clean path deletes target Document Info keys and catalog XMP Metadata entry
+- edited document-info path removes stale XMP packet rather than leaving conflicting old values
+- independent post-serialization verification before result UI
+- KO/EN/JA + responsive module CSS
+- HOW TO / practical expert guide / warnings / FAQ / WebApplication + FAQPage + BreadcrumbList / canonical + hreflang
+
+OSS
+qpdf-wasm-esm-embedded 1.1.1 — browser-local WASM; Apache-2.0 distribution; no network/API/key/account/fee.
+pdf-lib 1.17.1 remains the existing metadata serializer.
+
+DESIGN
+MAIN 029 / SUB 018.
+Official common content classes reused. TOOL034 work-area styles only in its module CSS.
+
+COMMON FILE PROTECTION
+No global CSS, legacy sealed CSS, common component, existing tool, site/category/sitemap/robots, or common checker modified.
+Only package.json/package-lock.json changed for related OSS + TOOL034 validation script registration.
+
+SERVICE LIMIT
+Approved service limit: `TOOL034_SERVICE_LIMITS` = 1 PDF / 50MB / password 128 chars / metadata field 2,000 chars.
+Do not run/finalize limit-only expected values until competitor/current/recommended limit briefing is presented and user approves a final value.
+
+MAIN WORKSPACE REQUIRED AFTER TRANSPLANT
+- npm install/ci and confirm `qpdf-wasm-esm-embedded@1.1.1` package/lock/install synchronization.
+- actual protected/unlocked QPDF WASM runtime tests.
+- actual browser PC/mobile KO/EN/JA light/dark overflow/touch/download checks.
+- production build and integrated regression/final.
+- category/site registration + sitemap/robots/canonical integration if required by current project architecture.
+- mobile real-device runner registration for TOOL034; smartphone execution remains category-batch policy.
+- approved limit sync to UI/policy/fixture/limit spec → limit-only → FINAL.
+
+ENVIRONMENT NOTE
+Auxiliary source ZIP contains no node_modules. Whole-project `tsc` therefore failed on missing Next/React/Playwright/pdf-lib type packages and was classified ENVIRONMENT, not PRODUCT. TOOL034 TS/TSX syntax was independently parsed with installed TypeScript compiler API and passed.
