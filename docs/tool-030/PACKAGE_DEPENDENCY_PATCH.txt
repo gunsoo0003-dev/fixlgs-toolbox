@@ -1,0 +1,22 @@
+TOOL030 dependency patch reference - DO NOT blindly overwrite package files
+
+--- /mnt/data/tool030_original/fixlgs-toolbox/package.json	2026-08-14 20:46:14.000000000 +0000
++++ package.json	2026-08-14 13:26:20.470586938 +0000
+@@ -257,7 +257,9 @@
+   "dependencies": {
+     "next": "16.2.12",
+     "react": "19.2.4",
+-    "react-dom": "19.2.4"
++    "react-dom": "19.2.4",
++    "pdf-lib": "1.17.1",
++    "pdfjs-dist": "6.2.108"
+   },
+   "devDependencies": {
+     "@tailwindcss/postcss": "^4",
+
+package-lock root/package nodes were prepared in the work copy. Main workshop should run npm install --save-exact pdf-lib@1.17.1 pdfjs-dist@6.2.108 and accept the regenerated lock only after diff review.
+
+MAIN WORKSHOP 2026-08-15 integration decision:
+- pdf-lib 1.17.1 is already pinned in the protected TOOL029 baseline; no dependency change required.
+- pdfjs-dist 5.4.54 is already pinned and shared by TOOL027/028/029. TOOL030 uses the same pdfjs-dist/webpack.mjs API.
+- Do NOT upgrade the protected baseline to 6.2.108 solely for TOOL030. TOOL030 package contract is synchronized to 5.4.54 to avoid unnecessary regression risk.

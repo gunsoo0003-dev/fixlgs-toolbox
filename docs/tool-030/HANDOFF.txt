@@ -1,0 +1,102 @@
+FIXLGS TOOLBOX 030 HANDOFF
+==========================
+도구 번호: 030
+도구명: PDF 페이지 정리 도구 / PDF Page Organizer / PDF ページ整理ツール
+카테고리: D. PDF 도구
+slug: pdf-page-organizer
+예상 URL: /ko/pdf-page-organizer | /en/pdf-page-organizer | /ja/pdf-page-organizer
+보조작업장 상태: READY (CODE / FUNCTION-STATIC / DESIGN-CODE / HARNESS-STRUCTURE / PACKAGE / COMMON FILE PROTECTION)
+전체 TOOLBOX FINAL 상태: 미판정 - 주작업장 최신본 통합 후 최종 판정
+
+1. 구현된 도장깨기 기능
+- 페이지 삭제: 단일/다중 선택, 마지막 1페이지 보호, 대량 삭제 확인, Undo 복구
+- 순서 변경: PC drag handle + 위/아래/맨앞/맨뒤 이동 버튼, 다중 선택 내부 순서 유지
+- 복제: 선택 페이지 바로 뒤 복제, stable ID 신규 부여, 원본 sourcePageIndex 유지
+- 회전: 선택 페이지 90도 단위 좌/우 회전, 0/90/180/270 정규화
+- 역순 정렬: 현재 전체 state reverse + 실행 전 confirm + Undo
+- 빈 페이지 추가: 선택 앞/뒤/맨앞/맨뒤, 인접 페이지/A4/Letter 크기
+
+2. 필수 보완 구현
+- PDF.js 기반 페이지 썸네일, 현재 번호/원본 번호, 회전/복제/빈 페이지 badge
+- 단일/다중/전체 선택 및 Shift 범위 선택
+- 변경 요약, 결과 파일명, 계속 편집, 재생성, 다운로드, 새 PDF, 초기화
+- state-array 기반 Undo/Redo (PDF binary history 복제 없음)
+- 결과 PDF는 pdf-lib copyPages 중심으로 생성하며 썸네일 rasterize 결과를 PDF로 사용하지 않음
+- 결과 저장 직후 결과 PDF를 다시 열어 pageCount/rotation/page size를 재검증
+- 손상/위장/암호화/0페이지/상한 초과 오류 분기와 새 파일 재선택 복구
+- KO/EN/JA UI/SEO/HOW TO/USE CASES/EXPERT POST/IMPORTANT NOTES/FAQ
+
+3. 디자인 이식 기준
+MAIN: TOOL 026 이미지 PDF 변환기
+- 공통 hero/body/NEXT WORK/HOW TO/FAQ/info-band 구조 및 공식 common class 계열 재사용
+- 신규 기능 작업영역만 pdf-page-organizer-tool.module.css로 격리
+- PC 페이지 grid 4열, 모바일 2열, 모바일 drag 대체 이동 버튼 제공
+- app/globals.css 및 styles 전역 7개 파일 + legacy sealed 2개 파일 변경 없음
+- legacy sealed selector 신규 참조 없음
+
+4. 신규 로컬 OSS 의존성
+- pdf-lib 1.17.1 / MIT / 결과 PDF 페이지 copy·rotate·blank·save / 브라우저 로컬 / 서버·API·키·비용·외부전송 없음
+- pdfjs-dist 5.4.54 / Apache-2.0 / PDF 페이지 preview thumbnail / 브라우저 로컬 / 서버·API·키·비용·외부전송 없음
+주작업장 반영 명령 후보:
+  npm install --save-exact pdf-lib@1.17.1 pdfjs-dist@5.4.54
+보조작업 사본 package.json/package-lock.json에는 위 버전을 기록했으나 최종 전달 ZIP에는 공통 package 파일 원본을 직접 포함하지 않고 dependency patch 자료만 포함한다.
+
+5. 서비스 유효상한 - 2026-08-15 사용자 확정
+후보 A를 FINAL 서비스 한도로 승인함.
+- 입력 PDF 50MB
+- 원본 100페이지
+- 편집 후 150페이지
+- thumbnail concurrency 2
+- Undo/Redo history 30
+제품 상수/UI/limit checker/FINAL expected를 동일 값으로 동기화함.
+
+6. 보조작업장 정적 검수 증거
+실행: node scripts/tool-030/run-static-validation.mjs
+결과: PASS, 6 groups, FAIL 0
+그룹: source / content / logic / harness / design-transplant / package
+fixture: single, marker 4/5, mixed-size, rotated, vector-text-image, exact-100, over-100, corrupt, encrypted, extension-spoof, JA, long KO/JA filename
+
+7. 주작업장 통합검증 항목
+최신 2026-08-11 보조작업장 상위 지시서에 따라 아래는 주작업장 통합검증으로 이관한다.
+- npm install/ci 후 dependency lock 최종 재생성·무결성 확인
+- 실제 localhost/Playwright: preflight -> core -> boundary -> feature -> regression -> 확정 한도 limit
+- PC/모바일 실제 viewport, KO/EN/JA, 라이트/다크, drag/touch/scroll, 실제 다운로드
+- 실제 결과 PDF marker 순서/rotation/duplicate/blank size 재분석
+- TypeScript, production build, 최신 프로젝트 전체 regression, 통합 FINAL
+- category/site route 등록, sitemap 반영, robots 비차단, 관련 도구 활성 경로만 연결
+- 모바일 실기기 runner에 TOOL030 selector/사용자경로/결과판정 등록. 실제 스마트폰 실테스트는 PDF 카테고리 완료 후 카테고리 단위 일괄 수행
+- 배포/서치콘솔/색인 요청
+
+8. 공통 연결부 HANDOFF
+보조작업장에서는 공통 파일을 수정하지 않았다. 주작업장에서 최신본 기준으로만 다음을 판단한다.
+- PDF 카테고리 목록 카드/route 등록
+- sitemap KO/EN/JA URL 추가
+- 028/029/033이 실제 배포되어 있을 때만 관련 도구 링크 활성화
+- 모바일 실기기 runner 대상 TOOL030 추가
+
+9. 이식 대상 전용 파일
+app/[locale]/pdf-page-organizer/page.tsx
+components/pdf-page-organizer-page.tsx
+components/pdf-page-organizer-tool.tsx
+components/pdf-page-organizer-tool.module.css
+lib/tool-030-pdf.ts
+scripts/tool-030/check-source.mjs
+scripts/tool-030/check-content.mjs
+scripts/tool-030/check-logic.mjs
+scripts/tool-030/check-harness.mjs
+scripts/tool-030/check-design-transplant.mjs
+scripts/tool-030/check-package.mjs
+scripts/tool-030/run-static-validation.mjs
+tests/tool-030-preflight.spec.ts
+tests/tool-030-core.spec.ts
+tests/tool-030-boundary.spec.ts
+tests/tool-030-feature.spec.ts
+tests/tool-030-regression.spec.ts
+tests/tool-030-limit.spec.ts
+test-fixtures/tool-030/*
+
+10. 제외/비침범 확인
+- 다중 PDF 병합 없음(028)
+- 페이지 추출/분할/페이지별 ZIP 없음(029)
+- PDF 압축/DPI/이미지 재압축 없음(033)
+- OCR/전자서명/워터마크/페이지번호/본문 편집/암호 우회/클라우드 저장 없음

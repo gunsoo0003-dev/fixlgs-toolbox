@@ -1,0 +1,17 @@
+import fs from "node:fs";
+const read=p=>fs.readFileSync(p,"utf8"); let fail=0; const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)fail++;};
+const main=read("components/image-to-pdf-page.tsx"); const page=read("components/pdf-page-organizer-page.tsx"); const css=read("components/pdf-page-organizer-tool.module.css"); const tool=read("components/pdf-page-organizer-tool.tsx");
+for(const c of ["toolbox-tool-detail-hero","toolbox-tool-detail-body","toolbox-next-work","toolbox-tool-guide","toolbox-tool-faq"]) need(main.includes(c)&&page.includes(c),`MAIN 026 common structure ${c}`);
+need(page.includes("030 · PDF"),"030 identity retained");
+need(css.includes("grid-template-columns:repeat(4")&&css.includes("grid-template-columns:repeat(2"),"desktop 4-col / mobile 2-col page grid");
+need(tool.includes("draggable")&&tool.includes("moveSelection(\"up\"")&&tool.includes("moveSelection(\"down\""),"desktop drag plus mobile move controls");
+need(tool.includes("workspaceDragging")&&tool.includes("dragActive = dragging || workspaceDragging")&&tool.includes("data-testid=\"tool030-workspace\"")&&tool.includes("dataTransfer.types").toString(),"shared external PDF drag state across post-upload workspace");
+need(css.includes(".workspaceDragging::after"),"workspace-wide drag visual state");
+need(css.includes("text-align:center")&&css.includes("padding:30px 20px")&&css.includes(".dropzone strong{display:block")&&css.includes(".dropzone span{display:block"),"PDF-category pre-upload centered compact dropzone");
+need(!css.includes(".dropzone{min-height:")&&!css.includes(".dropzone{min-height:210px")&&!css.includes(".dropzone{display:flex"),"pre-upload dropzone avoids oversized split layout");
+need(css.includes("border:1px dashed color-mix(in srgb,var(--blue) 68%,transparent)")&&css.includes("background:color-mix(in srgb,var(--blue) 3.5%,var(--tb-panel))"),"pre-upload dropzone color tokens match TOOL028 baseline");
+need(tool.indexOf("styles.localNote") < tool.indexOf("styles.dropzone"),"LOCAL ONLY note precedes dropzone like prior PDF tool");
+need(tool.includes("!hasPdf ? <section")&&tool.includes("data-testid=\"tool030-uploaded-file\"")&&tool.includes("styles.uploadedFileBar"),"post-upload UI switches from initial dropzone to compact uploaded file bar");
+need(css.includes(".uploadedFileBar{")&&css.includes(".uploadedFileInfo{"),"post-upload compact file bar styling exists");
+need(!css.includes(".toolbox-"),"module CSS does not override common toolbox selectors");
+process.exitCode=fail?1:0;

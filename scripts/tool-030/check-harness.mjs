@@ -1,0 +1,17 @@
+import fs from "node:fs";
+const need=(ok,msg)=>{console.log(ok?"PASS":"FAIL",msg);if(!ok)process.exitCode=1;};
+const files=["tests/tool-030-preflight.spec.ts","tests/tool-030-core.spec.ts","tests/tool-030-boundary.spec.ts","tests/tool-030-feature.spec.ts","tests/tool-030-regression.spec.ts","tests/tool-030-limit.spec.ts"];
+for(const f of files) need(fs.existsSync(f),f);
+const fixtures=["single-page.pdf","marker-4.pdf","marker-5.pdf","rotated-source.pdf","mixed-size-4.pdf","mixed-vector-text-image.pdf","exact-100-pages.pdf","over-100-pages.pdf","corrupt.pdf","encrypted.pdf","fake.pdf","ja-marker-3.pdf"];
+for(const f of fixtures) need(fs.existsSync(`test-fixtures/tool-030/${f}`),`fixture ${f}`);
+const joined=files.map(f=>fs.readFileSync(f,"utf8")).join("\n");
+for(const tok of ["tool030-root","tool030-page-card","tool030-result-verification","marker-5.pdf","exact-100-pages.pdf","over-100-pages.pdf"]) need(joined.includes(tok),`harness token ${tok}`);
+need(!/getByLabel\(["\']현재 \d+["\']\)/.test(joined),"no ambiguous current-page getByLabel locator");
+need(joined.includes('getByRole("checkbox", { name: "현재 2", exact: true })'),"current-page checkbox locator is role-scoped");
+
+need(!/getByLabel\(["\'](?:현재|Current) \d+["\']\)/.test(joined),"no ambiguous current-page getByLabel locator in KO/EN");
+const featureText=fs.readFileSync("tests/tool-030-feature.spec.ts","utf8");
+need(!featureText.includes('const dropzone = page.getByTestId("tool030-dropzone")')&&!featureText.includes('const dropzone = root.getByTestId("tool030-dropzone")'),"post-upload feature does not keep stale initial-dropzone locator");
+need(joined.includes('getByTestId("tool030-uploaded-file")'),"post-upload feature targets compact uploaded-file bar");
+need(!/page\.getByText\(\/50MB\/\)/.test(joined),"limit copy is scoped to tool dropzone instead of global page text");
+need(joined.includes('getByRole("checkbox", { name: "Current 2", exact: true })'),"English current-page checkbox locator is role-scoped");

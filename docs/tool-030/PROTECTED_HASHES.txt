@@ -1,0 +1,9 @@
+# TOOL 030 protected global CSS SHA256 comparison
+PASS | app/globals.css | 8856d74d81c25f7e386ec752a5e7a2ba1c736a0d18815260b2f4b16163e48f67
+PASS | styles/global-base.css | 0ef2dcc8b5aac5ebae233248d6375a8d6e5bcfa766dcf063fd62b66f96fa4296
+PASS | styles/toolbox-common.css | 73cb8c2990ccbc3ea383fb57d8bc767992a3058c984153fa0d70d62f228850f7
+PASS | styles/toolbox-detail-common.css | 07af1885912517330e915cab6606fbc027bd062eaeae7d98974f061b521daa37
+PASS | styles/theme.css | 9f25a849d1459c649f87fd9741ebdc8659b4570fcd7e7d99edba256cd7a854d8
+PASS | styles/toolbox-compat.css | 3860b5c64daba0bb7f1e67dab45d7cca7630a8099570c902cc7a86c1da195555
+PASS | styles/legacy-site-sealed.css | a443cb0d324fb6b794046e4e00e7d0abdd8d71d74430f601e66713b42aafa092
+PASS | styles/legacy-tools-sealed.css | cbb9ab57797b59d11f23e65811d2e3dc02b2b4cd92454754dbc17b4821b72477

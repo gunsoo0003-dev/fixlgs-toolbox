@@ -226,6 +226,8 @@ export const tool028Slug = "merge-pdf" as const;
 
 export const tool029Slug = "split-extract-pdf" as const;
 
+export const tool030Slug = "pdf-page-organizer" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -268,6 +270,8 @@ export const tool028Titles: Record<Locale, string> = { ko: "PDF 합치기", en: 
 export const tool028Descriptions: Record<Locale, string> = { ko: "여러 PDF를 원하는 파일 순서대로 정리하고 페이지를 확인한 뒤 하나의 PDF로 병합하세요.", en: "Arrange multiple PDFs in the order you want, preview their pages, and merge them into one PDF.", ja: "複数のPDFを希望する順番に並べ、ページを確認して1つのPDFに結合できます。" };
 export const tool029Titles: Record<Locale, string> = { ko: "PDF 분할·페이지 추출기", en: "Split & Extract PDF", ja: "PDF 分割・ページ抽出ツール" };
 export const tool029Descriptions: Record<Locale, string> = { ko: "PDF를 페이지 범위로 나누거나 필요한 페이지만 선택해 새 PDF 또는 개별 PDF로 저장하세요.", en: "Split a PDF by page ranges or extract selected pages into a new PDF or individual PDFs.", ja: "PDFをページ範囲で分割したり、必要なページだけを新しいPDFまたは個別PDFとして保存できます。" };
+export const tool030Titles: Record<Locale, string> = { ko: "PDF 페이지 정리 도구", en: "PDF Page Organizer", ja: "PDF ページ整理ツール" };
+export const tool030Descriptions: Record<Locale, string> = { ko: "PDF 페이지를 삭제·순서 변경·복제·회전하고 역순 정렬이나 빈 페이지 추가 후 새 PDF로 저장하세요.", en: "Delete, reorder, duplicate and rotate PDF pages, reverse the order or add blank pages, then save a new PDF.", ja: "PDFページを削除・並べ替え・複製・回転し、逆順や空白ページ追加を行って新しいPDFとして保存できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -675,6 +679,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool030Titles,
+      description: tool030Descriptions,
+      href: `/${"ko"}/${tool030Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -801,6 +812,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
       if (index === 1) return { ...item, href: `/${locale}/${tool027Slug}` };
       if (index === 2) return { ...item, href: `/${locale}/${tool028Slug}` };
       if (index === 3) return { ...item, href: `/${locale}/${tool029Slug}` };
+      if (index === 4) return { ...item, href: `/${locale}/${tool030Slug}` };
       return item;
     });
   }
