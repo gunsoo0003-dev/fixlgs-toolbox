@@ -1,0 +1,10 @@
+TOOL038 STATIC VALIDATION
+
+1) source structure: 7 PASS / 0 FAIL
+2) logic contract: 6 PASS / 0 FAIL
+3) exact fixture outputs: 35 PASS / 0 FAIL
+4) TypeScript whole-project check: ENVIRONMENT BLOCKED because dependencies are not installed in supplied archive; npm ci timed out in this execution environment.
+5) Filtered tsc diagnostics for TOOL038 dedicated files after syntax fix: 0 matching diagnostic lines.
+6) Browser/Playwright/build/integrated regression: MAIN WORKTREE / execution-environment follow-up; not claimed PASS.
+7) Service text-length limit: UNAPPROVED; intentionally not hard-coded.
+8) Common global CSS/site/sitemap/package files: not included in patch and not intentionally modified.

@@ -380,7 +380,17 @@
     "test:toolbox:037-final": "node scripts/tool-037/run-validation.mjs final",
     "check:toolbox:mobile-real-photo-001-035": "node scripts/check-mobile-real-photo-001-035-validator.mjs",
     "test:toolbox:mobile-real-photo-001-035": "node scripts/run-mobile-real-photo-001-035.mjs",
-    "test:toolbox:035-mobile-real": "node scripts/run-mobile-real-photo-001-035.mjs --only 35"
+    "test:toolbox:035-mobile-real": "node scripts/run-mobile-real-photo-001-035.mjs --only 35",
+    "check:tool038-source": "node scripts/tool-038/check-source.mjs",
+    "check:tool038-logic": "node scripts/tool-038/check-logic.mjs",
+    "test:toolbox:038-preflight": "node scripts/tool-038/run-validation.mjs preflight",
+    "test:toolbox:038-core-only": "node scripts/tool-038/run-validation.mjs core-only",
+    "test:toolbox:038-boundary-only": "node scripts/tool-038/run-validation.mjs boundary-only",
+    "test:toolbox:038-feature-only": "node scripts/tool-038/run-validation.mjs feature-only",
+    "test:toolbox:038-regression-only": "node scripts/tool-038/run-validation.mjs regression-only",
+    "test:toolbox:038-limit-only": "node scripts/tool-038/run-validation.mjs limit-only",
+    "test:toolbox:038-final": "node scripts/tool-038/run-validation.mjs final",
+    "check:tool038-fixtures": "node --experimental-strip-types scripts/tool-038/check-fixtures.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

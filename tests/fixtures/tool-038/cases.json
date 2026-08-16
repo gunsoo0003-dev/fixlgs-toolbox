@@ -1,0 +1,79 @@
+[
+  {
+    "id": "basic-en",
+    "source": "hello WORLD. next LINE!",
+    "expected": {
+      "upper": "HELLO WORLD. NEXT LINE!",
+      "lower": "hello world. next line!",
+      "title": "Hello World. Next Line!",
+      "sentence": "Hello world. Next line!",
+      "first": "Hello WORLD. next LINE!"
+    }
+  },
+  {
+    "id": "mixed-ko",
+    "source": "안녕하세요 fixlgs TOOLBOX",
+    "expected": {
+      "upper": "안녕하세요 FIXLGS TOOLBOX",
+      "lower": "안녕하세요 fixlgs toolbox",
+      "title": "안녕하세요 Fixlgs Toolbox",
+      "sentence": "안녕하세요 Fixlgs toolbox",
+      "first": "안녕하세요 Fixlgs TOOLBOX"
+    }
+  },
+  {
+    "id": "mixed-ja",
+    "source": "これは fixlgs TOOLBOX です。next TEST",
+    "expected": {
+      "upper": "これは FIXLGS TOOLBOX です。NEXT TEST",
+      "lower": "これは fixlgs toolbox です。next test",
+      "title": "これは Fixlgs Toolbox です。Next Test",
+      "sentence": "これは Fixlgs toolbox です。Next test",
+      "first": "これは Fixlgs TOOLBOX です。next TEST"
+    }
+  },
+  {
+    "id": "punctuation",
+    "source": "\"hello!\" (NEXT?)",
+    "expected": {
+      "upper": "\"HELLO!\" (NEXT?)",
+      "lower": "\"hello!\" (next?)",
+      "title": "\"Hello!\" (Next?)",
+      "sentence": "\"Hello!\" (Next?)",
+      "first": "\"Hello!\" (NEXT?)"
+    }
+  },
+  {
+    "id": "hyphen-apostrophe",
+    "source": "hello-world O'NEILL",
+    "expected": {
+      "upper": "HELLO-WORLD O'NEILL",
+      "lower": "hello-world o'neill",
+      "title": "Hello-World O'Neill",
+      "sentence": "Hello-world o'neill",
+      "first": "Hello-world O'NEILL"
+    }
+  },
+  {
+    "id": "structure",
+    "source": "hello\r\nWORLD\tNext",
+    "expected": {
+      "upper": "HELLO\r\nWORLD\tNEXT",
+      "lower": "hello\r\nworld\tnext",
+      "title": "Hello\r\nWorld\tNext",
+      "sentence": "Hello\r\nWorld\tnext",
+      "first": "Hello\r\nWORLD\tNext"
+    }
+  },
+  {
+    "id": "unicode",
+    "source": "straße ß 🔥 hello — WORLD",
+    "expected": {
+      "upper": "STRASSE SS 🔥 HELLO — WORLD",
+      "lower": "straße ß 🔥 hello — world",
+      "title": "Straße SS 🔥 Hello — World",
+      "sentence": "Straße ß 🔥 hello — world",
+      "first": "Straße ß 🔥 hello — WORLD"
+    }
+  }
+]

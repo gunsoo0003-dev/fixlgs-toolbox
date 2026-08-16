@@ -1,0 +1,52 @@
+TOOL038 / TOOL037 DESIGN TRANSPLANT REPORT
+DATE=2026-08-16
+STATUS=IMPLEMENTATION_READY_FOR_WINDOWS_FINAL
+
+DESIGN BASELINE
+- Direct design baseline: TOOL037 text-whitespace-linebreak-cleaner actual TSX/DOM/CSS/state/event/mobile structure.
+- TOOL038 tool CSS is byte-identical to TOOL037 tool CSS at this stage.
+- TOOL036 is not the direct design baseline.
+
+TOOL038 IMPLEMENTED
+- Uppercase
+- Lowercase
+- Simple Title Case
+- Sentence case
+- First cased character uppercase
+- TXT/MD/CSV file input + direct text input
+- Single activeWorkspace drag region
+- Loaded file card / replace confirmation / cancel
+- Complete reset to initial Dropzone
+- Result edit / copy / UTF-8 TXT download
+- KO/EN/JA page copy
+- NEXT WORK / RELATED TOOLS / HOW TO USE / FORMAT GUIDE / IMPORTANT NOTES / FAQ
+- lib/site.ts LIVE card + 038 numbering + locale href
+- sitemap TOOL038 URLs
+
+STATIC SELF-CHECK
+- source/design/integration: 44 PASS / 0 FAIL
+- logic contract: 6 PASS / 0 FAIL
+- exact fixture outputs: 35 PASS / 0 FAIL
+- CSS diff vs TOOL037: 0 lines, SHA256 identical
+
+CHECKER PREPARED
+- tests/tool-038-preflight.spec.ts
+- tests/tool-038-core.spec.ts
+- tests/tool-038-boundary.spec.ts
+- tests/tool-038-feature.spec.ts
+- tests/tool-038-regression.spec.ts
+- tests/tool-038-limit.spec.ts
+- tests/helpers/tool-038.ts
+- playwright.tool038.config.ts
+- scripts/tool-038/run-validation.mjs
+- package scripts for preflight/core/boundary/feature/regression/limit/final
+
+NOT CLAIMED
+- TypeScript whole-project PASS: not executed here because delivery archive has no node_modules.
+- Next.js production build PASS: not executed here.
+- Playwright browser PASS: not executed here.
+- Windows FINAL PASS: must be executed in the user's actual project environment after npm dependencies are present.
+- Git commit/push/archive: no .git directory exists in the supplied project ZIP, so no Git operation is claimed.
+
+SERVICE LIMIT
+- No unapproved hard character limit was invented for TOOL038.

@@ -1,0 +1,70 @@
+TOOL: 038
+NAME: 대소문자·문장 형식 변환기 / Case & Sentence Format Converter
+CATEGORY: E. Text Tools
+SLUG: case-sentence-format-converter
+EXPECTED URLS: /ko/case-sentence-format-converter /en/case-sentence-format-converter /ja/case-sentence-format-converter
+STATUS: FINAL PASS (11 PASS / 0 FAIL / 0 SKIP)
+
+FINAL STATUS
+- Source: PASS
+- Logic contract: PASS
+- Functional fixtures: PASS
+- TypeScript: PASS
+- Production build: PASS
+- Preflight: PASS
+- Core: PASS
+- Boundary: PASS
+- Feature: PASS
+- Regression: PASS
+- Limit: PASS
+- Production build generated the integrated project successfully.
+- KO/EN/JA desktop/mobile overflow and 036/037/038 category numbering/link regression passed.
+- TOOL037 design contract was carried into TOOL038 and dedicated design checks passed.
+
+IMPLEMENTED
+- Uppercase, lowercase, simple title case, sentence case, first-cased-character uppercase.
+- Every conversion derives from sourceText, never the previous result.
+- Unicode default case mapping; no locale guessing.
+- Whitespace/EOL/TAB/NBSP/emoji/ZWJ normalization is not performed.
+- KO/EN/JA UI, local privacy notice, limitations, HOW TO, format rules, caution, FAQ.
+- Copy success/failure feedback and complete reset.
+- TOOL037 direct/file input, single activeWorkspace drag, new-file confirm/cancel, action/result hierarchy, and mobile state flow inherited.
+
+DEDICATED FILES
+app/[locale]/case-sentence-format-converter/page.tsx
+components/case-sentence-format-converter-page.tsx
+components/case-sentence-format-converter-tool.tsx
+components/case-sentence-format-converter-tool.module.css
+lib/tool-038-case.ts
+
+DEDICATED VALIDATION/DELIVERY FILES
+tests/fixtures/tool-038/cases.json
+tests/fixtures/tool-038/invalid.json
+tests/fixtures/tool-038/sample.md
+tests/fixtures/tool-038/sample.txt
+scripts/tool-038/check-source.mjs
+scripts/tool-038/check-logic.mjs
+scripts/tool-038/check-fixtures.mjs
+scripts/tool-038/run-validation.mjs
+tests/tool-038-preflight.spec.ts
+tests/tool-038-core.spec.ts
+tests/tool-038-boundary.spec.ts
+tests/tool-038-feature.spec.ts
+tests/tool-038-regression.spec.ts
+tests/tool-038-limit.spec.ts
+docs/tool-038/REQ_MASTER.md
+docs/tool-038/CHANGE_MAP.md
+docs/tool-038/FAILURE_MAP.md
+
+CLEANUP
+- Removed three added mojibake/Unicode fixture duplicates that were byte-for-byte duplicates of existing canonical fixtures and were unrelated to TOOL038.
+- Restored tsconfig.tsbuildinfo to the baseline copy because the FINAL build had modified this generated artifact.
+- No product source, TOOL038 fixture, checker, or required project structure was removed.
+- .git, node_modules, .next, test-results, and playwright-report remain excluded from the next-work ZIP.
+
+GIT / DEPLOYMENT HANDOFF
+- This ZIP is a cleaned next-work project package, not the git archive deployment ZIP.
+- Existing local .git must be preserved/re-attached according to the TOOL037/038 control document.
+- After replacement, verify tracked D, real content changes vs EOL changes, then selectively stage TOOL038 and central integration files only.
+- Do not use git add . or git add -A.
+- Deployment is complete only after LOCAL HEAD = origin/main and git archive HEAD is independently verified.

@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {CaseSentenceFormatConverterPage} from '@/components/case-sentence-format-converter-page';
+import {locales,type Locale} from '@/lib/site';
+const meta={ko:{title:'대소문자·문장 형식 변환기 | FIXLGS TOOLBOX',description:'대문자, 소문자, 제목형, 문장형, 첫 글자 대문자를 원문 공백·줄바꿈 구조를 유지하며 브라우저에서 즉시 변환하세요.'},en:{title:'Case & Sentence Format Converter | FIXLGS TOOLBOX',description:'Convert uppercase, lowercase, simple title case, sentence case, and first-letter uppercase locally while preserving the source text structure.'},ja:{title:'大文字・小文字・文形式変換 | FIXLGS TOOLBOX',description:'大文字・小文字・単語先頭大文字・文頭大文字・最初の文字だけ大文字を、元の空白構造を保ちながらブラウザ内で変換します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale;const path=`/${l}/case-sentence-format-converter`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/case-sentence-format-converter',en:'/en/case-sentence-format-converter',ja:'/ja/case-sentence-format-converter','x-default':'/ko/case-sentence-format-converter'}}};}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <CaseSentenceFormatConverterPage locale={locale as Locale}/>}
