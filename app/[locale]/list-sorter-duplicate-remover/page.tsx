@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ListSorterDuplicateRemoverPage } from "@/components/list-sorter-duplicate-remover-page";
+import { locales, type Locale } from "@/lib/site";
+const meta={ko:{title:"목록 정렬·중복 제거기 | FIXLGS TOOLBOX",description:"목록의 중복 줄을 제거하고 가나다·알파벳·숫자순, 역순, 무작위 섞기를 브라우저에서 바로 처리하세요."},en:{title:"List Sorter & Duplicate Remover | FIXLGS TOOLBOX",description:"Remove duplicate lines, sort lists alphabetically or numerically, reverse order, and shuffle locally in your browser."},ja:{title:"一覧並べ替え・重複削除ツール | FIXLGS TOOLBOX",description:"重複行を削除し、五十音・アルファベット・数値順、逆順、シャッフルをブラウザ内で処理します。"}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale;const path=`/${l}/list-sorter-duplicate-remover`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:"/ko/list-sorter-duplicate-remover",en:"/en/list-sorter-duplicate-remover",ja:"/ja/list-sorter-duplicate-remover","x-default":"/ko/list-sorter-duplicate-remover"}}};}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <ListSorterDuplicateRemoverPage locale={locale as Locale}/>}

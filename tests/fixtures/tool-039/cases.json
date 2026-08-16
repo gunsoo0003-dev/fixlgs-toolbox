@@ -1,0 +1,7 @@
+{
+  "dedupe": {"input":"b\na\nb","output":"b\na"},
+  "numeric": {"input":"10\n2\n1\n-3\n2.5","output":"-3\n1\n2\n2.5\n10"},
+  "reverse": {"input":"A\nB\nC","output":"C\nB\nA"},
+  "exact": {"input":"Apple\napple\nApple ","output":"Apple\napple\nApple "},
+  "eol": {"input":"A\r\nB\rC\nD","normalized":"A\nB\nC\nD"}
+}
