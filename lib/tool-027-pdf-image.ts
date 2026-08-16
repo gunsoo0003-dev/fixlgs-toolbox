@@ -4,7 +4,7 @@ export const TOOL027_LIMITS = {
   maxPages: 100,
   maxScale: 3,
   maxCanvasPixels: 55_000_000,
-  thumbnailPages: 60,
+  thumbnailPages: 100,
   sequentialRenderConcurrency: 1,
 } as const;
 
