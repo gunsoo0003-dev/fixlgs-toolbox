@@ -1,0 +1,18 @@
+TOOL036 FAILURE RESPONSE MAP
+
+PRODUCT
+- Wrong grapheme/word/sentence/paragraph/line/UTF-8/reading result -> inspect lib/tool-036-text-statistics.ts and dedicated component only.
+- Approved 300,000-grapheme service limit not enforced -> inspect TOOL036_MAX_GRAPHEMES / limitTool036Text / localized limit notice.
+- Goal/copy/clear state wrong -> inspect components/character-document-counter-tool.tsx.
+
+CHECKER / HARNESS
+- Selector/expected mismatch while product is correct -> update only TOOL036 dedicated spec/helper/runner after actual latest DOM verification.
+- 300,000 limit expected must remain independently stated in limit spec; do not import product constant as checker truth.
+- Do not modify common checker engine or existing completed-tool checkers to make TOOL036 pass.
+
+ENVIRONMENT / MAIN WORKSPACE
+- Browser/Playwright unavailable in auxiliary package -> verify in latest main workspace after integration.
+- Production build, actual desktop/mobile KO/EN/JA, Japanese IME, light/dark, browser fallback, integrated regression and FINAL remain main-workspace gates.
+
+COMMON CHANGE NEEDED
+- Do not patch shared CSS/layout/site/sitemap/robots blindly. Record candidate and handle in latest main workspace after impact review.

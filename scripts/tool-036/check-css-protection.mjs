@@ -1,0 +1,5 @@
+import fs from "node:fs";import crypto from "node:crypto";
+const manifest="scripts/tool-036/common-hashes.json";const protectedFiles=["app/globals.css","styles/global-base.css","styles/toolbox-common.css","styles/toolbox-detail-common.css","styles/theme.css","styles/toolbox-compat.css","styles/legacy-site-sealed.css","styles/legacy-tools-sealed.css"];
+const digest=(f)=>crypto.createHash("sha256").update(fs.readFileSync(f)).digest("hex");let fail=0;
+if(!fs.existsSync(manifest)){const hashes={};for(const f of protectedFiles)if(fs.existsSync(f))hashes[f]=digest(f);fs.writeFileSync(manifest,JSON.stringify(hashes,null,2)+"\n");console.log("[PASS] baseline common hashes recorded");}
+const hashes=JSON.parse(fs.readFileSync(manifest,"utf8"));for(const [f,h] of Object.entries(hashes)){if(!fs.existsSync(f)){console.error("[FAIL] missing protected file",f);fail++;continue;}if(digest(f)!==h){console.error("[FAIL] protected file changed",f);fail++;}else console.log("[PASS] protected",f);}process.exitCode=fail?1:0;

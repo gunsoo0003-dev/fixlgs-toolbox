@@ -1,0 +1,3 @@
+import fs from "node:fs";let fail=0;const tool=fs.readFileSync("components/character-document-counter-tool.tsx","utf8");const page=fs.readFileSync("components/character-document-counter-page.tsx","utf8");
+for(const [label,s] of [["KO H1","글자 수·문서 통계 계산기"],["EN H1","Character & Document Statistics Counter"],["JA H1","文字数・文書統計カウンター"],["KO file","텍스트 파일 선택"],["EN file","Choose text file"],["JA file","テキストファイルを選択"],["KO download","TXT 다운로드"],["EN download","Download TXT"],["JA download","TXTダウンロード"],["JA with spaces","文字数（空白を含む）"],["JA without spaces","文字数（空白を除く）"],["JA reading","推定読了時間"],["UTF-8 label","UTF-8バイト"]]){if(tool.includes(s)||page.includes(s))console.log("[PASS]",label);else{console.error("[FAIL]",label);fail++;}}
+process.exitCode=fail?1:0;

@@ -1,0 +1,6 @@
+import fs from "node:fs";
+const tool=fs.readFileSync("components/character-document-counter-tool.tsx","utf8");const page=fs.readFileSync("components/character-document-counter-page.tsx","utf8");let fail=0;
+const ids=["tool036-root","tool036-local-notice","tool036-workspace","tool036-file-input","tool036-file-button","tool036-file-info","tool036-textarea","tool036-sample","tool036-clear","tool036-core-stats","tool036-chars-with","tool036-chars-without","tool036-words","tool036-secondary-stats","tool036-sentences","tool036-paragraphs","tool036-lines","tool036-bytes","tool036-reading-time","tool036-options","tool036-goal-toggle","tool036-character-goal","tool036-word-goal","tool036-wpm","tool036-copy-stats","tool036-download-text","tool036-error","tool036-replace-dialog","tool036-replace-cancel","tool036-replace-confirm"];
+for(const id of ids){if(tool.includes(id))console.log("[PASS] selector",id);else{console.error("[FAIL] selector",id);fail++;}}
+for(const marker of ["036 · TEXT","HOW TO USE","COUNTING GUIDE","IMPORTANT NOTES","FAQ","RELATED TOOLS"]){if(page.includes(marker))console.log("[PASS] page contract",marker);else{console.error("[FAIL] page contract",marker);fail++;}}
+process.exitCode=fail?1:0;

@@ -23,12 +23,12 @@ const copy = {
     ],
     guideTitle: "PDF 병합에서 꼭 확인할 기준",
     guide: [
-      ["01", "파일 순서가 곧 결과 순서", "카드에 표시되는 1, 2, 3번 순서가 실제 병합 순서입니다. 이동 직후에도 최신 순서를 기준으로 결과를 만듭니다."],
-      ["02", "원본 페이지를 이미지로 바꾸지 않음", "병합할 때 페이지를 JPG나 Canvas 이미지로 다시 만들지 않고 PDF 페이지 객체를 복사해 불필요한 화질 저하와 재압축을 피합니다."],
-      ["03", "가로·세로와 페이지 크기 유지", "A4 세로와 가로 문서, 서로 다른 크기의 PDF가 섞여도 각 원본 페이지 크기와 방향을 그대로 이어 붙이는 것을 기본으로 합니다."],
-      ["04", "미리보기와 편집 기능 구분", "미리보기는 문서와 페이지 순서를 확인하기 위한 기능입니다. 페이지 삭제·회전·복제·페이지 단위 재정렬은 별도 PDF 페이지 정리 도구 영역입니다."],
-      ["05", "오류 파일을 조용히 건너뛰지 않음", "손상 PDF, 암호화 PDF, PDF가 아닌 파일은 어떤 파일에서 문제가 생겼는지 표시하고 정상 파일만 몰래 합친 결과를 만들지 않습니다."],
-      ["06", "완성 결과를 다시 확인", "병합 후 결과 PDF를 다시 열어 예상한 총 페이지 수와 실제 결과 페이지 수가 같은지 확인한 뒤 다운로드 상태로 전환합니다."],
+      ["파일 순서", "파일 순서가 곧 결과 순서", "카드에 표시되는 1, 2, 3번 순서가 실제 병합 순서입니다. 이동 직후에도 최신 순서를 기준으로 결과를 만듭니다."],
+      ["원본 유지", "원본 페이지를 이미지로 바꾸지 않음", "병합할 때 페이지를 JPG나 Canvas 이미지로 다시 만들지 않고 PDF 페이지 객체를 복사해 불필요한 화질 저하와 재압축을 피합니다."],
+      ["페이지 유지", "가로·세로와 페이지 크기 유지", "A4 세로와 가로 문서, 서로 다른 크기의 PDF가 섞여도 각 원본 페이지 크기와 방향을 그대로 이어 붙이는 것을 기본으로 합니다."],
+      ["기능 구분", "미리보기와 편집 기능 구분", "미리보기는 문서와 페이지 순서를 확인하기 위한 기능입니다. 페이지 삭제·회전·복제·페이지 단위 재정렬은 별도 PDF 페이지 정리 도구 영역입니다."],
+      ["오류 처리", "오류 파일을 조용히 건너뛰지 않음", "손상 PDF, 암호화 PDF, PDF가 아닌 파일은 어떤 파일에서 문제가 생겼는지 표시하고 정상 파일만 몰래 합친 결과를 만들지 않습니다."],
+      ["결과 검증", "완성 결과를 다시 확인", "병합 후 결과 PDF를 다시 열어 예상한 총 페이지 수와 실제 결과 페이지 수가 같은지 확인한 뒤 다운로드 상태로 전환합니다."],
     ],
     caution: "주의사항",
     cautions: [
@@ -70,12 +70,12 @@ const copy = {
     ],
     guideTitle: "What to verify before merging PDFs",
     guide: [
-      ["01", "Card order is result order", "The visible 1, 2, 3 order is the merge order. A merge started immediately after moving a card uses the latest order."],
-      ["02", "Do not rasterize source pages", "The merge copies PDF page objects instead of rebuilding each page as a JPG or canvas image, avoiding unnecessary quality loss and recompression."],
-      ["03", "Keep page size and orientation", "Portrait, landscape, A4, and other page sizes can coexist in one result while retaining each source page's original geometry."],
-      ["04", "Preview is not page editing", "Preview is for confirming documents and pages. Deleting, rotating, duplicating, or reordering individual pages belongs to the separate page organizer tool."],
-      ["05", "Never silently skip a bad file", "Corrupt, encrypted, or non-PDF inputs are identified instead of being omitted while the remaining files are merged without warning."],
-      ["06", "Re-open the generated result", "After merging, the generated PDF is parsed again and its real page count must match the expected total before the result is presented as complete."],
+      ["File order", "Card order is result order", "The visible 1, 2, 3 order is the merge order. A merge started immediately after moving a card uses the latest order."],
+      ["Keep source", "Do not rasterize source pages", "The merge copies PDF page objects instead of rebuilding each page as a JPG or canvas image, avoiding unnecessary quality loss and recompression."],
+      ["Keep pages", "Keep page size and orientation", "Portrait, landscape, A4, and other page sizes can coexist in one result while retaining each source page's original geometry."],
+      ["Feature scope", "Preview is not page editing", "Preview is for confirming documents and pages. Deleting, rotating, duplicating, or reordering individual pages belongs to the separate page organizer tool."],
+      ["Error handling", "Never silently skip a bad file", "Corrupt, encrypted, or non-PDF inputs are identified instead of being omitted while the remaining files are merged without warning."],
+      ["Verify result", "Re-open the generated result", "After merging, the generated PDF is parsed again and its real page count must match the expected total before the result is presented as complete."],
     ],
     caution: "Important notes",
     cautions: [
@@ -117,12 +117,12 @@ const copy = {
     ],
     guideTitle: "PDF結合で確認する重要ポイント",
     guide: [
-      ["01", "カード順がそのまま結果順", "画面の1、2、3の順番が実際の結合順です。移動直後に実行しても最新の順序を使用します。"],
-      ["02", "元ページを画像化しない", "結合時に各ページをJPGやCanvas画像へ作り直さず、PDFページオブジェクトをコピーして不要な画質低下や再圧縮を避けます。"],
-      ["03", "縦横とページサイズを維持", "縦・横、A4、その他の異なるページサイズが混在しても、各元ページのサイズと向きを維持して1つにまとめます。"],
-      ["04", "プレビューとページ編集を分離", "プレビューは文書確認用です。ページ削除・回転・複製・ページ単位の並べ替えは別のPDFページ整理ツールの役割です。"],
-      ["05", "問題ファイルを黙って飛ばさない", "破損、暗号化、PDFではない入力を特定し、問題ファイルだけを黙って除外した不完全な結果を作りません。"],
-      ["06", "生成結果を再確認", "結合後のPDFをもう一度解析し、予想ページ数と実際の結果ページ数が一致してから完了状態にします。"],
+      ["ファイル順", "カード順がそのまま結果順", "画面の1、2、3の順番が実際の結合順です。移動直後に実行しても最新の順序を使用します。"],
+      ["原本維持", "元ページを画像化しない", "結合時に各ページをJPGやCanvas画像へ作り直さず、PDFページオブジェクトをコピーして不要な画質低下や再圧縮を避けます。"],
+      ["ページ維持", "縦横とページサイズを維持", "縦・横、A4、その他の異なるページサイズが混在しても、各元ページのサイズと向きを維持して1つにまとめます。"],
+      ["機能区分", "プレビューとページ編集を分離", "プレビューは文書確認用です。ページ削除・回転・複製・ページ単位の並べ替えは別のPDFページ整理ツールの役割です。"],
+      ["エラー処理", "問題ファイルを黙って飛ばさない", "破損、暗号化、PDFではない入力を特定し、問題ファイルだけを黙って除外した不完全な結果を作りません。"],
+      ["結果検証", "生成結果を再確認", "結合後のPDFをもう一度解析し、予想ページ数と実際の結果ページ数が一致してから完了状態にします。"],
     ],
     caution: "注意事項",
     cautions: [
@@ -177,7 +177,7 @@ export function MergePdfPage({ locale }: { locale: Locale }) {
         <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>029</span><h3>{locale === "ko" ? "PDF 분할·페이지 추출기" : locale === "en" ? "PDF Split & Page Extractor" : "PDF分割・ページ抽出ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
         <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item) => <Link key={item.n} className="toolbox-next-work-card" href={`/${locale}/${item.slug}`}><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "ja" ? "利用可能" : "AVAILABLE"}</span><strong>↗</strong></div></Link>)}</div></section>
         <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol></section>
-        <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{t.guide.map(([n, title, desc]) => <article key={n}><strong>{n}</strong><h4>{title}</h4><p>{desc}</p></article>)}</div></div></section>
+        <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.guide.map(([n, title, desc]) => <article key={n}><strong>{n}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
         <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{t.caution}</h2><span>{locale === "ko" ? "병합 순서와 결과 페이지 수를 확인한 뒤 다운로드하세요." : locale === "ja" ? "結合順と結果ページ数を確認してからダウンロードしてください。" : "Verify the merge order and result page count before downloading."}</span></div><ul className="toolbox-tool-info-band-list">{t.cautions.map((item) => <li key={item}>{item}</li>)}</ul></section>
         <section className="toolbox-tool-faq"><div className="toolbox-tool-guide-head"><p>FAQ</p><h2>{t.faqTitle}</h2></div><ToolboxFaqList items={t.faqs.map(([q, a]): readonly [string, string] => [q, a])} initialCount={5} moreLabel={t.faqMore} collapseLabel={t.faqLess} className="toolbox-tool-faq-list" /></section>
       </div></section>

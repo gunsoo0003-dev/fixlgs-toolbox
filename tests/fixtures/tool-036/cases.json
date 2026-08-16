@@ -1,0 +1,10 @@
+[
+  {"id":"empty","locale":"en","text":"","notes":"all statistics zero"},
+  {"id":"spaces-only","locale":"en","text":" \t\n","notes":"with-spaces > 0; words/sentences/paragraphs zero"},
+  {"id":"english-basic","locale":"en","text":"Hello world. This is FIXLGS!","notes":"basic English segmentation"},
+  {"id":"korean-basic","locale":"ko","text":"안녕하세요. FIXLGS 도구입니다.\n\n문서 통계를 확인합니다.","notes":"Korean sentences and paragraphs"},
+  {"id":"japanese-no-space","locale":"ja","text":"今日は良い天気です。文章の文字数と単語数を確認します。","notes":"Japanese word count must not collapse to one"},
+  {"id":"emoji-zwj","locale":"en","text":"A👨‍👩‍👧‍👦é👍🏽","notes":"grapheme clusters / combining / ZWJ"},
+  {"id":"mixed-eol","locale":"en","text":"one\r\ntwo\rthree\nfour","notes":"CRLF/LF/CR line counting"},
+  {"id":"unicode-space","locale":"ja","text":"A\u00a0B　C\tD","notes":"NBSP / ideographic space / tab are Unicode whitespace"}
+]

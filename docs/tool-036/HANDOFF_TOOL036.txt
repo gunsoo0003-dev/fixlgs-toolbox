@@ -1,0 +1,70 @@
+TOOL 036 | 글자 수·문서 통계 계산기
+Category: E. Text Tools
+Slug: character-document-counter
+Expected URLs: /ko/character-document-counter | /en/character-document-counter | /ja/character-document-counter
+Auxiliary status: IMPLEMENTATION + STATIC FUNCTION/DESIGN/HARNESS/LIMIT READY; SERVICE LIMIT APPROVED
+
+IMPLEMENTED
+- Browser-local live character/document statistics.
+- Grapheme-based with-spaces / without-spaces character counts.
+- Locale-aware Intl.Segmenter word/sentence counting with graceful fallback.
+- Paragraph / line / UTF-8 byte counts.
+- 150/200/250 WPM estimated reading time.
+- Optional character/word goals with remaining/over text.
+- Copy statistics, clear all, localized sample text.
+- KO/EN/JA UI, SEO metadata, JSON-LD, FAQ, usage guide, caution content.
+
+DESIGN REFERENCES
+- MAIN: TOOL033 PDF Compressor — current detail page shell and section hierarchy.
+- SUB: TOOL018 metadata checker — compact statistics/info-card treatment.
+- SUB: TOOL016 add-text-to-image — text input and form-control treatment.
+- Global CSS modifications: NONE.
+- Legacy sealed CSS use: NONE.
+
+DEDICATED INTEGRATION FILES
+- app/[locale]/character-document-counter/page.tsx
+- components/character-document-counter-page.tsx
+- components/character-document-counter-tool.tsx
+- components/character-document-counter-tool.module.css
+- lib/tool-036-text-statistics.ts
+
+DEDICATED VALIDATION / DELIVERY FILES
+- tests/fixtures/tool-036/cases.json
+- tests/tool-036-preflight.spec.ts
+- tests/tool-036-core.spec.ts
+- tests/tool-036-boundary.spec.ts
+- tests/tool-036-feature.spec.ts
+- tests/tool-036-regression.spec.ts
+- tests/tool-036-limit.spec.ts
+- playwright.tool036.config.ts
+- scripts/tool-036/run-validation.mjs
+- scripts/tool-036/check-source.mjs
+- scripts/tool-036/check-harness.mjs
+- scripts/tool-036/check-design-static.mjs
+- scripts/tool-036/check-css-protection.mjs
+- scripts/tool-036/check-localization.mjs
+- scripts/tool-036/check-functional-fixtures.mjs
+- scripts/tool-036/run-static-validation.mjs
+- TOOL036_DESIGN_CODE_CHECK.md
+- TOOL036_REQ_MASTER.md
+- TOOL036_LIMIT_BRIEFING.md
+- HANDOFF_TOOL036.txt
+
+MAIN WORKSPACE COMMON-INTEGRATION TODO (DO NOT BLINDLY OVERWRITE)
+- Register tool036 slug/title/description/category card in current `lib/site.ts` structure.
+- Add tool036 to current `app/sitemap.ts` only after inspecting latest integration state.
+- Keep robots common behavior unchanged unless current main project requires an explicit update.
+- When 037/038/042 routes exist, switch currently disabled related-tool cards to live links after verifying actual slugs.
+- Update current mobile runner registry/checker only in the main workspace using the latest product DOM/selector contract.
+
+SERVICE LIMIT APPROVAL GATE
+- User approved the recommended Candidate A on 2026-08-15.
+- Final product service limit: 300,000 Unicode grapheme clusters.
+- Exact limit is accepted; over-limit input is grapheme-safely capped at 300,000 with localized KO/EN/JA explicit notice.
+- Checker independent expected: 299,999 / 300,000 / 300,001 boundary set.
+- `tests/tool-036-limit.spec.ts` added for main-workspace runtime verification.
+
+MAIN WORKSPACE INTEGRATION VERIFICATION
+- Actual PC/mobile KO/EN/JA rendering, Japanese mobile labels, IME behavior, light/dark, focus/touch/scroll, browser fallback.
+- Latest checker preflight/core/boundary/feature/regression/limit/final synchronization and mechanical contract check.
+- TypeScript, production build, latest-project regression and integrated FINAL.

@@ -1,0 +1,37 @@
+TOOL036 PACKAGE MANIFEST
+Top-level folder: fixlgs-toolbox
+Scope: minimal TOOL036 integration package; no node_modules/.next/cache/results/common-file overwrite.
+
+FILES (relative path | sha256)
+f6550f899dc1f678f4c30665aca25f3818f9c0f58c135116fcdb409e7bdfcbf1  ./HANDOFF_TOOL036.txt
+aaf6c05ed0bfd36f013038ac7b40d1edb09965599e7cc673181fe7a77bb6aade  ./TOOL036_DESIGN_CODE_CHECK.md
+bb5dc8c96c381682cce32fab76205b32980e50f0ebdf23a244a7545566af0211  ./TOOL036_LIMIT_BRIEFING.md
+2fba314b02b6c3b63736007f708dc8e4bdd22ac74095a7647f9e9c231dadce3b  ./TOOL036_REQ_MASTER.md
+c6c1be8345c3a86d578f191fc96d11300d5ee5cf2d910140919b54c6843014b1  ./app/[locale]/character-document-counter/page.tsx
+bb1a0b4354adb4f8962e532bf998af92a2482178aa42f9f6cae3777d53d90eb5  ./components/character-document-counter-page.tsx
+0bb175f6b5b7ce224738670e880fc5d42b1f2455009bb12ce8556f1b5d052e79  ./components/character-document-counter-tool.module.css
+a97c143374d2142b22e7b00c71320a624e24bbfb71417bcf412607350ad76d69  ./components/character-document-counter-tool.tsx
+5e1f466a8b6c7a48571708444082ea9c2c347e10415d784a78add6b9bc98f5aa  ./docs/tool-036/CHANGE_MAP_036.txt
+fbefb2fe35d68d41bdf402d6d914f4bbae26081de03f94d52e9c3b2efc87687e  ./docs/tool-036/CHECKLIST_036_FINAL.txt
+b0bc5a4e12b31969e6ea39e399cf4b0c53e3668e6bea3607d660e246c0df8389  ./docs/tool-036/FAILURE_RESPONSE_MAP_036.txt
+c8fc545e11395611c4c5739a7738070fd124310898097521c9222e002c911c5a  ./docs/tool-036/FIXLGS_TOOLBOX_036_글자_수_문서_통계_계산기_최종제작전달서.pdf
+a0a7754babb39e0e8e0697055a3ac0953927f2e1ee54eaa8232a7dfdd3774b72  ./docs/tool-036/ORIGINAL_PLAN_SHA256.txt
+b5743c1216eab55ef8c5b6a94bdcb47747f0757b6c8a68df3c8951074449b2fc  ./docs/tool-036/STATIC_VALIDATION_036.txt
+edbaa9dfb0e2cd64a764ec3cfe22147905ed369bfaa3f5d5eb4964962c941a16  ./lib/tool-036-text-statistics.ts
+95135722d7e8d858289598de264b6f7164664b823a7853596dbb74b99098d5ec  ./playwright.tool036.config.ts
+19cc1fa4c57731e6544cb255e577f377609f37c3eca9ceb57f30c8798a68293d  ./scripts/tool-036/check-css-protection.mjs
+573d0e488ea40d584c5f6613b31d0a38ab610286d32a85b5c86e37c7bfeac2fd  ./scripts/tool-036/check-design-static.mjs
+497684cae7351506f6b96dc44d6cb7073f6286b0f769ea79ec353c31752faa9e  ./scripts/tool-036/check-functional-fixtures.mjs
+baaa0afec3195f6883387365f151042b6808d3761a805d3c483b0d7886068022  ./scripts/tool-036/check-harness.mjs
+b40e9ab929d63d139eb1befd5c67d74e4af5b5d4bb439a169b809164319cf7c3  ./scripts/tool-036/check-localization.mjs
+b64cd769a2ae0f18085ba6ab1b30e59ed72411c52395d8a7b9178e2fdf16ec91  ./scripts/tool-036/check-source.mjs
+bb4cc1b3924c8b67dbf075b06bf34e8bd4e5d390449489d0fb77c68bc1c620ef  ./scripts/tool-036/common-hashes.json
+40cd4f7d06ecbae3452105283c9c44f31872be44edeaf29ac5bcfac373294d14  ./scripts/tool-036/run-static-validation.mjs
+d9b537fda6b87e05c1b90df8f74199c9e7137058ad6d3eceb2ac543a476581ef  ./scripts/tool-036/run-validation.mjs
+10877d556a2b41ded3062ad78e5fe79c95d419be4eb5ba48b6fd3a4b4839c6f4  ./tests/fixtures/tool-036/cases.json
+98715db151e335b953ba2ce1891ca39c8e8c13bc20913d1f77d34a1ecb6638dc  ./tests/tool-036-boundary.spec.ts
+c1acef05e452605d68109d2b380fab6ba6a3db027ed6b5d063fcf190d2cd30fe  ./tests/tool-036-core.spec.ts
+3601a683e6ed2291da96b34446bc8079af22106eb4076f2e8bbc90dfa707a713  ./tests/tool-036-feature.spec.ts
+a08ddef1232713a2e57dee08452c5cc7142555654d1bda159993084a8e7419fd  ./tests/tool-036-limit.spec.ts
+c3f3371f7c54745512127ef72af8d3efda63493b15deeb460a7bcf20f93d3d2f  ./tests/tool-036-preflight.spec.ts
+6025d1b27ad5a0908c76cd961221593c74001938eac82591a63cd20ae8e0c122  ./tests/tool-036-regression.spec.ts

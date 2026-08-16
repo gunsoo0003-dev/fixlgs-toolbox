@@ -1,0 +1,40 @@
+TOOL036 CHANGE MAP
+
+NEW PRODUCT FILES
+- app/[locale]/character-document-counter/page.tsx
+- components/character-document-counter-page.tsx
+- components/character-document-counter-tool.tsx
+- components/character-document-counter-tool.module.css
+- lib/tool-036-text-statistics.ts
+
+NEW CHECKER FILES
+- playwright.tool036.config.ts
+- tests/fixtures/tool-036/cases.json
+- tests/tool-036-preflight.spec.ts
+- tests/tool-036-core.spec.ts
+- tests/tool-036-boundary.spec.ts
+- tests/tool-036-feature.spec.ts
+- tests/tool-036-regression.spec.ts
+- tests/tool-036-limit.spec.ts
+- scripts/tool-036/check-source.mjs
+- scripts/tool-036/check-harness.mjs
+- scripts/tool-036/check-design-static.mjs
+- scripts/tool-036/check-css-protection.mjs
+- scripts/tool-036/check-localization.mjs
+- scripts/tool-036/check-functional-fixtures.mjs
+- scripts/tool-036/run-static-validation.mjs
+- scripts/tool-036/run-validation.mjs
+- scripts/tool-036/common-hashes.json
+
+NEW DELIVERY / EVIDENCE FILES
+- TOOL036_REQ_MASTER.md
+- TOOL036_DESIGN_CODE_CHECK.md
+- TOOL036_LIMIT_BRIEFING.md
+- HANDOFF_TOOL036.txt
+- docs/tool-036/*
+
+EXISTING FILE MODIFICATIONS
+- NONE. Diff against user-provided TOOL033 deployed baseline shows only TOOL036-dedicated additions.
+
+COMMON / PROTECTED FILE MODIFICATIONS
+- NONE.

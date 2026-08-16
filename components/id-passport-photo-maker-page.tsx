@@ -20,14 +20,14 @@ const copy = {
     ],
     guideTitle: "규격 사진 제작 핵심 기준",
     guide: [
-      ["01", "사진 크기와 얼굴 크기는 따로 확인", "35×45mm처럼 사진 전체 규격이 맞아도 얼굴이 너무 크거나 작으면 제출 규정과 어긋날 수 있습니다. 국가 preset에 얼굴 길이 범위가 있는 경우 전체 사진 크기와 얼굴 위치를 함께 확인합니다."],
-      ["02", "No Stretch로 원본 비율 유지", "세로 사진을 규격에 맞춘다고 가로·세로를 강제로 늘리지 않습니다. 원본 비율을 유지한 채 zoom과 position으로 필요한 영역만 잘라 얼굴 형태가 왜곡되지 않도록 합니다."],
-      ["03", "얼굴 가이드는 미리보기용", "얼굴 위치선과 참고 가이드는 작업 중 정렬을 돕기 위한 화면 표시입니다. 최종 JPG·PNG와 A4 출력에는 가이드가 포함되지 않도록 분리해 사용합니다."],
-      ["04", "인쇄 mm와 온라인 px를 구분", "35×45mm 같은 값은 실제 인화 크기이고 413×531px 같은 값은 온라인 제출용 디지털 크기입니다. 같은 여권사진이라도 인쇄용과 온라인 제출용 조건을 서로 바꾸어 사용하지 않습니다."],
-      ["05", "한국 온라인 제출 조건 별도 적용", "한국 온라인 여권사진 preset은 413×531px JPG를 기준으로 출력하고 500KB 이하가 되도록 저장합니다. 일반 PNG 출력이나 인쇄용 preset과는 별도 흐름으로 처리합니다."],
-      ["06", "국가별 preset은 서로 다름", "한국·미국·일본·영국·캐나다는 사진 전체 크기와 얼굴 길이 조건이 동일하지 않습니다. 비슷해 보이는 35×45mm 규격이라도 얼굴 범위와 제출 방식이 다를 수 있어 현재 선택한 국가 preset을 다시 확인합니다."],
-      ["07", "A4는 210×297mm 실제 크기", "선택한 사진의 실제 mm 크기를 유지하면서 A4 210×297mm 안에 들어가는 수량을 반복 배치합니다. 프린터의 ‘페이지에 맞춤’이나 자동 확대·축소를 사용하면 실제 사진 크기가 달라질 수 있습니다."],
-      ["08", "공식 여권과 일반 증명·취업사진 분리", "국가별 여권 preset은 공식 제출 규격 참고용이고 3×4cm·3.5×4.5cm와 사용자 지정은 일반 증명·취업사진 편의용입니다. 회사·학교·시험기관이 별도 크기를 지정하면 그 요구를 우선합니다."]
+      ["크기 기준", "사진 크기와 얼굴 크기는 따로 확인", "35×45mm처럼 사진 전체 규격이 맞아도 얼굴이 너무 크거나 작으면 제출 규정과 어긋날 수 있습니다. 국가 preset에 얼굴 길이 범위가 있는 경우 전체 사진 크기와 얼굴 위치를 함께 확인합니다."],
+      ["비율 유지", "No Stretch로 원본 비율 유지", "세로 사진을 규격에 맞춘다고 가로·세로를 강제로 늘리지 않습니다. 원본 비율을 유지한 채 zoom과 position으로 필요한 영역만 잘라 얼굴 형태가 왜곡되지 않도록 합니다."],
+      ["얼굴 가이드", "얼굴 가이드는 미리보기용", "얼굴 위치선과 참고 가이드는 작업 중 정렬을 돕기 위한 화면 표시입니다. 최종 JPG·PNG와 A4 출력에는 가이드가 포함되지 않도록 분리해 사용합니다."],
+      ["단위 구분", "인쇄 mm와 온라인 px를 구분", "35×45mm 같은 값은 실제 인화 크기이고 413×531px 같은 값은 온라인 제출용 디지털 크기입니다. 같은 여권사진이라도 인쇄용과 온라인 제출용 조건을 서로 바꾸어 사용하지 않습니다."],
+      ["온라인 제출", "한국 온라인 제출 조건 별도 적용", "한국 온라인 여권사진 preset은 413×531px JPG를 기준으로 출력하고 500KB 이하가 되도록 저장합니다. 일반 PNG 출력이나 인쇄용 preset과는 별도 흐름으로 처리합니다."],
+      ["국가 규격", "국가별 preset은 서로 다름", "한국·미국·일본·영국·캐나다는 사진 전체 크기와 얼굴 길이 조건이 동일하지 않습니다. 비슷해 보이는 35×45mm 규격이라도 얼굴 범위와 제출 방식이 다를 수 있어 현재 선택한 국가 preset을 다시 확인합니다."],
+      ["A4 인쇄", "A4는 210×297mm 실제 크기", "선택한 사진의 실제 mm 크기를 유지하면서 A4 210×297mm 안에 들어가는 수량을 반복 배치합니다. 프린터의 ‘페이지에 맞춤’이나 자동 확대·축소를 사용하면 실제 사진 크기가 달라질 수 있습니다."],
+      ["용도 구분", "공식 여권과 일반 증명·취업사진 분리", "국가별 여권 preset은 공식 제출 규격 참고용이고 3×4cm·3.5×4.5cm와 사용자 지정은 일반 증명·취업사진 편의용입니다. 회사·학교·시험기관이 별도 크기를 지정하면 그 요구를 우선합니다."]
     ],
     caution: "주의사항",
     cautions: [
@@ -68,14 +68,14 @@ const copy = {
     ],
     guideTitle: "Key standards for document photos",
     guide: [
-      ["01", "Check photo size and face size separately", "A correct overall photo size does not guarantee a correct face scale. When a preset provides a face-length range, check both the full image dimensions and the face position."],
-      ["02", "Preserve aspect ratio with No Stretch", "Do not force a portrait into the target size by stretching width or height. Keep the source aspect ratio and use zoom and position to crop only the required area."],
-      ["03", "Face guides are preview-only", "Face-position lines and guides help alignment while editing. They are separated from the rendered result and are not intended to appear in the final JPG, PNG, or A4 output."],
-      ["04", "Keep print millimeters and online pixels separate", "Values such as 35×45mm describe physical print size, while values such as 413×531px describe digital submission dimensions. Do not substitute one workflow for the other."],
-      ["05", "Apply Korean online rules separately", "The Korean online passport preset outputs a 413×531px JPG and keeps the file at or below 500KB. It is handled separately from general PNG output and print presets."],
-      ["06", "Country presets are not interchangeable", "Korea, the U.S., Japan, the U.K., and Canada do not share identical photo and face-size requirements. Even when overall dimensions look similar, composition and submission rules may differ."],
-      ["07", "A4 means actual 210×297mm output", "The tool repeats the selected physical photo size on a 210×297mm A4 sheet. Printer scaling such as Fit to Page can change the final photo dimensions."],
-      ["08", "Separate official passport and general ID sizes", "Country passport presets are official-format references, while 30×40mm, 35×45mm, and custom sizes are general conveniences for ID or employment photos. Always prioritize the recipient's stated requirement."]
+      ["Size rules", "Check photo size and face size separately", "A correct overall photo size does not guarantee a correct face scale. When a preset provides a face-length range, check both the full image dimensions and the face position."],
+      ["Aspect ratio", "Preserve aspect ratio with No Stretch", "Do not force a portrait into the target size by stretching width or height. Keep the source aspect ratio and use zoom and position to crop only the required area."],
+      ["Face guide", "Face guides are preview-only", "Face-position lines and guides help alignment while editing. They are separated from the rendered result and are not intended to appear in the final JPG, PNG, or A4 output."],
+      ["Units", "Keep print millimeters and online pixels separate", "Values such as 35×45mm describe physical print size, while values such as 413×531px describe digital submission dimensions. Do not substitute one workflow for the other."],
+      ["Online submit", "Apply Korean online rules separately", "The Korean online passport preset outputs a 413×531px JPG and keeps the file at or below 500KB. It is handled separately from general PNG output and print presets."],
+      ["Country rules", "Country presets are not interchangeable", "Korea, the U.S., Japan, the U.K., and Canada do not share identical photo and face-size requirements. Even when overall dimensions look similar, composition and submission rules may differ."],
+      ["A4 print", "A4 means actual 210×297mm output", "The tool repeats the selected physical photo size on a 210×297mm A4 sheet. Printer scaling such as Fit to Page can change the final photo dimensions."],
+      ["Use case", "Separate official passport and general ID sizes", "Country passport presets are official-format references, while 30×40mm, 35×45mm, and custom sizes are general conveniences for ID or employment photos. Always prioritize the recipient's stated requirement."]
     ],
     caution: "Important notes",
     cautions: [
@@ -116,14 +116,14 @@ const copy = {
     ],
     guideTitle: "証明写真作成の重要基準",
     guide: [
-      ["01", "写真サイズと顔サイズを別々に確認", "35×45mmなど写真全体のサイズが合っていても、顔が大きすぎたり小さすぎたりすると規格から外れる場合があります。顔の長さ範囲があるpresetでは両方を確認します。"],
-      ["02", "No Stretchで元画像比率を維持", "目標サイズに合わせるために幅や高さだけを強制的に伸ばしません。元画像比率を保ったままzoomとpositionで必要な範囲をcropします。"],
-      ["03", "顔ガイドはプレビュー専用", "顔位置線と参考ガイドは編集中の整列を助ける表示です。最終JPG・PNGやA4出力には含まれないよう結果レンダリングと分離します。"],
-      ["04", "印刷mmとオンラインpixelを分離", "35×45mmは実際の印刷サイズ、413×531pxはオンライン提出用のデジタルサイズです。同じ写真でも印刷用とオンライン用の条件を入れ替えて使いません。"],
-      ["05", "韓国オンライン条件を別適用", "韓国オンラインパスポートpresetは413×531px JPGで出力し、500KB以下になるよう保存します。一般PNG出力や印刷presetとは別の処理です。"],
-      ["06", "国別presetは同一ではありません", "韓国・米国・日本・英国・カナダでは写真全体サイズと顔の長さ条件が同一ではありません。似た寸法でも構図や提出方法が異なる場合があります。"],
-      ["07", "A4は210×297mmの実寸", "選択した写真の実寸mmを保って210×297mmのA4内に繰り返し配置します。プリンターの自動拡大・縮小や用紙に合わせる設定を使うと最終サイズが変わります。"],
-      ["08", "公式パスポートと一般証明サイズを分離", "国別パスポートpresetは公式規格の参考用、30×40mm・35×45mm・カスタムは一般証明・就職写真用です。会社・学校・試験機関の指定がある場合はその値を優先します。"]
+      ["サイズ基準", "写真サイズと顔サイズを別々に確認", "35×45mmなど写真全体のサイズが合っていても、顔が大きすぎたり小さすぎたりすると規格から外れる場合があります。顔の長さ範囲があるpresetでは両方を確認します。"],
+      ["比率維持", "No Stretchで元画像比率を維持", "目標サイズに合わせるために幅や高さだけを強制的に伸ばしません。元画像比率を保ったままzoomとpositionで必要な範囲をcropします。"],
+      ["顔ガイド", "顔ガイドはプレビュー専用", "顔位置線と参考ガイドは編集中の整列を助ける表示です。最終JPG・PNGやA4出力には含まれないよう結果レンダリングと分離します。"],
+      ["単位区分", "印刷mmとオンラインpixelを分離", "35×45mmは実際の印刷サイズ、413×531pxはオンライン提出用のデジタルサイズです。同じ写真でも印刷用とオンライン用の条件を入れ替えて使いません。"],
+      ["オンライン提出", "韓国オンライン条件を別適用", "韓国オンラインパスポートpresetは413×531px JPGで出力し、500KB以下になるよう保存します。一般PNG出力や印刷presetとは別の処理です。"],
+      ["国別規格", "国別presetは同一ではありません", "韓国・米国・日本・英国・カナダでは写真全体サイズと顔の長さ条件が同一ではありません。似た寸法でも構図や提出方法が異なる場合があります。"],
+      ["A4印刷", "A4は210×297mmの実寸", "選択した写真の実寸mmを保って210×297mmのA4内に繰り返し配置します。プリンターの自動拡大・縮小や用紙に合わせる設定を使うと最終サイズが変わります。"],
+      ["用途区分", "公式パスポートと一般証明サイズを分離", "国別パスポートpresetは公式規格の参考用、30×40mm・35×45mm・カスタムは一般証明・就職写真用です。会社・学校・試験機関の指定がある場合はその値を優先します。"]
     ],
     caution: "注意事項",
     cautions: [
@@ -173,7 +173,7 @@ export function IdPassportPhotoMakerPage({locale}:{locale:Locale}){
       <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>026</span><h3>{locale==="ko"?"이미지 PDF 변환기":locale==="en"?"Image to PDF Converter":"画像PDF変換ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
       <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item)=><Link key={item.n} className="toolbox-next-work-card" href={item.href}><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>OPEN</span><strong>→</strong></div></Link>)}</div></section>
       <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,i)=><li key={step}><span>{String(i+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>
-      <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{t.guide.map(([n,title,desc])=><article key={n}><strong>{n}</strong><h4>{title}</h4><p>{desc}</p></article>)}</div></div></section>
+      <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.guide.map(([n,title,desc])=><article key={n}><strong>{n}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
       <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{t.caution}</h2><span>{locale === "ko" ? "여권·증명사진은 제출처 규격과 원본 촬영 조건을 함께 확인한 뒤 저장하세요." : locale === "ja" ? "パスポート・証明写真は提出先の規格と元写真の撮影条件を確認してから保存してください。" : "Check both the recipient requirements and the source-photo conditions before exporting an ID or passport photo."}</span></div><ul className="toolbox-tool-info-band-list">{t.cautions.map((x)=><li key={x}>{x}</li>)}</ul></section>
       <section className="toolbox-tool-faq"><div className="toolbox-tool-guide-head"><p>FAQ</p><h2>{t.faqTitle}</h2></div><ToolboxFaqList items={t.faqs.map(([q,a]):readonly [string,string]=>[q,a])} initialCount={5} moreLabel={t.faqMore} collapseLabel={t.faqLess} className="toolbox-tool-faq-list" /></section>
     </div></section>

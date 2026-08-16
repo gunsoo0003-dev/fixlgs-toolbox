@@ -1,0 +1,267 @@
+
+[STEP] check-source.mjs
+[PASS] components/character-document-counter-tool.tsx
+[PASS] components/character-document-counter-tool.module.css
+[PASS] components/character-document-counter-page.tsx
+[PASS] app/[locale]/character-document-counter/page.tsx
+[PASS] lib/tool-036-text-statistics.ts
+[PASS] tests/fixtures/tool-036/cases.json
+[PASS] tests/fixtures/tool-036/sample.txt
+[PASS] tests/fixtures/tool-036/sample.md
+[PASS] tests/fixtures/tool-036/sample.csv
+[PASS] tests/tool-036-preflight.spec.ts
+[PASS] tests/tool-036-core.spec.ts
+[PASS] tests/tool-036-boundary.spec.ts
+[PASS] tests/tool-036-feature.spec.ts
+[PASS] tests/tool-036-regression.spec.ts
+[PASS] tests/tool-036-limit.spec.ts
+[PASS] playwright.tool036.config.ts
+[PASS] scripts/tool-036/run-validation.mjs
+[PASS] root selector
+[PASS] single active workspace
+[PASS] textarea
+[PASS] file input
+[PASS] TXT MD CSV accept
+[PASS] file.text local read
+[PASS] drag handlers
+[PASS] core stats
+[PASS] secondary stats
+[PASS] goal toggle
+[PASS] copy stats
+[PASS] TXT download
+[PASS] UTF-8 blob
+[PASS] complete reset file
+[PASS] debounce
+[PASS] IME hooks
+[PASS] start-state transition
+[PASS] approved max graphemes
+[PASS] Intl Segmenter
+[PASS] grapheme
+[PASS] wordLike
+[PASS] Unicode whitespace
+[PASS] TextEncoder
+[PASS] paragraphs
+[PASS] line endings
+
+[STEP] check-harness.mjs
+[PASS] selector tool036-root
+[PASS] selector tool036-local-notice
+[PASS] selector tool036-workspace
+[PASS] selector tool036-file-input
+[PASS] selector tool036-file-button
+[PASS] selector tool036-file-info
+[PASS] selector tool036-textarea
+[PASS] selector tool036-sample
+[PASS] selector tool036-clear
+[PASS] selector tool036-core-stats
+[PASS] selector tool036-chars-with
+[PASS] selector tool036-chars-without
+[PASS] selector tool036-words
+[PASS] selector tool036-secondary-stats
+[PASS] selector tool036-sentences
+[PASS] selector tool036-paragraphs
+[PASS] selector tool036-lines
+[PASS] selector tool036-bytes
+[PASS] selector tool036-reading-time
+[PASS] selector tool036-options
+[PASS] selector tool036-goal-toggle
+[PASS] selector tool036-character-goal
+[PASS] selector tool036-word-goal
+[PASS] selector tool036-wpm
+[PASS] selector tool036-copy-stats
+[PASS] selector tool036-download-text
+[PASS] selector tool036-error
+[PASS] page contract 036 · TEXT
+[PASS] page contract HOW TO USE
+[PASS] page contract COUNTING GUIDE
+[PASS] page contract IMPORTANT NOTES
+[PASS] page contract FAQ
+[PASS] page contract RELATED TOOLS
+
+[STEP] check-design-static.mjs
+[PASS] shared detail hero
+[PASS] shared detail body
+[PASS] shared next-work
+[PASS] shared how-to
+[PASS] shared lower-section wrapper boundary
+[PASS] shared information band
+[PASS] shared FAQ
+[PASS] single workspace owns drag contract
+[PASS] start dropzone state-gated
+[PASS] dropzone CTA and textarea share the actual input shell
+[PASS] legacy detached prompt removed
+[PASS] no detached workspace header
+[PASS] one workspace selector only
+[PASS] two primary character cards desktop
+[PASS] six compact stats in three columns
+[PASS] previous-tool dropzone treatment
+[PASS] blue workspace treatment
+[PASS] loaded file expands textarea
+[PASS] mobile core single column
+[PASS] mobile file bar stacks
+[PASS] no global selector declarations
+[PASS] theme via variables
+
+[STEP] check-css-protection.mjs
+[PASS] protected app/globals.css
+[PASS] protected styles/global-base.css
+[PASS] protected styles/toolbox-common.css
+[PASS] protected styles/toolbox-detail-common.css
+[PASS] protected styles/theme.css
+[PASS] protected styles/toolbox-compat.css
+[PASS] protected styles/legacy-site-sealed.css
+[PASS] protected styles/legacy-tools-sealed.css
+
+[STEP] check-localization.mjs
+[PASS] KO H1
+[PASS] EN H1
+[PASS] JA H1
+[PASS] KO file
+[PASS] EN file
+[PASS] JA file
+[PASS] KO download
+[PASS] EN download
+[PASS] JA download
+[PASS] JA with spaces
+[PASS] JA without spaces
+[PASS] JA reading
+[PASS] UTF-8 label
+
+[STEP] check-functional-fixtures.mjs
+
+[CASE] empty {
+  charactersWithSpaces: 0,
+  charactersWithoutSpaces: 0,
+  words: 0,
+  sentences: 0,
+  paragraphs: 0,
+  lines: 0,
+  utf8Bytes: 0,
+  readingSeconds: 0
+}
+[PASS] empty: finite 
+[PASS] empty: nonnegative 
+
+[CASE] spaces-only {
+  charactersWithSpaces: 3,
+  charactersWithoutSpaces: 0,
+  words: 0,
+  sentences: 0,
+  paragraphs: 0,
+  lines: 2,
+  utf8Bytes: 3,
+  readingSeconds: 0
+}
+[PASS] spaces-only: finite 
+[PASS] spaces-only: nonnegative 
+
+[CASE] english-basic {
+  charactersWithSpaces: 28,
+  charactersWithoutSpaces: 24,
+  words: 5,
+  sentences: 2,
+  paragraphs: 1,
+  lines: 1,
+  utf8Bytes: 28,
+  readingSeconds: 2
+}
+[PASS] english-basic: finite 
+[PASS] english-basic: nonnegative 
+
+[CASE] korean-basic {
+  charactersWithSpaces: 35,
+  charactersWithoutSpaces: 29,
+  words: 6,
+  sentences: 3,
+  paragraphs: 2,
+  lines: 3,
+  utf8Bytes: 75,
+  readingSeconds: 2
+}
+[PASS] korean-basic: finite 
+[PASS] korean-basic: nonnegative 
+
+[CASE] japanese-no-space {
+  charactersWithSpaces: 27,
+  charactersWithoutSpaces: 27,
+  words: 15,
+  sentences: 2,
+  paragraphs: 1,
+  lines: 1,
+  utf8Bytes: 81,
+  readingSeconds: 5
+}
+[PASS] japanese-no-space: finite 
+[PASS] japanese-no-space: nonnegative 
+
+[CASE] emoji-zwj {
+  charactersWithSpaces: 4,
+  charactersWithoutSpaces: 4,
+  words: 2,
+  sentences: 1,
+  paragraphs: 1,
+  lines: 1,
+  utf8Bytes: 37,
+  readingSeconds: 1
+}
+[PASS] emoji-zwj: finite 
+[PASS] emoji-zwj: nonnegative 
+
+[CASE] mixed-eol {
+  charactersWithSpaces: 18,
+  charactersWithoutSpaces: 15,
+  words: 4,
+  sentences: 4,
+  paragraphs: 1,
+  lines: 4,
+  utf8Bytes: 19,
+  readingSeconds: 2
+}
+[PASS] mixed-eol: finite 
+[PASS] mixed-eol: nonnegative 
+
+[CASE] unicode-space {
+  charactersWithSpaces: 7,
+  charactersWithoutSpaces: 4,
+  words: 4,
+  sentences: 1,
+  paragraphs: 1,
+  lines: 1,
+  utf8Bytes: 10,
+  readingSeconds: 2
+}
+[PASS] unicode-space: finite 
+[PASS] unicode-space: nonnegative 
+[PASS] empty all zero 
+[PASS] spaces included 
+[PASS] spaces excluded zero 
+[PASS] spaces words zero 
+[PASS] spaces sentences zero 
+[PASS] spaces paragraphs zero 
+[PASS] emoji grapheme 4 got=4
+[PASS] Japanese no-space words > 1 got=15
+[PASS] Japanese sentences 2 got=2
+[PASS] mixed EOL lines 4 got=4
+[PASS] paragraphs separated by blank lines got=3
+[PASS] UTF-8 byte exact got=8
+[PASS] limit below accepted got=299999
+[PASS] limit exact accepted got=300000
+[PASS] limit over truncated graphemes=300000 length=300000
+[PASS] limit preserves ZWJ grapheme boundary graphemes=300000
+(node:3711) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3711) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/tool036_work/fixlgs-toolbox/lib/tool-036-text-statistics.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/tool036_work/fixlgs-toolbox/package.json.
+
+[STEP] check-main-integration.mjs
+[PASS] site slug
+[PASS] site titles
+[PASS] text category preset
+[PASS] localized text category route mapping
+[PASS] sitemap import/entry
+[PASS] package FINAL script
+[PASS] route page
+[PASS] text category availability label
+
+[SUMMARY] TOOL036 static validation: PASS | failed=0/7

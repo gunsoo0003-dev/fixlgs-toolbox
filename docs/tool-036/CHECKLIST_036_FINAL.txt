@@ -1,0 +1,34 @@
+TOOL036 AUXILIARY FINAL CHECKLIST
+
+[PASS] Tool number/name/category/slug fixed: 036 / Character & Document Statistics Counter / E / character-document-counter
+[PASS] Core functions implemented: chars with/without spaces, words, sentences, paragraphs, lines, UTF-8 bytes, estimated reading time
+[PASS] KO/EN/JA localized UI and page SEO content implemented
+[PASS] Intl.Segmenter locale-aware word/sentence/grapheme path + graceful fallback
+[PASS] Unicode White_Space exclusion definition implemented
+[PASS] Goals / WPM presets / copy statistics / clear / sample implemented
+[PASS] Approved service limit synchronized to product: 300,000 Unicode grapheme clusters
+[PASS] Limit behavior: exact accepted; over-limit grapheme-safe cap + localized explicit notice
+[PASS] Independent limit checker expected: 299,999 / 300,000 / 300,001
+[PASS] Static functional fixture: Japanese no-space words > 1; emoji/ZWJ grapheme; UTF-8 exact; EOL; paragraph boundaries
+[PASS] Pure helper limit fixture: below/exact/over/ZWJ boundary PASS
+[PASS] DESIGN-CODE: MAIN 033 / SUB 018 + 016
+[PASS] Desktop 3 core cards + compact secondary grid structure present
+[PASS] Mobile single-column core layout + Japanese wrap protection present
+[PASS] Existing official common classes reused at page shell/content sections
+[PASS] Tool-specific visual rules confined to character-document-counter-tool.module.css
+[PASS] Global CSS modifications: 0
+[PASS] Legacy sealed CSS direct use: 0
+[PASS] Existing baseline file modifications: 0 (only dedicated additions vs TOOL033 baseline)
+[PASS] HARNESS STRUCTURE: route/root/selectors/specs/runner/config aligned
+[PASS] Static validation: 6/6 steps PASS; see STATIC_VALIDATION_036.txt
+[PASS] Original production handoff PDF included unchanged + SHA256 recorded
+[PASS] HANDOFF / change map / failure response map included
+[MAIN WORKSPACE] Actual browser/Playwright desktop/mobile KO/EN/JA + Japanese IME + light/dark + focus/touch/scroll
+[MAIN WORKSPACE] TypeScript full project typecheck / production build / latest integrated regression / FINAL
+[MAIN WORKSPACE] site.ts/category/route card + sitemap integration after latest-state inspection
+[MAIN WORKSPACE] mobile real-device runner registration according to current registry contract
+
+AUXILIARY RESULT: READY
+FAIL: 0
+NOT VERIFIED (auxiliary-required): 0
+MAIN-WORKSPACE INTEGRATION ITEMS: explicitly separated above
