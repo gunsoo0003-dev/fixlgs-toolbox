@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+let fail=0; const need=(ok,msg)=>{console.log(ok?'PASS':'FAIL',msg);if(!ok)fail++;};
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const site=fs.readFileSync('lib/site.ts','utf8');
+const sitemap=fs.readFileSync('app/sitemap.ts','utf8');
+for(const key of ['test:toolbox:035-preflight','test:toolbox:035-core-only','test:toolbox:035-boundary-only','test:toolbox:035-feature-only','test:toolbox:035-regression-only','test:toolbox:035-limit-only','test:toolbox:035-final','check:toolbox:mobile-real-photo-001-035','test:toolbox:035-mobile-real']) need(Boolean(pkg.scripts?.[key]),`package script ${key}`);
+need(site.includes('tool035Slug = "pdf-text-image-extractor"'),'site slug registered');
+need(site.includes('tool035Titles')&&site.includes('tool035Descriptions'),'site titles/descriptions registered');
+need(site.includes('index === 9')&&site.includes('tool035Slug'),'PDF category locale mapping registered');
+need(sitemap.includes('tool035Slug')&&sitemap.includes('${baseUrl}/${locale}/${tool035Slug}'),'sitemap registered');
+for(const f of ['scripts/run-mobile-real-photo-001-035.mjs','scripts/check-mobile-real-photo-001-035-validator.mjs','scripts/tool-035/mobile-runner-entry.mjs']) need(fs.existsSync(f),`mobile registration artifact ${f}`);
+process.exitCode=fail?1:0;

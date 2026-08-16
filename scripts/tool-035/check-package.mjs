@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+let fail=0;const need=(ok,msg)=>{console.log(ok?'PASS':'FAIL',msg);if(!ok)fail++;};
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const lock=JSON.parse(fs.readFileSync('package-lock.json','utf8'));
+need(pkg.dependencies?.['pdfjs-dist']==='5.4.54','existing pdfjs-dist 5.4.54 reused');
+need(lock.packages?.['']?.dependencies?.['pdfjs-dist']==='5.4.54','lock root pdfjs-dist unchanged');
+need(lock.packages?.['node_modules/pdfjs-dist']?.license==='Apache-2.0','pdfjs-dist license Apache-2.0 recorded');
+need(!pkg.dependencies?.['jszip']&&!pkg.dependencies?.['pdfjs-extract'],'no duplicate extraction/ZIP dependency added');
+need(fs.existsSync('docs/tool-035/original/FIXLGS_TOOLBOX_035_PDF_텍스트_이미지_추출기_최종제작전달서.pdf'),'original production brief preserved');
+process.exitCode=fail?1:0;

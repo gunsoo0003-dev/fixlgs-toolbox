@@ -1,0 +1,81 @@
+TOOL 035 HANDOFF
+================
+도구 번호: 035
+도구명: PDF 텍스트·이미지 추출기 / PDF Text & Image Extractor
+카테고리: D. PDF 도구
+slug: pdf-text-image-extractor
+예상 URL: /ko/pdf-text-image-extractor, /en/pdf-text-image-extractor, /ja/pdf-text-image-extractor
+보조작업장 상태: READY
+
+[핵심 구현]
+- native text: PDF.js getTextContent, page grouping, TXT
+- embedded image: PDF.js operator/object path; full-page render output 사용 안 함
+- exposed decoded bitmap은 PNG fallback으로 명시
+- modes: text / images / both
+- page scope: all / selected / custom
+- small-image filter OFF by default; hash duplicate hide OFF by default
+- deterministic file names / safe ZIP paths / individual image / images ZIP / combined ZIP
+- cancel/reset/re-extract/job-id/abort/page cleanup/object URL cleanup
+- KO/EN/JA, accessibility, responsive mobile image grid
+
+[승인 서비스 한도]
+- 1 PDF / 50MB / 200 pages
+- extracted image warning > 500
+- extracted image hard stop at 1000 (existing results retained)
+- page concurrency 1
+- status APPROVED_2026_08_15
+
+[디자인 기준]
+MAIN 030 / SUB 029 / SUB 027
+기능 전용 CSS는 pdf-text-image-extractor-tool.module.css에 국한. 전역 CSS/legacy sealed 변경 없음.
+
+[의존성]
+신규 dependency 없음. 기존 pdfjs-dist 5.4.54 재사용. package.json/package-lock.json 변경 없음.
+pdfjs-dist license: Apache-2.0 (lock metadata/static package evidence).
+
+[주작업장 이식 대상 구현파일]
+app/[locale]/pdf-text-image-extractor/page.tsx
+components/pdf-text-image-extractor-page.tsx
+components/pdf-text-image-extractor-tool.tsx
+components/pdf-text-image-extractor-tool.module.css
+lib/tool-035-pdf-extractor.ts
+
+[공통 변경 필요사항]
+필수 후보 없음. 공통 route/category/sitemap/robots/shared mobile runner aggregate 연결은 주작업장 통합 단계에서 현재 최신 구조에 맞춰 수행.
+
+[검수자료]
+- tests/tool-035-preflight.spec.ts
+- tests/tool-035-core.spec.ts
+- tests/tool-035-boundary.spec.ts
+- tests/tool-035-feature.spec.ts
+- tests/tool-035-regression.spec.ts
+- tests/tool-035-limit.spec.ts
+- scripts/tool-035/*
+- test-fixtures/tool-035/*
+- docs/tool-035/*
+
+[보조작업장 증거]
+- static validation 7 groups PASS / fail 0
+- TypeScript transpile syntax 10 files PASS / fail 0
+- protected global CSS + package files SHA256 unchanged
+- special fixture parse/render sanity PASS; 200/201 page count fixture verified
+
+[주작업장 통합검증]
+1. 설치된 node_modules/browser 환경에서 actual Playwright 실행
+2. preflight → core → boundary → feature → regression → limit 순서, checker self-check 후 진행
+3. actual PC/mobile/KO/EN/JA/light/dark render
+4. actual TXT UTF-8/download content, embedded image decode/width/height/pixel, ZIP structure/count/names
+5. production build, latest integrated regression/FINAL
+6. PDF category mobile real-device batch runner에 035 payload 병합/실행
+
+[FAIL 처리]
+PRODUCT / CHECKER(HARNESS) / ENVIRONMENT 먼저 분류. 정상 제품을 checker에 맞추기 위해 왜곡하지 않음. 공통파일 수정 필요 시 HANDOFF 후보로만 처리.
+
+[PACKAGE AUDIT]
+- top-level: fixlgs-toolbox
+- file count: 51
+- ZIP reopen: PASS
+- PACKAGE_MANIFEST exact match: PASS
+- node_modules/.next/cache/test-results/playwright-report/temp/backup/copy: 0
+- other TOOL 034/036 artifacts: 0
+- HANDOFF implementation files vs ZIP implementation files: 1:1 PASS

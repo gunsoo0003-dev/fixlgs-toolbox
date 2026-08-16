@@ -1,0 +1,172 @@
+{
+  "tool": "035",
+  "mode": "final",
+  "pass": 16,
+  "fail": 0,
+  "skip": 0,
+  "status": "RUNNING",
+  "updatedAt": "2026-08-16T01:54:16.026Z",
+  "activeStep": null,
+  "results": [
+    {
+      "name": "source",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.552Z",
+      "ended": "2026-08-16T01:52:32.635Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "content",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.636Z",
+      "ended": "2026-08-16T01:52:32.718Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "logic",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.719Z",
+      "ended": "2026-08-16T01:52:32.798Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "harness-static",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.799Z",
+      "ended": "2026-08-16T01:52:32.880Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "design-code",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.881Z",
+      "ended": "2026-08-16T01:52:32.961Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "package",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:32.962Z",
+      "ended": "2026-08-16T01:52:33.044Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "common-protection",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:33.045Z",
+      "ended": "2026-08-16T01:52:33.128Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "main-integration",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:33.130Z",
+      "ended": "2026-08-16T01:52:33.212Z",
+      "elapsedSec": 0,
+      "timeoutSec": null
+    },
+    {
+      "name": "typescript",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:33.213Z",
+      "ended": "2026-08-16T01:52:42.677Z",
+      "elapsedSec": 9,
+      "timeoutSec": null
+    },
+    {
+      "name": "production-build",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:42.678Z",
+      "ended": "2026-08-16T01:52:58.999Z",
+      "elapsedSec": 16,
+      "timeoutSec": null
+    },
+    {
+      "name": "preflight",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:52:59.001Z",
+      "ended": "2026-08-16T01:53:04.018Z",
+      "elapsedSec": 5,
+      "timeoutSec": 180
+    },
+    {
+      "name": "core",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:53:04.020Z",
+      "ended": "2026-08-16T01:53:21.692Z",
+      "elapsedSec": 18,
+      "timeoutSec": 300
+    },
+    {
+      "name": "boundary",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:53:21.693Z",
+      "ended": "2026-08-16T01:53:35.030Z",
+      "elapsedSec": 13,
+      "timeoutSec": 240
+    },
+    {
+      "name": "feature",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:53:35.031Z",
+      "ended": "2026-08-16T01:53:57.777Z",
+      "elapsedSec": 23,
+      "timeoutSec": 240
+    },
+    {
+      "name": "regression",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:53:57.778Z",
+      "ended": "2026-08-16T01:54:08.867Z",
+      "elapsedSec": 11,
+      "timeoutSec": 300
+    },
+    {
+      "name": "limit",
+      "status": 0,
+      "error": null,
+      "kind": "exit",
+      "started": "2026-08-16T01:54:08.868Z",
+      "ended": "2026-08-16T01:54:16.025Z",
+      "elapsedSec": 7,
+      "timeoutSec": 240
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+import fs from 'node:fs';
+let fail=0;const need=(ok,msg)=>{console.log(ok?'PASS':'FAIL',msg);if(!ok)fail++;};
+const helper=fs.readFileSync('lib/tool-035-pdf-extractor.ts','utf8');
+const tool=fs.readFileSync('components/pdf-text-image-extractor-tool.tsx','utf8');
+const page=fs.readFileSync('components/pdf-text-image-extractor-page.tsx','utf8');
+need(helper.includes('APPROVED_2026_08_15'),'service limit approval status finalized');
+for(const token of ['fileBytes: 50 * 1024 * 1024','pages: 200','extractedImagesWarning: 500','extractedImagesHardStop: 1000','pageConcurrency: 1']) need(helper.includes(token),`SERVICE_LIMITS ${token}`);
+need(tool.includes('nextFile.size > TOOL035_SERVICE_LIMITS.fileBytes'),'50MB upload validation wired');
+need(tool.includes('doc.numPages > TOOL035_SERVICE_LIMITS.pages'),'200-page validation wired');
+need(tool.includes('TOOL035_SERVICE_LIMITS.extractedImagesWarning')&&tool.includes('TOOL035_SERVICE_LIMITS.extractedImagesHardStop'),'image warning/hard-stop wired');
+need(page.includes('50MB')&&page.includes('200')&&page.includes('500')&&page.includes('1,000'),'FAQ/caution limit copy synchronized');
+need(helper.includes('parseTool035PageRange')&&helper.includes('OUT_OF_RANGE'),'page-range validator exists');
+need(helper.includes('safeTool035ZipPath')&&helper.includes('part !== ".."'),'ZIP traversal normalization exists');
+need(helper.includes('PAGE ${String(pageNumber).padStart'),'TXT page marker exists');
+need(tool.includes('getTextContent')&&tool.includes('textItemsToPlainText'),'native text path exists');
+need(tool.includes('getOperatorList')&&tool.includes('operatorKind'),'operator-image path exists');
+need(tool.includes('primePageImageResources(page)'),'page.render is limited to resource priming, not output extraction');
+
+need(tool.includes('PRIME_RENDER_TIMEOUT')&&tool.includes('renderTask?.cancel?.()'),'resource priming render is bounded and cancellable');
+need(tool.includes('!file ? <section')&&tool.includes('data-testid="tool035-error" onClick={(e) => e.stopPropagation()}'),'load/limit errors remain visible in dropzone state when no PDF is active');
+need(tool.includes('const [imageViewMode, setImageViewMode] = useState<ImageViewMode>("major")'),'major image mode defaults ON');
+need(tool.includes('useState<ExclusionFilterMode>("basic")'),'exclusion filter defaults to basic automatic filtering');
+need(tool.includes('exclusionFilter === "level1" ? 24')&&tool.includes('exclusionFilter === "level2" ? 48')&&tool.includes('exclusionFilter === "level3" ? 96'),'exclusion filter level thresholds are 24/48/96px');
+need(tool.includes('tool035-filter-${key}')&&tool.includes('["basic", t.filterBasic')&&tool.includes('["custom", t.filterCustom'),'exclusion filter exposes basic/level1/level2/level3/custom choices');
+need(tool.includes('exclusionFilter === "custom" ? <label')&&tool.includes('tool035-filter-custom-size'),'custom minimum-side input only appears in custom mode');
+need(tool.includes('function isMajorImage')&&tool.includes('image.sourceKind === "mask"'),'major-image classifier exists');
+need(tool.includes('stats.detected += 1')&&tool.includes('stats.failed += 1'),'image detected/decode-failure stats exist');
+need(tool.includes('IMAGE_OBJECT_TIMEOUT')&&tool.includes('timeoutMs = 1500')&&tool.includes('args[0], 250'),'image object async wait uses short resolve before bounded priming retry');
+need(tool.includes('store.get(id, done)')&&!tool.includes('const immediate = store?.get?.(id, done)'),'PDF.js PDFObjects callback return-null contract handled');
+need(tool.includes('isOffscreenCanvasSupported: false')&&tool.includes('isImageDecoderSupported: false'),'PDF.js extraction opens with bitmap-only worker paths disabled');
+need(tool.includes('ArrayBuffer.isView(data)')&&tool.includes('data instanceof ArrayBuffer'),'decoded pixel payload accepts ArrayBuffer and typed-array views');
+need(tool.includes('context.drawImage(value as CanvasImageSource'),'cross-realm bitmap/canvas fallback path exists');
+need(tool.includes('imageObjectsButFailed'),'detected-but-zero decode error exists');
+need(!tool.includes('hideDuplicates')&&!tool.includes('setHideDuplicates'),'duplicate toggle removed');
+need(tool.includes('const dedupedImages = useMemo')&&tool.includes('duplicateExcludedCount'),'duplicate removal is always-on before view filtering');
+need(tool.includes('fastImageFingerprint')&&tool.includes('image.hash'),'fast fingerprint dedup path exists');
+need(tool.includes('function isLikelyBlankTechnicalImage')&&tool.includes('hasTechnicalGeometry'),'blank/technical artifact classifier exists');
+need(tool.includes('image.sourceKind === "mask"')&&tool.includes('minSide <= 2'),'mask and line-like technical objects are auto excluded');
+need(tool.includes('canvasLooksBlankTechnical')&&tool.includes('ctx.drawImage(source, 0, 0, sample, sample)')&&tool.includes('const shouldPixelInspect = image.converted || byteDensity <= 0.025'),'PNG fallbacks are blank-checked before encoding; low-density JPEGs retain bounded sampling');
+need(tool.includes('whiteRatio >= 0.90')&&tool.includes('inkRatio <= 0.045')&&tool.includes('chromaRatio <= 0.02'),'large whitespace boxes with faint borders are auto excluded');
+need(tool.includes('statsOut.technicalExcluded += 1')&&tool.includes('URL.revokeObjectURL(image.url)'),'technical artifacts are removed before result storage');
+need(tool.includes('tool035-stat-technical')&&tool.includes('technicalHidden'),'technical exclusion count is visible in result summary');
+need(tool.includes('page?.cleanup?.()'),'page lifecycle cleanup exists');
+need(tool.includes('URL.revokeObjectURL'),'object URL cleanup exists');
+need(tool.includes('jobIdRef')&&tool.includes('abortRef'),'stale job/cancel state exists');
+process.exitCode=fail?1:0;
+need(tool.includes('PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false })'),'independent structural page-count validation exists');
+need(tool.includes('canonicalPageCountRef'),'canonical page-count fallback state exists');
+need(tool.includes('singlePdf.copyPages(sourcePdf, [pageNumber - 1])'),'page-count mismatch can process pages beyond PDF.js count');
+need(tool.includes('extractStructuralJpegImages'),'DCTDecode structural JPEG recovery path exists');
+need(tool.includes('new Blob([new Uint8Array(encoded)], { type: "image/jpeg" })')&&tool.includes('format: "jpg"')&&tool.includes('converted: false'),'DCTDecode JPEG original stream is preserved without PNG re-encode');
+need(tool.includes('useOriginalJpegs')&&tool.includes('skipXObjects'),'all-JPEG XObject pages skip duplicate PDF.js XObject decoding');
+
+need(tool.includes('buildStructuralImageIndex')&&tool.includes('structuralIndexRef'),'document-wide structural image index is built once and reused');
+need(tool.includes('structuralJpegCache')&&tool.includes('emittedStructuralRefs'),'document-wide JPEG resource cache prevents repeated stream extraction');
+need(tool.includes('emittedHashes')&&tool.includes('statsOut.duplicateExcluded += 1'),'cross-page duplicate hashes are discarded before result storage');
+need(tool.includes('if (technicalBlank) return { blob: null')&&tool.indexOf('technicalBlank') < tool.indexOf('canvasToPngBlob(canvas)'),'blank PNG fallbacks are rejected before PNG encoding');
+need(tool.includes('structuralDocRef.current ?? await PDFDocument.load'),'page-count fallback reuses the already-loaded structural PDF');
+need(page.includes('jpg-png-webp-image-converter')&&page.includes('JPG·PNG·WebP 이미지 변환기'),'related Tool 001 image format converter is linked');
+
+
+
