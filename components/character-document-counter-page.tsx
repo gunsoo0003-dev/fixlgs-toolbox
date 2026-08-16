@@ -35,7 +35,7 @@ export function CharacterDocumentCounterPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const url = `https://toolbox.fixlgs.com/${locale}/character-document-counter`;
   const related = [
-    { n:"037", slug:"text-whitespace-line-break-cleaner", name:locale === "ko" ? "텍스트 공백·줄바꿈 정리기" : locale === "ja" ? "テキスト空白・改行整理ツール" : "Text Whitespace & Line Break Cleaner" },
+    { n:"037", slug:"text-whitespace-linebreak-cleaner", name:locale === "ko" ? "텍스트 공백·줄바꿈 정리기" : locale === "ja" ? "テキスト空白・改行整理ツール" : "Text Whitespace & Line Break Cleaner" },
     { n:"038", slug:"text-case-sentence-converter", name:locale === "ko" ? "대소문자·문장 형식 변환기" : locale === "ja" ? "大文字・小文字・文形式変換ツール" : "Text Case & Sentence Converter" },
     { n:"042", slug:"text-find-replace", name:locale === "ko" ? "텍스트 찾기·바꾸기" : locale === "ja" ? "テキスト検索・置換" : "Text Find & Replace" },
   ];
@@ -56,7 +56,7 @@ export function CharacterDocumentCounterPage({ locale }: { locale: Locale }) {
     <section className="toolbox-tool-detail-body"><div>
       <CharacterDocumentCounterTool locale={locale}/>
 
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>037</span><h3>{related[0].name}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
+      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/${related[0].slug}`}><span>037</span><h3>{related[0].name}</h3><div className="toolbox-next-work-card-foot"><span>{t.available}</span><strong>↗</strong></div></Link></div></section>
       <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.slice(1).map((item)=><div key={item.n} className="toolbox-next-work-card is-disabled"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>)}</div></section>
     </div></section>
 

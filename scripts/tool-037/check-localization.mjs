@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+const tool=fs.readFileSync('components/text-whitespace-linebreak-cleaner-tool.tsx','utf8');const page=fs.readFileSync('components/text-whitespace-linebreak-cleaner-page.tsx','utf8');const route=fs.readFileSync('app/[locale]/text-whitespace-linebreak-cleaner/page.tsx','utf8');let fail=0;
+const checks=[['KO strings',tool.includes('연속 공백 제거')&&page.includes('텍스트 공백·줄바꿈 정리기')],['EN strings',tool.includes('Collapse repeated spaces')&&page.includes('Text Whitespace & Line Break Cleaner')],['JA strings',tool.includes('連続スペースを1つに整理')&&page.includes('テキスト空白・改行整理ツール')],['hreflang ko/en/ja',route.includes('languages:{ko:')&&route.includes('en:')&&route.includes('ja:')],['x-default',route.includes('"x-default"')],['absolute canonical',route.includes('https://toolbox.fixlgs.com/${l}/text-whitespace-linebreak-cleaner')]];
+for(const [label,ok] of checks){console.log(`[${ok?'PASS':'FAIL'}] ${label}`);if(!ok)fail++;}process.exitCode=fail?1:0;

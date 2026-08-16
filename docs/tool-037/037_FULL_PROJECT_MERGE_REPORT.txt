@@ -1,0 +1,34 @@
+FIXLGS TOOLBOX TOOL037 FULL PROJECT MERGE REPORT
+Date: 2026-08-16
+
+BASE
+- fixlgs-toolbox_필수파일_20260816_160952(4).zip
+- TOOL036 completed full project baseline
+
+OVERLAY
+- FIXLGS_TOOLBOX_037_메인통합_검수준비_20260816.zip
+- TOOL037 main-integration patch based on TOOL036 design/state contract
+
+MERGE POLICY
+- Preserve full TOOL036 archive members unless TOOL037 explicitly overlays them.
+- Overlay only TOOL037 new/modified files.
+- Do not normalize unrelated Unicode/mojibake paths.
+- Keep exactly one top-level root: fixlgs-toolbox
+
+TOOL037 INTEGRATION SCOPE
+- TOOL037 route/page/tool/CSS/logic
+- KO/EN/JA content
+- Text category LIVE card and 036/037/038 sequence
+- TOOL036 NEXT WORK -> TOOL037 live link
+- Sitemap entry
+- TOOL037 checker/static/final runner files and fixtures
+- package.json TOOL037 scripts only; no dependency replacement
+
+USER-SIDE FINAL GATES STILL REQUIRED
+- Windows PowerShell 5 project validation
+- TypeScript
+- production build
+- Desktop Chromium
+- Mobile Chromium
+- official TOOL037 FINAL
+- selective Git staging/push and LOCAL HEAD=origin/main confirmation

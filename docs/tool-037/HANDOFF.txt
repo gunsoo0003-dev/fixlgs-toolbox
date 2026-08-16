@@ -1,0 +1,50 @@
+TOOL 037 | 텍스트 공백·줄바꿈 정리기
+Category: E. 텍스트 도구
+Slug: text-whitespace-linebreak-cleaner
+Integration status: PRODUCT CODE / TOOL036 DESIGN CODE / STATIC SELF-CHECK / MAIN CONNECTION READY
+Protected baseline: 001~036
+Service limit carried from support handoff: 1,000,000 input characters
+
+IMPLEMENTED
+- Collapse repeated U+0020 spaces
+- Per-line leading/trailing horizontal whitespace cleanup
+- Remove U+0009 TAB
+- Remove blank lines
+- Normalize CRLF/LF/CR input and emit LF or CRLF
+- Editable cleaned result
+- Browser-local result copy
+- UTF-8 TXT save: cleaned-text.txt
+- Change summary
+- TXT/MD/CSV local file input and whole-workspace drag/drop
+- Safe replacement confirm/cancel
+- Complete reset
+- KO/EN/JA metadata, UI, FAQ JSON-LD
+
+DESIGN BASELINE - CORRECTED
+- TOOL036 is the sole actual design/state baseline for TOOL037.
+- The original support handoff's MAIN 034 / SUB 033 baseline is superseded for main integration.
+- TOOL036 local notice, active workspace, blue drag treatment, dropzone, textarea states, cards, pill buttons, spacing, mobile breakpoints and lower section hierarchy were applied.
+- TOOL037-specific output/summary/options are added inside that baseline without new global CSS selectors.
+
+CENTRAL INTEGRATION
+- lib/site.ts: TOOL037 LIVE card, locale URL, 2 available text tools
+- app/sitemap.ts: TOOL037 locale URLs
+- character-document-counter-page.tsx: 036 next-work -> 037 active link
+- category page existing text numbering contract verified: 036/037/038, 3 digits
+- package.json + playwright.tool037.config.ts + robust run-validation added
+
+STATIC RESULT
+- source contract: PASS
+- harness contract: PASS
+- TOOL036 design-code contract: PASS
+- protected CSS: PASS
+- KO/EN/JA + SEO contract: PASS
+- pure logic fixtures: PASS
+- main integration/numbering: PASS
+- TypeScript syntax transpile check on changed TS/TSX: PASS
+
+WINDOWS FINAL STILL REQUIRED
+- Run clean package-lock based install in the real Windows project.
+- Run TOOL037 integrated FINAL in Desktop/Mobile Chromium.
+- Classify any FAIL as PRODUCT/CHECKER/ENVIRONMENT before changes.
+- After final PASS: selective staging/Git, LOCAL HEAD=origin/main, git archive HEAD, then current-project tar.exe handoff ZIP.

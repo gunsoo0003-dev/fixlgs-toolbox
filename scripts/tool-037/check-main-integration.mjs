@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(p,'utf8');let fail=0;const must=(file,token,label)=>{const ok=fs.existsSync(file)&&read(file).includes(token);console.log(`[${ok?'PASS':'FAIL'}] ${label}`);if(!ok)fail++;};
+must('lib/site.ts','export const tool037Slug = "text-whitespace-linebreak-cleaner" as const;','site slug');
+must('lib/site.ts','export const tool037Titles','site titles');
+must('lib/site.ts','title: tool037Titles','text category card');
+must('lib/site.ts','index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` }','localized category route mapping');
+must('lib/site.ts','ko: "2개 사용 가능", en: "2 available", ja: "2件利用可能"','text category availability label');
+must('app/sitemap.ts','tool037Slug','sitemap import/entry');
+must('components/character-document-counter-page.tsx','text-whitespace-linebreak-cleaner','036 next-work link target');
+must('package.json','test:toolbox:037-final','package FINAL script');
+must('app/[locale]/text-whitespace-linebreak-cleaner/page.tsx','TextWhitespaceLinebreakCleanerPage','route page');
+const category=read('app/[locale]/category/[categorySlug]/page.tsx');const numbering=category.includes('categorySlug === "text" ? index + 36')&&category.includes('String(toolNumber).padStart(3, "0")');console.log(`[${numbering?'PASS':'FAIL'}] text category 036/037/038 numbering`);if(!numbering)fail++;
+process.exitCode=fail?1:0;

@@ -1,0 +1,36 @@
+TOOL037 MAIN INTEGRATION CHANGE MAP
+DATE=2026-08-16
+BASELINE=TOOL036 actual product code
+STATUS=STATIC SELF-CHECK PASS / WINDOWS FINAL REQUIRED
+
+PRODUCT
+- components/text-whitespace-linebreak-cleaner-tool.tsx
+- components/text-whitespace-linebreak-cleaner-tool.module.css
+- components/text-whitespace-linebreak-cleaner-page.tsx
+- app/[locale]/text-whitespace-linebreak-cleaner/page.tsx
+- lib/tool-037-text-cleaner.ts
+
+CENTRAL INTEGRATION
+- lib/site.ts
+- app/sitemap.ts
+- components/character-document-counter-page.tsx
+- package.json
+
+CHECKER / RUNNER
+- playwright.tool037.config.ts
+- scripts/tool-037/*
+- tests/helpers/tool-037.ts
+- tests/tool-037-*.spec.ts
+- tests/fixtures/tool-037/*
+
+DOCUMENTATION
+- docs/tool-037/*
+
+KEY CONTRACTS
+- TOOL036 actual visual/state structure is the design baseline.
+- TOOL037 fixed cleanup features are retained without expanding scope.
+- Text category numbering is 036 / 037 / 038.
+- Upload/file replacement/complete reset/whole-workspace drag follow TOOL036.
+- KO/EN/JA routes, metadata and sitemap connection are included.
+- Static self-check and changed TS/TSX syntax transpile pass.
+- Next.js build and Playwright Desktop/Mobile runtime are NOT claimed PASS here; Windows integrated FINAL remains required.

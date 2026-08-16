@@ -1,0 +1,19 @@
+TOOL037 STATIC VALIDATION
+DATE=2026-08-16
+BASELINE=TOOL036 actual code
+STATUS=PASS
+
+PASS source contract
+PASS harness contract
+PASS TOOL036 design-code comparison
+PASS protected CSS no-tool037-selector
+PASS KO/EN/JA + canonical/hreflang/x-default
+PASS normalize pipeline fixtures 10/10
+PASS site category + sitemap + 036->037 link
+PASS text category numbering 036/037/038
+PASS changed TypeScript/TSX syntax transpile
+
+NOT EXECUTED IN THIS CONTAINER
+- Next.js production build (local Next dependency unavailable)
+- Playwright Desktop/Mobile Chromium runtime (local Playwright dependency unavailable)
+These remain Windows integrated FINAL gates, not inferred PASS.
