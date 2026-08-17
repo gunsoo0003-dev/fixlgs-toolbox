@@ -1,0 +1,54 @@
+FIXLGS TOOLBOX HANDOFF
+TOOL 040 | 구분자·목록 변환기 | Delimiter & List Converter
+Category: E. 텍스트 도구
+Slug: delimiter-list-converter
+Expected URL: /{ko|en|ja}/delimiter-list-converter
+Status: PRODUCT/CODE INTEGRATED + SOURCE SELF-CHECK PASS + MAIN INTEGRATION PASS + STATIC PASS / FINAL NOT RUN
+
+[LATEST DESIGN BASELINE]
+- PRIMARY: TOOL039 actual TSX/DOM/CSS/event/state/mobile.
+- CROSS CHECK: TOOL037/038 Text direct/file input, single activeWorkspace drag, complete reset, action/result.
+- Old auxiliary assumption MAIN=036 is superseded by the current TOOL039 handoff/control document.
+
+[IMPLEMENTED FEATURES]
+1. newline(CRLF/LF/CR) <-> comma
+2. TAB conversion
+3. source/target custom literal delimiter, regex-meta and multi-char safe
+4. none/single/double quote wrapper + matching quote doubling
+5. none/number/bullet/hyphen prefix
+6. trim ON/OFF + empty item removal ON/OFF
+7. conversion always starts from sourceText, not prior result
+8. TXT/MD/CSV direct file input + single activeWorkspace drag
+9. file replacement confirmation/cancel + complete reset
+10. result-only copy + UTF-8 TXT download
+11. KO/EN/JA UI/SEO/FAQ/How-to/notes
+12. local browser processing only
+
+[CENTRAL INTEGRATION]
+- lib/site.ts: TOOL040 slug/title/description + text category LIVE card.
+- app/sitemap.ts: TOOL040 locale routes.
+- package.json: TOOL040 source/main/static/partial/final scripts.
+- related tool 039 links to actual LIVE route; 041/042 stay coming-soon.
+
+[CHECKER ALIGNMENT]
+- selector/state/action/file/drag/reset/copy/download/result contracts re-inventoried after product integration.
+- stale helper assumptions corrected before FINAL.
+- source self-check: PASS.
+- main integration: PASS.
+- static functional fixtures: PASS.
+- runner inherits TOOL039 bounded timeout + Desktop ZIP evidence contract.
+
+[SERVICE LIMIT APPROVAL GATE]
+Candidate only, not final:
+- input: 300,000 chars
+- custom delimiter: 50 chars
+- final items: 50,000
+Final approval is required before limit-only and FINAL.
+
+[ENVIRONMENT]
+This container has no project node_modules and npm ci could not be completed here, so TypeScript/build/Playwright execution is classified ENVIRONMENT, not PRODUCT.
+Windows main workspace must run npm ci, then the provided TOOL040 validation runner. All long results are written to Desktop ZIP by the runner.
+
+[FINAL STATUS]
+Do not mark TOOL040 complete yet.
+Required next gate: user service-limit approval -> synchronize approved values -> source self-check -> FULL FINAL once.

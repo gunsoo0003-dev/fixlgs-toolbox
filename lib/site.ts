@@ -246,6 +246,8 @@ export const tool038Slug = "case-sentence-format-converter" as const;
 
 export const tool039Slug = "list-sorter-duplicate-remover" as const;
 
+export const tool040Slug = "delimiter-list-converter" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -308,6 +310,8 @@ export const tool038Titles: Record<Locale, string> = { ko: "대소문자·문장
 export const tool038Descriptions: Record<Locale, string> = { ko: "대문자·소문자·제목형·문장형·첫 글자 대문자를 원문 구조를 유지한 채 브라우저에서 변환하세요.", en: "Convert text to uppercase, lowercase, title case, sentence case, or first-letter uppercase while preserving its structure.", ja: "大文字・小文字・単語先頭大文字・文頭大文字・最初の文字だけ大文字を元の構造を保って変換します。" };
 export const tool039Titles: Record<Locale, string> = { ko: "목록 정렬·중복 제거기", en: "List Sorter & Duplicate Remover", ja: "一覧並べ替え・重複削除ツール" };
 export const tool039Descriptions: Record<Locale, string> = { ko: "목록의 중복 줄을 제거하고 가나다·알파벳·숫자순, 역순, 무작위 섞기를 브라우저에서 바로 처리하세요.", en: "Remove duplicate lines, sort lists alphabetically or numerically, reverse order, and shuffle locally in your browser.", ja: "重複行を削除し、五十音・アルファベット・数値順、逆順、シャッフルをブラウザ内で処理します。" };
+export const tool040Titles: Record<Locale, string> = { ko: "구분자·목록 변환기", en: "Delimiter & List Converter", ja: "区切り文字・リスト変換ツール" };
+export const tool040Descriptions: Record<Locale, string> = { ko: "줄바꿈·쉼표·탭·사용자 구분자를 서로 바꾸고 따옴표와 번호·글머리표를 추가하세요.", en: "Convert new lines, commas, tabs, and custom delimiters, then add quotes, numbering, or bullets.", ja: "改行・カンマ・タブ・カスタム区切り文字を変換し、引用符や番号・箇条書きを追加できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -787,6 +791,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool040Titles,
+      description: tool040Descriptions,
+      href: `/${"ko"}/${tool040Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -924,7 +935,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "text") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool036Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool038Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool039Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool036Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool038Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool039Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool040Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

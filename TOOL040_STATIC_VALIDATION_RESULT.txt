@@ -1,0 +1,40 @@
+
+=== source ===
+TOOL040 SOURCE SELF-CHECK: PASS
+ERRORS=0 WARNINGS=0
+SENTINEL=TOOL040_SOURCE_SELF_CHECK_PASS
+
+=== common-protection ===
+[PASS] protected global unchanged by TOOL040 marker app/globals.css
+[PASS] protected global unchanged by TOOL040 marker styles/global-base.css
+[PASS] protected global unchanged by TOOL040 marker styles/toolbox-common.css
+[PASS] protected global unchanged by TOOL040 marker styles/toolbox-detail-common.css
+[PASS] protected global unchanged by TOOL040 marker styles/theme.css
+[PASS] protected global unchanged by TOOL040 marker styles/toolbox-compat.css
+[PASS] protected global unchanged by TOOL040 marker styles/legacy-site-sealed.css
+[PASS] protected global unchanged by TOOL040 marker styles/legacy-tools-sealed.css
+[PASS] site intentional integration
+[PASS] sitemap intentional integration
+
+=== functional-fixtures ===
+[PASS] newline-comma exact output | got="a, b, c, d"
+[PASS] comma-newline-empty-off exact output | got="a\nb\n\nc\n"
+[PASS] tab-pipe exact output | got="A|B|C"
+[PASS] custom-regex-meta exact output | got="A, B, C"
+[PASS] custom-multichar exact output | got="one / two / three"
+[PASS] double-quote-escape exact output | got="\"a\"\"b\", \"c\""
+[PASS] single-quote-escape exact output | got="'O''Reilly', 'SQL'"
+[PASS] number-ko-ja exact output | got="1. 한국어\n2. 日本語"
+[PASS] bullet-unicode exact output | got="• 가족 👨‍👩‍👧‍👦\n• NBSP 유지"
+[PASS] newline parser CRLF/LF/CR
+[PASS] literal custom []
+[PASS] literal custom backslash
+[PASS] source text not mutated
+(node:1517) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1517) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/work040/lib/tool-040-delimiter-list.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/work040/package.json.
+
+TOOL040 STATIC PASS | failed_steps=0
+EXIT=0

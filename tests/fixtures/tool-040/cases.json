@@ -1,0 +1,11 @@
+[
+  {"id":"newline-comma","input":"a\r\nb\rc\nd","options":{"sourceKind":"newline","targetKind":"comma","trimItems":true,"removeEmpty":true,"quoteMode":"none","listMode":"none"},"expected":"a, b, c, d"},
+  {"id":"comma-newline-empty-off","input":"a, b,, c,","options":{"sourceKind":"comma","targetKind":"newline","trimItems":true,"removeEmpty":false,"quoteMode":"none","listMode":"none"},"expected":"a\nb\n\nc\n"},
+  {"id":"tab-pipe","input":"A\tB\tC","options":{"sourceKind":"tab","targetKind":"pipe","trimItems":true,"removeEmpty":true,"quoteMode":"none","listMode":"none"},"expected":"A|B|C"},
+  {"id":"custom-regex-meta","input":"A.*B.*C","options":{"sourceKind":"custom","sourceCustom":".*","targetKind":"comma","trimItems":true,"removeEmpty":true,"quoteMode":"none","listMode":"none"},"expected":"A, B, C"},
+  {"id":"custom-multichar","input":"one<->two<->three","options":{"sourceKind":"custom","sourceCustom":"<->","targetKind":"custom","targetCustom":" / ","trimItems":true,"removeEmpty":true,"quoteMode":"none","listMode":"none"},"expected":"one / two / three"},
+  {"id":"double-quote-escape","input":"a\"b\nc","options":{"sourceKind":"newline","targetKind":"comma","trimItems":true,"removeEmpty":true,"quoteMode":"double","listMode":"none"},"expected":"\"a\"\"b\", \"c\""},
+  {"id":"single-quote-escape","input":"O'Reilly\nSQL","options":{"sourceKind":"newline","targetKind":"comma","trimItems":true,"removeEmpty":true,"quoteMode":"single","listMode":"none"},"expected":"'O''Reilly', 'SQL'"},
+  {"id":"number-ko-ja","input":"한국어\n日本語","options":{"sourceKind":"newline","targetKind":"newline","trimItems":true,"removeEmpty":true,"quoteMode":"none","listMode":"number"},"expected":"1. 한국어\n2. 日本語"},
+  {"id":"bullet-unicode","input":"가족 👨‍👩‍👧‍👦\nNBSP 유지","options":{"sourceKind":"newline","targetKind":"newline","trimItems":false,"removeEmpty":true,"quoteMode":"none","listMode":"bullet"},"expected":"• 가족 👨‍👩‍👧‍👦\n• NBSP 유지"}
+]
