@@ -41,6 +41,7 @@
   }
 }
 
+
 /* USE CASES: approved 019/020 editorial row treatment, now reusable. */
 .toolbox-tool-use-cases--editorial .toolbox-tool-format-grid article{
   grid-template-columns:70px minmax(280px,.78fr) minmax(0,1.22fr);

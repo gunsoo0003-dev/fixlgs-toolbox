@@ -102,7 +102,7 @@ export const categories: Category[] = [
       en: "Date gaps, countdowns, time math, and world time.",
       ja: "日付差、D-day、時間計算、世界時間。",
     },
-    toolCountLabel: { ko: "제작 예정", en: "Planned", ja: "制作予定" },
+    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -253,6 +253,7 @@ export const tool041Slug = "text-extractor" as const;
 export const tool042Slug = "text-find-replace" as const;
 export const tool043Slug = "text-diff-compare" as const;
 export const tool044Slug = "keyword-frequency-duplicate-analyzer" as const;
+export const tool045Slug = "date-difference-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -326,6 +327,8 @@ export const tool043Titles: Record<Locale, string> = { ko: "두 텍스트 비교
 export const tool043Descriptions: Record<Locale, string> = { ko: "두 텍스트의 추가·삭제·변경을 줄 단위와 단어 단위로 비교하고 결과 보고서를 복사하세요.", en: "Compare two texts by line and word, classify additions, removals, and changes, and copy a diff report.", ja: "2つのテキストの追加・削除・変更を行単位・単語単位で比較し、差分レポートをコピーできます。" };
 export const tool044Titles: Record<Locale, string> = { ko: "키워드 빈도·중복 분석기", en: "Keyword Frequency & Duplicate Analyzer", ja: "キーワード頻度・重複分析ツール" };
 export const tool044Descriptions: Record<Locale, string> = { ko: "텍스트의 단어 빈도·키워드 밀도·상위 키워드와 반복·중복 문장을 브라우저에서 분석하세요.", en: "Analyze word frequency, keyword density, top keywords, and repeated or duplicate sentences locally in your browser.", ja: "文章の単語頻度・キーワード密度・上位キーワード・反復文と重複文をブラウザ内で分析します。" };
+export const tool045Titles: Record<Locale, string> = { ko: "날짜 차이 계산기", en: "Date Difference Calculator", ja: "日付差計算ツール" };
+export const tool045Descriptions: Record<Locale, string> = { ko: "두 날짜 사이의 정확한 일수와 달력 기간을 계산하고 시작일 포함 여부, 평일·주말 수를 확인하세요.", en: "Calculate exact days and calendar duration between two dates, with optional start-date inclusion plus weekday and weekend counts.", ja: "2つの日付の日数差とカレンダー期間を計算し、開始日を含める設定や平日・週末の日数を確認できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -841,6 +844,15 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
   ],
+  "date-time": [
+    {
+      title: tool045Titles,
+      description: tool045Descriptions,
+      href: `/${"ko"}/${tool045Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+  ],
   "image-edit": [
     {
       title: tool008Titles,
@@ -978,6 +990,10 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
 
   if (categorySlug === "text") {
     return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool036Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool038Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool039Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool040Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool041Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool042Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool043Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool044Slug}` } : item);
+  }
+
+  if (categorySlug === "date-time") {
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {
