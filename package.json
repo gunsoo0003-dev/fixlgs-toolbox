@@ -424,7 +424,18 @@
     "test:toolbox:040-boundary": "playwright test -c playwright.tool040.config.ts tests/tool-040-boundary.spec.ts",
     "test:toolbox:040-feature": "playwright test -c playwright.tool040.config.ts tests/tool-040-feature.spec.ts",
     "test:toolbox:040-regression": "playwright test -c playwright.tool040.config.ts tests/tool-040-regression.spec.ts",
-    "test:toolbox:040-limit": "playwright test -c playwright.tool040.config.ts tests/tool-040-limit.spec.ts"
+    "test:toolbox:040-limit": "playwright test -c playwright.tool040.config.ts tests/tool-040-limit.spec.ts",
+    "tool041:static": "node scripts/tool-041/run-static-validation.mjs",
+    "tool041:final": "node scripts/tool-041/run-validation.mjs final",
+    "check:tool041-static": "node scripts/tool-041/run-static-validation.mjs",
+    "check:tool041-harness": "node scripts/tool-041/check-harness.mjs",
+    "test:toolbox:041-preflight": "node scripts/tool-041/run-validation.mjs preflight",
+    "test:toolbox:041-core-only": "node scripts/tool-041/run-validation.mjs core-only",
+    "test:toolbox:041-boundary-only": "node scripts/tool-041/run-validation.mjs boundary-only",
+    "test:toolbox:041-feature-only": "node scripts/tool-041/run-validation.mjs feature-only",
+    "test:toolbox:041-regression-only": "node scripts/tool-041/run-validation.mjs regression-only",
+    "test:toolbox:041-limit-only": "node scripts/tool-041/run-validation.mjs limit-only",
+    "test:toolbox:041": "node scripts/tool-041/run-validation.mjs final"
   },
   "dependencies": {
     "next": "16.2.12",

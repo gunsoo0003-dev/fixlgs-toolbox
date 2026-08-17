@@ -1,0 +1,2 @@
+import { test, expect } from '@playwright/test';
+for(const locale of ['ko','en','ja'] as const){test(`TOOL041 ${locale} no horizontal overflow`,async({page})=>{await page.goto(`/${locale}/text-extractor`);await expect(page.getByTestId('tool041-root')).toBeVisible();const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);expect(overflow).toBeLessThanOrEqual(1);});}

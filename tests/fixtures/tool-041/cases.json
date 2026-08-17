@@ -1,0 +1,119 @@
+{
+  "mixed-basic": {
+    "input": "a@fixlgs.com, b.test+1@example.co.kr. https://fixlgs.com/a?x=1#top). 010-1234-5678 / +82 10 1234 5678 #FIXLGS #웹도구 #日本語 12345 12.5 -3 1,234.50 100% abc 가나다 élan",
+    "expected": {
+      "emails": [
+        "a@fixlgs.com",
+        "b.test+1@example.co.kr"
+      ],
+      "urls": [
+        "https://fixlgs.com/a?x=1#top"
+      ],
+      "phones": [
+        "010-1234-5678",
+        "+82 10 1234 5678"
+      ],
+      "hashtags": [
+        "#FIXLGS",
+        "#웹도구",
+        "#日本語"
+      ],
+      "numbers": [
+        "1",
+        "1",
+        "010",
+        "1234",
+        "5678",
+        "+82",
+        "10",
+        "1234",
+        "5678",
+        "12345",
+        "12.5",
+        "-3",
+        "1,234.50",
+        "100%"
+      ],
+      "korean": [
+        "웹도구",
+        "가나다"
+      ],
+      "english": [
+        "a",
+        "fixlgs",
+        "com",
+        "b",
+        "test",
+        "example",
+        "co",
+        "kr",
+        "https",
+        "fixlgs",
+        "com",
+        "a",
+        "x",
+        "top",
+        "FIXLGS",
+        "abc",
+        "élan"
+      ]
+    }
+  },
+  "email-edge": {
+    "input": "<b.test+1@sub.example-domain.co.kr>, admin@example.com.",
+    "expected": [
+      "b.test+1@sub.example-domain.co.kr",
+      "admin@example.com"
+    ]
+  },
+  "url-edge": {
+    "input": "See https://example.com:8443/a?q=1#x), then www.example.com/test,.",
+    "expected": [
+      "https://example.com:8443/a?q=1#x",
+      "www.example.com/test"
+    ]
+  },
+  "phone-ko": {
+    "input": "010-1234-5678 / 02-123-4567 / 031-123-4567 / +82 10 1234 5678 / (02) 123-4567",
+    "expected": [
+      "010-1234-5678",
+      "02-123-4567",
+      "031-123-4567",
+      "+82 10 1234 5678",
+      "(02) 123-4567"
+    ]
+  },
+  "hashtag-unicode": {
+    "input": "#한글 #English_1 #日本語 #tag-ignored #",
+    "expected": [
+      "#한글",
+      "#English_1",
+      "#日本語",
+      "#tag"
+    ]
+  },
+  "number-edge": {
+    "input": "-3 12.5 1,234.50 100% 010-1234-5678",
+    "expected": [
+      "-3",
+      "12.5",
+      "1,234.50",
+      "100%",
+      "010",
+      "1234",
+      "5678"
+    ]
+  },
+  "unicode": {
+    "input": "😀 ZWJ 👩‍💻 NBSP CJK 日本語",
+    "expected": {
+      "hashtags": [],
+      "korean": [],
+      "english": [
+        "ZWJ",
+        "NBSP",
+        "CJK"
+      ]
+    }
+  }
+}
