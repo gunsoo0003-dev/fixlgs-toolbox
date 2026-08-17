@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {analyzeTool044,normalizeSentenceForDuplicate,segmentWords,validateTool044,TOOL044_SERVICE_LIMITS} from '../../lib/tool-044-keyword-analyzer.ts';
+let pass=0; const ok=(name,fn)=>{fn();pass++;console.log('PASS',name)};
+ok('EN exact',()=>{const r=analyzeTool044('apple banana apple','en');assert.equal(r.totalWords,3);assert.equal(r.keywords[0].keyword,'apple');assert.equal(r.keywords[0].count,2);assert.equal(r.keywords[0].density.toFixed(2),'66.67')});
+ok('KO exact',()=>{const r=analyzeTool044('사과 배 사과','ko');assert.equal(r.totalWords,3);assert.equal(r.keywords[0].count,2)});
+ok('JA sentence duplicate',()=>{const r=analyzeTool044('猫が好きです。犬も好きです。猫が好きです。','ja');assert.equal(r.sentenceCount,3);assert.equal(r.duplicateSentenceGroups,1);assert.equal(r.duplicates[0].count,2)});
+ok('case insensitive',()=>{const r=analyzeTool044('Apple apple APPLE','en');assert.equal(r.uniqueWords,1);assert.equal(r.keywords[0].count,3)});
+ok('normalized whitespace duplicate',()=>{const r=analyzeTool044('Hello   world. Hello world.','en');assert.equal(r.duplicateSentenceGroups,1)});
+ok('punctuation only zero',()=>{const r=analyzeTool044('... !!!','en');assert.equal(r.totalWords,0);assert.equal(r.keywords.length,0)});
+ok('emoji excluded',()=>{const r=analyzeTool044('사과🙂사과','ko');assert.equal(r.totalWords,2);assert.equal(r.keywords[0].count,2)});
+ok('frequency invariant',()=>{const r=analyzeTool044('a b a c c c','en');assert.equal(r.keywords.reduce((n,x)=>n+x.count,0),r.totalWords)});
+ok('density range/formula',()=>{const r=analyzeTool044('a b a c','en');for(const x of r.keywords){assert.ok(x.density>=0&&x.density<=100);assert.equal(x.density,x.count/r.totalWords*100)}});
+ok('tie break first appearance',()=>{const r=analyzeTool044('beta alpha beta alpha','en');assert.equal(r.keywords[0].keyword,'beta');assert.equal(r.keywords[1].keyword,'alpha')});
+ok('normalization deterministic',()=>{assert.equal(normalizeSentenceForDuplicate('  Hello   WORLD. ','en'),'hello world.')});
+ok('numeric token included',()=>{assert.equal(segmentWords('2026 test','en').length,2)});
+ok('character boundary accepted',()=>{assert.equal(validateTool044('a'.repeat(TOOL044_SERVICE_LIMITS.maxCharacters),'en').some(x=>x.code==='CHARACTER_LIMIT'),false)});
+ok('character over rejected',()=>{assert.equal(validateTool044('a'.repeat(TOOL044_SERVICE_LIMITS.maxCharacters+1),'en')[0].code,'CHARACTER_LIMIT')});
+console.log(`TOOL044 LOGIC PASS=${pass} FAIL=0`);

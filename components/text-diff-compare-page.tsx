@@ -12,6 +12,30 @@ ja:{back:"テキストツール",title:"2つのテキスト比較ツール",desc
 
 export function TextDiffComparePage({locale}:{locale:Locale}){
  const t=copy[locale]; const faq=t.faqs;
+ const expertTitle=locale==="ko"?"두 텍스트의 차이를 정확히 읽는 실전 기준":locale==="ja"?"2つのテキスト差分を正確に読む実践基準":"Practical standards for reading text differences accurately";
+ const expertLead=locale==="ko"?"줄 단위 구조와 변경 블록 내부의 단어 차이를 분리해서 보고, 공백·구두점·Unicode 원문을 그대로 보존해야 비교 결과를 정확히 해석할 수 있습니다.":locale==="ja"?"行単位の構造と変更ブロック内の単語差分を分け、空白・句読点・Unicode原文を保持して比較結果を読みます。":"Separate line-level structure from word-level edits while preserving whitespace, punctuation, and Unicode source text for reliable comparison.";
+ const expert=locale==="ko"?[
+  ["줄 비교는 문서 구조를 먼저 보여줍니다","추가·삭제·동일 줄을 먼저 분류하면 긴 문서에서 어느 구간이 바뀌었는지 빠르게 찾을 수 있습니다. 단어 차이는 변경 블록 안에서만 추가 계산합니다."],
+  ["변경은 삭제와 추가의 관계로 표현됩니다","같은 위치에서 인접한 삭제 블록과 추가 블록을 하나의 변경으로 묶어 보여주지만 내부 원시 상태는 삭제와 추가로 보존해 결과를 재구성할 수 있게 합니다."],
+  ["공백과 빈 줄도 실제 차이입니다","기본 비교는 자동 공백 정리나 Unicode normalization을 하지 않습니다. 줄 끝 공백·빈 줄·구두점이 실제 문서에서 의미가 있다면 그대로 차이로 표시됩니다."],
+  ["단어 비교는 원문 재구성이 가능해야 합니다","한글·영문·일본어·emoji가 섞인 변경에서도 토큰 표시 때문에 원문 문자 순서가 깨지지 않아야 합니다. 색상 없이도 추가와 삭제 상태를 읽을 수 있어야 합니다."],
+  ["요약 숫자와 실제 블록을 함께 확인합니다","추가·삭제·변경 건수는 빠른 개요용입니다. 최종 판단은 줄 번호와 실제 변경 블록을 함께 확인해야 문장 이동이나 큰 블록 교체를 오해하지 않습니다."],
+  ["비교 원문과 보고서는 브라우저에만 남습니다","A/B 원문과 생성된 plain-text diff 보고서는 외부 서버로 보내지지 않습니다. 민감한 문서를 비교할 때도 현재 브라우저 메모리에서 처리됩니다."]
+ ]:locale==="ja"?[
+  ["行比較で文書構造を先に確認します","追加・削除・同一行を先に分類し、単語差分は変更ブロック内だけで計算します。"],
+  ["変更は削除と追加の関係として扱います","同じ位置の隣接する削除・追加を変更としてまとめつつ、内部状態は保持します。"],
+  ["空白や空行も実際の差分です","自動的な空白整理やUnicode正規化を行わず、行末スペースや句読点もそのまま比較します。"],
+  ["単語差分でも原文再構成を保ちます","日本語・韓国語・英語・emojiが混在しても元の文字順を壊さず差分を表示します。"],
+  ["集計値と実際のブロックを一緒に確認します","追加・削除・変更の数だけでなく行番号と差分ブロックを見て最終判断します。"],
+  ["原文とレポートはブラウザ内で処理します","A/B原文とplain-text差分レポートは外部サーバーへ送信しません。"]
+ ]:[
+  ["Line comparison reveals document structure first","Classifying added, removed, and unchanged lines makes large edits easier to locate. Word detail is calculated only inside changed blocks."],
+  ["A change is represented by related remove/add blocks","Adjacent removal and addition blocks at the same position are grouped as a change while the underlying raw states remain available for reconstruction."],
+  ["Whitespace and blank lines are real differences","The default comparison does not normalize whitespace or Unicode automatically, so trailing spaces, blank lines, and punctuation can remain visible differences."],
+  ["Word detail must preserve source reconstruction","Mixed Korean, English, Japanese, punctuation, and emoji should retain their original order so tokenization never corrupts the displayed source."],
+  ["Read summary counts together with actual blocks","Added, removed, and changed totals are an overview. Use line references and the actual blocks before deciding what materially changed."],
+  ["Source text and reports stay in the browser","Both source versions and the generated plain-text diff report are processed in browser memory and are not sent to an external server."]
+ ] as const;
  return <ToolboxSubpageShell locale={locale} appName={t.title}>
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://toolbox.fixlgs.com/${locale}/text-diff-compare`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
   <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
@@ -21,11 +45,12 @@ export function TextDiffComparePage({locale}:{locale:Locale}){
   </section>
   <section className="toolbox-tool-detail-body"><div>
    <TextDiffCompareTool locale={locale}/>
-   <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>044</span><h3>{locale==="ko"?"키워드 빈도·중복 분석기":locale==="ja"?"キーワード頻度・重複分析ツール":"Keyword Frequency & Duplicate Analyzer"}</h3><div className="toolbox-next-work-card-foot"><span>Coming soon</span><strong>·</strong></div></div></div></section>
+   <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/keyword-frequency-duplicate-analyzer`}><span>044</span><h3>{locale==="ko"?"키워드 빈도·중복 분석기":locale==="ja"?"キーワード頻度・重複分析ツール":"Keyword Frequency & Duplicate Analyzer"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
    <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/text-find-replace`}><span>042</span><h3>{locale==="ko"?"텍스트 찾기·바꾸기":locale==="ja"?"テキスト検索・置換":"Text Find & Replace"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link><Link className="toolbox-next-work-card" href={`/${locale}/character-document-counter`}><span>036</span><h3>{locale==="ko"?"글자 수·문서 통계 계산기":locale==="ja"?"文字数・文書統計カウンター":"Character & Document Statistics"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
   </div></section>
   <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,"0")}</span><p>{x}</p></li>)}</ol></section>
-  <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>043</h2></div><ul className="toolbox-tool-info-band-list">{t.notes.map(x=><li key={x}>{x}</li>)}</ul></section>
+  <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>EXPERT POST</p><h2>{expertTitle}</h2><span>{expertLead}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{expert.map(([title,description])=><article key={title}><h4>{title}</h4><p>{description}</p></article>)}</div></div></section>
+  <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{locale==="ko"?"주의사항":locale==="ja"?"注意事項":"Important notes"}</h2></div><ul className="toolbox-tool-info-band-list">{t.notes.map(x=><li key={x}>{x}</li>)}</ul></section>
   <section className="toolbox-tool-faq"><div className="toolbox-tool-guide-head"><p>FAQ</p><h2>{t.faq}</h2></div><ToolboxFaqList items={faq.map(([q,a]):readonly[string,string]=>[q,a])} initialCount={5} moreLabel={locale==="ko"?"FAQ 더보기":locale==="ja"?"FAQをもっと見る":"Show more FAQs"} collapseLabel={locale==="ko"?"FAQ 접기":locale==="ja"?"FAQを閉じる":"Collapse FAQs"} className="toolbox-tool-faq-list"/></section>
  </ToolboxSubpageShell>;
 }

@@ -13,6 +13,30 @@ const copy={
 export function TextFindReplacePage({locale}:{locale:Locale}){
   const t=copy[locale];
   const faq=t.faqs;
+  const expertTitle=locale==="ko"?"찾기·바꾸기를 안전하게 사용하는 실전 기준":locale==="ja"?"検索・置換を安全に使う実践基準":"Practical standards for safe find and replace";
+  const expertLead=locale==="ko"?"원문 기준 동시 치환, 겹치는 검색어 우선순위, 대소문자 정책과 결과 한도를 이해하면 대량 치환에서도 예상하지 못한 연쇄 변경을 줄일 수 있습니다.":locale==="ja"?"原文基準の同時置換、重複する検索語の優先順位、大文字小文字の扱いと結果上限を理解すると、意図しない連鎖置換を防げます。":"Understand source-based simultaneous replacement, overlapping-term priority, case policy, and output limits to avoid unintended chained edits.";
+  const expert=locale==="ko"?[
+    ["원문 기준으로 한 번만 치환합니다","042는 첫 번째 치환 결과를 다시 검색하지 않습니다. 모든 일치 후보를 원문에서 먼저 계산한 뒤 한 번에 적용하므로 규칙끼리 연쇄적으로 결과를 바꾸지 않습니다."],
+    ["겹치는 검색어는 우선순위가 중요합니다","같은 위치에 여러 검색어가 겹치면 긴 검색어를 먼저 확정하고 길이가 같으면 앞에 등록한 규칙을 우선합니다. 규칙 순서를 바꾸면 같은 길이의 충돌 결과가 달라질 수 있습니다."],
+    ["대소문자 구분은 영문 비교 방식입니다","대소문자 무시는 영문 case-folding에 영향을 주며 한글·일본어처럼 대소문자가 없는 문자는 그대로 비교합니다. 동일 검색어 중복 판정도 같은 정책을 사용합니다."],
+    ["literal 검색이라 특수문자를 그대로 찾습니다","점, 별표, 대괄호 같은 문자는 정규식 기호가 아니라 실제 문자로 처리됩니다. 정규식 패턴이 필요한 작업과 일반 문자열 일괄치환을 구분해야 합니다."],
+    ["원문과 결과를 따로 보존합니다","결과가 만들어져도 원문 입력을 덮어쓰지 않습니다. 변경 횟수와 규칙별 결과를 확인한 뒤 복사해야 대량 치환에서 잘못된 규칙을 발견하기 쉽습니다."],
+    ["대량 치환은 한도와 결과 크기를 함께 봅니다","입력 글자수뿐 아니라 규칙 수, find·replacement 길이, 최종 결과 크기에 각각 한도가 있습니다. 긴 replacement를 여러 위치에 적용하면 출력이 입력보다 크게 늘어날 수 있습니다."]
+  ]:locale==="ja"?[
+    ["置換は原文基準で一度だけ行います","最初の置換結果を再検索せず、原文からすべての一致候補を計算して一度に適用するため連鎖置換を防ぎます。"],
+    ["重なる検索語には優先順位があります","同じ位置で候補が重なる場合は長い検索語を優先し、同じ長さなら先に登録したルールを優先します。"],
+    ["大文字小文字設定は英字比較に作用します","case-insensitiveでは英字をcase-foldingし、日本語や韓国語のように大小文字のない文字はそのまま比較します。"],
+    ["literal検索では記号もそのまま扱います","点・アスタリスク・角括弧などは正規表現ではなく通常の文字として検索します。"],
+    ["原文と結果は分けて保持します","結果を作成しても原文は上書きしません。総置換回数とルール別回数を確認してからコピーできます。"],
+    ["大量置換では出力上限も確認します","入力文字数だけでなくルール数、検索・置換文字列、最終結果サイズにも上限があります。"]
+  ]:[
+    ["Replacement runs once against the original text","All match candidates are resolved from the original source before replacements are applied, so replacement output is not searched again and chained edits do not occur."],
+    ["Overlapping terms use a deterministic priority","Longer search terms win when candidates overlap at the same position; equal lengths use the earlier rule."],
+    ["Case policy mainly affects alphabetic matching","Case-insensitive mode case-folds English letters while scripts without letter case, such as Korean and Japanese, are compared as written."],
+    ["Literal search treats regex symbols as normal text","Dots, asterisks, brackets, and similar characters are matched literally rather than interpreted as regular expressions."],
+    ["Source and result remain separate","The output never overwrites the original input. Review total and per-rule counts before copying large replacement results."],
+    ["Large jobs must respect both input and output limits","Input length, rule count, find/replacement size, and final result size have separate limits because long replacements can expand output significantly."]
+  ] as const;
   return <ToolboxSubpageShell locale={locale} appName={t.title}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://toolbox.fixlgs.com/${locale}/text-find-replace`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
     <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
@@ -27,7 +51,8 @@ export function TextFindReplacePage({locale}:{locale:Locale}){
       <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/text-extractor`}><span>041</span><h3>{locale==="ko"?"텍스트 추출기":locale==="ja"?"テキスト抽出ツール":"Text Data Extractor"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link><Link className="toolbox-next-work-card" href={`/${locale}/delimiter-list-converter`}><span>040</span><h3>{locale==="ko"?"구분자·목록 변환기":locale==="ja"?"区切り文字・リスト変換ツール":"Delimiter & List Converter"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,"0")}</span><p>{x}</p></li>)}</ol></section>
-    <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>042</h2></div><ul className="toolbox-tool-info-band-list">{t.notes.map(x=><li key={x}>{x}</li>)}</ul></section>
+    <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>EXPERT POST</p><h2>{expertTitle}</h2><span>{expertLead}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{expert.map(([title,description])=><article key={title}><h4>{title}</h4><p>{description}</p></article>)}</div></div></section>
+    <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{locale==="ko"?"주의사항":locale==="ja"?"注意事項":"Important notes"}</h2></div><ul className="toolbox-tool-info-band-list">{t.notes.map(x=><li key={x}>{x}</li>)}</ul></section>
     <section className="toolbox-tool-faq"><div className="toolbox-tool-guide-head"><p>FAQ</p><h2>{t.faq}</h2></div><ToolboxFaqList items={faq.map(([q,a]):readonly[string,string]=>[q,a])} initialCount={5} moreLabel={locale==="ko"?"FAQ 더보기":locale==="ja"?"FAQをもっと見る":"Show more FAQs"} collapseLabel={locale==="ko"?"FAQ 접기":locale==="ja"?"FAQを閉じる":"Collapse FAQs"} className="toolbox-tool-faq-list"/></section>
   </ToolboxSubpageShell>;
 }

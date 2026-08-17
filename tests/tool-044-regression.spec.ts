@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';import {route044,setText044} from './helpers/tool-044';
+test('long JA keyword does not overflow document',async({page})=>{await page.goto(route044('ja'));await setText044(page,`${'長'.repeat(120)} ${'長'.repeat(120)}`);await page.getByTestId('tool044-run').click();const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth);expect(overflow).toBe(false);});
