@@ -1,0 +1,2 @@
+import { expect,test } from '@playwright/test';
+test('TOOL045 exact elapsed and include-start contract',async({page})=>{await page.goto('/ko/date-difference-calculator');await page.getByTestId('tool045-start').fill('2026-01-05');await page.getByTestId('tool045-end').fill('2026-01-12');await expect(page.getByTestId('tool045-total-days')).toHaveText('7');await expect(page.getByTestId('tool045-weeks')).toContainText('1 주');await page.getByTestId('tool045-include-start').check();await expect(page.getByTestId('tool045-total-days')).toHaveText('8');});

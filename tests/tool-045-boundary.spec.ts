@@ -1,0 +1,4 @@
+import { expect,test } from '@playwright/test';
+const route='/ko/date-difference-calculator';
+test('TOOL045 leap and month end fixtures',async({page})=>{await page.goto(route);await page.getByTestId('tool045-start').fill('2028-02-28');await page.getByTestId('tool045-end').fill('2028-03-01');await expect(page.getByTestId('tool045-total-days')).toHaveText('2');await page.getByTestId('tool045-start').fill('2026-01-31');await page.getByTestId('tool045-end').fill('2026-02-28');await expect(page.getByTestId('tool045-total-days')).toHaveText('28');await expect(page.getByTestId('tool045-calendar')).toContainText('0 개월');});
+test('TOOL045 reversed date is an error and is not swapped',async({page})=>{await page.goto(route);await page.getByTestId('tool045-start').fill('2026-02-01');await page.getByTestId('tool045-end').fill('2026-01-31');await expect(page.getByTestId('tool045-error')).toBeVisible();await expect(page.getByTestId('tool045-result')).toHaveCount(0);});

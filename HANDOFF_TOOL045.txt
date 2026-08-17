@@ -1,0 +1,60 @@
+FIXLGS TOOLBOX HANDOFF — TOOL045 날짜 차이 계산기
+Category: F. 날짜·시간 도구
+Slug: date-difference-calculator
+Expected URL: /{locale}/date-difference-calculator
+Status: 보조작업장 READY
+
+[구현 기능]
+- 두 날짜 사이 실제 Gregorian 일수
+- 적용 총 일수 기준 주 + 나머지 일
+- 완전히 지난 달력 연/월/일 별도 표시(30/365 단순 환산 금지)
+- 시작일 포함 toggle(+1)
+- 평일/주말 수 및 invariant
+- 역순 오류, reset, KO/EN/JA, local-only
+
+[디자인 기준]
+MAIN TOOL036 Character & Document Counter
+SUB TOOL039 List Sorter & Duplicate Remover
+공통 CSS 변경 없음. legacy sealed 신규 참조 없음.
+
+[주작업장 이식 대상 전용 파일]
+app/[locale]/date-difference-calculator/page.tsx
+components/date-difference-calculator-page.tsx
+components/date-difference-calculator-tool.tsx
+components/date-difference-calculator-tool.module.css
+lib/tool-045-date-difference.ts
+tests/fixtures/tool-045/cases.json
+tests/tool-045-preflight.spec.ts
+tests/tool-045-core.spec.ts
+tests/tool-045-boundary.spec.ts
+tests/tool-045-feature.spec.ts
+tests/tool-045-regression.spec.ts
+tests/tool-045-limit.spec.ts
+scripts/tool-045/check-source.mjs
+scripts/tool-045/check-design.mjs
+scripts/tool-045/check-harness.mjs
+scripts/tool-045/check-logic.mjs
+scripts/tool-045/run-static-validation.mjs
+TOOL045_REQ_MASTER.md
+TOOL045_DESIGN_CODE_CHECK.md
+TOOL045_CHECKLIST.md
+TOOL045_STATIC_VALIDATION_RESULT.txt
+HANDOFF_TOOL045.txt
+FIXLGS_TOOLBOX_045_날짜_차이_계산기_최종제작전달서.pdf
+
+[공통 연결 필요 — 주작업장]
+- lib/site.ts: tool045Slug/title/description/date-time category LIVE card 등록
+- app/sitemap.ts: KO/EN/JA TOOL045 URL 추가
+- 필요 시 category count/status 갱신
+- robots는 기존 정책을 확인하되 TOOL045 때문에 임의 변경하지 말 것
+- 위 공통 파일은 보조작업장에서 수정하지 않았음
+
+[서비스 상한]
+전달서 요구대로 임의 서비스 유효상한을 승인값으로 고정하지 않았다. helper는 HTML date 입력과 일치하는 4자리 Gregorian 0001~9999 기술 범위를 파싱할 수 있으나, UI/validation/checker/FAQ의 서비스 cap 최종값은 주작업장 사용자 승인 게이트에서 동기화할 것.
+
+[주작업장 통합검증]
+최신 최상위 보조작업장 지시서에 따라 실제 browser/Playwright, PC/mobile viewport, KO/EN/JA 실렌더링, light/dark, production build, 공통 CSS/layout 영향, 전체 regression, 통합 FINAL, 배포/색인은 주작업장 책임.
+
+[보조작업장 검증]
+node scripts/tool-045/run-static-validation.mjs => PASS (source/design/harness/logic, FAIL 0)
+Fixture: same/same included/year boundary/leap/common year/month end/one week/weekend span/reverse error.

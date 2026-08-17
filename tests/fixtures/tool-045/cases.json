@@ -1,0 +1,10 @@
+[
+ {"name":"same","start":"2026-01-01","end":"2026-01-01","includeStart":false,"elapsedDays":0,"appliedDays":0,"weekdays":0,"weekends":0},
+ {"name":"same-included","start":"2026-01-01","end":"2026-01-01","includeStart":true,"elapsedDays":0,"appliedDays":1,"weekdays":1,"weekends":0},
+ {"name":"year-boundary","start":"2026-12-31","end":"2027-01-01","includeStart":false,"elapsedDays":1,"appliedDays":1},
+ {"name":"leap","start":"2028-02-28","end":"2028-03-01","includeStart":false,"elapsedDays":2,"appliedDays":2},
+ {"name":"common-year","start":"2027-02-28","end":"2027-03-01","includeStart":false,"elapsedDays":1,"appliedDays":1},
+ {"name":"month-end","start":"2026-01-31","end":"2026-02-28","includeStart":false,"elapsedDays":28,"appliedDays":28,"calendar":{"years":0,"months":0,"days":28}},
+ {"name":"one-week","start":"2026-01-05","end":"2026-01-12","includeStart":false,"elapsedDays":7,"appliedDays":7,"weeks":1,"remainderDays":0},
+ {"name":"weekend-span","start":"2026-08-15","end":"2026-08-17","includeStart":false,"elapsedDays":2,"appliedDays":2,"weekdays":1,"weekends":1}
+]

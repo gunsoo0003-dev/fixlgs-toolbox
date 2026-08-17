@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { DateDifferenceCalculatorPage } from "@/components/date-difference-calculator-page";
+import { locales, type Locale } from "@/lib/site";
+const meta={ko:{title:"날짜 차이 계산기 - 두 날짜 사이 일수·주·월·년 계산 | FIXLGS TOOLBOX",description:"두 날짜 사이의 일수와 주·월·년 기간을 계산하고 시작일 포함 여부, 평일·주말 수를 확인하세요."},en:{title:"Date Difference Calculator - Days, Weeks, Months & Years | FIXLGS TOOLBOX",description:"Calculate the exact difference between two dates, optional start-date inclusion, weekdays, weekends, and calendar duration."},ja:{title:"日付差計算ツール - 日数・週・月・年を計算 | FIXLGS TOOLBOX",description:"2つの日付の日数差、開始日を含める設定、平日・週末、カレンダー期間をブラウザ内で計算します。"}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/date-difference-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:"/ko/date-difference-calculator",en:"/en/date-difference-calculator",ja:"/ja/date-difference-calculator","x-default":"/ko/date-difference-calculator"}}};}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <DateDifferenceCalculatorPage locale={locale as Locale}/>}
