@@ -1,0 +1,2 @@
+import {spawnSync} from 'node:child_process';
+const steps=['check-source.mjs','check-design-static.mjs','check-main-integration.mjs','check-localization.mjs','check-logic.mjs','check-req.mjs','check-limit-static.mjs','check-css-protection.mjs','check-harness.mjs'];let fail=0;for(const step of steps){console.log(`\n== ${step} ==`);const r=spawnSync(process.execPath,[`scripts/tool-042/${step}`],{stdio:'inherit'});if(r.status!==0)fail++;}console.log(`\nTOOL042_STATIC ${fail?'FAIL':'PASS'} steps_failed=${fail}`);process.exitCode=fail?1:0;

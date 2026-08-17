@@ -1,0 +1,32 @@
+TOOL042 HANDOFF - MAIN WORKSHOP INTEGRATION CANDIDATE
+Date: 2026-08-17
+
+BASELINE
+- Previous completed tool: TOOL041 Text Extractor
+- Protected range: TOOL001~041
+- Design baseline: TOOL041 actual final TSX/DOM/CSS/event/state/mobile
+- TOOL042: Text Find & Replace
+
+CURRENT STATE
+- TOOL042 product resynced from stale TOOL037 auxiliary design to TOOL041 final contract.
+- Dedicated find/replace engine retained and corrected with result-limit enforcement.
+- Direct/file input, one activeWorkspace, drag, file replacement confirm/cancel, complete reset, copy/download, KO/EN/JA, PC/mobile are aligned with TOOL041.
+- Main text category, site card, localized href, sitemap, package scripts, previous-tool link integration completed.
+- Static self-check PASS including logic 15/15 and REQ 12/12.
+
+CHECKER CONTRACT
+- Product inventory first; checker selectors/expected/state/output then aligned.
+- Added feature specs for file replacement and complete reset.
+- Copy/download pre-result expectation follows TOOL041: visible but disabled.
+- Full runner: scripts/tool-042/run-validation-full.mjs
+- Command: npm run test:toolbox:042
+
+ENVIRONMENT NOTE
+- Browser FINAL is not claimed here because npm registry access timed out and the source ZIP contains no node_modules.
+- Main Windows workspace must run the full runner. Any FAIL must first be classified PRODUCT / CHECKER-HARNESS / ENVIRONMENT.
+
+GIT / FILE PROTECTION
+- Do not use git add . or git add -A.
+- Before cleanup, census tracked/untracked by directory with Git-native commands.
+- Unicode/mojibake mixed fixture directories must not be bulk-deleted when tracked files exist.
+- After runtime PASS: selective staging -> cached verification -> commit -> push -> HEAD match -> git archive HEAD independent verification -> clean worktree -> next-project tar.exe ZIP.

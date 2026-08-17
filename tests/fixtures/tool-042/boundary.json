@@ -1,0 +1,53 @@
+{
+  "duplicateCaseInsensitive": {
+    "input": "cat",
+    "rules": [
+      [
+        "cat",
+        "X"
+      ],
+      [
+        "CAT",
+        "Y"
+      ]
+    ],
+    "caseSensitive": false,
+    "error": "DUPLICATE_FIND"
+  },
+  "emptyFind": {
+    "input": "x",
+    "rules": [
+      [
+        "",
+        "Y"
+      ]
+    ],
+    "caseSensitive": true,
+    "error": "EMPTY_FIND"
+  },
+  "limit": {
+    "characters": 1000001
+  },
+  "literalMeta": {
+    "input": "a.b a*b",
+    "rules": [
+      [
+        ".",
+        "X"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "aXb a*b"
+  },
+  "unicode": {
+    "input": "한글😀日本語",
+    "rules": [
+      [
+        "😀",
+        "🙂"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "한글🙂日本語"
+  }
+}

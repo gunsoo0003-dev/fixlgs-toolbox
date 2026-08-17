@@ -250,6 +250,8 @@ export const tool040Slug = "delimiter-list-converter" as const;
 
 export const tool041Slug = "text-extractor" as const;
 
+export const tool042Slug = "text-find-replace" as const;
+
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
 export const tool010Titles: Record<Locale, string> = { ko: "이미지 모자이크·블러 도구", en: "Image Mosaic & Blur Tool", ja: "画像モザイク・ぼかしツール" };
@@ -316,6 +318,8 @@ export const tool040Titles: Record<Locale, string> = { ko: "구분자·목록 �
 export const tool040Descriptions: Record<Locale, string> = { ko: "줄바꿈·쉼표·탭·사용자 구분자를 서로 바꾸고 따옴표와 번호·글머리표를 추가하세요.", en: "Convert new lines, commas, tabs, and custom delimiters, then add quotes, numbering, or bullets.", ja: "改行・カンマ・タブ・カスタム区切り文字を変換し、引用符や番号・箇条書きを追加できます。" };
 export const tool041Titles: Record<Locale, string> = { ko: "텍스트 추출기", en: "Text Data Extractor", ja: "テキスト抽出ツール" };
 export const tool041Descriptions: Record<Locale, string> = { ko: "숫자·한글·영어·이메일·URL·전화번호·해시태그를 긴 텍스트에서 유형별로 추출하세요.", en: "Extract numbers, Korean, English, emails, URLs, phone numbers, and hashtags from long text by type.", ja: "長い文章から数字・韓国語・英語・メール・URL・電話番号・ハッシュタグを種類別に抽出します。" };
+export const tool042Titles: Record<Locale, string> = { ko: "텍스트 찾기·바꾸기", en: "Text Find & Replace", ja: "テキスト検索・置換" };
+export const tool042Descriptions: Record<Locale, string> = { ko: "하나 또는 여러 검색어를 찾아 원본 기준으로 동시에 바꾸고 변경 횟수를 확인하세요.", en: "Find one or multiple terms, replace them simultaneously from the original text, and review replacement counts.", ja: "1つまたは複数の検索語を原文基準で同時に置換し、置換回数を確認できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -809,6 +813,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool042Titles,
+      description: tool042Descriptions,
+      href: `/${"ko"}/${tool042Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -946,7 +957,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "text") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool036Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool038Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool039Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool040Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool041Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool036Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool037Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool038Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool039Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool040Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool041Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool042Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

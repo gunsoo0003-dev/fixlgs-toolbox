@@ -1,0 +1,142 @@
+{
+  "F01": {
+    "input": "Hello world",
+    "rules": [
+      [
+        "world",
+        "FIX"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "Hello FIX",
+    "total": 1
+  },
+  "F02": {
+    "input": "Cat cat CAT",
+    "rules": [
+      [
+        "cat",
+        "dog"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "Cat dog CAT",
+    "total": 1
+  },
+  "F03": {
+    "input": "Cat cat CAT",
+    "rules": [
+      [
+        "cat",
+        "dog"
+      ]
+    ],
+    "caseSensitive": false,
+    "output": "dog dog dog",
+    "total": 3
+  },
+  "F04": {
+    "input": "abc abc",
+    "rules": [
+      [
+        "abc",
+        ""
+      ]
+    ],
+    "caseSensitive": true,
+    "output": " ",
+    "total": 2
+  },
+  "F05": {
+    "input": "catalog cat",
+    "rules": [
+      [
+        "cat",
+        "X"
+      ],
+      [
+        "catalog",
+        "Y"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "Y X",
+    "total": 2
+  },
+  "F06": {
+    "input": "A B",
+    "rules": [
+      [
+        "A",
+        "B"
+      ],
+      [
+        "B",
+        "C"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "B C",
+    "total": 2
+  },
+  "F07": {
+    "input": "a.b a*b",
+    "rules": [
+      [
+        ".",
+        "X"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "aXb a*b",
+    "total": 1
+  },
+  "F08": {
+    "input": "안녕하세요 안녕",
+    "rules": [
+      [
+        "안녕",
+        "반가워"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "반가워하세요 반가워",
+    "total": 2
+  },
+  "F09": {
+    "input": "日本語日本語",
+    "rules": [
+      [
+        "日本",
+        "JP"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "JP語JP語",
+    "total": 2
+  },
+  "F10": {
+    "input": "😀😀",
+    "rules": [
+      [
+        "😀",
+        "🙂"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "🙂🙂",
+    "total": 2
+  },
+  "F11": {
+    "input": "same",
+    "rules": [
+      [
+        "same",
+        "same"
+      ]
+    ],
+    "caseSensitive": true,
+    "output": "same",
+    "total": 1
+  }
+}

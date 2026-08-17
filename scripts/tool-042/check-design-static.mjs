@@ -1,0 +1,17 @@
+import fs from "node:fs";
+const page=fs.readFileSync("components/text-find-replace-page.tsx","utf8");
+const tool=fs.readFileSync("components/text-find-replace-tool.tsx","utf8");
+const css=fs.readFileSync("components/text-find-replace-tool.module.css","utf8");
+let fail=0;const check=(n,ok)=>{console.log(`[${ok?"PASS":"FAIL"}] ${n}`);if(!ok)fail++};
+check("041 MAIN shell",/toolbox-tool-detail-hero[\s\S]*toolbox-tool-detail-body/.test(page));
+check("NEXT WORK + RELATED",/NEXT WORK[\s\S]*RELATED TOOLS/.test(page));
+check("HOW TO",/toolbox-tool-guide toolbox-tool-guide--five/.test(page));
+check("FAQ",/ToolboxFaqList/.test(page));
+check("single activeWorkspace",/activeWorkspace/.test(tool)&&/workspaceDragging/.test(tool)&&/data-testid="tool042-workspace"/.test(tool));
+check("responsive 720",/@media\(max-width:720px\)/.test(css));
+check("responsive 420",/@media\(max-width:420px\)/.test(css));
+check("file replace dialog",/pendingFile/.test(tool)&&/tool042-replace-dialog/.test(tool));
+check("copy + download",/tool042-copy/.test(tool)&&/tool042-download/.test(tool));
+check("complete reset",/setLoadedFile\(null\)/.test(tool)&&/setPendingFile\(null\)/.test(tool)&&/setRules\(\[EMPTY_RULE\]\)/.test(tool));
+check("no global TOOL042 selector",!/\.tool042|#tool042/.test(css));
+process.exitCode=fail?1:0;
