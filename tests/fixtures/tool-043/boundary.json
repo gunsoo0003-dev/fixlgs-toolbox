@@ -1,0 +1,6 @@
+[
+ {"id":"mixed-newline","a":"A\r\nB\rC\n","b":"A\r\nB\rC\n"},
+ {"id":"nfc-nfd","a":"é","b":"é"},
+ {"id":"trailing-space","a":"A \nB","b":"A\nB"},
+ {"id":"ko-ja-emoji","a":"한글 日本語 🙂","b":"한글 日本語 🙃"}
+]

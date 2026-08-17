@@ -1,0 +1,45 @@
+[ADD]
+app/[locale]/text-diff-compare/page.tsx
+components/text-diff-compare-page.tsx
+components/text-diff-compare-tool.module.css
+components/text-diff-compare-tool.tsx
+docs/tool-043/REQ_MASTER_043.md
+docs/tool-043/HANDOFF_043.md
+docs/tool-043/CHANGE_LIST_043.txt
+lib/tool-043-text-diff.ts
+playwright.tool043.config.ts
+scripts/tool-043/check-logic.mjs
+scripts/tool-043/check-static.mjs
+scripts/tool-043/run-static-validation.mjs
+tests/fixtures/tool-043/boundary.json
+tests/fixtures/tool-043/core.json
+tests/fixtures/tool-043/file-a.txt
+tests/fixtures/tool-043/file-b.txt
+tests/helpers/tool-043.ts
+tests/tool-043-boundary.spec.ts
+tests/tool-043-core.spec.ts
+tests/tool-043-limit.spec.ts
+tests/tool-043-preflight.spec.ts
+tests/tool-043-regression.spec.ts
+
+[MODIFY]
+app/sitemap.ts
+components/text-find-replace-page.tsx
+lib/site.ts
+package.json
+
+[DELETE]
+none
+
+[2026-08-17 EMPTY-STATE DESIGN ALIGNMENT]
+- Initial A/B textareas -> independent light-blue dashed start workspaces.
+- Added visible A/B badges, baseline/comparison labels, supported-format text.
+- Added per-side click/paste/file/drop activation into the existing textarea state.
+- Reset returns both sides to the empty start state.
+- Updated preflight/core/helper/static checker for the new state contract.
+components/text-tool-input-common.module.css | NEW | shared TOOL042-source text workspace/dropzone CSS
+components/text-find-replace-tool.tsx | MOD | TOOL042 consumes shared text workspace CSS
+components/text-find-replace-tool.module.css | MOD | remove duplicated shared workspace/dropzone rules
+components/text-diff-compare-tool.tsx | MOD | TOOL043 consumes shared CSS; A/B copy remains tool-specific
+components/text-diff-compare-tool.module.css | MOD | keep TOOL043-only A/B modifiers
+scripts/tool-043/check-static.mjs | MOD | assert 042/043 shared CSS consumption

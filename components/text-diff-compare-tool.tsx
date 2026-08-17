@@ -1,0 +1,98 @@
+"use client";
+import { useMemo, useRef, useState } from "react";
+import type { DragEvent } from "react";
+import type { Locale } from "@/lib/site";
+import { compareTool043, createTool043Report, TOOL043_SERVICE_LIMITS, validateTool043, type DiffBlock, type Tool043Result } from "@/lib/tool-043-text-diff";
+import styles from "./text-diff-compare-tool.module.css";
+import inputCommon from "./text-tool-input-common.module.css";
+
+type Mode="line"|"word";
+type Side="A"|"B";
+const ACCEPTED_FILE_EXTENSIONS=["txt","md","csv","json","xml","log"] as const;
+const ACCEPT_ATTRIBUTE=".txt,.md,.csv,.json,.xml,.log,text/plain,text/csv,application/json,application/xml,text/xml,text/markdown";
+const copy={
+ko:{local:"입력한 두 텍스트와 비교 결과는 서버로 전송하거나 저장하지 않고 현재 브라우저에서만 처리합니다.",a:"텍스트 A",b:"텍스트 B",aHelp:"기존 버전 또는 비교 기준 텍스트",bHelp:"새 버전 또는 비교 대상 텍스트",aPlaceholder:"예) 계약 기간은 1년입니다.\n자동 갱신 조항은 없습니다.",bPlaceholder:"예) 계약 기간은 2년입니다.\n자동 갱신 조항이 추가되었습니다.",compare:"비교하기",sample:"예시 넣기",reset:"전체 지우기",line:"줄 단위",word:"단어 단위",summary:"비교 요약",added:"추가",removed:"삭제",changed:"변경",unchanged:"동일",copy:"비교 결과 복사",copied:"비교 결과를 복사했습니다.",copyFail:"클립보드에 복사하지 못했습니다. 아래 보고서를 직접 선택해 복사해 주세요.",identical:"두 텍스트가 같습니다.",empty:"텍스트 A 또는 텍스트 B 중 하나 이상을 입력해 주세요.",charLimit:"입력 글자 수가 서비스 상한을 초과했습니다.",lineLimit:"입력 줄 수가 서비스 상한을 초과했습니다.",before:"기존",after:"변경",lineLabel:"줄",report:"복사 보고서",limit:`서비스 상한: 각 텍스트 ${TOOL043_SERVICE_LIMITS.maxCharactersPerText.toLocaleString("ko-KR")}자 · ${TOOL043_SERVICE_LIMITS.maxLinesPerText.toLocaleString("ko-KR")}줄`,wordHint:"변경 블록 내부의 단어·공백·구두점 차이를 표시합니다.",file:"파일 선택",drop:"여기에 파일을 놓으세요",fileHelp:"TXT · MD · CSV · JSON · XML · LOG",fileError:"지원하는 텍스트 파일만 사용할 수 있습니다.",fileReadError:"파일을 읽지 못했습니다. 다른 파일을 선택해 주세요.",loaded:"파일을 불러왔습니다.",swap:"A ↔ B 바꾸기",changesOnly:"변경점만 보기",showAll:"전체 보기",download:"TXT 다운로드",downloaded:"비교 결과 TXT를 다운로드했습니다.",noChanges:"표시할 변경점이 없습니다."},
+en:{local:"Both texts and comparison results stay in this browser and are not sent to or stored on a server.",a:"Text A",b:"Text B",aHelp:"Original or baseline version",bHelp:"New or comparison version",aPlaceholder:"Example: Contract period is 1 year.\nNo auto-renewal clause.",bPlaceholder:"Example: Contract period is 2 years.\nAn auto-renewal clause was added.",compare:"Compare",sample:"Insert sample",reset:"Clear all",line:"Line view",word:"Word detail",summary:"Comparison summary",added:"Added",removed:"Removed",changed:"Changed",unchanged:"Unchanged",copy:"Copy diff report",copied:"Diff report copied.",copyFail:"Could not write to the clipboard. Select the report below and copy it manually.",identical:"The two texts are identical.",empty:"Enter at least one of Text A or Text B.",charLimit:"An input exceeds the character service limit.",lineLimit:"An input exceeds the line service limit.",before:"Before",after:"After",lineLabel:"Line",report:"Copy report",limit:`Service limit: ${TOOL043_SERVICE_LIMITS.maxCharactersPerText.toLocaleString("en-US")} characters · ${TOOL043_SERVICE_LIMITS.maxLinesPerText.toLocaleString("en-US")} lines per text`,wordHint:"Shows word, whitespace, and punctuation differences inside changed blocks.",file:"Choose file",drop:"Drop a file here",fileHelp:"TXT · MD · CSV · JSON · XML · LOG",fileError:"Use a supported plain-text file.",fileReadError:"Could not read the file. Choose another file.",loaded:"File loaded.",swap:"Swap A ↔ B",changesOnly:"Changes only",showAll:"Show all",download:"Download TXT",downloaded:"Diff report TXT downloaded.",noChanges:"No changed blocks to display."},
+ja:{local:"入力した2つのテキストと比較結果はサーバーへ送信・保存せず、このブラウザ内だけで処理します。",a:"テキストA",b:"テキストB",aHelp:"旧版または比較基準",bHelp:"新版または比較対象",aPlaceholder:"例) 契約期間は1年です。\n自動更新条項はありません。",bPlaceholder:"例) 契約期間は2年です。\n自動更新条項が追加されました。",compare:"比較する",sample:"サンプルを入力",reset:"すべてクリア",line:"行単位",word:"単語詳細",summary:"比較サマリー",added:"追加",removed:"削除",changed:"変更",unchanged:"同一",copy:"比較結果をコピー",copied:"比較結果をコピーしました。",copyFail:"クリップボードへコピーできませんでした。下のレポートを選択して手動でコピーしてください。",identical:"2つのテキストは同じです。",empty:"テキストAまたはBの少なくとも一方を入力してください。",charLimit:"入力文字数がサービス上限を超えています。",lineLimit:"入力行数がサービス上限を超えています。",before:"変更前",after:"変更後",lineLabel:"行",report:"コピーレポート",limit:`サービス上限: 各テキスト${TOOL043_SERVICE_LIMITS.maxCharactersPerText.toLocaleString("ja-JP")}文字 · ${TOOL043_SERVICE_LIMITS.maxLinesPerText.toLocaleString("ja-JP")}行`,wordHint:"変更ブロック内の単語・空白・句読点の差分を表示します。",file:"ファイル選択",drop:"ここにファイルをドロップ",fileHelp:"TXT · MD · CSV · JSON · XML · LOG",fileError:"対応しているテキストファイルを使用してください。",fileReadError:"ファイルを読み込めませんでした。別のファイルを選択してください。",loaded:"ファイルを読み込みました。",swap:"A ↔ B 入れ替え",changesOnly:"変更点のみ",showAll:"すべて表示",download:"TXTダウンロード",downloaded:"比較結果TXTをダウンロードしました。",noChanges:"表示する変更点はありません。"}
+} as const;
+
+function lineCount(v:string){if(!v)return 0;return (v.match(/\r\n|\r|\n/g)?.length??0)+1;}
+function range(start:number|null,count:number){if(start===null||count===0)return "—";return count===1?String(start):`${start}–${start+count-1}`;}
+function isAcceptedTextFile(file:File){const ext=file.name.split(".").pop()?.toLowerCase()??"";return ACCEPTED_FILE_EXTENSIONS.includes(ext as (typeof ACCEPTED_FILE_EXTENSIONS)[number]);}
+
+export function TextDiffCompareTool({locale}:{locale:Locale}){
+ const t=copy[locale]; const localeId=locale==="ko"?"ko-KR":locale==="ja"?"ja-JP":"en-US";
+ const [a,setA]=useState(""),[b,setB]=useState(""),[result,setResult]=useState<Tool043Result|null>(null),[mode,setMode]=useState<Mode>("line"),[error,setError]=useState(""),[status,setStatus]=useState("");
+ const [fileA,setFileA]=useState(""),[fileB,setFileB]=useState(""),[dragSide,setDragSide]=useState<Side|null>(null),[changesOnly,setChangesOnly]=useState(false);
+ const [activeA,setActiveA]=useState(false),[activeB,setActiveB]=useState(false);
+ const inputARef=useRef<HTMLInputElement>(null),inputBRef=useRef<HTMLInputElement>(null),textareaARef=useRef<HTMLTextAreaElement>(null),textareaBRef=useRef<HTMLTextAreaElement>(null);
+ const report=useMemo(()=>result?createTool043Report(result,{summary:t.summary,added:t.added,removed:t.removed,changed:t.changed,unchanged:t.unchanged,before:t.before,after:t.after,line:t.lineLabel}):"",[result,t]);
+ const visibleBlocks=useMemo(()=>result?(changesOnly?result.blocks.filter(block=>block.status!=="unchanged"):result.blocks):[],[result,changesOnly]);
+ const invalidate=(nextA=a,nextB=b)=>{setResult(null);setStatus("");setError("");setChangesOnly(false);setA(nextA);setB(nextB);};
+ const run=()=>{setStatus("");setError("");if(!a&&!b){setResult(null);setError(t.empty);return;}const errors=validateTool043(a,b);if(errors.length){setResult(null);setError(errors[0].code==="CHARACTER_LIMIT"?t.charLimit:t.lineLimit);return;}try{setResult(compareTool043(a,b,locale));setMode("line");setChangesOnly(false);}catch{setResult(null);setError(t.charLimit);}};
+ const reset=()=>{setA("");setB("");setFileA("");setFileB("");setActiveA(false);setActiveB(false);setResult(null);setMode("line");setChangesOnly(false);setError("");setStatus("");if(inputARef.current)inputARef.current.value="";if(inputBRef.current)inputBRef.current.value="";};
+ const sample=()=>{const aa=locale==="ja"?"契約期間は1年です。\n料金は1000円です。\n連絡先: sample@example.com":locale==="ko"?"계약 기간은 1년입니다.\n요금은 1000원입니다.\n연락처: sample@example.com":"Contract period is 1 year.\nPrice is 1000 USD.\nContact: sample@example.com";const bb=locale==="ja"?"契約期間は2年です。\n料金は1200円です。\n自動更新条項を追加しました。":locale==="ko"?"계약 기간은 2년입니다.\n요금은 1200원입니다.\n자동 갱신 조항이 추가되었습니다.":"Contract period is 2 years.\nPrice is 1200 USD.\nAn auto-renewal clause was added.";setFileA("");setFileB("");setActiveA(true);setActiveB(true);invalidate(aa,bb);};
+ const copyReport=async()=>{if(!report)return;try{await navigator.clipboard.writeText(report);setStatus(t.copied);setError("");}catch{setStatus("");setError(t.copyFail);}};
+ const downloadReport=()=>{if(!report)return;const blob=new Blob([report],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const anchor=document.createElement("a");anchor.href=url;anchor.download="text-diff-report.txt";document.body.appendChild(anchor);anchor.click();anchor.remove();URL.revokeObjectURL(url);setStatus(t.downloaded);setError("");};
+ const swap=()=>{const nextA=b,nextB=a,nextFileA=fileB,nextFileB=fileA,nextActiveA=activeB,nextActiveB=activeA;setFileA(nextFileA);setFileB(nextFileB);setActiveA(nextActiveA);setActiveB(nextActiveB);invalidate(nextA,nextB);};
+ const applyFile=async(side:Side,file:File)=>{setStatus("");setError("");if(!isAcceptedTextFile(file)){setError(t.fileError);return;}try{const text=await file.text();const errors=validateTool043(side==="A"?text:"",side==="B"?text:"");if(errors.length){setError(errors[0].code==="CHARACTER_LIMIT"?t.charLimit:t.lineLimit);return;}if(side==="A"){setFileA(file.name);setActiveA(true);invalidate(text,b);}else{setFileB(file.name);setActiveB(true);invalidate(a,text);}setStatus(`${file.name} · ${t.loaded}`);}catch{setError(t.fileReadError);}};
+ const onDrop=(side:Side,e:DragEvent<HTMLDivElement>)=>{e.preventDefault();e.stopPropagation();setDragSide(null);const file=e.dataTransfer.files?.[0];if(file)void applyFile(side,file);};
+ const activateSide=(side:Side)=>{if(side==="A"){setActiveA(true);requestAnimationFrame(()=>textareaARef.current?.focus());}else{setActiveB(true);requestAnimationFrame(()=>textareaBRef.current?.focus());}};
+ const pasteIntoSide=(side:Side,text:string)=>{if(side==="A"){setActiveA(true);setFileA("");invalidate(text,b);}else{setActiveB(true);setFileB("");invalidate(a,text);}};
+ const onDragOver=(side:Side,e:DragEvent<HTMLDivElement>)=>{e.preventDefault();e.stopPropagation();e.dataTransfer.dropEffect="copy";setDragSide(side);};
+ const onDragLeave=(side:Side,e:DragEvent<HTMLDivElement>)=>{e.preventDefault();e.stopPropagation();if(e.currentTarget.contains(e.relatedTarget as Node|null))return;if(dragSide===side)setDragSide(null);};
+ return <div className={styles.root} data-testid="tool043-root">
+  <div className={styles.localNotice}><strong>LOCAL</strong><span>{t.local}</span></div>
+  <section className={styles.workspace} data-testid="tool043-workspace">
+   <div className={styles.inputGrid}>
+    <div className={`${styles.editorCard} ${!activeA?inputCommon.workspaceSurface:""} ${!activeA&&dragSide==="A"?inputCommon.workspaceDragging:""}`} data-state={activeA?"active":"empty"} data-dragging={dragSide==="A"} data-testid="tool043-drop-a" onDrop={e=>onDrop("A",e)} onDragOver={e=>onDragOver("A",e)} onDragLeave={e=>onDragLeave("A",e)}>
+     {!activeA?<div className={`${inputCommon.startDropzone} ${styles.emptyStartModifier}`} data-testid="tool043-empty-a" role="button" tabIndex={0} onClick={()=>activateSide("A")} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activateSide("A");}}} onPaste={e=>{e.preventDefault();pasteIntoSide("A",e.clipboardData.getData("text"));}}>
+      <span className={styles.sideBadge}>A</span><span className={inputCommon.plusIcon} aria-hidden="true">+</span><h2>{t.a}</h2><p><strong>{t.aHelp}</strong><br/>{t.drop}<br/><span className={inputCommon.supportedFormats}>{t.fileHelp}</span></p>
+      <input ref={inputARef} className={styles.fileInput} type="file" accept={ACCEPT_ATTRIBUTE} data-testid="tool043-file-a" onClick={e=>e.stopPropagation()} onChange={e=>{const f=e.target.files?.[0];if(f)void applyFile("A",f);}}/><button type="button" className={inputCommon.fileButton} onClick={e=>{e.stopPropagation();inputARef.current?.click();}}>{t.file}</button>
+     </div>:<>
+      <div className={styles.editorHead}><div><label htmlFor="tool043-a"><strong><span className={styles.inlineBadge}>A</span>{t.a}</strong></label><em>{t.aHelp}</em></div><div className={styles.fileActions}><input ref={inputARef} className={styles.fileInput} type="file" accept={ACCEPT_ATTRIBUTE} data-testid="tool043-file-a" onChange={e=>{const f=e.target.files?.[0];if(f)void applyFile("A",f);}}/><button type="button" className={styles.fileButton} onClick={()=>inputARef.current?.click()}>{t.file}</button></div></div>
+      <div className={styles.dropHint}><strong>{dragSide==="A"?t.drop:(fileA||t.drop)}</strong><span>{t.fileHelp}</span></div>
+      <textarea ref={textareaARef} id="tool043-a" data-testid="tool043-input-a" className={styles.textarea} value={a} onChange={e=>{setFileA("");invalidate(e.target.value,b);}} placeholder={t.aPlaceholder} aria-describedby="tool043-a-meta"/>
+      <span id="tool043-a-meta" className={styles.meta}>{a.length.toLocaleString(localeId)} · {lineCount(a).toLocaleString(localeId)} lines</span>
+     </>}
+     {dragSide==="A"&&<div className={styles.dropOverlay} aria-hidden="true">A · {t.drop}</div>}
+    </div>
+    <div className={`${styles.editorCard} ${!activeB?inputCommon.workspaceSurface:""} ${!activeB&&dragSide==="B"?inputCommon.workspaceDragging:""}`} data-state={activeB?"active":"empty"} data-dragging={dragSide==="B"} data-testid="tool043-drop-b" onDrop={e=>onDrop("B",e)} onDragOver={e=>onDragOver("B",e)} onDragLeave={e=>onDragLeave("B",e)}>
+     {!activeB?<div className={`${inputCommon.startDropzone} ${styles.emptyStartModifier}`} data-testid="tool043-empty-b" role="button" tabIndex={0} onClick={()=>activateSide("B")} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activateSide("B");}}} onPaste={e=>{e.preventDefault();pasteIntoSide("B",e.clipboardData.getData("text"));}}>
+      <span className={styles.sideBadge}>B</span><span className={inputCommon.plusIcon} aria-hidden="true">+</span><h2>{t.b}</h2><p><strong>{t.bHelp}</strong><br/>{t.drop}<br/><span className={inputCommon.supportedFormats}>{t.fileHelp}</span></p>
+      <input ref={inputBRef} className={styles.fileInput} type="file" accept={ACCEPT_ATTRIBUTE} data-testid="tool043-file-b" onClick={e=>e.stopPropagation()} onChange={e=>{const f=e.target.files?.[0];if(f)void applyFile("B",f);}}/><button type="button" className={inputCommon.fileButton} onClick={e=>{e.stopPropagation();inputBRef.current?.click();}}>{t.file}</button>
+     </div>:<>
+      <div className={styles.editorHead}><div><label htmlFor="tool043-b"><strong><span className={styles.inlineBadge}>B</span>{t.b}</strong></label><em>{t.bHelp}</em></div><div className={styles.fileActions}><input ref={inputBRef} className={styles.fileInput} type="file" accept={ACCEPT_ATTRIBUTE} data-testid="tool043-file-b" onChange={e=>{const f=e.target.files?.[0];if(f)void applyFile("B",f);}}/><button type="button" className={styles.fileButton} onClick={()=>inputBRef.current?.click()}>{t.file}</button></div></div>
+      <div className={styles.dropHint}><strong>{dragSide==="B"?t.drop:(fileB||t.drop)}</strong><span>{t.fileHelp}</span></div>
+      <textarea ref={textareaBRef} id="tool043-b" data-testid="tool043-input-b" className={styles.textarea} value={b} onChange={e=>{setFileB("");invalidate(a,e.target.value);}} placeholder={t.bPlaceholder} aria-describedby="tool043-b-meta"/>
+      <span id="tool043-b-meta" className={styles.meta}>{b.length.toLocaleString(localeId)} · {lineCount(b).toLocaleString(localeId)} lines</span>
+     </>}
+     {dragSide==="B"&&<div className={styles.dropOverlay} aria-hidden="true">B · {t.drop}</div>}
+    </div>
+   </div>
+   <p className={styles.limit}>{t.limit}</p>
+   <div className={styles.utilityRow}><button className={styles.button} data-testid="tool043-swap" onClick={swap} disabled={!a&&!b}>{t.swap}</button></div>
+   <div className={styles.actionRow}><button className={styles.primaryButton} data-testid="tool043-run" onClick={run} disabled={!a&&!b}>{t.compare}</button><button className={styles.button} data-testid="tool043-sample" onClick={sample}>{t.sample}</button><button className={styles.button} data-testid="tool043-reset" onClick={reset}>{t.reset}</button></div>
+   {error&&<p className={styles.error} role="alert" data-testid="tool043-error">{error}</p>}
+   {status&&<p className={styles.status} role="status" aria-live="polite" data-testid="tool043-status">{status}</p>}
+  </section>
+  {result&&<section className={styles.resultPanel} data-testid="tool043-result">
+   <div className={styles.resultHead}><div><p>DIFF RESULT</p><h2>{t.summary}</h2></div><div className={styles.resultControls}><button className={styles.filterButton} aria-pressed={changesOnly} data-testid="tool043-changes-only" onClick={()=>setChangesOnly(v=>!v)}>{changesOnly?t.showAll:t.changesOnly}</button><div className={styles.modeTabs} role="tablist" aria-label={t.summary}><button role="tab" aria-selected={mode==="line"} data-testid="tool043-mode-line" onClick={()=>setMode("line")}>{t.line}</button><button role="tab" aria-selected={mode==="word"} data-testid="tool043-mode-word" onClick={()=>setMode("word")}>{t.word}</button></div></div></div>
+   <div className={styles.stats}><Stat label={t.added} value={result.stats.added} kind="added"/><Stat label={t.removed} value={result.stats.removed} kind="removed"/><Stat label={t.changed} value={result.stats.changed} kind="changed"/><Stat label={t.unchanged} value={result.stats.unchanged} kind="unchanged"/></div>
+   {result.identical?<div className={styles.identical} data-testid="tool043-identical">= {t.identical}</div>:visibleBlocks.length?<div className={styles.diffList} data-testid="tool043-diff-list">{visibleBlocks.map(block=><DiffRow key={block.id} block={block} mode={mode} labels={t}/>)}</div>:<div className={styles.identical} data-testid="tool043-no-changes">{t.noChanges}</div>}
+   {mode==="word"&&!result.identical&&<p className={styles.wordHint}>{t.wordHint}</p>}
+   <div className={styles.reportCard}><div className={styles.reportHead}><strong>{t.report}</strong><div className={styles.reportActions}><button className={styles.button} data-testid="tool043-download" onClick={downloadReport}>{t.download}</button><button className={styles.primaryButton} data-testid="tool043-copy" onClick={copyReport}>{t.copy}</button></div></div><textarea className={styles.report} data-testid="tool043-report" readOnly value={report} aria-label={t.report}/></div>
+  </section>}
+ </div>;
+}
+
+function Stat({label,value,kind}:{label:string,value:number,kind:string}){return <div className={styles.stat} data-kind={kind}><span>{label}</span><strong>{value}</strong></div>}
+function splitLines(text:string){return text.split(/\r\n|\r|\n/);}
+function NumberedLines({text,start,count}:{text:string;start:number|null;count:number}){const lines=count===0?[]:splitLines(text);return <div className={styles.numberedLines}>{lines.map((line,index)=><div className={styles.numberedLine} key={index}><span className={styles.lineNumber}>{start===null?"":start+index}</span><span className={styles.lineText}>{line||" "}</span></div>)}</div>}
+function DiffRow({block,mode,labels}:{block:DiffBlock;mode:Mode;labels:{added:string;removed:string;changed:string;unchanged:string}}){
+ const symbol=block.status==="added"?"+":block.status==="removed"?"-":block.status==="changed"?"~":"="; const label=labels[block.status];
+ return <article className={styles.diffBlock} data-status={block.status} data-testid={`tool043-block-${block.id}`}>
+  <header><strong>{symbol} {label}</strong><span>A {range(block.aStart,block.aCount)} · B {range(block.bStart,block.bCount)}</span></header>
+  {block.status==="changed"&&mode==="word"?<div className={styles.wordGrid}><div><small>A</small><pre>{block.wordPartsA?.map((p,i)=><mark key={i} data-status={p.status}>{p.text}</mark>)}</pre></div><div><small>B</small><pre>{block.wordPartsB?.map((p,i)=><mark key={i} data-status={p.status}>{p.text}</mark>)}</pre></div></div>:<div className={styles.lineGrid}><div><small>A</small><NumberedLines text={block.aText} start={block.aStart} count={block.aCount}/></div><div><small>B</small><NumberedLines text={block.bText} start={block.bStart} count={block.bCount}/></div></div>}
+ </article>;
+}

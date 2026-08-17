@@ -1,0 +1,15 @@
+TOOL043 CHECKER LIMIT FIX V4
+Date: 2026-08-17
+
+원인:
+- 초기 상태가 A/B empty workspace이며 textarea는 활성화 후 생성된다.
+- limit checker의 injectText helper가 초기 상태에서 textarea가 이미 존재한다고 가정하여
+  tool043-input-a/b를 찾지 못하고 30초 timeout 발생.
+- Core/Boundary/Regression에서 이미 동일한 확정 state transition으로 정합됨.
+
+수정:
+- tests/helpers/tool-043.ts의 injectText helper만 수정.
+- 대상 textarea가 없으면 testId suffix(-a/-b)를 기준으로 해당 empty workspace를 먼저 클릭하여
+  editor를 활성화한 뒤 기존 native value setter injection을 수행.
+- 제품 코드/DOM/CSS/state 변경 없음.
+- limit 테스트 자체의 기대값은 변경하지 않음.

@@ -1,0 +1,11 @@
+[
+ {"id":"same","a":"alpha\nbeta","b":"alpha\nbeta","stats":{"added":0,"removed":0,"changed":0}},
+ {"id":"add","a":"A\nB","b":"A\nX\nB","stats":{"added":1,"removed":0,"changed":0}},
+ {"id":"remove","a":"A\nX\nB","b":"A\nB","stats":{"added":0,"removed":1,"changed":0}},
+ {"id":"change","a":"가격 1000원","b":"가격 1200원","stats":{"added":0,"removed":0,"changed":1}},
+ {"id":"blank","a":"A\n\nB","b":"A\nB","stats":{"added":0,"removed":1,"changed":0}},
+ {"id":"punctuation","a":"안녕하세요.","b":"안녕하세요!","stats":{"added":0,"removed":0,"changed":1}},
+ {"id":"ja","a":"契約期間は1年です","b":"契約期間は2年です","stats":{"added":0,"removed":0,"changed":1}},
+ {"id":"emoji","a":"A🙂B","b":"A🙃B","stats":{"added":0,"removed":0,"changed":1}},
+ {"id":"one-sided","a":"","b":"new","stats":{"added":1,"removed":0,"changed":0}}
+]

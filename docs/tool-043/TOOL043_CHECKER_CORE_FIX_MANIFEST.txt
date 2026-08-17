@@ -1,0 +1,15 @@
+TOOL043 CHECKER CORE FIX
+Date: 2026-08-17
+
+원인:
+- A drag/drop 후 A만 active editor로 전환되고 B는 empty workspace를 유지하는 제품 상태가 확정되어 있음.
+- 기존 core checker가 B textarea(tool043-input-b)의 존재를 요구하여 CHECKER-HARNESS FAIL 발생.
+
+수정:
+- drag/drop core assertion을 B textarea 존재/빈값 검사에서 B empty workspace(tool043-empty-b) 표시 검사로 변경.
+- 제품 코드/DOM/state는 변경하지 않음.
+
+재검수 대상:
+- desktop-chromium drag/drop
+- mobile-chromium drag/drop
+- Core 전체

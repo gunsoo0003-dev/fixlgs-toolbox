@@ -1,0 +1,12 @@
+TOOL043 CHECKER BOUNDARY FIX V2
+Date: 2026-08-17
+
+원인:
+- reset은 제품의 확정 상태전이에 따라 A/B 입력값을 지우고 초기 empty workspace로 복귀한다.
+- 기존 boundary checker가 reset 후 textarea(tool043-input-a/b) 존재를 요구하여 CHECKER-HARNESS FAIL 발생.
+
+수정:
+- reset 후 A/B textarea 값 검사 제거.
+- reset 후 tool043-empty-a / tool043-empty-b가 표시되는지 검사.
+- 결과 영역 제거와 run disabled 검사는 유지.
+- 제품 코드는 변경하지 않음.

@@ -1,0 +1,4 @@
+import type { Page } from "@playwright/test";
+export const route043=(locale="ko")=>`/${locale}/text-diff-compare`;
+export async function setTexts(page:Page,a:string,b:string){await page.getByTestId("tool043-empty-a").click();await page.getByTestId("tool043-input-a").fill(a);await page.getByTestId("tool043-empty-b").click();await page.getByTestId("tool043-input-b").fill(b);}
+export async function injectText(page:Page,testId:string,value:string){const side=testId.endsWith("-a")?"a":"b";const input=page.getByTestId(testId);if(await input.count()===0){await page.getByTestId(`tool043-empty-${side}`).click();}await input.evaluate((el,v)=>{const node=el as HTMLTextAreaElement;const setter=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,"value")?.set;if(!setter)throw new Error("NATIVE_VALUE_SETTER_NOT_FOUND");setter.call(node,v);node.dispatchEvent(new Event("input",{bubbles:true}));},value);}

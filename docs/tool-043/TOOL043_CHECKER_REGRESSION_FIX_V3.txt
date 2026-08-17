@@ -1,0 +1,13 @@
+TOOL043 CHECKER REGRESSION FIX V3
+Date: 2026-08-17
+
+원인:
+- 043 초기 상태가 A/B empty workspace로 확정되어 있음.
+- 기존 regression checker가 초기 진입 직후 A/B textarea(tool043-input-a/b) 존재를 요구함.
+- 따라서 제품 상태와 checker expectation 불일치로 desktop/mobile 2건 FAIL.
+
+수정:
+- 초기 mobile usability 검사에서 A/B textarea visible 요구 제거.
+- A/B empty workspace 표시 확인.
+- A/B file input 존재 및 run control 존재를 확인.
+- 제품 코드/DOM/state는 변경하지 않음.
