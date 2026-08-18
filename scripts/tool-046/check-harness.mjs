@@ -1,0 +1,30 @@
+import fs from 'node:fs';let fail=0;const check=(n,o)=>{console.log(`[${o?'PASS':'FAIL'}] ${n}`);if(!o)fail++};
+const product=fs.readFileSync('components/date-add-subtract-calculator-tool.tsx','utf8');
+const ids=new Set([...product.matchAll(/data-testid="([^"]+)"/g)].map(x=>x[1]));
+const mountedInitially=new Set(['tool046-root','tool046-workspace','tool046-start-date','tool046-direction','tool046-unit','tool046-quantity','tool046-reset','tool046-calculate','tool046-result']);
+const resultOnly=new Set(['tool046-result-date','tool046-weekday','tool046-copy']);
+const errorOnly=new Set(['tool046-error']);
+for(const kind of ['preflight','core','boundary','feature','regression','limit']){
+  const f=`tests/tool-046-${kind}.spec.ts`;const s=fs.readFileSync(f,'utf8');
+  check(`${kind} no skip/fixme/only`,!/\.skip\(|\.fixme\(|test\.only\(/.test(s));
+  for(const m of s.matchAll(/getByTestId\(["']([^"']+)["']\)/g))check(`${kind} selector ${m[1]} exists in product`,ids.has(m[1]));
+  check(`${kind} canonical route`,s.includes('date-add-subtract-calculator'));
+}
+const pre=fs.readFileSync('tests/tool-046-preflight.spec.ts','utf8');
+for(const id of mountedInitially)check(`preflight covers initially-mounted ${id}`,pre.includes(id));
+for(const id of resultOnly)check(`preflight asserts result-only absent ${id}`,pre.includes(id));
+check('preflight validates calculate/reset actionability',pre.includes('toBeEnabled()')&&pre.includes('tool046-calculate')&&pre.includes('tool046-reset'));
+const feature=fs.readFileSync('tests/tool-046-feature.spec.ts','utf8');
+check('feature covers reset state contract',feature.includes('tool046-reset')&&feature.includes('toHaveValue("add")')&&feature.includes('toHaveValue("day")')&&feature.includes('toHaveValue("7")'));
+check('feature covers quick preset result',feature.includes('+30 days')&&feature.includes('2026-09-15'));
+check('feature covers result copy',feature.includes('tool046-copy')&&feature.includes('clipboard'));
+const boundary=fs.readFileSync('tests/tool-046-boundary.spec.ts','utf8');
+for(const id of errorOnly)check(`boundary covers ${id}`,boundary.includes(id));
+check('boundary verifies error/result exclusivity',boundary.includes('tool046-result-date')&&boundary.includes('toHaveCount(0)'));
+const fixture=JSON.parse(fs.readFileSync('tests/fixtures/tool-046/cases.json','utf8'));
+check('fixture count >= 8',fixture.length>=8);check('month-end fixture',fixture.some(x=>x.start==='2026-01-31'&&x.expected==='2026-02-28'));check('leap-year fixture',fixture.some(x=>x.start==='2028-02-29'&&x.expected==='2029-02-28'));check('subtract fixture',fixture.some(x=>x.direction==='subtract'));check('week fixture',fixture.some(x=>x.unit==='week'));
+const runner=fs.readFileSync('scripts/tool-046/run-validation-full.mjs','utf8');
+for(const mode of ['preflight','core-only','boundary-only','feature-only','regression-only','limit-only'])check(`runner supports ${mode}`,runner.includes(`mode==='${mode}'`)||mode==='preflight'&&runner.includes("mode==='preflight'"));
+check('spawn error evidence',runner.includes('SPAWN_ERROR='));check('dependency preflight',runner.includes('dependencyPreflight'));check('FINAL keeps independent stages',runner.includes('FINAL deliberately keeps running independent stages after a failure'));
+const config=fs.readFileSync('playwright.tool046.config.ts','utf8');check('desktop project exists',config.includes('desktop-chromium'));check('mobile project exists',config.includes('mobile-chromium'));check('isolated port 41746',config.includes('41746'));check('retries disabled',config.includes('retries:0'));
+process.exitCode=fail?1:0;

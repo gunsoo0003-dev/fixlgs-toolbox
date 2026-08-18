@@ -1,0 +1,10 @@
+[
+  {"start":"2026-08-16","direction":"add","unit":"day","quantity":10,"expected":"2026-08-26"},
+  {"start":"2026-08-16","direction":"subtract","unit":"week","quantity":2,"expected":"2026-08-02"},
+  {"start":"2026-01-31","direction":"add","unit":"month","quantity":1,"expected":"2026-02-28"},
+  {"start":"2028-01-31","direction":"add","unit":"month","quantity":1,"expected":"2028-02-29"},
+  {"start":"2026-02-28","direction":"add","unit":"year","quantity":1,"expected":"2027-02-28"},
+  {"start":"2028-02-29","direction":"add","unit":"year","quantity":1,"expected":"2029-02-28"},
+  {"start":"2026-12-31","direction":"add","unit":"day","quantity":1,"expected":"2027-01-01"},
+  {"start":"2026-08-16","direction":"add","unit":"day","quantity":0,"expected":"2026-08-16"}
+]
