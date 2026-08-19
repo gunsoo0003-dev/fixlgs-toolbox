@@ -482,7 +482,17 @@
     "test:toolbox:046-feature-only": "node scripts/tool-046/run-validation-full.mjs feature-only",
     "test:toolbox:046-regression-only": "node scripts/tool-046/run-validation-full.mjs regression-only",
     "test:toolbox:046-limit-only": "node scripts/tool-046/run-validation-full.mjs limit-only",
-    "test:toolbox:046": "node scripts/tool-046/run-validation-full.mjs final"
+    "test:toolbox:046": "node scripts/tool-046/run-validation-full.mjs final",
+    "tool047:static": "node scripts/tool-047/run-static-validation.mjs",
+    "tool047:preflight": "node scripts/tool-047/run-validation-full.mjs preflight",
+    "tool047:core": "node scripts/tool-047/run-validation-full.mjs core-only",
+    "tool047:boundary": "node scripts/tool-047/run-validation-full.mjs boundary-only",
+    "tool047:feature": "node scripts/tool-047/run-validation-full.mjs feature-only",
+    "tool047:regression": "node scripts/tool-047/run-validation-full.mjs regression-only",
+    "tool047:limit": "node scripts/tool-047/run-validation-full.mjs limit-only",
+    "tool047:final": "node scripts/tool-047/run-validation-full.mjs final",
+    "check:tool047-static": "node scripts/tool-047/run-static-validation.mjs",
+    "check:tool047-harness": "node scripts/tool-047/check-harness.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

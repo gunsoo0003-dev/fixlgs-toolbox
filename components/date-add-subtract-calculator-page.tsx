@@ -14,7 +14,7 @@ export function DateAddSubtractCalculatorPage({locale}:{locale:Locale}){
  const t=copy[locale],url=`https://toolbox.fixlgs.com/${locale}/date-add-subtract-calculator`;
  const related=[
   {n:"045",slug:"date-difference-calculator",name:locale==="ko"?"날짜 차이 계산기":locale==="ja"?"日付差計算ツール":"Date Difference Calculator",available:true},
-  {n:"047",slug:"dday-anniversary-calculator",name:locale==="ko"?"디데이·기념일 계산기":locale==="ja"?"D-day・記念日計算ツール":"D-day & Anniversary Calculator",available:false},
+  {n:"047",slug:"dday-anniversary-calculator",name:locale==="ko"?"디데이·기념일 계산기":locale==="ja"?"Dデイ・記念日計算ツール":"D-Day & Anniversary Calculator",available:true},
   {n:"050",slug:"business-day-calculator",name:locale==="ko"?"평일·영업일 계산기":locale==="ja"?"平日・営業日計算ツール":"Weekday & Business Day Calculator",available:false},
   {n:"051",slug:"time-calculator",name:locale==="ko"?"시간 계산기":locale==="ja"?"時間計算ツール":"Time Calculator",available:false}
  ];

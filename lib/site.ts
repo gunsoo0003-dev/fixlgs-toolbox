@@ -255,6 +255,7 @@ export const tool043Slug = "text-diff-compare" as const;
 export const tool044Slug = "keyword-frequency-duplicate-analyzer" as const;
 export const tool045Slug = "date-difference-calculator" as const;
 export const tool046Slug = "date-add-subtract-calculator" as const;
+export const tool047Slug = "dday-anniversary-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -332,6 +333,8 @@ export const tool045Titles: Record<Locale, string> = { ko: "날짜 차이 계산
 export const tool045Descriptions: Record<Locale, string> = { ko: "두 날짜 사이의 정확한 일수와 달력 기간을 계산하고 시작일 포함 여부, 평일·주말 수를 확인하세요.", en: "Calculate exact days and calendar duration between two dates, with optional start-date inclusion plus weekday and weekend counts.", ja: "2つの日付の日数差とカレンダー期間を計算し、開始日を含める設定や平日・週末の日数を確認できます。" };
 export const tool046Titles: Record<Locale, string> = { ko: "날짜 더하기·빼기 계산기", en: "Date Add & Subtract Calculator", ja: "日付加算・減算計算ツール" };
 export const tool046Descriptions: Record<Locale, string> = { ko: "기준 날짜에 일·주·개월·년을 더하거나 빼서 결과 날짜와 요일을 확인하세요.", en: "Add or subtract days, weeks, months, or years from a date and see the resulting date and weekday.", ja: "基準日に日・週・か月・年を加算または減算し、結果の日付と曜日を確認できます。" };
+export const tool047Titles: Record<Locale, string> = { ko: "디데이·기념일 계산기", en: "D-Day & Anniversary Calculator", ja: "Dデイ・記念日計算ツール" };
+export const tool047Descriptions: Record<Locale, string> = { ko: "특정 날짜까지 남은 D-day와 지난 날짜, 다음 생일, 100일·주년 기념일을 계산하세요.", en: "Calculate D-Day, elapsed days, the next birthday, and 100-day or yearly anniversary milestones.", ja: "目標日までのDデイ、経過日数、次の誕生日、100日・周年記念日を計算できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -862,6 +865,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool047Titles,
+      description: tool047Descriptions,
+      href: `/${"ko"}/${tool047Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1003,7 +1013,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "date-time") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

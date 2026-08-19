@@ -1,0 +1,8 @@
+import {defineConfig,devices} from '@playwright/test';
+export default defineConfig({
+  testDir:'./tests',timeout:30_000,retries:0,workers:1,
+  reporter:[['list'],['html',{outputFolder:'docs/tool-047/results/playwright-report',open:'never'}]],
+  use:{baseURL:'http://127.0.0.1:41747',trace:'retain-on-failure'},
+  webServer:{command:'npm run dev -- --hostname 127.0.0.1 --port 41747',url:'http://127.0.0.1:41747/ko/dday-anniversary-calculator',reuseExistingServer:false,timeout:30_000},
+  projects:[{name:'desktop-chromium',use:{...devices['Desktop Chrome']}},{name:'mobile-chromium',use:{...devices['Pixel 5']}}]
+});
