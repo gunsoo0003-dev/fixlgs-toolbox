@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+for(const locale of ['ko','en','ja'])test(`TOOL058 ${locale} route/root`,async({page})=>{await page.goto(`/${locale}/data-cooking-unit-converter`);await expect(page.getByTestId('tool058-root')).toBeVisible();await expect(page.getByTestId('tool058-workspace')).toBeVisible();await expect(page.getByTestId('tool058-tab-data')).toBeVisible();await expect(page.getByTestId('tool058-tab-cooking')).toBeVisible();});

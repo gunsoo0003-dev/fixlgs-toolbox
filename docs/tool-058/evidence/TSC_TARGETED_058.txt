@@ -1,0 +1,15 @@
+app/[locale]/data-cooking-unit-converter/page.tsx(1,29): error TS2307: Cannot find module 'next' or its corresponding type declarations.
+app/[locale]/data-cooking-unit-converter/page.tsx(2,24): error TS2307: Cannot find module 'next/navigation' or its corresponding type declarations.
+app/[locale]/data-cooking-unit-converter/page.tsx(3,35): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+app/[locale]/data-cooking-unit-converter/page.tsx(4,51): error TS2307: Cannot find module '@/components/tool-058-data-cooking-unit-converter-page' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(1,18): error TS2307: Cannot find module 'next/link' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(2,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(3,47): error TS2307: Cannot find module '@/components/tool-058-data-cooking-unit-converter' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(4,30): error TS2307: Cannot find module '@/components/toolbox-faq-list' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(5,35): error TS2307: Cannot find module '@/components/toolbox-subpage-shell' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter-page.tsx(6,20): error TS2307: Cannot find module '@/components/tool-058-data-cooking-unit-converter.module.css' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter.tsx(2,32): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter.tsx(3,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter.tsx(4,412): error TS2307: Cannot find module '@/lib/tool-058-units' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter.tsx(5,20): error TS2307: Cannot find module './tool-058-data-cooking-unit-converter.module.css' or its corresponding type declarations.
+components/tool-058-data-cooking-unit-converter.tsx(12,51): error TS2538: Type 'Locale' cannot be used as an index type.

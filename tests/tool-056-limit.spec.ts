@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL056 exact 1e15 accepted and over-limit blocked',async({page})=>{await page.goto('/en/weight-temperature-pressure-converter');await page.getByTestId('tool056-value').fill('1000000000000000');await expect(page.getByTestId('tool056-error')).toHaveCount(0);await page.getByTestId('tool056-value').fill('1000000000000001');await expect(page.getByTestId('tool056-error')).toContainText('1e+15');});
+test('TOOL056 precision maximum is eight',async({page})=>{await page.goto('/en/weight-temperature-pressure-converter');await expect(page.getByTestId('tool056-precision')).toHaveAttribute('max','8');});

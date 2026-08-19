@@ -1,0 +1,45 @@
+'use client';
+import {useMemo,useState} from 'react';
+import type {Locale} from '@/lib/site';
+import {TOOL057_DEFAULT_PRECISION,TOOL057_DEFAULTS,TOOL057_LIMITS,TOOL057_UNITS,convertTool057,formatTool057,getTool057Unit,parseTool057Number,summarizeTool057,type Tool057Category,type Tool057Group} from '@/lib/tool-057-units';
+import styles from './tool-057-speed-fuel-energy-converter.module.css';
+const copy={
+ ko:{speed:'속도',fuel:'연비',energyPower:'에너지·전력',energy:'에너지',power:'전력·마력',local:'입력값과 변환 결과는 서버로 전송하거나 저장하지 않고 현재 브라우저에서만 계산합니다.',value:'입력값',from:'변환 전',to:'변환 후',swap:'단위 교환',reset:'초기화',copy:'결과 복사',copied:'복사됨',common:'대표 단위 동시 표시',precision:'정밀도',advanced:'표시 설정',empty:'변환할 숫자를 입력하세요.',invalid:'올바른 숫자를 입력하세요.',negative:'측정값은 0 이상으로 입력하세요.',fuelPositive:'연비는 0보다 큰 값을 입력하세요.',limit:`입력값은 ${TOOL057_LIMITS.maxAbsInput.toExponential(0)} 이하로 입력하세요.`,fuelHint:'km/L·MPG는 높을수록 효율이 좋고 L/100km는 낮을수록 효율이 좋습니다.',dimensionHint:'kW는 전력, kWh는 에너지입니다. 서로 다른 그룹이므로 직접 교차 변환하지 않습니다.',hpHint:'hp와 PS는 서로 다른 마력 단위입니다.',result:'변환 결과',quick:'빠른 단위'},
+ en:{speed:'Speed',fuel:'Fuel Economy',energyPower:'Energy & Power',energy:'Energy',power:'Power & Horsepower',local:'Values and conversion results are calculated only in this browser and are not sent to or stored on a server.',value:'Value',from:'From',to:'To',swap:'Swap units',reset:'Reset',copy:'Copy result',copied:'Copied',common:'Common unit results',precision:'Precision',advanced:'Display settings',empty:'Enter a number to convert.',invalid:'Enter a valid number.',negative:'Use a value of zero or greater.',fuelPositive:'Fuel economy must be greater than zero.',limit:`Enter a value no greater than ${TOOL057_LIMITS.maxAbsInput.toExponential(0)}.`,fuelHint:'Higher km/L or MPG means better economy; lower L/100km means better economy.',dimensionHint:'kW is power and kWh is energy. They are different groups and are not cross-converted.',hpHint:'hp and PS are different horsepower units.',result:'Conversion result',quick:'Quick units'},
+ ja:{speed:'速度',fuel:'燃費',energyPower:'エネルギー・電力',energy:'エネルギー',power:'電力・馬力',local:'入力値と変換結果はサーバーに送信・保存せず、このブラウザ内だけで計算します。',value:'値',from:'変換前',to:'変換後',swap:'単位を入れ替え',reset:'リセット',copy:'結果をコピー',copied:'コピー済み',common:'代表単位を同時表示',precision:'精度',advanced:'表示設定',empty:'変換する数値を入力してください。',invalid:'有効な数値を入力してください。',negative:'測定値は0以上で入力してください。',fuelPositive:'燃費は0より大きい値を入力してください。',limit:`入力値は${TOOL057_LIMITS.maxAbsInput.toExponential(0)}以下にしてください。`,fuelHint:'km/L・MPGは高いほど効率が良く、L/100kmは低いほど効率が良い指標です。',dimensionHint:'kWは電力、kWhはエネルギーです。異なるグループなので直接相互変換しません。',hpHint:'hpとPSは異なる馬力単位です。',result:'変換結果',quick:'クイック単位'}
+} as const;
+function errorMessage(code:string,t:(typeof copy)[Locale]){return code==='NEGATIVE_VALUE'?t.negative:code==='FUEL_NON_POSITIVE'?t.fuelPositive:code==='VALUE_LIMIT'?t.limit:t.invalid}
+function categoryForGroup(group:Tool057Group):Tool057Category{return group==='speed'?'speed':group==='fuel'?'fuel':'energyPower'}
+export function Tool057SpeedFuelEnergyConverter({locale}:{locale:Locale}){
+ const t=copy[locale];const [group,setGroup]=useState<Tool057Group>('speed');const [raw,setRaw]=useState('100');const [from,setFrom]=useState(TOOL057_DEFAULTS.speed.from);const [to,setTo]=useState(TOOL057_DEFAULTS.speed.to);const [precision,setPrecision]=useState(TOOL057_DEFAULT_PRECISION);const [status,setStatus]=useState('');
+ const parsed=parseTool057Number(raw);let error='';let result:number|null=null;if(raw.trim()==='')error=t.empty;else if(parsed===null)error=t.invalid;else{try{result=convertTool057(parsed,group,from,to)}catch(e){error=errorMessage(e instanceof Error?e.message:'',t)}}
+ const summary=useMemo(()=>{if(parsed===null)return[];try{return summarizeTool057(parsed,group,from)}catch{return[]}},[parsed,group,from]);
+ function switchGroup(next:Tool057Group){setGroup(next);setFrom(TOOL057_DEFAULTS[next].from);setTo(TOOL057_DEFAULTS[next].to);setRaw(next==='fuel'?'12.5':next==='energy'?'10':next==='power'?'300':'100');setStatus('')}
+ function switchCategory(next:Tool057Category){if(next==='speed')switchGroup('speed');else if(next==='fuel')switchGroup('fuel');else switchGroup(group==='power'?'power':'energy')}
+ function swap(){setFrom(to);setTo(from);setStatus('')}
+ function reset(){switchGroup('speed');setPrecision(TOOL057_DEFAULT_PRECISION)}
+ async function copyResult(){if(result===null)return;const fromUnit=getTool057Unit(group,from),toUnit=getTool057Unit(group,to);const text=`${raw} ${fromUnit.symbol} = ${formatTool057(result,precision)} ${toUnit.symbol}`;try{await navigator.clipboard.writeText(text);setStatus(t.copied)}catch{setStatus('')}}
+ const units=TOOL057_UNITS[group],toUnit=getTool057Unit(group,to),fromUnit=getTool057Unit(group,from),category=categoryForGroup(group);
+ return <div className={styles.root} data-testid="tool057-root" data-group={group}>
+  <div className={styles.localNotice}><strong>LOCAL</strong><span>{t.local}</span></div>
+  <div className={styles.tabs} role="tablist" aria-label="category">{(['speed','fuel','energyPower'] as Tool057Category[]).map(c=><button key={c} type="button" role="tab" aria-selected={category===c} className={`${styles.tab} ${category===c?styles.tabActive:''}`} onClick={()=>switchCategory(c)} data-testid={`tool057-tab-${c}`}>{t[c]}</button>)}</div>
+  {category==='energyPower'&&<div className={styles.subTabs} role="tablist" aria-label="energy or power"><button type="button" role="tab" aria-selected={group==='energy'} className={`${styles.subTab} ${group==='energy'?styles.subTabActive:''}`} onClick={()=>switchGroup('energy')} data-testid="tool057-subtab-energy">{t.energy}</button><button type="button" role="tab" aria-selected={group==='power'} className={`${styles.subTab} ${group==='power'?styles.subTabActive:''}`} onClick={()=>switchGroup('power')} data-testid="tool057-subtab-power">{t.power}</button></div>}
+  <section className={styles.workspace} data-testid="tool057-workspace">
+   <div className={styles.card}>
+    <div className={styles.inputGrid}>
+     <label className={`${styles.field} ${styles.valueField}`}>{t.value}<input inputMode="decimal" value={raw} onChange={e=>{setRaw(e.target.value);setStatus('')}} aria-invalid={Boolean(error)} data-testid="tool057-value"/></label>
+     <label className={styles.field}>{t.from}<select value={from} onChange={e=>{setFrom(e.target.value);setStatus('')}} data-testid="tool057-from">{units.map(u=><option key={u.id} value={u.id}>{u.names[locale]} ({u.symbol})</option>)}</select></label>
+     <button type="button" className={styles.swap} onClick={swap} aria-label={t.swap} title={t.swap} data-testid="tool057-swap">⇄</button>
+     <label className={styles.field}>{t.to}<select value={to} onChange={e=>{setTo(e.target.value);setStatus('')}} data-testid="tool057-to">{units.map(u=><option key={u.id} value={u.id}>{u.names[locale]} ({u.symbol})</option>)}</select></label>
+    </div>
+    <div><p className={styles.summaryTitle}>{t.quick}</p><div className={styles.quickRow}>{TOOL057_DEFAULTS[group].summary.map(id=>{const u=getTool057Unit(group,id);return <button type="button" key={id} className={`${styles.preset} ${to===id?styles.presetActive:''}`} onClick={()=>setTo(id)}>{u.symbol}</button>})}</div></div>
+    {group==='fuel'&&<p className={styles.infoHint}>{t.fuelHint}</p>}
+    {(group==='energy'||group==='power')&&<p className={styles.infoHint}>{t.dimensionHint}{group==='power'?` ${t.hpHint}`:''}</p>}
+    <div className={styles.actionRow}><button type="button" className={styles.button} onClick={reset} data-testid="tool057-reset">{t.reset}</button><button type="button" className={styles.primaryButton} onClick={copyResult} disabled={result===null} data-testid="tool057-copy">{t.copy}</button></div>
+    {error&&<p className={styles.error} role="alert" data-testid="tool057-error">{error}</p>}
+   </div>
+   <details className={styles.advanced}><summary>{t.advanced} · {t.precision}</summary><div className={styles.precisionRow}><input aria-label={t.precision} type="range" min="0" max={TOOL057_LIMITS.maxPrecision} value={precision} onChange={e=>setPrecision(Number(e.target.value))} data-testid="tool057-precision"/><span className={styles.precisionValue}>{precision}</span></div></details>
+   <section className={styles.resultCard} aria-live="polite" data-testid="tool057-result"><div className={styles.resultHead}><p className={styles.resultLabel}>RESULT · {t.result}</p></div>{result===null?<p className={styles.hint}>{error||t.empty}</p>:<><p className={styles.resultValue} data-testid="tool057-main-result">{formatTool057(result,precision)}<span>{toUnit.symbol}</span></p><p className={styles.equation}>{formatTool057(parsed!,precision)} {fromUnit.symbol} → {toUnit.symbol}</p><p className={styles.summaryTitle}>{t.common}</p><div className={styles.summaryGrid} data-testid="tool057-summary">{summary.map(({unit,value})=><div className={styles.summaryItem} key={unit.id} data-unit={unit.id}><strong>{formatTool057(value,precision)}</strong><span>{unit.names[locale]} · {unit.symbol}</span></div>)}</div></>}{status&&<p className={styles.status} role="status">{status}</p>}</section>
+  </section>
+ </div>
+}

@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};
+const required=['lib/tool-058-units.ts','components/tool-058-data-cooking-unit-converter.tsx','components/tool-058-data-cooking-unit-converter.module.css','components/tool-058-data-cooking-unit-converter-page.tsx','app/[locale]/data-cooking-unit-converter/page.tsx','tests/fixtures/tool-058/cases.json'];
+for(const f of required)c(`required ${f}`,fs.existsSync(f));
+const lib=fs.readFileSync('lib/tool-058-units.ts','utf8');for(const t of ['maxAbsInput:1e15','maxPrecision:8','maxSummaryUnits:6','cupMl:240','tablespoonMl:15','teaspoonMl:5',"id:'bit'","id:'byte'","id:'kb'","id:'tb'"])c(`contract ${t}`,lib.includes(t));
+const route=fs.readFileSync('app/[locale]/data-cooking-unit-converter/page.tsx','utf8');c('canonical/hreflang route',route.includes("'x-default':'/ko/data-cooking-unit-converter'")&&route.includes("canonical:path"));
+const page=fs.readFileSync('components/tool-058-data-cooking-unit-converter-page.tsx','utf8');c('FAQPage actual FAQ',page.includes('"@type":"FAQPage"')&&page.includes('t.faqs.map'));c('related 055-057 and next 059',['055','056','057','059'].every(n=>page.includes(`['${n}'`)));
+const product=fs.readFileSync('components/tool-058-data-cooking-unit-converter.tsx','utf8');c('no server/API fetch',!/\bfetch\s*\(|axios|XMLHttpRequest|WebSocket/.test(product));c('category split',product.includes("'data'")&&product.includes("'cooking'"));c('notation split',product.includes("'decimal'")&&product.includes("'binary'"));
+const globals=fs.readFileSync('app/globals.css','utf8');c('no global TOOL058 css contamination',!/tool058|tool-058/i.test(globals));
+console.log(`RESULT SOURCE PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

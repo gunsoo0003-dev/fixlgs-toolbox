@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL058 data and cooking registries stay isolated',async({page})=>{await page.goto('/en/data-cooking-unit-converter');await expect(page.getByTestId('tool058-from').locator('option')).toHaveCount(6);await page.getByTestId('tool058-tab-cooking').click();await expect(page.getByTestId('tool058-from').locator('option')).toHaveCount(4);await expect(page.getByTestId('tool058-from')).not.toContainText('Gigabyte');});

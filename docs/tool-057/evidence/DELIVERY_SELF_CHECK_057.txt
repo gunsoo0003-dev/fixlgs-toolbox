@@ -1,0 +1,107 @@
+
+=== check-source.mjs ===
+PASS required lib/tool-057-units.ts
+PASS required components/tool-057-speed-fuel-energy-converter.tsx
+PASS required components/tool-057-speed-fuel-energy-converter.module.css
+PASS required components/tool-057-speed-fuel-energy-converter-page.tsx
+PASS required app/[locale]/speed-fuel-energy-converter/page.tsx
+PASS required tests/fixtures/tool-057/cases.json
+PASS contract maxAbsInput:1e15
+PASS contract maxPrecision:8
+PASS contract factor:0.44704
+PASS contract factor:1852/3600
+PASS contract 1.609344/3.785411784
+PASS contract 1.609344/4.54609
+PASS contract factor:3.6e6
+PASS contract factor:745.6998715822702
+PASS contract factor:735.49875
+PASS ui data-testid={`tool057-tab-${c}`}
+PASS ui tool057-subtab-energy
+PASS ui tool057-subtab-power
+PASS ui kW
+PASS ui kWh
+PASS ui hp
+PASS ui PS
+PASS ui aria-live="polite"
+PASS US/UK MPG in unit registry
+PASS canonical
+PASS hreflang
+INFO common protection file unavailable: app/globals.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/global-base.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/toolbox-common.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/toolbox-detail-common.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/theme.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/toolbox-compat.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/legacy-site-sealed.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+INFO common protection file unavailable: styles/legacy-tools-sealed.css (not packaged; verified separately by COMMON_PROTECTION_VERIFY_057.txt)
+RESULT SOURCE PASS=26 FAIL=0
+
+=== check-design.mjs ===
+PASS TOOL055-derived structure .root{
+PASS TOOL055-derived structure .localNotice{
+PASS TOOL055-derived structure .tabs{
+PASS TOOL055-derived structure .workspace{
+PASS TOOL055-derived structure .inputGrid{
+PASS TOOL055-derived structure .primaryButton{
+PASS TOOL055-derived structure .summaryGrid{
+PASS TOOL055-derived structure @media(max-width:820px)
+PASS TOOL055-derived structure @media(max-width:520px)
+INFO MAIN055 live file not included in delivery package; DESIGN_CODE_CHECK_057.md records baseline comparison evidence.
+PASS 057 energy/power subtab local module
+PASS no important override
+PASS local module only
+PASS common HOW TO reused
+PASS common info band reused
+PASS common FAQ reused
+PASS mobile overflow guards
+PASS primary black
+RESULT DESIGN PASS=17 FAIL=0
+
+=== check-harness.mjs ===
+PASS selector tool057-root
+PASS selector tool057-workspace
+PASS selector tool057-value
+PASS selector tool057-from
+PASS selector tool057-to
+PASS selector tool057-swap
+PASS selector tool057-reset
+PASS selector tool057-copy
+PASS selector tool057-error
+PASS selector tool057-result
+PASS selector tool057-main-result
+PASS selector tool057-summary
+PASS selector tool057-precision
+PASS fixtures
+PASS logic checker
+RESULT HARNESS_STRUCTURE PASS=15 FAIL=0
+
+=== check-logic.mjs ===
+PASS 100kmh=62.1371mph
+PASS 100kmh=27.7778ms
+PASS 1knot=1.852kmh
+PASS 30 US MPG ~= 7.84L/100km
+PASS 8L/100km=12.5km/L
+PASS US UK MPG separated
+PASS 1kWh=3.6MJ
+PASS 1kWh=3.6MJ joules
+PASS 1hp~=745.7W
+PASS 1PS~=735.5W
+PASS hp PS separated
+PASS comma normalize
+PASS summary max6
+PASS limits
+PASS fuel zero blocked
+PASS negative blocked
+PASS over limit blocked
+PASS zero allowed speed
+PASS zero allowed energy
+PASS zero allowed power
+PASS roundtrip speed
+PASS roundtrip fuel
+PASS roundtrip energy
+PASS roundtrip power
+RESULT LOGIC PASS=24 FAIL=0
+(node:1341) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+TOOL057 STATIC PASS | fail=0

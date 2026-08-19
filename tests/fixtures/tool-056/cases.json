@@ -1,0 +1,23 @@
+{
+  "source": "TOOL056 제작전달서 + NIST SP 811 / NIST OWM conversion references",
+  "mass": [
+    {"value":1,"from":"kg","to":"lb","expected":2.2046226218487757},
+    {"value":1,"from":"lb","to":"kg","expected":0.45359237},
+    {"value":5,"from":"kg","to":"oz","expected":176.36980974790285}
+  ],
+  "temperature": [
+    {"value":-40,"from":"c","to":"f","expected":-40},
+    {"value":0,"from":"c","to":"f","expected":32},
+    {"value":100,"from":"c","to":"f","expected":212},
+    {"value":0,"from":"c","to":"k","expected":273.15},
+    {"value":0,"from":"k","to":"c","expected":-273.15}
+  ],
+  "pressure": [
+    {"value":1,"from":"atm","to":"pa","expected":101325},
+    {"value":1,"from":"bar","to":"kpa","expected":100},
+    {"value":1,"from":"psi","to":"pa","expected":6894.757293168},
+    {"value":101.325,"from":"kpa","to":"atm","expected":1}
+  ],
+  "precision": [0,2,4,8],
+  "limits": {"maxAbsInput":1000000000000000,"maxPrecision":8,"kelvinMin":0}
+}

@@ -1,0 +1,110 @@
+
+=== check-source.mjs ===
+PASS required lib/tool-056-units.ts
+PASS required components/tool-056-weight-temperature-pressure-converter.tsx
+PASS required components/tool-056-weight-temperature-pressure-converter.module.css
+PASS required components/tool-056-weight-temperature-pressure-converter-page.tsx
+PASS required app/[locale]/weight-temperature-pressure-converter/page.tsx
+PASS required tests/tool-056-preflight.spec.ts
+PASS required tests/tool-056-design.spec.ts
+PASS required tests/tool-056-core.spec.ts
+PASS required tests/tool-056-feature.spec.ts
+PASS required tests/tool-056-temperature.spec.ts
+PASS required tests/tool-056-pressure.spec.ts
+PASS required tests/tool-056-mass.spec.ts
+PASS required tests/tool-056-boundary.spec.ts
+PASS required tests/tool-056-regression.spec.ts
+PASS required tests/tool-056-limit.spec.ts
+PASS required tests/fixtures/tool-056/cases.json
+PASS contract maxAbsInput:1e15
+PASS contract maxPrecision:8
+PASS contract factor:0.45359237
+PASS contract factor:101325
+PASS contract factor:6894.757293168
+PASS contract factor:133.3224
+PASS contract (value-32)/1.8
+PASS contract celsius*1.8+32
+PASS contract celsius+273.15
+PASS page 무게·온도·압력 변환기
+PASS page Weight, Temperature & Pressure Converter
+PASS page 重量・温度・圧力変換ツール
+PASS page FAQPage
+PASS page WebApplication
+PASS canonical languages
+PASS browser-local no network API
+PASS scope excludes adjacent energy/data/cooking engines
+PASS no global TOOL056 css contamination
+PASS no global contamination styles/global-base.css
+PASS no global contamination styles/toolbox-common.css
+PASS no global contamination styles/toolbox-detail-common.css
+PASS no global contamination styles/theme.css
+PASS no global contamination styles/toolbox-compat.css
+PASS no global contamination styles/legacy-site-sealed.css
+PASS no global contamination styles/legacy-tools-sealed.css
+RESULT SOURCE PASS=41 FAIL=0
+
+=== check-design.mjs ===
+PASS MAIN=055 common shell inheritance
+PASS three-category segmented tabs
+PASS primary action black like 055
+PASS mobile single-column input
+PASS Japanese long labels can wrap
+PASS no legacy selector use
+PASS no copied 055 test ids
+PASS structure parity with MAIN
+RESULT DESIGN PASS=8 FAIL=0 MAIN=055 SUB=NONE
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec design
+PASS spec core
+PASS spec feature
+PASS spec temperature
+PASS spec pressure
+PASS spec mass
+PASS spec boundary
+PASS spec regression
+PASS spec limit
+PASS selector tool056-root
+PASS selector tool056-workspace
+PASS selector tool056-value
+PASS selector tool056-from
+PASS selector tool056-to
+PASS selector tool056-swap
+PASS selector tool056-reset
+PASS selector tool056-copy
+PASS selector tool056-precision
+PASS selector tool056-result
+PASS selector tool056-main-result
+PASS selector tool056-summary
+PASS fixture source independent
+PASS no prior tool residue outside intentional regression
+RESULT HARNESS_STRUCTURE PASS=24 FAIL=0
+
+=== check-logic.mjs ===
+PASS 1kg=2.2046226218lb
+PASS 1lb=0.45359237kg
+PASS -40C=-40F
+PASS 0C=32F
+PASS 100C=212F
+PASS 0C=273.15K
+PASS 0K=-273.15C
+PASS 1atm=101325Pa
+PASS 1bar=100kPa
+PASS 1psi=6894.757293168Pa
+PASS 101.325kPa=1atm
+PASS comma normalize
+PASS precision 0
+PASS precision 2
+PASS precision 8
+PASS mass summary=6
+PASS temperature summary=3
+PASS pressure summary=6
+PASS negative mass blocked
+PASS negative pressure blocked
+PASS -1K blocked
+PASS over limit blocked
+PASS limits
+RESULT LOGIC PASS=23 FAIL=0
+
+TOOL056 STATIC PASS | fail=0

@@ -1,0 +1,7 @@
+{
+  "speed":[{"value":100,"from":"kmh","to":"mph","expected":62.1371192237334},{"value":100,"from":"kmh","to":"ms","expected":27.7777777777778},{"value":1,"from":"knot","to":"kmh","expected":1.852}],
+  "fuel":[{"value":30,"from":"mpgus","to":"l100km","expected":7.84048611111111},{"value":8,"from":"l100km","to":"kml","expected":12.5}],
+  "energy":[{"value":1,"from":"kwh","to":"mj","expected":3.6},{"value":1,"from":"kwh","to":"j","expected":3600000}],
+  "power":[{"value":1,"from":"hp","to":"w","expected":745.6998715822702},{"value":1,"from":"ps","to":"w","expected":735.49875}],
+  "limits":{"maxAbsInput":1000000000000000,"maxPrecision":8,"maxSummaryUnits":6}
+}

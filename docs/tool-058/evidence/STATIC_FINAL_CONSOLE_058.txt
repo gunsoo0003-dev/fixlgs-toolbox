@@ -1,0 +1,117 @@
+
+=== check-source.mjs ===
+PASS required lib/tool-058-units.ts
+PASS required components/tool-058-data-cooking-unit-converter.tsx
+PASS required components/tool-058-data-cooking-unit-converter.module.css
+PASS required components/tool-058-data-cooking-unit-converter-page.tsx
+PASS required app/[locale]/data-cooking-unit-converter/page.tsx
+PASS required tests/fixtures/tool-058/cases.json
+PASS contract maxAbsInput:1e15
+PASS contract maxPrecision:8
+PASS contract maxSummaryUnits:6
+PASS contract cupMl:240
+PASS contract tablespoonMl:15
+PASS contract teaspoonMl:5
+PASS contract id:'bit'
+PASS contract id:'byte'
+PASS contract id:'kb'
+PASS contract id:'tb'
+PASS canonical/hreflang route
+PASS FAQPage actual FAQ
+PASS related 055-057 and next 059
+PASS no server/API fetch
+PASS category split
+PASS notation split
+PASS no global TOOL058 css contamination
+RESULT SOURCE PASS=23 FAIL=0
+
+=== check-design.mjs ===
+PASS shared shell ToolboxSubpageShell
+PASS shared shell toolbox-tool-detail-hero
+PASS shared shell toolbox-tool-detail-body
+PASS shared shell toolbox-next-work
+PASS shared shell toolbox-tool-guide toolbox-tool-guide--five
+PASS shared shell toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head
+PASS shared shell toolbox-tool-info-band toolbox-tool-info-band--section-start
+PASS shared shell toolbox-tool-faq
+PASS lower DOM order HOWTO -> GUIDE -> NOTES -> FAQ
+PASS two category tabs
+PASS two notation buttons
+PASS desktop input four-part row
+PASS summary desktop 3 columns
+PASS tablet breakpoint
+PASS mobile breakpoint
+PASS mobile input one column
+PASS mobile summary one column
+PASS Japanese labels present
+PASS overflow protection
+PASS no important overrides
+PASS no legacy/global direct references
+RESULT DESIGN PASS=21 FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec data
+PASS spec data no skip/fixme/only
+PASS spec binary
+PASS spec binary no skip/fixme/only
+PASS spec cooking
+PASS spec cooking no skip/fixme/only
+PASS spec dimension
+PASS spec dimension no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS playwright config exists
+PASS route exists
+PASS fixture exists
+PASS runner exists
+RESULT HARNESS PASS=24 FAIL=0
+
+=== check-logic.mjs ===
+PASS 8bit=1byte
+PASS 1KB decimal=1000B
+PASS 1MB decimal=1000000B
+PASS 1GB decimal=1000MB
+PASS 1KiB binary=1024B
+PASS 1MiB binary=1048576B
+PASS 1GiB binary=1024MiB
+PASS binary symbol KiB
+PASS 1cup=240mL
+PASS 1cup=16tbsp
+PASS 1cup=48tsp
+PASS 2tbsp=6tsp
+PASS 500mL reverse cup
+PASS reference 240/15/5
+PASS comma normalize
+PASS data summary=6
+PASS cooking summary=4
+PASS limits
+PASS negative data blocked
+PASS negative cooking blocked
+PASS over limit blocked
+RESULT LOGIC PASS=21 FAIL=0
+
+TOOL058 STATIC PASS groups_failed=0
+(node:759) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:759) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/tool058_work/fixlgs-toolbox/lib/tool-058-units.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/tool058_work/fixlgs-toolbox/package.json.
+ENVIRONMENT_BLOCK missing_local_bins=playwright,next,tsc
+TOOL058 MODE=final
+PASS=1
+FAIL=0
+MAIN_WORK=3
+ENVIRONMENT_BLOCK=1
+STATUS=AUX_READY_MAIN_WORK_REQUIRED
+
+RESULT_TXT=/mnt/data/tool058_work/fixlgs-toolbox/docs/tool-058/evidence/058_final_검수결과_2026-08-19T11-18-54-592Z.txt

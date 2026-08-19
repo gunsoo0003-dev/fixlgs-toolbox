@@ -1,0 +1,11 @@
+TOOL057 unit-source record
+Basis: user-provided TOOL057 final production handoff, which specifies NIST-based speed/energy/power conversion criteria and explicit US/UK gallon separation.
+Implemented exact/standard factors used by the production spec:
+- mph -> m/s: 0.44704
+- knot -> km/h: 1.852
+- kWh -> J: 3,600,000
+- mechanical hp -> W: 745.6998715822702
+- metric PS -> W: 735.49875
+- US gallon: 3.785411784 L relation in MPG factor
+- UK Imperial gallon: 4.54609 L relation in MPG factor
+No external API or runtime lookup is used.

@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL058 precision max 8',async({page})=>{await page.goto('/en/data-cooking-unit-converter');const precision=page.getByTestId('tool058-precision');const details=precision.locator('xpath=ancestor::details');await details.locator('summary').click();await expect(details).toHaveAttribute('open','');await expect(page.getByTestId('tool058-precision')).toHaveAttribute('max','8');});
+test('TOOL058 summary limits data/cooking',async({page})=>{await page.goto('/en/data-cooking-unit-converter');await expect(page.getByTestId('tool058-summary').locator('[data-unit]')).toHaveCount(6);await page.getByTestId('tool058-tab-cooking').click();await expect(page.getByTestId('tool058-summary').locator('[data-unit]')).toHaveCount(4);});

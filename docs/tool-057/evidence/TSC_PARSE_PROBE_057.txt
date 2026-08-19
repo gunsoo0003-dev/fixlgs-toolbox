@@ -1,0 +1,19 @@
+
+--- TSC parse probe ---
+app/[locale]/speed-fuel-energy-converter/page.tsx(1,29): error TS2307: Cannot find module 'next' or its corresponding type declarations.
+app/[locale]/speed-fuel-energy-converter/page.tsx(2,24): error TS2307: Cannot find module 'next/navigation' or its corresponding type declarations.
+app/[locale]/speed-fuel-energy-converter/page.tsx(3,35): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+app/[locale]/speed-fuel-energy-converter/page.tsx(4,51): error TS2307: Cannot find module '@/components/tool-057-speed-fuel-energy-converter-page' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(1,18): error TS2307: Cannot find module 'next/link' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(2,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(3,47): error TS2307: Cannot find module '@/components/tool-057-speed-fuel-energy-converter' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(4,30): error TS2307: Cannot find module '@/components/toolbox-faq-list' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(5,35): error TS2307: Cannot find module '@/components/toolbox-subpage-shell' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter-page.tsx(6,20): error TS2307: Cannot find module '@/components/tool-057-speed-fuel-energy-converter.module.css' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter.tsx(2,32): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter.tsx(3,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter.tsx(4,206): error TS2307: Cannot find module '@/lib/tool-057-units' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter.tsx(5,20): error TS2307: Cannot find module './tool-057-speed-fuel-energy-converter.module.css' or its corresponding type declarations.
+components/tool-057-speed-fuel-energy-converter.tsx(11,51): error TS2538: Type 'Locale' cannot be used as an index type.
+TSC_EXIT=2
+PARSE_STATUS=NO_SYNTAX_ERROR_CODES; unresolved imports expected because node_modules is absent

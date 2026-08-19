@@ -1,0 +1,4 @@
+import fs from 'node:fs';let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};
+for(const s of ['preflight','design','core','feature','data','binary','cooking','dimension','boundary','regression','limit']){const f=`tests/tool-058-${s}.spec.ts`;c(`spec ${s}`,fs.existsSync(f));if(fs.existsSync(f))c(`spec ${s} no skip/fixme/only`,!/(test|describe)\.(skip|fixme|only)\s*\(/.test(fs.readFileSync(f,'utf8')))}
+c('playwright config exists',fs.existsSync('playwright.tool058.config.ts'));c('route exists',fs.existsSync('app/[locale]/data-cooking-unit-converter/page.tsx'));c('fixture exists',fs.existsSync('tests/fixtures/tool-058/cases.json'));c('runner exists',fs.existsSync('scripts/tool-058/run-validation-full.mjs'));
+console.log(`RESULT HARNESS PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

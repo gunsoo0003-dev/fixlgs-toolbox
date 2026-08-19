@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL056 1kg/lb round trip basis',async({page})=>{await page.goto('/en/weight-temperature-pressure-converter');await page.getByTestId('tool056-from').selectOption('lb');await page.getByTestId('tool056-to').selectOption('kg');await expect(page.getByTestId('tool056-main-result')).toContainText('0.4536');await page.getByTestId('tool056-from').selectOption('kg');await page.getByTestId('tool056-to').selectOption('lb');await expect(page.getByTestId('tool056-main-result')).toContainText('2.2046');});

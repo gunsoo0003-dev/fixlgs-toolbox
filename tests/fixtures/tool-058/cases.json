@@ -1,0 +1,9 @@
+{
+  "data": {
+    "decimal": [{"value":8,"from":"bit","to":"byte","expected":1},{"value":1,"from":"kb","to":"byte","expected":1000},{"value":1,"from":"mb","to":"byte","expected":1000000},{"value":1,"from":"gb","to":"mb","expected":1000}],
+    "binary": [{"value":1,"from":"kb","to":"byte","expected":1024},{"value":1,"from":"mb","to":"byte","expected":1048576},{"value":1,"from":"gb","to":"mb","expected":1024}]
+  },
+  "cooking": [{"value":1,"from":"cup","to":"ml","expected":240},{"value":1,"from":"cup","to":"tbsp","expected":16},{"value":1,"from":"cup","to":"tsp","expected":48},{"value":500,"from":"ml","to":"cup","expected":2.0833333333333335}],
+  "limits": {"maxAbsInput":1000000000000000,"maxPrecision":8,"maxSummaryUnits":6},
+  "reference": {"cupMl":240,"tablespoonMl":15,"teaspoonMl":5}
+}
