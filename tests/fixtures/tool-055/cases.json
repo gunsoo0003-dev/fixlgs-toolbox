@@ -1,0 +1,22 @@
+{
+  "source": "Independent expected values for TOOL055 checker fixtures",
+  "length": [
+    {"value":1,"from":"m","to":"cm","expected":100},
+    {"value":1,"from":"m","to":"mm","expected":1000},
+    {"value":1,"from":"in","to":"cm","expected":2.54},
+    {"value":1,"from":"m","to":"ft","expected":3.280839895013123}
+  ],
+  "area": [
+    {"value":1,"from":"m2","to":"cm2","expected":10000},
+    {"value":1,"from":"ft2","to":"m2","expected":0.09290304},
+    {"value":1,"from":"ha","to":"m2","expected":10000},
+    {"value":1,"from":"pyeong","to":"m2","expected":3.3057851239669422}
+  ],
+  "volume": [
+    {"value":1,"from":"l","to":"ml","expected":1000},
+    {"value":1,"from":"l","to":"cm3","expected":1000},
+    {"value":1,"from":"m3","to":"l","expected":1000},
+    {"value":1,"from":"ft3","to":"m3","expected":0.028316846592}
+  ],
+  "boundaries": {"zero":0,"negative":-1,"max":1000000000000000,"over":1000000000000001,"maxPrecision":8,"summaryCount":6}
+}

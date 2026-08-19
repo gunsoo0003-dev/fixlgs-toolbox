@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};
+const required=['lib/tool-055-units.ts','components/tool-055-length-area-volume-converter.tsx','components/tool-055-length-area-volume-converter.module.css','components/tool-055-length-area-volume-converter-page.tsx','app/[locale]/length-area-volume-converter/page.tsx','tests/tool-055-preflight.spec.ts','tests/tool-055-design.spec.ts','tests/tool-055-core.spec.ts','tests/tool-055-feature.spec.ts','tests/tool-055-dimension.spec.ts','tests/tool-055-boundary.spec.ts','tests/tool-055-regression.spec.ts','tests/tool-055-limit.spec.ts','tests/tool-055-runtime-safety.spec.ts','tests/fixtures/tool-055/cases.json'];
+for(const f of required)c(`required ${f}`,fs.existsSync(f));
+const lib=fs.readFileSync('lib/tool-055-units.ts','utf8');for(const t of ['maxAbsInput:1e15','maxPrecision:8','maxSummaryUnits:6','factor:400/121','factor:0.0254','factor:0.09290304','factor:0.003785411784'])c(`contract ${t}`,lib.includes(t));
+const site=fs.readFileSync('lib/site.ts','utf8');c('shared slug registration',site.includes('tool055Slug = "length-area-volume-converter"'));c('unit-calc LIVE card',site.includes('"unit-calc": [')&&site.includes('title: tool055Titles')&&site.includes('status: "LIVE"'));
+const map=fs.readFileSync('app/sitemap.ts','utf8');c('sitemap registration',map.includes('tool055Slug')&&map.includes('`${baseUrl}/${locale}/${tool055Slug}`'));
+const page=fs.readFileSync('components/tool-055-length-area-volume-converter-page.tsx','utf8');c('localized FAQ large heading',page.includes("'자주 묻는 질문'")&&page.includes("'Frequently asked questions'")&&page.includes("'よくある質問'"));
+const globals=fs.readFileSync('app/globals.css','utf8');c('no global TOOL055 css contamination',!/tool055|tool-055/i.test(globals));
+console.log(`RESULT SOURCE PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

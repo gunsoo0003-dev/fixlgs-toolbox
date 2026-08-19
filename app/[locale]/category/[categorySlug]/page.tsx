@@ -117,7 +117,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
         </div>
         <div className="toolbox-subpage-card-grid">
           {toolCards.map((tool, index) => {
-            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : categorySlug === "pdf" ? index + 26 : categorySlug === "text" ? index + 36 : categorySlug === "date-time" ? index + 45 : index + 1;
+            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : categorySlug === "pdf" ? index + 26 : categorySlug === "text" ? index + 36 : categorySlug === "date-time" ? index + 45 : categorySlug === "unit-calc" ? index + 55 : index + 1;
             const imageEditTitleLines: Record<Locale, string[][]> = {
               ko: [
                 ["이미지 자르기", "회전 도구"],
@@ -185,7 +185,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
                     : tool.title[currentLocale];
             const body = (
               <>
-                <div className="toolbox-subpage-card-top"><span>{(categorySlug === "content-image" || categorySlug === "pdf" || categorySlug === "text" || categorySlug === "date-time") ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
+                <div className="toolbox-subpage-card-top"><span>{(categorySlug === "content-image" || categorySlug === "pdf" || categorySlug === "text" || categorySlug === "date-time" || categorySlug === "unit-calc") ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
                 <div><h2>{cardTitle}</h2>{tool.description[currentLocale] ? <p>{tool.description[currentLocale]}</p> : null}</div>
                 <div className="toolbox-subpage-card-foot"><b>{tool.active ? open : preparing}</b><i>↗</i></div>
               </>

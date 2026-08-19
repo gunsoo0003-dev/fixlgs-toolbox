@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL055 exact 1e15 accepted and over-limit blocked',async({page})=>{await page.goto('/en/length-area-volume-converter');await page.getByTestId('tool055-value').fill('1000000000000000');await expect(page.getByTestId('tool055-error')).toHaveCount(0);await page.getByTestId('tool055-value').fill('1000000000000001');await expect(page.getByTestId('tool055-error')).toContainText('1e+15');});
+test('TOOL055 precision maximum is eight',async({page})=>{await page.goto('/en/length-area-volume-converter');await expect(page.getByTestId('tool055-precision')).toHaveAttribute('max','8');});

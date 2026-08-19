@@ -114,7 +114,7 @@ export const categories: Category[] = [
       en: "Length, weight, temperature, percent, ratios, and stats.",
       ja: "長さ、重さ、温度、割合、比率、統計。",
     },
-    toolCountLabel: { ko: "제작 예정", en: "Planned", ja: "制作予定" },
+    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -263,6 +263,7 @@ export const tool051Slug = "time-calculator" as const;
 export const tool052Slug = "world-time-timezone-converter" as const;
 export const tool053Slug = "unix-timestamp-converter" as const;
 export const tool054Slug = "timer-stopwatch" as const;
+export const tool055Slug = "length-area-volume-converter" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -356,6 +357,8 @@ export const tool053Titles: Record<Locale, string> = { ko: "Unix Timestamp 변�
 export const tool053Descriptions: Record<Locale, string> = { ko: "Unix timestamp를 날짜로, 날짜를 초·밀리초 timestamp로 변환하고 UTC와 현지시간을 함께 확인하세요.", en: "Convert Unix timestamps to dates and dates to seconds or milliseconds while comparing UTC and local time.", ja: "Unixタイムスタンプと日付を相互変換し、秒・ミリ秒、UTC・現地時刻を確認できます。" };
 export const tool054Titles: Record<Locale, string> = { ko: "타이머·스톱워치", en: "Timer & Stopwatch", ja: "タイマー・ストップウォッチ" };
 export const tool054Descriptions: Record<Locale, string> = { ko: "카운트다운, 스톱워치, Lap·Split 기록과 Work·Rest 반복 타이머를 브라우저에서 사용하세요.", en: "Use a countdown, stopwatch with lap and split records, and a Work/Rest repeat timer in your browser.", ja: "カウントダウン、ストップウォッチ、ラップ記録、作業・休憩の繰り返しタイマーをブラウザで使えます。" };
+export const tool055Titles: Record<Locale, string> = { ko: "길이·면적·부피 변환기", en: "Length, Area & Volume Converter", ja: "長さ・面積・体積変換ツール" };
+export const tool055Descriptions: Record<Locale, string> = { ko: "길이·면적·부피 단위를 변환하고 평·㎡와 자주 쓰는 단위를 한눈에 비교하세요.", en: "Convert length, area, pyeong/square meters, and volume units while comparing common units at a glance.", ja: "長さ・面積・体積の単位を変換し、坪・平方メートルとよく使う単位を一覧で比較できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -943,6 +946,15 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
   ],
+  "unit-calc": [
+    {
+      title: tool055Titles,
+      description: tool055Descriptions,
+      href: `/${"ko"}/${tool055Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+  ],
   "image-edit": [
     {
       title: tool008Titles,
@@ -1084,6 +1096,10 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
 
   if (categorySlug === "date-time") {
     return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool048Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool049Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool050Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool051Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool052Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool053Slug}` } : index === 9 ? { ...item, href: `/${locale}/${tool054Slug}` } : item);
+  }
+
+  if (categorySlug === "unit-calc") {
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool055Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

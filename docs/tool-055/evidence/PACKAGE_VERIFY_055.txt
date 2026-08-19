@@ -1,0 +1,8 @@
+TOOL055 PACKAGE VERIFY
+status=PASS
+root=fixlgs-toolbox
+integrity=zip-test-no-errors
+forbidden=node_modules,.next,cache,playwright-report,test-results,backup,copy,temp -> absent
+common-global-css=absent-from-delivery-package
+package-json-lock=absent-from-delivery-package (unchanged baseline, no dependency change)
+handoff-file-list=26 including manifest and package verification evidence

@@ -1,0 +1,166 @@
+
+=== check-secret-scan.mjs ===
+RESULT SECRET_SCAN PASS scanned=1470 findings=0
+
+=== check-source.mjs ===
+PASS required lib/tool-055-units.ts
+PASS required components/tool-055-length-area-volume-converter.tsx
+PASS required components/tool-055-length-area-volume-converter.module.css
+PASS required components/tool-055-length-area-volume-converter-page.tsx
+PASS required app/[locale]/length-area-volume-converter/page.tsx
+PASS required tests/tool-055-preflight.spec.ts
+PASS required tests/tool-055-design.spec.ts
+PASS required tests/tool-055-core.spec.ts
+PASS required tests/tool-055-feature.spec.ts
+PASS required tests/tool-055-dimension.spec.ts
+PASS required tests/tool-055-boundary.spec.ts
+PASS required tests/tool-055-regression.spec.ts
+PASS required tests/tool-055-limit.spec.ts
+PASS required tests/tool-055-runtime-safety.spec.ts
+PASS required tests/fixtures/tool-055/cases.json
+PASS contract maxAbsInput:1e15
+PASS contract maxPrecision:8
+PASS contract maxSummaryUnits:6
+PASS contract factor:400/121
+PASS contract factor:0.0254
+PASS contract factor:0.09290304
+PASS contract factor:0.003785411784
+PASS shared slug registration
+PASS unit-calc LIVE card
+PASS sitemap registration
+PASS localized FAQ large heading
+PASS no global TOOL055 css contamination
+RESULT SOURCE PASS=27 FAIL=0
+
+=== check-design.mjs ===
+PASS common shell toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description
+PASS common shell toolbox-tool-detail-body
+PASS common shell toolbox-next-work
+PASS common shell toolbox-tool-guide toolbox-tool-guide--five
+PASS hero TOOL055 eyebrow
+PASS unit-calc backlink
+PASS LOCAL detail badge
+PASS workspace class styles.root
+PASS workspace class styles.localNotice
+PASS workspace class styles.tabs
+PASS workspace class styles.tab
+PASS workspace class styles.tabActive
+PASS workspace class styles.workspace
+PASS workspace class styles.card
+PASS workspace class styles.inputGrid
+PASS workspace class styles.field
+PASS workspace class styles.valueField
+PASS workspace class styles.swap
+PASS workspace class styles.quickRow
+PASS workspace class styles.preset
+PASS workspace class styles.presetActive
+PASS workspace class styles.actionRow
+PASS workspace class styles.button
+PASS workspace class styles.primaryButton
+PASS workspace class styles.advanced
+PASS workspace class styles.precisionRow
+PASS workspace class styles.resultCard
+PASS workspace class styles.resultHead
+PASS workspace class styles.resultValue
+PASS workspace class styles.summaryGrid
+PASS workspace class styles.summaryItem
+PASS three dimension tabs
+PASS tablist semantics
+PASS result live region
+PASS error alert region
+PASS copy status region
+PASS decimal input mode
+PASS summary capped six
+PASS advanced precision details
+PASS desktop tabs three columns
+PASS desktop input four-part row
+PASS desktop summary three columns
+PASS selected tab blue
+PASS workspace blue-tint contract
+PASS result value responsive type
+PASS tablet breakpoint 820
+PASS tablet input two columns
+PASS tablet summary two columns
+PASS mobile breakpoint 520
+PASS mobile input one column
+PASS mobile summary one column
+PASS mobile action two columns
+PASS mobile swap full width
+PASS mobile buttons touch height
+PASS focus-visible contract
+PASS no important overrides
+PASS no sealed/global direct references
+PASS shared lower exact toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head
+PASS shared lower exact toolbox-tool-format-guide-head
+PASS shared lower exact toolbox-tool-format-body
+PASS shared lower exact toolbox-tool-format-grid
+PASS shared lower exact toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head
+PASS shared lower exact toolbox-tool-info-band-head
+PASS shared lower exact toolbox-tool-info-band-list
+PASS shared lower exact toolbox-tool-faq
+PASS shared lower exact toolbox-tool-faq-list
+PASS lower DOM order HOWTO -> EXPERT -> NOTES -> FAQ
+PASS localized FAQ heading
+PASS related numbering 056-059
+PASS unit-calc category start 55
+PASS unit-calc uses three-digit card number
+PASS category card top class retained
+RESULT DESIGN PASS=72 FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec design
+PASS spec design no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec dimension
+PASS spec dimension no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS spec runtime-safety
+PASS spec runtime-safety no skip/fixme/only
+PASS secret scan exists
+PASS full runner exists
+PASS playwright config exists
+PASS package script tool055:static
+PASS package script tool055:preflight
+PASS package script tool055:design
+PASS package script tool055:core
+PASS package script tool055:feature
+PASS package script tool055:dimension
+PASS package script tool055:boundary
+PASS package script tool055:regression
+PASS package script tool055:limit
+PASS package script tool055:runtime
+PASS package script tool055:final
+PASS desktop project
+PASS mobile project
+PASS isolated port 41755
+PASS route exists
+RESULT HARNESS PASS=36 FAIL=0
+
+=== check-logic.mjs ===
+PASS 1m=100cm
+PASS 1in=2.54cm
+PASS 1pyeong=400/121m2
+PASS 1L=1000mL
+PASS comma normalize
+PASS summary=6
+PASS limits
+PASS negative blocked
+PASS over limit blocked
+RESULT LOGIC PASS=9 FAIL=0
+(node:2515) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2515) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/tool055_checkupd/fixlgs-toolbox/lib/tool-055-units.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/tool055_checkupd/fixlgs-toolbox/package.json.
+
+TOOL055 STATIC PASS | fail=0

@@ -1,0 +1,25 @@
+TOOL055 FINAL COMMAND
+
+PowerShell / project root:
+
+npm run tool055:final
+
+Expected behavior:
+- Secret Scan
+- static self-check
+- preflight
+- core
+- feature
+- dimension
+- boundary
+- regression
+- limit
+- runtime-safety (pageerror / console.error)
+- TypeScript
+- production build
+- Desktop RESULT_TXT creation
+
+Completion authority:
+STATUS=PASS
+FAIL=0
+ENVIRONMENT_BLOCK=0

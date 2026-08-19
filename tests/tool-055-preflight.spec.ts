@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+for(const locale of ['ko','en','ja'] as const)test(`TOOL055 ${locale} mount contract`,async({page})=>{await page.goto(`/${locale}/length-area-volume-converter`);await expect(page.getByTestId('tool055-root')).toBeVisible();await expect(page.getByTestId('tool055-workspace')).toBeVisible();await expect(page.getByTestId('tool055-tab-length')).toHaveAttribute('aria-selected','true');await expect(page.getByTestId('tool055-value')).toHaveValue('1');await expect(page.getByTestId('tool055-result')).toBeVisible();});

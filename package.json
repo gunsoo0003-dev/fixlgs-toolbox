@@ -570,7 +570,21 @@
     "tool054:limit": "node scripts/tool-054/run-validation-full.mjs limit-only",
     "tool054:final": "node scripts/tool-054/run-validation-full.mjs final",
     "check:tool054-static": "node scripts/tool-054/run-static-validation.mjs",
-    "check:tool054-harness": "node scripts/tool-054/check-harness.mjs"
+    "check:tool054-harness": "node scripts/tool-054/check-harness.mjs",
+    "tool055:secret": "node scripts/tool-055/check-secret-scan.mjs",
+    "tool055:static": "node scripts/tool-055/run-static-validation.mjs",
+    "tool055:preflight": "node scripts/tool-055/run-validation-full.mjs preflight",
+    "tool055:design": "node scripts/tool-055/run-validation-full.mjs design-only",
+    "tool055:core": "node scripts/tool-055/run-validation-full.mjs core-only",
+    "tool055:feature": "node scripts/tool-055/run-validation-full.mjs feature-only",
+    "tool055:dimension": "node scripts/tool-055/run-validation-full.mjs dimension-only",
+    "tool055:boundary": "node scripts/tool-055/run-validation-full.mjs boundary-only",
+    "tool055:regression": "node scripts/tool-055/run-validation-full.mjs regression-only",
+    "tool055:limit": "node scripts/tool-055/run-validation-full.mjs limit-only",
+    "tool055:runtime": "node scripts/tool-055/run-validation-full.mjs runtime-only",
+    "tool055:final": "node scripts/tool-055/run-validation-full.mjs final",
+    "check:tool055-static": "node scripts/tool-055/run-static-validation.mjs",
+    "check:tool055-harness": "node scripts/tool-055/check-harness.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

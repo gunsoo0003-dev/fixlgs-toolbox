@@ -1,0 +1,4 @@
+import {expect,test} from '@playwright/test';
+test('TOOL055 zero remains zero',async({page})=>{await page.goto('/ko/length-area-volume-converter');await page.getByTestId('tool055-value').fill('0');await expect(page.getByTestId('tool055-main-result')).toContainText('0');});
+test('TOOL055 negative is blocked',async({page})=>{await page.goto('/ko/length-area-volume-converter');await page.getByTestId('tool055-value').fill('-1');await expect(page.getByTestId('tool055-error')).toBeVisible();await expect(page.getByTestId('tool055-main-result')).toHaveCount(0);});
+test('TOOL055 comma input normalizes',async({page})=>{await page.goto('/en/length-area-volume-converter');await page.getByTestId('tool055-value').fill('1,000');await page.getByTestId('tool055-from').selectOption('m');await page.getByTestId('tool055-to').selectOption('km');await expect(page.getByTestId('tool055-main-result')).toContainText('1');});

@@ -1,0 +1,5 @@
+TOOL055 STATIC PASS
+files=13
+common-css-contamination=0
+dimension-registry=length,area,volume
+limits=maxAbsInput:1e15,maxPrecision:8,maxSummaryUnits:6
