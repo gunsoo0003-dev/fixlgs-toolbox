@@ -1,0 +1,2 @@
+import { expect, test } from '@playwright/test';
+test('TOOL051 accepts 999:59:59 duration boundary', async ({page}) => { await page.goto('/en/time-calculator'); await page.getByTestId('tool051-duration-hours').fill('999'); await page.getByTestId('tool051-duration-minutes').fill('59'); await page.getByTestId('tool051-duration-seconds').fill('59'); await expect(page.getByTestId('tool051-error')).toHaveCount(0); });

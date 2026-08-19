@@ -259,6 +259,10 @@ export const tool047Slug = "dday-anniversary-calculator" as const;
 export const tool048Slug = "age-life-calculator" as const;
 export const tool049Slug = "employment-tenure-calculator" as const;
 export const tool050Slug = "business-day-calculator" as const;
+export const tool051Slug = "time-calculator" as const;
+export const tool052Slug = "world-time-timezone-converter" as const;
+export const tool053Slug = "unix-timestamp-converter" as const;
+export const tool054Slug = "timer-stopwatch" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -344,6 +348,14 @@ export const tool049Titles: Record<Locale, string> = { ko: "근속·재직기간
 export const tool049Descriptions: Record<Locale, string> = { ko: "입사일과 퇴사일로 근속기간을 연·월·일로 계산하고 여러 경력을 합산하세요.", en: "Calculate employment tenure in years, months and days and add multiple employment periods.", ja: "入社日と退職日から勤続期間を年・月・日で計算し、複数の職歴を合算できます。" };
 export const tool050Titles: Record<Locale, string> = { ko: "평일·영업일 계산기", en: "Business Days Calculator", ja: "平日・営業日計算ツール" };
 export const tool050Descriptions: Record<Locale, string> = { ko: "주말과 한국·미국·일본 공휴일을 제외해 두 날짜 사이 영업일 수와 N영업일 후·전 날짜를 계산하세요.", en: "Calculate business days between dates or find a date before or after N business days with weekend and holiday exclusions for Korea, the United States, and Japan.", ja: "土日と韓国・米国・日本の祝日を除外して、2つの日付の営業日数やN営業日後・前の日付を計算できます。" };
+export const tool051Titles: Record<Locale, string> = { ko: "시간 계산기", en: "Time Calculator", ja: "時間計算ツール" };
+export const tool051Descriptions: Record<Locale, string> = { ko: "시간 더하기·빼기, 두 시각 차이, 자정 넘김과 12·24시간 변환을 브라우저에서 계산하세요.", en: "Add or subtract time, calculate time differences across midnight, and convert between 12-hour and 24-hour formats.", ja: "時間の加算・減算、時刻差、日付またぎ、12時間制・24時間制の変換をブラウザで計算します。" };
+export const tool052Titles: Record<Locale, string> = { ko: "세계시간·타임존 변환기", en: "World Time & Timezone Converter", ja: "世界時間・タイムゾーン変換ツール" };
+export const tool052Descriptions: Record<Locale, string> = { ko: "UTC와 여러 도시의 현지시간을 비교하고 DST를 반영한 변환과 공통 회의시간을 찾으세요.", en: "Compare UTC and multiple city times, convert with DST-aware IANA time zones, and find shared meeting hours.", ja: "UTCと複数都市の現地時刻を比較し、DST対応の変換と共通会議時間を確認できます。" };
+export const tool053Titles: Record<Locale, string> = { ko: "Unix Timestamp 변환기", en: "Unix Timestamp Converter", ja: "Unix タイムスタンプ変換ツール" };
+export const tool053Descriptions: Record<Locale, string> = { ko: "Unix timestamp를 날짜로, 날짜를 초·밀리초 timestamp로 변환하고 UTC와 현지시간을 함께 확인하세요.", en: "Convert Unix timestamps to dates and dates to seconds or milliseconds while comparing UTC and local time.", ja: "Unixタイムスタンプと日付を相互変換し、秒・ミリ秒、UTC・現地時刻を確認できます。" };
+export const tool054Titles: Record<Locale, string> = { ko: "타이머·스톱워치", en: "Timer & Stopwatch", ja: "タイマー・ストップウォッチ" };
+export const tool054Descriptions: Record<Locale, string> = { ko: "카운트다운, 스톱워치, Lap·Split 기록과 Work·Rest 반복 타이머를 브라우저에서 사용하세요.", en: "Use a countdown, stopwatch with lap and split records, and a Work/Rest repeat timer in your browser.", ja: "カウントダウン、ストップウォッチ、ラップ記録、作業・休憩の繰り返しタイマーをブラウザで使えます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -902,6 +914,34 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool051Titles,
+      description: tool051Descriptions,
+      href: `/${"ko"}/${tool051Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool052Titles,
+      description: tool052Descriptions,
+      href: `/${"ko"}/${tool052Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool053Titles,
+      description: tool053Descriptions,
+      href: `/${"ko"}/${tool053Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool054Titles,
+      description: tool054Descriptions,
+      href: `/${"ko"}/${tool054Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1043,7 +1083,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "date-time") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool048Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool049Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool050Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool048Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool049Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool050Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool051Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool052Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool053Slug}` } : index === 9 ? { ...item, href: `/${locale}/${tool054Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

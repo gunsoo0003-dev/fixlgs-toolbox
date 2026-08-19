@@ -1,0 +1,18 @@
+# TOOL053 REQ MASTER
+- 053-F01 Timestamp -> Date.
+- 053-F02 Date -> Timestamp using browser local date/time.
+- 053-F03 Seconds input/output.
+- 053-F04 Milliseconds input/output.
+- 053-F05 UTC and browser Local Time for the same instant.
+- 053-C01 ISO 8601 output.
+- 053-C02 10/13-digit unit mismatch warning never overrides explicit unit.
+- 053-C03 Negative timestamp support inside JavaScript Date range.
+- 053-C04 Out-of-range values fail safely.
+- 053-U01 Two-mode separation on PC/mobile code structure.
+- 053-U02 Current timestamp live display and Now action.
+- 053-U03 Per-row copy controls with accessible names.
+- 053-L01 KO/EN/JA route and UI content.
+- 053-L02 Mobile-safe long timestamp/ISO wrapping.
+- 053-S01 Canonical/hreflang metadata in the tool route.
+- 053-S02 Sitemap/site registry changes are main-workspace integration items because common files are protected.
+- 053-Q01 Auxiliary READY requires static/function/design/harness/package/common-file-protection PASS; browser/build/integrated FINAL remain main-workspace checks.

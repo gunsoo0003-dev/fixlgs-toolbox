@@ -1,0 +1,2 @@
+import { expect, test } from '@playwright/test';
+for(const locale of ['ko','en','ja'])test(`TOOL052 ${locale} route and root`,async({page})=>{await page.goto(`/${locale}/world-time-timezone-converter`);await expect(page.getByTestId('tool052-root')).toBeVisible();await expect(page.getByTestId('tool052-reference-zone')).toBeVisible();await expect(page.getByTestId('tool052-city-search')).toBeVisible();await expect(page.getByTestId('tool052-results')).toBeVisible();});

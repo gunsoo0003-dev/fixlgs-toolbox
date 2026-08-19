@@ -1,0 +1,14 @@
+# TOOL053 DESIGN CODE CHECK
+- MAIN: TOOL047 D-Day & Anniversary Calculator.
+  - Reused/compared: LOCAL notice, two-level tool layout, mode controls, blue-accent workspace, field cards, result card, 720/380 responsive structure.
+- SUB: TOOL046 Date Add & Subtract Calculator.
+  - Compared: date input semantics, date/time calculator field hierarchy, result readability.
+- TOOL053-specific justified differences: two modes, seconds/milliseconds segmented unit control, live current timestamp strip, multi-row UTC/Local/ISO/seconds/milliseconds result and per-row Copy.
+- Common UI classes reused on the page: toolbox-tool-detail-hero/body, toolbox-next-work, toolbox-tool-guide, toolbox-tool-expert-post, toolbox-tool-info-band, toolbox-tool-faq.
+- Dedicated CSS only: components/tool-053-unix-timestamp-tool.module.css.
+- app/globals.css changes: NONE.
+- styles/* global CSS changes: NONE.
+- legacy sealed direct use/copy: NONE.
+- New global overrides: NONE.
+- Static design check: PASS 20 / FAIL 0.
+- Real PC/mobile/KO/EN/JA/light/dark rendering: MAIN WORKSPACE INTEGRATION CHECK per 2026-08-11 top-level instruction.

@@ -1,0 +1,23 @@
+# TOOL051 REQ MASTER
+
+- R01 시간 더하기 구현
+- R02 시간 빼기 구현
+- R03 두 시각 차이 구현
+- R04 자정 넘김 명시 옵션, 기본 OFF
+- R05 12시간제 → 24시간제 변환
+- R06 24시간제 → 12시간제 변환
+- R07 분/초 carry 및 총 초 정규화 단일 로직
+- R08 12 AM=00:00, 12 PM=12:00 경계
+- R09 Now 빠른 입력
+- R10 결과 복사 / 초기화
+- R11 KO/EN/JA
+- R12 모바일 긴 문구/overflow 방어
+- R13 입력 시각/분/초 유효성 검증
+- R14 시간량 0~999:59:59 서비스 상한
+- R15 타임존/Unix/timer/근무시간 기능 제외
+- R16 브라우저 로컬 처리, 입력값 외부 전송 금지
+- R17 canonical/hreflang/WebApplication/FAQ 실표시
+- R18 052/053/054 역할 경계 안내
+- R19 전용 module.css, 전역 CSS/legacy sealed 미변경
+- R20 신규 전용 fixture/spec/checker/runner 구조 준비
+- R21 주작업장 통합: site/sitemap/robots/실브라우저/Playwright/build/FINAL/배포/색인

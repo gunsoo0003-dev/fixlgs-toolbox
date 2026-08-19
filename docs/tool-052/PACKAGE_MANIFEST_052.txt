@@ -1,0 +1,36 @@
+TOOL052 PACKAGE MANIFEST
+Root: fixlgs-toolbox
+Purpose: main-workspace integration package for TOOL052 World Time & Time Zone Converter
+
+IMPLEMENTATION
+app/[locale]/world-time-timezone-converter/page.tsx
+components/tool-052-world-time-tool.tsx
+components/tool-052-world-time-tool.module.css
+lib/tool-052-timezone.ts
+lib/tool-052-timezone-data.ts
+
+HARNESS
+playwright.tool052.config.ts
+tests/tool-052-preflight.spec.ts
+tests/tool-052-core.spec.ts
+tests/tool-052-boundary.spec.ts
+tests/tool-052-feature.spec.ts
+tests/tool-052-regression.spec.ts
+tests/tool-052-limit.spec.ts
+scripts/tool-052/check-static.mjs
+scripts/tool-052/check-design.mjs
+scripts/tool-052/check-harness.mjs
+scripts/tool-052/check-logic.mjs
+scripts/tool-052/check-boundary.mjs
+scripts/tool-052/run-static-validation.mjs
+scripts/tool-052/run-validation-full.mjs
+
+HANDOFF / EVIDENCE
+docs/tool-052/REQ_MASTER_052.md
+docs/tool-052/DESIGN_CODE_CHECK_052.md
+docs/tool-052/LIMIT_BRIEFING_052.md
+docs/tool-052/CHECKLIST_052.md
+docs/tool-052/HANDOFF_052.md
+docs/tool-052/TIMEZONE_DATA_VERSION_052.txt
+docs/tool-052/STATIC_VALIDATION_RESULT_052.txt
+docs/tool-052/FIXLGS_TOOLBOX_052_세계시간_타임존_변환기_제작전달서.pdf

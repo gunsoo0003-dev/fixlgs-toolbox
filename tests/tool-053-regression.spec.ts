@@ -1,0 +1,1 @@
+import { test, expect } from '@playwright/test'; for(const slug of ['date-difference-calculator','date-add-subtract-calculator','dday-anniversary-calculator'])test(`protected ${slug}`,async({page})=>{await page.goto(`/en/${slug}`);await expect(page.locator('h1')).toBeVisible();});

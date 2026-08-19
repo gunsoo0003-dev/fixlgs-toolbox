@@ -19,7 +19,7 @@ const sitemap=fs.readFileSync(path.join(root,'app/sitemap.ts'),'utf8');
 check('sitemap:tool047',sitemap.includes('tool047Slug'));
 const tool046=fs.readFileSync(path.join(root,'components/date-add-subtract-calculator-page.tsx'),'utf8');
 check('regression:tool046-links-047-live',/n:"047"[^\n]*available:true/.test(tool046));
-check('page:next-048-disabled',page.includes('toolbox-next-work-card is-disabled') && page.includes('<span>048</span>'));
+check('page:next-048-live',page.includes('href={`/${locale}/${related[2][2]}`}') && page.includes('<span>048</span>') && !page.includes('toolbox-next-work-card is-disabled'));
 
 const product=fs.readFileSync(path.join(root,'components/tool-047-dday-anniversary-tool.tsx'),'utf8');
 for(const id of ['tool047-root','tool047-workspace','tool047-mode-dday','tool047-mode-birthday','tool047-mode-anniversary','tool047-reset','tool047-result','tool047-copy'])

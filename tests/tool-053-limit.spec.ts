@@ -1,0 +1,1 @@
+import { test, expect } from '@playwright/test'; test('unsafe integer rejected',async({page})=>{await page.goto('/en/unix-timestamp-converter');await page.getByTestId('tool053-timestamp').fill('999999999999999999999');await expect(page.getByTestId('tool053-error')).toBeVisible();});

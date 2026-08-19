@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const files=['app/[locale]/world-time-timezone-converter/page.tsx','components/tool-052-world-time-tool.tsx','components/tool-052-world-time-tool.module.css','lib/tool-052-timezone.ts','lib/tool-052-timezone-data.ts'];
+let fail=0;const check=(n,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${n}`);if(!ok)fail++};
+for(const f of files)check(`exists ${f}`,fs.existsSync(f));
+const page=fs.readFileSync(files[0],'utf8'),product=fs.readFileSync(files[1],'utf8'),helper=fs.readFileSync(files[3],'utf8'),data=fs.readFileSync(files[4],'utf8');
+check('route slug',page.includes('world-time-timezone-converter'));check('TOOL052 eyebrow',page.includes('052 · DATE & TIME'));check('KO/EN/JA copy',page.includes("ko:{")&&page.includes("en:{")&&page.includes("ja:{"));
+check('canonical/hreflang',page.includes('x-default')&&page.includes('alternates'));check('WebApplication',page.includes("'@type':'WebApplication'"));check('FAQPage',page.includes("'@type':'FAQPage'"));
+for(const token of ['tool052-root','tool052-reference-zone','tool052-city-search','tool052-results','tool052-meeting'])check(`product contract ${token}`,product.includes(token));
+check('max city constant 12',helper.includes('maxCities: 12'));check('30 minute meeting step',helper.includes('meetingStepMinutes: 30'));check('IANA zone resolver',helper.includes('resolveLocalDateTime'));check('ambiguous/nonexistent states',helper.includes("'ambiguous'")&&helper.includes("'nonexistent'"));
+check('IANA 2026c metadata',data.includes("release: '2026c'")&&data.includes("releaseDate: '2026-07-08'"));check('30/45 fixtures in city index',data.includes('Asia/Kolkata')&&data.includes('Australia/Eucla'));
+for(const old of ['tool047','TOOL047','dday-anniversary'])check(`no stale ${old}`,!product.includes(old)&&!helper.includes(old));
+console.log(`RESULT STATIC FAIL=${fail}`);process.exit(fail?1:0);

@@ -1,0 +1,2 @@
+import { expect, test } from '@playwright/test';
+test('TOOL051 reset returns default mode and values', async ({page}) => { await page.goto('/en/time-calculator'); await page.getByTestId('tool051-mode-difference').click(); await page.getByTestId('tool051-reset').click(); await expect(page.getByTestId('tool051-mode-arithmetic')).toHaveAttribute('aria-selected','true'); await expect(page.getByTestId('tool051-base')).toHaveValue('09:25'); });

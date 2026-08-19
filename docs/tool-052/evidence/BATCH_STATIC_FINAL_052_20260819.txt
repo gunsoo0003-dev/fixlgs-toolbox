@@ -1,0 +1,100 @@
+
+=== check-secret-scan.mjs ===
+RESULT SECRET_SCAN PASS scanned=1427 findings=0
+
+=== check-static.mjs ===
+PASS exists app/[locale]/world-time-timezone-converter/page.tsx
+PASS exists components/tool-052-world-time-tool.tsx
+PASS exists components/tool-052-world-time-tool.module.css
+PASS exists lib/tool-052-timezone.ts
+PASS exists lib/tool-052-timezone-data.ts
+PASS route slug
+PASS TOOL052 eyebrow
+PASS KO/EN/JA copy
+PASS canonical/hreflang
+PASS WebApplication
+PASS FAQPage
+PASS product contract tool052-root
+PASS product contract tool052-reference-zone
+PASS product contract tool052-city-search
+PASS product contract tool052-results
+PASS product contract tool052-meeting
+PASS max city constant 12
+PASS 30 minute meeting step
+PASS IANA zone resolver
+PASS ambiguous/nonexistent states
+PASS IANA 2026c metadata
+PASS 30/45 fixtures in city index
+PASS no stale tool047
+PASS no stale TOOL047
+PASS no stale dday-anniversary
+RESULT STATIC FAIL=0
+
+=== check-design.mjs ===
+PASS MAIN 047 workspace pattern
+PASS common hero classes reused
+PASS common HOW TO reused
+PASS common expert/info/faq reused
+PASS tool-only CSS module
+PASS mobile breakpoint
+PASS mobile city cards one column
+PASS no fixed page width
+PASS focus styling
+PASS protected file untouched by tool source app/globals.css
+PASS protected file untouched by tool source styles/global-base.css
+PASS protected file untouched by tool source styles/toolbox-common.css
+PASS protected file untouched by tool source styles/toolbox-detail-common.css
+PASS protected file untouched by tool source styles/legacy-site-sealed.css
+PASS protected file untouched by tool source styles/legacy-tools-sealed.css
+RESULT DESIGN-CODE FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS secret scan exists
+PASS secret scan in static runner
+PASS secret scan in full final
+PASS runner preflight
+PASS runner core-only
+PASS runner feature-only
+PASS runner boundary-only
+PASS runner regression-only
+PASS runner limit-only
+PASS runner final
+PASS desktop project
+PASS mobile project
+PASS isolated port 41752
+PASS route exists
+RESULT HARNESS PASS=26 FAIL=0
+
+=== check-logic.mjs ===
+PASS Seoul offset: 540
+PASS Kolkata offset: 330
+PASS Eucla offset: 525
+PASS NY spring nonexistent: 0
+PASS NY fall ambiguous: 2
+RESULT LOGIC FAIL=0
+
+=== check-boundary.mjs ===
+PASS year range 1900-2100
+PASS 12-city limit
+PASS duplicate prevention
+PASS minimum 2 cities
+PASS invalid working interval rejected
+PASS DST ambiguity choice UI
+PASS nonexistent local time UI
+PASS date boundary badges
+PASS special zones
+RESULT BOUNDARY FAIL=0
+
+TOOL052 STATIC PASS | fail=0

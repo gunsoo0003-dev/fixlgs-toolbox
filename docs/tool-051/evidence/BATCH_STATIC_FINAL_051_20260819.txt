@@ -1,0 +1,120 @@
+
+=== check-secret-scan.mjs ===
+RESULT SECRET_SCAN PASS scanned=1427 findings=0
+
+=== check-source.mjs ===
+PASS file:app/[locale]/time-calculator/page.tsx
+PASS file:components/tool-051-time-calculator.tsx
+PASS file:components/tool-051-time-calculator.module.css
+PASS file:lib/tool-051-time-calculator.ts
+PASS file:tests/fixtures/tool-051/cases.json
+PASS file:docs/tool-051/REQ_MASTER_051.md
+PASS selector:tool051-root
+PASS selector:tool051-cross-midnight
+PASS selector:tool051-reset
+PASS selector:tool051-copy
+PASS selector:tool051-result-value
+PASS selector:dynamic mode ids
+PASS no stale tool047-
+PASS no stale tool046-
+PASS no stale TOOL047_SERVICE_LIMITS
+PASS page:시간 계산기
+PASS page:Time Calculator
+PASS page:時間計算ツール
+PASS page:canonical
+PASS page:x-default
+PASS page:WebApplication
+PASS page:052
+PASS page:053
+PASS page:054
+PASS css mobile 720
+PASS css mobile 390
+PASS css no global import
+PASS protected no TOOL051 marker:app/globals.css
+PASS protected no TOOL051 marker:styles/global-base.css
+PASS protected no TOOL051 marker:styles/toolbox-common.css
+PASS protected no TOOL051 marker:styles/toolbox-detail-common.css
+PASS protected no TOOL051 marker:styles/theme.css
+PASS protected no TOOL051 marker:styles/toolbox-compat.css
+PASS protected no TOOL051 marker:styles/legacy-site-sealed.css
+PASS protected no TOOL051 marker:styles/legacy-tools-sealed.css
+PASS integration site tool051
+PASS integration sitemap tool051
+RESULT SOURCE PASS=37 FAIL=0
+
+=== check-design.mjs ===
+PASS MAIN reference 047 shell pattern
+PASS SUB reference 046 calculator flow
+PASS three-mode separation
+PASS selected mode blue
+PASS workspace shell blue contract
+PASS mobile single-column safety
+PASS common guide classes reused
+PASS no global selector
+RESULT DESIGN PASS=8 FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS secret scan exists
+PASS secret scan in static runner
+PASS secret scan in full final
+PASS runner preflight
+PASS runner core-only
+PASS runner feature-only
+PASS runner boundary-only
+PASS runner regression-only
+PASS runner limit-only
+PASS runner final
+PASS desktop project
+PASS mobile project
+PASS isolated port 41751
+PASS route exists
+RESULT HARNESS PASS=26 FAIL=0
+
+=== check-logic.mjs ===
+PASS 09:25 + 02:40 = 12:05 | 12:05
+PASS 17:40 - 01:55 = 15:45 | 15:45
+PASS 09:20 -> 17:55 = 08:35 | {"hours":8,"minutes":35,"seconds":0}
+PASS 23:30 -> 01:15 = 01:45 | {"hours":1,"minutes":45,"seconds":0}
+PASS 12:30 AM = 00:30 | 00:30
+PASS 12:30 PM = 12:30 | 12:30
+PASS 7:30 PM = 19:30 | 19:30
+PASS 19:30 = 7:30 PM | {"hour":7,"minute":30,"second":0,"period":"PM"}
+PASS minute carry | 11:10
+PASS second carry | 11:00:10
+PASS next-day offset | 01:00 offset=1
+PASS cross-midnight explicit OFF gate
+RESULT LOGIC PASS=12 FAIL=0
+(node:3800) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3800) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/batch_051_054/fixlgs-toolbox/lib/tool-051-time-calculator.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/batch_051_054/fixlgs-toolbox/package.json.
+
+=== check-boundary.mjs ===
+PASS 00:00 valid
+PASS 23:59 valid
+PASS 23:59 -> 00:00 = 1 minute
+PASS same time = zero
+PASS exact 24h preserves clock and +1 day
+PASS 999:59:59 accepted
+PASS invalid clock ranges rejected
+RESULT BOUNDARY PASS=7 FAIL=0
+(node:3811) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3811) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/batch_051_054/fixlgs-toolbox/lib/tool-051-time-calculator.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/batch_051_054/fixlgs-toolbox/package.json.
+
+TOOL051 STATIC PASS | fail=0

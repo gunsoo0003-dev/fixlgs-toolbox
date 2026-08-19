@@ -1,0 +1,6 @@
+TOOL052 TIME ZONE DATA VERSION RECORD
+Planning/reference release: IANA Time Zone Database 2026c
+Release date: 2026-07-08
+City index: lib/tool-052-timezone-data.ts
+Rule execution: Browser Intl.DateTimeFormat IANA time-zone implementation
+Important: runtime browser/OS tzdata may differ from the planning/reference release; production integration must validate representative transitions.

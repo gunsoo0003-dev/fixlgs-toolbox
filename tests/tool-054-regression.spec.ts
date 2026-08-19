@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('TOOL054 locales and common shell',async({page})=>{for(const locale of ['ko','en','ja']){await page.goto(`/${locale}/timer-stopwatch`);await expect(page.getByTestId('tool054-root')).toBeVisible();await expect(page.locator('header')).toBeVisible();await expect(page.locator('footer')).toBeVisible()}});

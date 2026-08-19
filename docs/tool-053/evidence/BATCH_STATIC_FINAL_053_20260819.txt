@@ -1,0 +1,125 @@
+
+=== check-secret-scan.mjs ===
+RESULT SECRET_SCAN PASS scanned=1427 findings=0
+
+=== check-source.mjs ===
+PASS file:app/[locale]/unix-timestamp-converter/page.tsx
+PASS file:components/tool-053-unix-timestamp-tool.tsx
+PASS file:components/tool-053-unix-timestamp-tool.module.css
+PASS file:lib/tool-053-unix-timestamp.ts
+PASS file:docs/tool-053/REQ_MASTER_053.md
+PASS selector:tool053-root
+PASS selector:tool053-current
+PASS selector:tool053-now
+PASS selector:tool053-mode-to-date
+PASS selector:tool053-mode-to-timestamp
+PASS selector:tool053-workspace
+PASS selector:tool053-timestamp
+PASS selector:tool053-unit-seconds
+PASS selector:tool053-unit-milliseconds
+PASS selector:tool053-date
+PASS selector:tool053-time
+PASS selector:tool053-result
+PASS selector:tool053-unit-warning
+PASS product:navigator.clipboard.writeText
+PASS product:setInterval
+PASS product:unitMismatchHint
+PASS product:timestampToDate
+PASS product:localDateTimeToTimestamp
+PASS product:aria-live="polite"
+PASS page:ko
+PASS page:en
+PASS page:ja
+PASS page:canonical
+PASS page:x-default
+PASS page:WebApplication
+PASS page:051
+PASS page:052
+PASS page:054
+PASS page:ToolboxFaqList
+PASS css:mobile
+PASS css:380
+PASS css:blue active
+PASS css:overflow wrap
+PASS css:no global import
+PASS common:no tool053 globals
+PASS common:styles/global-base.css:no tool053
+PASS common:styles/toolbox-common.css:no tool053
+PASS common:styles/toolbox-detail-common.css:no tool053
+PASS common:styles/legacy-site-sealed.css:no tool053
+PASS common:styles/legacy-tools-sealed.css:no tool053
+RESULT SOURCE PASS=45 FAIL=0
+
+=== check-design.mjs ===
+PASS MAIN047:.localNotice
+PASS MAIN047:.modeRow
+PASS MAIN047:.workspace
+PASS MAIN047:.workspaceHead
+PASS MAIN047:.fields
+PASS MAIN047:.field
+PASS MAIN047:.result
+PASS common hero
+PASS common body
+PASS common next
+PASS common howto
+PASS common expert
+PASS common notes
+PASS common faq
+PASS 2-mode
+PASS 2-unit
+PASS mobile single fields
+PASS long strings wrap
+PASS MAIN documented
+PASS SUB046 documented
+RESULT DESIGN-CODE PASS=20 FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec timezone
+PASS spec timezone no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS secret scan exists
+PASS secret scan in static runner
+PASS secret scan in full final
+PASS runner preflight
+PASS runner core-only
+PASS runner feature-only
+PASS runner timezone-only
+PASS runner boundary-only
+PASS runner regression-only
+PASS runner limit-only
+PASS runner final
+PASS desktop project
+PASS mobile project
+PASS isolated port 41753
+PASS route exists
+RESULT HARNESS PASS=29 FAIL=0
+
+=== check-logic.mjs ===
+PASS epoch
+PASS Y2K seconds
+PASS Y2K milliseconds
+PASS 2024
+PASS negative
+PASS 13-digit hint
+PASS 10-digit hint
+PASS selected unit preserved by design
+PASS source JS Date max constant
+PASS source integer-only
+PASS source invalid date roundtrip
+PASS source local Date constructor
+PASS source seconds-ms relation
+PASS range overflow
+RESULT LOGIC-CROSSCHECK PASS=14 FAIL=0
+
+TOOL053 STATIC PASS | fail=0

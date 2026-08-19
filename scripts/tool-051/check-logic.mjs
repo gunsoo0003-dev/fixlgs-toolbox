@@ -1,0 +1,13 @@
+import { addOrSubtractTime, format24, timeDifference, twelveToTwentyFour, twentyFourToTwelve } from '../../lib/tool-051-time-calculator.ts';
+let pass=0,fail=0;const check=(name,ok,actual='')=>{console.log(`${ok?'PASS':'FAIL'} ${name}${actual!==''?` | ${actual}`:''}`);ok?pass++:fail++};
+const add=addOrSubtractTime({hour:9,minute:25,second:0},{hours:2,minutes:40,seconds:0},'add');check('09:25 + 02:40 = 12:05',format24(add)==='12:05',format24(add));
+const sub=addOrSubtractTime({hour:17,minute:40,second:0},{hours:1,minutes:55,seconds:0},'subtract');check('17:40 - 01:55 = 15:45',format24(sub)==='15:45',format24(sub));
+const diff=timeDifference({hour:9,minute:20,second:0},{hour:17,minute:55,second:0},false);check('09:20 -> 17:55 = 08:35',diff.hours===8&&diff.minutes===35,JSON.stringify(diff));
+const midnight=timeDifference({hour:23,minute:30,second:0},{hour:1,minute:15,second:0},true);check('23:30 -> 01:15 = 01:45',midnight.hours===1&&midnight.minutes===45,JSON.stringify(midnight));
+const am=twelveToTwentyFour(12,30,0,'AM'); const pm=twelveToTwentyFour(12,30,0,'PM');check('12:30 AM = 00:30',format24(am)==='00:30',format24(am));check('12:30 PM = 12:30',format24(pm)==='12:30',format24(pm));
+const evening=twelveToTwentyFour(7,30,0,'PM');check('7:30 PM = 19:30',format24(evening)==='19:30',format24(evening));const back=twentyFourToTwelve({hour:19,minute:30,second:0});check('19:30 = 7:30 PM',back.hour===7&&back.period==='PM',JSON.stringify(back));
+const carry=addOrSubtractTime({hour:10,minute:50,second:0},{hours:0,minutes:20,seconds:0},'add');check('minute carry',format24(carry)==='11:10',format24(carry));
+const secondCarry=addOrSubtractTime({hour:10,minute:59,second:50},{hours:0,minutes:0,seconds:20},'add');check('second carry',format24(secondCarry,true)==='11:00:10',format24(secondCarry,true));
+const next=addOrSubtractTime({hour:22,minute:0,second:0},{hours:3,minutes:0,seconds:0},'add');check('next-day offset',format24(next)==='01:00'&&next.dayOffset===1,`${format24(next)} offset=${next.dayOffset}`);
+let gate=false;try{timeDifference({hour:23,minute:30,second:0},{hour:1,minute:15,second:0},false)}catch(e){gate=e instanceof RangeError&&e.message==='CROSS_MIDNIGHT_REQUIRED'}check('cross-midnight explicit OFF gate',gate);
+console.log(`RESULT LOGIC PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

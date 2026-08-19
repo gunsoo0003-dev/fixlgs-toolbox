@@ -1,0 +1,7 @@
+{
+  "add": [{"base":{"hour":9,"minute":25,"second":0},"duration":{"hours":2,"minutes":40,"seconds":0},"expected":"12:05"}],
+  "subtract": [{"base":{"hour":17,"minute":40,"second":0},"duration":{"hours":1,"minutes":55,"seconds":0},"expected":"15:45"}],
+  "difference": [{"start":{"hour":9,"minute":20,"second":0},"end":{"hour":17,"minute":55,"second":0},"crossMidnight":false,"expected":{"hours":8,"minutes":35,"seconds":0}}],
+  "crossMidnight": [{"start":{"hour":23,"minute":30,"second":0},"end":{"hour":1,"minute":15,"second":0},"crossMidnight":true,"expected":{"hours":1,"minutes":45,"seconds":0}}],
+  "boundaries": ["00:00","23:59","12:00 AM","12:00 PM","59 minute carry","59 second carry","same time","24 hour offset"]
+}

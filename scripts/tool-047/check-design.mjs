@@ -5,6 +5,7 @@ const check=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fai
 
 const product=fs.readFileSync('components/tool-047-dday-anniversary-tool.tsx','utf8');
 const css=fs.readFileSync('components/tool-047-dday-anniversary-tool.module.css','utf8');
+const page=fs.readFileSync('app/[locale]/dday-anniversary-calculator/page.tsx','utf8');
 const tool045Css=fs.existsSync('components/date-difference-calculator-tool.module.css')
   ? fs.readFileSync('components/date-difference-calculator-tool.module.css','utf8')
   : '';
@@ -50,5 +51,20 @@ if(tool045Css){
     check(`TOOL045 baseline shares ${token}`,tool045Css.includes(token));
 }
 
+
+const lowerPage=page;
+for(const token of [
+  'toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head',
+  'toolbox-tool-format-guide-head','toolbox-tool-format-body','toolbox-tool-format-grid',
+  'toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head',
+  'toolbox-tool-info-band-head','toolbox-tool-info-band-list','toolbox-tool-faq','toolbox-tool-faq-list'
+]) check(`shared lower exact ${token}`,lowerPage.includes(token));
+const expertIndex=lowerPage.indexOf('toolbox-tool-format-guide toolbox-tool-expert-post');
+const notesIndex=lowerPage.indexOf('toolbox-tool-info-band toolbox-tool-info-band--section-start');
+const faqIndex=lowerPage.indexOf('toolbox-tool-faq');
+check('lower DOM order HOWTO -> EXPERT -> NOTES -> FAQ',lowerPage.indexOf('toolbox-tool-guide toolbox-tool-guide--five')<expertIndex&&expertIndex<notesIndex&&notesIndex<faqIndex);
+
+
+check('localized FAQ heading',page.includes("'자주 묻는 질문'")&&page.includes("'よくある質問'")&&page.includes("'Frequently asked questions'"));
 console.log(`RESULT DESIGN PASS=${pass} FAIL=${fail}`);
 if(fail) process.exit(1);
