@@ -258,6 +258,7 @@ export const tool046Slug = "date-add-subtract-calculator" as const;
 export const tool047Slug = "dday-anniversary-calculator" as const;
 export const tool048Slug = "age-life-calculator" as const;
 export const tool049Slug = "employment-tenure-calculator" as const;
+export const tool050Slug = "business-day-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -341,6 +342,8 @@ export const tool048Titles: Record<Locale, string> = { ko: "나이·생후기간
 export const tool048Descriptions: Record<Locale, string> = { ko: "생년월일과 기준일로 만나이, 연나이, 생후 일수와 다음 생일까지 남은 날짜를 계산하세요.", en: "Calculate calendar age, year age, days since birth, and time until the next birthday from a birth date and as-of date.", ja: "生年月日と基準日から満年齢、年基準の年齢、生後日数、次の誕生日までを計算できます。" };
 export const tool049Titles: Record<Locale, string> = { ko: "근속·재직기간 계산기", en: "Employment Tenure & Service Period Calculator", ja: "勤続・在職期間計算ツール" };
 export const tool049Descriptions: Record<Locale, string> = { ko: "입사일과 퇴사일로 근속기간을 연·월·일로 계산하고 여러 경력을 합산하세요.", en: "Calculate employment tenure in years, months and days and add multiple employment periods.", ja: "入社日と退職日から勤続期間を年・月・日で計算し、複数の職歴を合算できます。" };
+export const tool050Titles: Record<Locale, string> = { ko: "평일·영업일 계산기", en: "Business Days Calculator", ja: "平日・営業日計算ツール" };
+export const tool050Descriptions: Record<Locale, string> = { ko: "주말과 한국·미국·일본 공휴일을 제외해 두 날짜 사이 영업일 수와 N영업일 후·전 날짜를 계산하세요.", en: "Calculate business days between dates or find a date before or after N business days with weekend and holiday exclusions for Korea, the United States, and Japan.", ja: "土日と韓国・米国・日本の祝日を除外して、2つの日付の営業日数やN営業日後・前の日付を計算できます。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -892,6 +895,13 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool050Titles,
+      description: tool050Descriptions,
+      href: `/${"ko"}/${tool050Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1033,7 +1043,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "date-time") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool048Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool049Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool045Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool046Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool047Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool048Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool049Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool050Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+async function waitReady(page:any){await expect(page.getByTestId('tool050-start')).not.toHaveValue('');}
+for(const [country,start,end,expected] of [['KR','2026-08-14','2026-08-17','1'],['US','2026-07-02','2026-07-06','2'],['JP','2026-07-17','2026-07-21','2']] as const)test(`TOOL050 ${country} holiday fixture`,async({page})=>{await page.goto('/ko/business-day-calculator');await waitReady(page);await page.getByTestId('tool050-country').selectOption(country);await page.getByTestId('tool050-start').fill(start);await page.getByTestId('tool050-end').fill(end);await page.getByTestId('tool050-calculate').click();await expect(page.getByTestId('tool050-business-days')).toHaveText(expected);});

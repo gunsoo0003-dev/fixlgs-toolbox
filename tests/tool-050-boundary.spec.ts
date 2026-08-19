@@ -1,0 +1,4 @@
+import {expect,test} from '@playwright/test';
+async function waitReady(page:any){await expect(page.getByTestId('tool050-start')).not.toHaveValue('');}
+test('TOOL050 reversed range',async({page})=>{await page.goto('/ja/business-day-calculator');await waitReady(page);await page.getByTestId('tool050-start').fill('2026-08-20');await page.getByTestId('tool050-end').fill('2026-08-19');await page.getByTestId('tool050-calculate').click();await expect(page.getByTestId('tool050-error')).toBeVisible();});
+test('TOOL050 zero business day',async({page})=>{await page.goto('/ko/business-day-calculator');await waitReady(page);await page.getByTestId('tool050-mode-target').click();await page.getByTestId('tool050-base').fill('2026-08-19');await page.getByTestId('tool050-count').fill('0');await page.getByTestId('tool050-calculate').click();await expect(page.getByTestId('tool050-target-date')).toHaveText('2026-08-19');});

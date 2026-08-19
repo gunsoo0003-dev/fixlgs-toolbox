@@ -1,0 +1,13 @@
+PASS unchanged app/globals.css
+PASS unchanged styles/global-base.css
+PASS unchanged styles/toolbox-common.css
+PASS unchanged styles/toolbox-detail-common.css
+PASS unchanged styles/theme.css
+PASS unchanged styles/toolbox-compat.css
+PASS unchanged styles/legacy-site-sealed.css
+PASS unchanged styles/legacy-tools-sealed.css
+PASS unchanged lib/site.ts
+PASS unchanged app/sitemap.ts
+PASS unchanged app/robots.ts
+
+050 references in protected CSS:

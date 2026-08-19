@@ -1,0 +1,10 @@
+import {calculateBusinessRange,normalizeCustomDates,TOOL050_LIMITS} from '../../lib/tool-050-business-day.ts';
+const ok=(n,fn)=>{try{fn();console.log(`PASS ${n}`)}catch(e){console.error(`FAIL ${n}: ${e}`);process.exitCode=1}}; const throws=(n,fn)=>{try{fn();console.error(`FAIL ${n}: no error`);process.exitCode=1}catch{console.log(`PASS ${n}`)}};
+ok('same date inclusive',()=>{if(calculateBusinessRange('2026-08-19','2026-08-19','KR',true).calendarDays!==1)throw Error('bad')});
+throws('reversed date',()=>calculateBusinessRange('2026-08-20','2026-08-19','KR',true));
+ok('holiday weekend no double count',()=>{const r=calculateBusinessRange('2026-05-24','2026-05-25','KR',true);if(r.weekendDays!==1||r.holidayDays!==1)throw Error(JSON.stringify(r))});
+ok('custom dedupe',()=>{const r=normalizeCustomDates(['2026-08-19','2026-08-19']);if(r.length!==1)throw Error('bad')});
+ok('custom dedupe before cap',()=>{const r=normalizeCustomDates(Array(TOOL050_LIMITS.maxCustomHolidays+1).fill('2026-08-19'));if(r.length!==1)throw Error('bad')});
+throws('custom unique limit',()=>normalizeCustomDates(Array.from({length:TOOL050_LIMITS.maxCustomHolidays+1},(_,i)=>{const d=new Date(Date.UTC(2025,0,1+i));return d.toISOString().slice(0,10)})));
+throws('20y limit over',()=>calculateBusinessRange('2000-01-01','2021-01-02','KR',false));
+console.log(process.exitCode?'RESULT BOUNDARY FAIL':'RESULT BOUNDARY PASS');

@@ -1,0 +1,46 @@
+TOOL050 MAIN INTEGRATION EVIDENCE
+Generated: 2026-08-19 14:20:36 KST
+
+BASELINE
+- Source: TOOL049 next-project ZIP
+- Protected scope: TOOL001~049
+- Baseline commit from control docs: 17d94ad30cecab987b6be0fe507339db957308c8
+
+INTEGRATION
+- TOOL050 route/component/logic/CSS integrated
+- site registry/category/sitemap/package scripts integrated
+- TOOL049 -> TOOL050 next link activated
+- TOOL050 -> TOOL049 related link corrected
+- common expert-post / format-guide / info-band / FAQ lower contract integrated
+
+PRODUCT CONTRACT FIXES
+- Country change recomputes an existing result immediately
+- Holiday exclusion toggle recomputes an existing result immediately
+- Custom holiday limit applies after normalization/deduplication
+- Japan built-in holiday exceptions added for 2025-2027 coverage
+- Client date defaults initialize after mount; checker waits for state-ready date controls
+
+SECRET SCAN
+- Official Secret Scan gate added to TOOL050 checker
+- Standalone scan: PASS / scanned 1314 text candidates / findings 0
+- Static runner includes Secret Scan
+- FULL FINAL includes independent secret-scan stage
+- Harness verifies all three wiring contracts
+
+STATIC VALIDATION
+- STATIC 37 PASS / 0 FAIL
+- DESIGN 23 PASS / 0 FAIL
+- HARNESS 19 PASS / 0 FAIL
+- LOGIC 11 PASS / 0 FAIL
+- BOUNDARY 7 PASS / 0 FAIL
+
+FULL FINAL ATTEMPT
+- First full run classified ENVIRONMENT_BLOCK because local binaries playwright/next/tsc were absent.
+- npm dependency installation could not complete in the current sandbox execution window.
+- This is not classified as PRODUCT FAIL. Browser, TypeScript and production-build gates remain pending for execution in the main Windows project environment.
+
+PROTECTION / DIFF
+- package-lock.json unchanged from TOOL049 baseline
+- Existing changed common files limited to: app/sitemap.ts, lib/site.ts, package.json, components/employment-tenure-calculator-page.tsx
+- All other additions are TOOL050-specific route/component/lib/docs/scripts/tests/config files
+- node_modules/.next/test-results/playwright-report excluded from handoff package

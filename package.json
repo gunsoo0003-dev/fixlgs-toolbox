@@ -512,7 +512,19 @@
     "tool049:limit": "node scripts/tool-049/run-validation-full.mjs limit-only",
     "tool049:final": "node scripts/tool-049/run-validation-full.mjs final",
     "check:tool049-static": "node scripts/tool-049/run-static-validation.mjs",
-    "check:tool049-harness": "node scripts/tool-049/check-harness.mjs"
+    "check:tool049-harness": "node scripts/tool-049/check-harness.mjs",
+    "tool050:secret": "node scripts/tool-050/check-secret-scan.mjs",
+    "tool050:static": "node scripts/tool-050/run-static-validation.mjs",
+    "tool050:preflight": "node scripts/tool-050/run-validation-full.mjs preflight",
+    "tool050:core": "node scripts/tool-050/run-validation-full.mjs core-only",
+    "tool050:holiday": "node scripts/tool-050/run-validation-full.mjs holiday-only",
+    "tool050:boundary": "node scripts/tool-050/run-validation-full.mjs boundary-only",
+    "tool050:feature": "node scripts/tool-050/run-validation-full.mjs feature-only",
+    "tool050:regression": "node scripts/tool-050/run-validation-full.mjs regression-only",
+    "tool050:limit": "node scripts/tool-050/run-validation-full.mjs limit-only",
+    "tool050:final": "node scripts/tool-050/run-validation-full.mjs final",
+    "check:tool050-static": "node scripts/tool-050/run-static-validation.mjs",
+    "check:tool050-harness": "node scripts/tool-050/check-harness.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

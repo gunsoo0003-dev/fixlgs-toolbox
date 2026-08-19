@@ -1,0 +1,14 @@
+import {calculateBusinessRange,addBusinessDays,isBusinessDay} from '../../lib/tool-050-business-day.ts';
+const eq=(n,a,b)=>{if(JSON.stringify(a)!==JSON.stringify(b)){console.error(`FAIL ${n}: ${JSON.stringify(a)} != ${JSON.stringify(b)}`);process.exitCode=1}else console.log(`PASS ${n}`)};
+eq('Mon-Fri inclusive',calculateBusinessRange('2026-08-03','2026-08-07','KR',false).businessDays,5);
+eq('Fri-Mon weekend boundary',calculateBusinessRange('2026-08-14','2026-08-17','KR',false).businessDays,2);
+eq('KR Liberation substitute excluded',calculateBusinessRange('2026-08-14','2026-08-17','KR',true).businessDays,1);
+eq('US July4 observed 2026',isBusinessDay('2026-07-03','US',true),false);
+eq('JP Marine Day 2026',isBusinessDay('2026-07-20','JP',true),false);
+eq('JP substitute holiday May6 2026',isBusinessDay('2026-05-06','JP',true),false);
+eq('JP citizens holiday Sep22 2026',isBusinessDay('2026-09-22','JP',true),false);
+eq('JP substitute holiday Mar22 2027',isBusinessDay('2027-03-22','JP',true),false);
+eq('5 business days after',addBusinessDays('2026-08-14',5,'after','KR',true),'2026-08-24');
+eq('5 business days before',addBusinessDays('2026-08-24',5,'before','KR',true),'2026-08-14');
+eq('zero business days',addBusinessDays('2026-08-17',0,'after','KR',true),'2026-08-17');
+console.log(process.exitCode?'RESULT LOGIC FAIL':'RESULT LOGIC PASS');
