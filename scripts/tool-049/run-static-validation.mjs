@@ -1,0 +1,1 @@
+import {spawnSync} from 'node:child_process';const steps=['check-source.mjs','check-logic.mjs','check-harness.mjs','check-design.mjs'];let fail=0;for(const f of steps){console.log(`\n=== ${f} ===`);const r=spawnSync(process.execPath,['--experimental-strip-types',`scripts/tool-049/${f}`],{stdio:'inherit'});if(r.status!==0)fail++}process.exitCode=fail?1:0;

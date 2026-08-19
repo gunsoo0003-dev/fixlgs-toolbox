@@ -1,0 +1,15 @@
+[
+  {"name":"reference","dob":"2000-01-01","asOf":"2026-08-17","age":{"years":26,"months":7,"days":16},"yearAge":26,"elapsedDays":9725,"nextBirthday":"2027-01-01","nextBirthdayDays":137},
+  {"name":"same-date","dob":"2026-08-17","asOf":"2026-08-17","age":{"years":0,"months":0,"days":0},"yearAge":0,"elapsedDays":0,"nextBirthday":"2026-08-17","nextBirthdayDays":0},
+  {"name":"day-before-first-birthday","dob":"2025-08-18","asOf":"2026-08-17","age":{"years":0,"months":11,"days":30},"yearAge":1,"elapsedDays":364,"nextBirthday":"2026-08-18","nextBirthdayDays":1},
+  {"name":"exact-one-year","dob":"2025-08-17","asOf":"2026-08-17","age":{"years":1,"months":0,"days":0},"yearAge":1,"elapsedDays":365,"nextBirthday":"2026-08-17","nextBirthdayDays":0},
+  {"name":"leap-birthday-non-leap-birthday","dob":"2024-02-29","asOf":"2025-02-28","age":{"years":1,"months":0,"days":0},"yearAge":1,"elapsedDays":365,"nextBirthday":"2025-02-28","nextBirthdayDays":0,"policy":"FEB_28"},
+  {"name":"leap-birthday-day-after","dob":"2024-02-29","asOf":"2025-03-01","age":{"years":1,"months":0,"days":1},"yearAge":1,"elapsedDays":366,"nextBirthday":"2026-02-28","nextBirthdayDays":364,"policy":"FEB_28"},
+  {"name":"month-end","dob":"2026-01-31","asOf":"2026-02-28","age":{"years":0,"months":1,"days":0},"yearAge":0,"elapsedDays":28,"nextBirthday":"2027-01-31"},
+  {"name":"year-boundary","dob":"2025-12-31","asOf":"2026-01-01","age":{"years":0,"months":0,"days":1},"yearAge":1,"elapsedDays":1,"nextBirthday":"2026-12-31"},
+  {"name":"future-dob","dob":"2026-08-18","asOf":"2026-08-17","error":"DOB_AFTER_AS_OF"},
+  {"name":"lower-limit","dob":"1900-01-01","asOf":"1900-01-01","elapsedDays":0},
+  {"name":"upper-limit","dob":"2000-01-01","asOf":"2100-12-31","elapsedDays":36889},
+  {"name":"below-limit","dob":"1899-12-31","asOf":"2026-08-17","error":"OUT_OF_RANGE"},
+  {"name":"above-limit","dob":"2000-01-01","asOf":"2101-01-01","error":"OUT_OF_RANGE"}
+]

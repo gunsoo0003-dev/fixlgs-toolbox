@@ -1,0 +1,7 @@
+[
+ {"name":"basic","start":"2020-03-01","end":"2025-08-31","years":5,"months":5,"days":30,"totalDays":2009},
+ {"name":"same","start":"2026-01-01","end":"2026-01-01","years":0,"months":0,"days":0,"totalDays":0},
+ {"name":"leap","start":"2024-02-29","end":"2025-02-28","years":0,"months":11,"days":30,"totalDays":365},
+ {"name":"month-end","start":"2025-01-31","end":"2025-02-28","years":0,"months":0,"days":28,"totalDays":28},
+ {"name":"year-boundary","start":"2025-12-31","end":"2026-01-01","years":0,"months":0,"days":1,"totalDays":1}
+]

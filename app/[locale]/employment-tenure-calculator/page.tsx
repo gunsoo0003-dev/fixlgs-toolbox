@@ -1,0 +1,7 @@
+import type {Metadata} from "next";
+import {notFound} from "next/navigation";
+import {EmploymentTenureCalculatorPage} from "@/components/employment-tenure-calculator-page";
+import {locales,type Locale} from "@/lib/site";
+const meta={ko:{title:"근속·재직기간 계산기 - 경력 합산 | FIXLGS TOOLBOX",description:"입사일과 퇴사일로 근속기간을 연·월·일로 계산하고 현재 재직 기준일과 여러 경력을 합산하세요."},en:{title:"Employment Tenure Calculator - Add Multiple Service Periods",description:"Calculate employment tenure in years, months and days, use an as-of date for current employment, and add multiple employment periods."},ja:{title:"勤続・在職期間計算ツール - 職歴合算 | FIXLGS TOOLBOX",description:"入社日と退職日から勤続期間を年・月・日で計算し、現在在職中の基準日と複数の職歴を合算できます。"}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/employment-tenure-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:"/ko/employment-tenure-calculator",en:"/en/employment-tenure-calculator",ja:"/ja/employment-tenure-calculator","x-default":"/ko/employment-tenure-calculator"}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <EmploymentTenureCalculatorPage locale={locale as Locale}/>}

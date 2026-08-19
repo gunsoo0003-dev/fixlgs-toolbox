@@ -1,0 +1,2 @@
+import { expect,test } from '@playwright/test';
+for(const locale of ['ko','en','ja'] as const)test(`TOOL048 ${locale} deterministic internal values`,async({page})=>{await page.goto(`/${locale}/age-life-calculator`);await page.getByTestId('tool048-dob').fill('2000-01-01');await page.getByTestId('tool048-as-of').fill('2026-08-17');await expect(page.getByTestId('tool048-year-age')).toHaveText('26');await expect(page.getByTestId('tool048-next-date')).toContainText('2027-01-01');});

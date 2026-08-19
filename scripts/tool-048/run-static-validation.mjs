@@ -1,0 +1,2 @@
+import {spawnSync} from 'node:child_process';
+const steps=['check-source.mjs','check-logic.mjs','check-harness.mjs','check-design.mjs'];for(const step of steps){const r=spawnSync(process.execPath,[`scripts/tool-048/${step}`],{stdio:'inherit'});if(r.status!==0)process.exit(r.status??1)}const runtime=spawnSync(process.execPath,['--experimental-strip-types','scripts/tool-048/check-runtime.mjs'],{stdio:'inherit'});if(runtime.status!==0)process.exit(runtime.status??1);console.log('TOOL048 STATIC VALIDATION PASS');
