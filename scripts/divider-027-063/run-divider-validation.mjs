@@ -5,7 +5,7 @@ import path from 'node:path';
 
 const stamp = new Date().toISOString().replaceAll(':', '-');
 const desktop = path.join(os.homedir(), 'Desktop');
-const resultPath = path.join(desktop, `DIVIDER_027_063_검수결과_${stamp}.txt`);
+const resultPath = path.join(desktop, `DIVIDER_027_065_검수결과_${stamp}.txt`);
 const nextDir = path.join(process.cwd(), '.next');
 try {
   fs.rmSync(nextDir, { recursive: true, force: true });
@@ -29,11 +29,11 @@ const stderr = run.stderr ?? '';
 const exitCode = typeof run.status === 'number' ? run.status : 127;
 const status = exitCode === 0 ? 'PASS' : 'FAIL';
 const passLines = stdout.split(/\r?\n/).filter((line) => line.includes('DIVIDER_PASS '));
-const expectedPages = 37 * 3 * 2;
+const expectedPages = 39 * 3 * 2;
 
 const header = [
-  'DIVIDER027_063 MODE=batch',
-  'TOOLS=37',
+  'DIVIDER027_065 MODE=batch',
+  'TOOLS=39',
   'LOCALES=3',
   'DEVICES=2',
   'SCOPE=IMPORTANT_NOTES_FULL_WIDTH_DIVIDER_ONLY',

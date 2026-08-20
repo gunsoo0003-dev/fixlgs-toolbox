@@ -23,6 +23,7 @@
 
 /* EXPERT POST: shared width modifiers instead of per-tool head overrides. */
 .toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head{max-width:none}
+.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head h2{white-space:normal;overflow-wrap:anywhere;word-break:normal}
 .toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head>span{max-width:980px}
 @media (min-width:901px){
   .toolbox-tool-expert-post--compact-copy .toolbox-tool-format-guide-head>span{
@@ -126,13 +127,14 @@
 .toolbox-tool-info-band--left-head .toolbox-tool-info-band-head>p{margin:0}
 .toolbox-tool-info-band--left-head .toolbox-tool-info-band-head>span{max-width:900px}
 
-/* TOOL 024: prevent the full-viewport section separator from expanding document scroll width. */
+/* IMPORTANT NOTES common contract: format-head + section-start always uses a full-viewport divider.
+   New tools inherit this automatically; no per-tool modifier class is required. */
 .toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start::before{
-  left:0;
-  width:100%;
-  transform:none;
+  left:50%;
+  width:100vw;
+  transform:translateX(-50%);
 }
-/* Full-width section divider opt-in for tools that keep the format-head layout. */
+/* Legacy compatibility: older tools may still carry this modifier, but it is no longer required. */
 .toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start.toolbox-tool-info-band--full-divider::before{
   left:50%;
   width:100vw;

@@ -1,0 +1,1 @@
+import{expect,test}from'@playwright/test';for(const locale of['ko','en','ja'])test(`TOOL065 preflight ${locale}`,async({page})=>{await page.goto(`/${locale}/fraction-decimal-calculator`);await expect(page.getByTestId('tool065-root')).toBeVisible();await expect(page.getByTestId('tool065-calculate')).toBeVisible()});

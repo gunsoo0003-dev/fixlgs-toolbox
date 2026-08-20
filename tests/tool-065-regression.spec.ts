@@ -1,0 +1,1 @@
+import{expect,test}from'@playwright/test';test('TOOL065 auxiliary regression anchor TOOL058',async({page})=>{await page.goto('/ko/data-cooking-unit-converter');await expect(page.getByTestId('tool058-root')).toBeVisible();await page.goto('/ko/fraction-decimal-calculator');await expect(page.getByTestId('tool065-root')).toBeVisible()});

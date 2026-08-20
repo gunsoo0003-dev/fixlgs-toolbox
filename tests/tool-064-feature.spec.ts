@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL064 sorted and reset controls',async({page})=>{await page.goto('/ko/statistics-calculator');await page.getByTestId('tool064-input').fill('3,1,2');await page.getByTestId('tool064-sorted').locator('summary').click();await expect(page.getByTestId('tool064-sorted')).toContainText('1');await page.getByTestId('tool064-reset').click();await expect(page.getByTestId('tool064-input')).toHaveValue('10, 20, 30');await expect(page.getByTestId('tool064-copy')).toBeEnabled();});

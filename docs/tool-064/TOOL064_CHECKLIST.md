@@ -1,0 +1,21 @@
+# TOOL064 보조작업장 체크리스트
+
+- [x] 064 번호/명칭/category/slug 고정
+- [x] 평균/중앙값/최빈값/합계/개수/최소/최대/범위 구현
+- [x] 원본 배열 보존 + median 정렬 copy
+- [x] odd/even median fixture
+- [x] mode none/single/multiple fixture
+- [x] single datum fixture
+- [x] negative/decimal fixture
+- [x] invalid token 가시화
+- [x] 10,000 / 1e15 / decimal 8 / token 30 상한 일치
+- [x] KO/EN/JA copy 및 metadata
+- [x] canonical/hreflang
+- [x] JSON-LD WebApplication/Breadcrumb/FAQ
+- [x] 공통 class 재사용 / 전용 module.css
+- [x] 전역 CSS 변경 0
+- [x] legacy sealed 사용 0
+- [x] 신규 OSS 0
+- [x] 정적 logic/source/design PASS
+- [x] Playwright spec 구조 준비
+- [ ] 실제 Playwright/PC/mobile/dark/build — 주작업장 통합검증

@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL064 rejects scientific notation and precision over 8',async({page})=>{await page.goto('/en/statistics-calculator');await page.getByTestId('tool064-input').fill('1e3,0.123456789');await expect(page.getByTestId('tool064-invalid')).toContainText('scientific');await expect(page.getByTestId('tool064-invalid')).toContainText('precision');});
+test('TOOL064 absolute value limit',async({page})=>{await page.goto('/en/statistics-calculator');await page.getByTestId('tool064-input').fill('1000000000000001');await expect(page.getByTestId('tool064-invalid')).toContainText('value-limit');});

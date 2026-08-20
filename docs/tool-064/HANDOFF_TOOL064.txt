@@ -1,0 +1,53 @@
+TOOL064 | 평균·통계 계산기 | G. 단위·일반 계산기
+slug: statistics-calculator
+예상 URL: /{ko|en|ja}/statistics-calculator
+보조작업장 상태: READY (정적/구조/디자인코드/패키지 기준)
+
+[구현]
+- textarea 숫자 목록 입력: comma / whitespace / newline
+- Mean / Median / Mode / Sum / Count / Min / Max / Range
+- odd/even median 분기
+- mode none/single/multiple 분기
+- single datum: mean/median/mode=value, range=0
+- invalid token 노출, 과학적 표기 제외
+- sorted data 접힘, summary copy/reset
+- KO/EN/JA, canonical/hreflang, JSON-LD, FAQ
+
+[서비스 유효상한]
+maxCount=10000, maxAbsValue=1e15, maxDecimalPlaces=8, maxTokenLength=30
+
+[이식 대상 전용 파일]
+app/[locale]/statistics-calculator/page.tsx
+components/tool-064-statistics-calculator-page.tsx
+components/tool-064-statistics-calculator.tsx
+components/tool-064-statistics-calculator.module.css
+lib/tool-064-statistics.ts
+tests/fixtures/tool-064/cases.json
+tests/tool-064-preflight.spec.ts
+tests/tool-064-core.spec.ts
+tests/tool-064-feature.spec.ts
+tests/tool-064-median.spec.ts
+tests/tool-064-mode.spec.ts
+tests/tool-064-parser.spec.ts
+tests/tool-064-boundary.spec.ts
+tests/tool-064-regression.spec.ts
+tests/tool-064-limit.spec.ts
+scripts/tool-064/check-logic.mjs
+scripts/tool-064/check-source.mjs
+scripts/tool-064/check-design.mjs
+scripts/tool-064/run-static-validation.mjs
+
+[보호/의존성]
+전역 CSS 변경 없음. legacy sealed 사용 없음. 기존 완료 도구 수정 없음. 신규 OSS 없음. package.json/package-lock.json 변경 없음.
+
+[기준 도구]
+MAIN TOOL058, SUB TOOL055~057. 제공 기준 ZIP에 061~063 소스가 없어 해당 3개와의 실제 통합 regression은 주작업장 최신본에서 수행 필요.
+
+[주작업장 통합검증]
+- 최신 프로젝트에서 061/062/063 실제 기준과 디자인/selector 재대조
+- 실제 브라우저/Playwright: preflight/core/feature/median/mode/parser/boundary/regression/limit
+- PC/mobile KO/EN/JA, 일본어 줄바꿈, light/dark, long decimal overflow
+- TypeScript/production build (제공 기준 ZIP에 node_modules 없음; 보조작업장 global tsc는 Next/React type module resolution 환경 오류로 최종 판정 불가)
+- category 등록, related/next link 활성화 판단
+- sitemap/robots/배포/Search Console/색인
+- 통합 FINAL FAIL0/SKIP0

@@ -1,0 +1,11 @@
+import {calculateTool064Stats,parseTool064Input,TOOL064_LIMITS} from '../../lib/tool-064-statistics.ts';
+let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};const stats=s=>calculateTool064Stats(parseTool064Input(s).values);const near=(a,b)=>Math.abs(a-b)<1e-12;
+let x=stats('10,20,30');c('mean 20',x&&near(x.mean,20));c('median odd 20',x&&x.median===20);c('mode none',x&&x.modeState==='none');
+x=stats('1,2,3,4');c('median even 2.5',x&&x.median===2.5);c('mean 2.5',x&&x.mean===2.5);
+x=stats('1,1,2,2,3');c('multiple mode 1,2',x&&x.modeState==='multiple'&&x.modes.join(',')==='1,2');
+x=stats('7');c('single datum mode 7',x&&x.modeState==='single'&&x.modes[0]===7&&x.range===0);
+x=stats('-5,0,5');c('negative and range',x&&x.mean===0&&x.range===10&&x.min===-5&&x.max===5);
+let p=parseTool064Input('1,abc,3');c('invalid token surfaced',p.invalid.length===1&&p.invalid[0].token==='abc'&&p.values.join(',')==='1,3');
+p=parseTool064Input('1e3');c('scientific notation rejected',p.invalid[0]?.reason==='scientific');p=parseTool064Input('0.123456789');c('precision >8 rejected',p.invalid[0]?.reason==='precision');
+c('limits frozen',TOOL064_LIMITS.maxCount===10000&&TOOL064_LIMITS.maxAbsValue===1e15&&TOOL064_LIMITS.maxDecimalPlaces===8&&TOOL064_LIMITS.maxTokenLength===30);
+console.log(`RESULT LOGIC PASS=${pass} FAIL=${fail} TOOL=064`);if(fail)process.exit(1);

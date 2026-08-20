@@ -38,6 +38,8 @@ const tools = [
   ['061', 'percentage-percent-change-calculator'],
   ['062', 'discount-price-calculator'],
   ['063', 'ratio-proportion-calculator'],
+  ['064', 'statistics-calculator'],
+  ['065', 'fraction-decimal-calculator'],
 ] as const;
 
 const locales = ['ko', 'en', 'ja'] as const;
@@ -59,9 +61,9 @@ for (const [toolNo, slug] of tools) {
       expect(response!.status(), `${toolNo} ${locale} HTTP`).toBeLessThan(400);
 
       const notes = page.locator(
-        '.toolbox-tool-info-band.toolbox-tool-info-band--section-start.toolbox-tool-info-band--format-head.toolbox-tool-info-band--full-divider'
+        '.toolbox-tool-info-band.toolbox-tool-info-band--section-start.toolbox-tool-info-band--format-head'
       );
-      await expect(notes, `TOOL${toolNo} ${locale} notes full-divider`).toHaveCount(1);
+      await expect(notes, `TOOL${toolNo} ${locale} notes common-divider`).toHaveCount(1);
       await expect(notes).toBeVisible();
 
       const divider = await notes.evaluate((element) => {

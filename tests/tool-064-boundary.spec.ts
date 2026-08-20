@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL064 single datum',async({page})=>{await page.goto('/ko/statistics-calculator');await page.getByTestId('tool064-input').fill('7');await expect(page.getByTestId('tool064-mean')).toHaveText('7');await expect(page.getByTestId('tool064-median')).toHaveText('7');await expect(page.getByTestId('tool064-mode')).toHaveText('7');await expect(page.getByTestId('tool064-range')).toHaveText('0');});
+test('TOOL064 negative decimal',async({page})=>{await page.goto('/ko/statistics-calculator');await page.getByTestId('tool064-input').fill('-5,0,5');await expect(page.getByTestId('tool064-mean')).toHaveText('0');await expect(page.getByTestId('tool064-range')).toHaveText('10');});

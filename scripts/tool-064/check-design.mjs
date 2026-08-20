@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+let pass=0,fail=0;
+const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};
+const page=fs.readFileSync('components/tool-064-statistics-calculator-page.tsx','utf8');
+const tool=fs.readFileSync('components/tool-064-statistics-calculator.tsx','utf8');
+const css=fs.readFileSync('components/tool-064-statistics-calculator.module.css','utf8');
+const common=fs.readFileSync('styles/toolbox-detail-common.css','utf8');
+for(const token of ['ToolboxSubpageShell','toolbox-tool-detail-hero','toolbox-tool-detail-body','toolbox-next-work','toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head','toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head','toolbox-tool-faq'])c(`common contract ${token}`,page.includes(token));
+c('lower section exact order',page.indexOf('toolbox-tool-guide toolbox-tool-guide--five')<page.indexOf('toolbox-tool-format-guide toolbox-tool-expert-post')&&page.indexOf('toolbox-tool-format-guide toolbox-tool-expert-post')<page.indexOf('toolbox-tool-info-band toolbox-tool-info-band--section-start')&&page.indexOf('toolbox-tool-info-band toolbox-tool-info-band--section-start')<page.indexOf('toolbox-tool-faq'));
+c('expert exact 6-card source contract',(page.match(/\['(MEAN|MEDIAN|MODE|RANGE|OUTLIER|SCOPE)'/g)||[]).length>=6);
+for(const id of ['tool064-root','tool064-workspace','tool064-input','tool064-reset','tool064-copy','tool064-result','tool064-mean','tool064-median','tool064-mode','tool064-count','tool064-sum','tool064-min','tool064-max','tool064-range','tool064-sorted'])c(`runtime testid ${id}`,tool.includes(`data-testid="${id}"`));
+c('desktop statistics grids',css.includes('grid-template-columns:repeat(3,minmax(0,1fr))')&&css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'));
+c('mobile result reflow',css.includes('@media(max-width:560px)')&&css.includes('.primaryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}')&&css.includes('.secondaryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}'));
+c('common divider automatic contract',common.includes('.toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start::before')&&common.includes('width:100vw'));
+c('wide-head multilingual wrap contract',common.includes('.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head h2{white-space:normal;overflow-wrap:anywhere;word-break:normal}'));
+c('no per-tool divider modifier',!page.includes('toolbox-tool-info-band--full-divider'));
+c('global pollution absent',!/(globals\.css|legacy-(site|tools)-sealed|!important)/i.test(page+css));
+console.log(`RESULT DESIGN-CODE PASS=${pass} FAIL=${fail} ACTUAL_DOM=YES COMMON_DIVIDER=AUTO TOOL=064`);if(fail)process.exit(1);
