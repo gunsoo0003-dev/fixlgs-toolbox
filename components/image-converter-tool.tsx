@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { ToolNavigation } from "@/components/tool-navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createStoredZip } from "@/lib/zip";
 import { tool001LocalNotes, type Locale } from "@/lib/site";
@@ -1067,28 +1068,7 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
 
       </section>
 
-      <section className="toolbox-next-work">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-semibold">{locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業"}</h2>
-            <p className="mt-1 text-sm text-muted">
-              {locale === "ko"
-                ? "이 결과를 이어서 활용하기 좋은 도구를 먼저 보여줍니다."
-                : locale === "en"
-                  ? "Tools that naturally continue this result are shown first."
-                  : "この結果を続けて使いやすいツールを先に表示します。"}
-            </p>
-          </div>
-          <a href={`/${locale}`} className="text-sm font-medium text-foreground">
-            {locale === "ko" ? "카테고리로 돌아가기" : locale === "en" ? "Back to categories" : "カテゴリへ戻る"}
-          </a>
-        </div>
-        <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <ToolCardSkeleton title={locale === "ko" ? "이미지 압축기" : locale === "en" ? "Image Compressor" : "画像圧縮"} description={locale === "ko" ? "001의 다음 흐름으로 연결되는 도구" : locale === "en" ? "Natural next step after conversion" : "変換後の次に使いやすいツール"} />
-          <ToolCardSkeleton title={locale === "ko" ? "이미지 크기 변경기" : locale === "en" ? "Image Resizer" : "画像サイズ変更"} description={locale === "ko" ? "웹용 크기 조정에 연결" : locale === "en" ? "For resizing before upload" : "アップロード前のサイズ調整"} />
-          <ToolCardSkeleton title={locale === "ko" ? "웹 이미지 최적화기" : locale === "en" ? "Web Image Optimizer" : "Web最適化"} description={locale === "ko" ? "용량 줄이기와 웹 최적화" : locale === "en" ? "For lighter web-ready assets" : "軽量なWeb向け画像へ"} />
-        </div>
-      </section>
+      <ToolNavigation locale={locale} currentTool={1} />
     </div>
   );
 }

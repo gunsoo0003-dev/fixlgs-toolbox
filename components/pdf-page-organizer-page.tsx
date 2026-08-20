@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { ToolboxSubpageShell } from "./toolbox-subpage-shell";
@@ -49,8 +50,8 @@ export function PdfPageOrganizerPage({ locale }: { locale: Locale }) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description"><Link className="toolbox-subpage-back" href={`/${locale}/category/pdf`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">030 · PDF</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{t.local}</span></div></section>
     <section className="toolbox-tool-detail-body"><div><PdfPageOrganizerTool locale={locale} />
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>031</span><h3>{locale === "ko" ? "PDF 페이지 번호·워터마크 도구" : locale === "en" ? "PDF Page Number & Watermark Tool" : "PDF ページ番号・透かしツール"}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "준비 중" : locale === "en" ? "COMING SOON" : "準備中"}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((x) => <Link key={x.n} href={x.href} className="toolbox-next-work-card"><span>{x.n}</span><h3>{x.name}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "en" ? "AVAILABLE" : "利用可能"}</span><strong>↗</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={30} />
+      
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((s, i) => <li key={s}><span>{String(i + 1).padStart(2, "0")}</span><p>{s}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-use-cases--editorial"><div className="toolbox-tool-format-guide-head"><p>USE CASES</p><h2>{locale === "ko" ? "활용 예시" : locale === "en" ? "Use cases" : "活用例"}</h2></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.examples.map(([title, description], i) => <article key={title}><strong>{String(i + 1).padStart(2, "0")}</strong><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>

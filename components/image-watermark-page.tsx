@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { ImageWatermarkTool } from "@/components/image-watermark-tool";
 import "@/components/image-watermark-tool.css";
@@ -239,24 +240,7 @@ export function ImageWatermarkPage({ locale }: { locale: Locale }) {
 
       <section className="toolbox-tool-detail-body"><div>
         <ImageWatermarkTool locale={locale} />
-        <section className="toolbox-next-work">
-          <div><p>NEXT WORK</p><h2>{t.nextTitle}</h2></div>
-          <div className="toolbox-next-work-grid">
-            {nextCards.map((card) => card.href ? (
-              <Link key={card.n} href={card.href} className="toolbox-next-work-card">
-                <span>{card.n}</span>
-                <h3>{card.name}</h3>
-                <div className="toolbox-next-work-card-foot"><span>{t.ready}</span><strong>↗</strong></div>
-              </Link>
-            ) : (
-              <div key={card.n} className="toolbox-next-work-card is-disabled">
-                <span>{card.n}</span>
-                <h3>{card.name}</h3>
-                <div className="toolbox-next-work-card-foot"><span>{t.soon}</span><strong>·</strong></div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <ToolNavigation locale={locale} currentTool={17} />
       </div></section>
 
       <section className="toolbox-tool-guide tool017-how-to tool013-how-to-grid">

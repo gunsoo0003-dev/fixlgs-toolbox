@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { ToolboxSubpageShell } from "./toolbox-subpage-shell";
@@ -67,12 +68,8 @@ export function PdfToImageConverterPage({ locale }: { locale: Locale }) {
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <PdfToImageConverterTool locale={locale} />
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/merge-pdf`}><span>028</span><h3>{locale === "ko" ? "PDF 합치기" : locale === "en" ? "Merge PDF" : "PDF結合"}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "ja" ? "利用可能" : "AVAILABLE"}</span><strong>↗</strong></div></Link></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">
-        <Link className="toolbox-next-work-card" href={`/${locale}/image-to-pdf`}><span>026</span><h3>{locale === "ko" ? "이미지 PDF 변환기" : locale === "en" ? "Image to PDF Converter" : "画像 PDF 変換ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "ja" ? "利用可能" : "AVAILABLE"}</span><strong>↗</strong></div></Link>
-        <div className="toolbox-next-work-card is-disabled"><span>029</span><h3>{locale === "ko" ? "PDF 분할·페이지 추출기" : locale === "en" ? "PDF Split & Page Extractor" : "PDF分割・ページ抽出ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>
-        <div className="toolbox-next-work-card is-disabled"><span>035</span><h3>{locale === "ko" ? "PDF 텍스트·이미지 추출기" : locale === "en" ? "PDF Text & Image Extractor" : "PDFテキスト・画像抽出ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>
-      </div></section>
+      <ToolNavigation locale={locale} currentTool={27} />
+      
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-use-cases--editorial"><div className="toolbox-tool-format-guide-head"><p>USE CASES</p><h2>{locale === "ko" ? "활용 예시" : locale === "ja" ? "活用例" : "Use cases"}</h2></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.examples.map(([title, description], index) => <article key={title}><strong>{String(index + 1).padStart(2, "0")}</strong><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>

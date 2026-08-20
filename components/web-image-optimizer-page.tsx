@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { WebImageOptimizerTool } from "@/components/web-image-optimizer-tool";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -55,16 +56,7 @@ export function WebImageOptimizerPage({ locale }: { locale: Locale }) {
 
       <section className="toolbox-tool-detail-body"><div>
         <WebImageOptimizerTool locale={locale} />
-        <section className="toolbox-next-work">
-          <div><p>NEXT WORK</p><h2>{locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業"}</h2></div>
-          <div className="toolbox-next-work-grid">
-            {[
-              ["004", locale === "ko" ? "이미지 압축기" : locale === "en" ? "Image Compressor" : "画像圧縮ツール", "image-compressor"],
-              ["005", locale === "ko" ? "목표 용량 이미지 압축기" : locale === "en" ? "Target Size Compressor" : "目標容量圧縮ツール", "target-size-image-compressor"],
-              ["006", locale === "ko" ? "이미지 크기 변경기" : locale === "en" ? "Image Resizer" : "画像サイズ変更ツール", "image-resizer"],
-            ].map(([n, name, slug]) => <Link key={n} href={`/${locale}/${slug}`} className="toolbox-next-work-card"><span>{n}</span><h3>{name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>)}
-          </div>
-        </section>
+        <ToolNavigation locale={locale} currentTool={7} />
       </div></section>
 
       <section className="toolbox-tool-guide toolbox-tool-guide--six">

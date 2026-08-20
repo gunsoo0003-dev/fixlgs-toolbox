@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -45,8 +46,8 @@ export function TextDiffComparePage({locale}:{locale:Locale}){
   </section>
   <section className="toolbox-tool-detail-body"><div>
    <TextDiffCompareTool locale={locale}/>
-   <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/keyword-frequency-duplicate-analyzer`}><span>044</span><h3>{locale==="ko"?"키워드 빈도·중복 분석기":locale==="ja"?"キーワード頻度・重複分析ツール":"Keyword Frequency & Duplicate Analyzer"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
-   <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/text-find-replace`}><span>042</span><h3>{locale==="ko"?"텍스트 찾기·바꾸기":locale==="ja"?"テキスト検索・置換":"Text Find & Replace"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link><Link className="toolbox-next-work-card" href={`/${locale}/character-document-counter`}><span>036</span><h3>{locale==="ko"?"글자 수·문서 통계 계산기":locale==="ja"?"文字数・文書統計カウンター":"Character & Document Statistics"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
+   <ToolNavigation locale={locale} currentTool={43} />
+   
   </div></section>
   <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,"0")}</span><p>{x}</p></li>)}</ol></section>
   <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>EXPERT POST</p><h2>{expertTitle}</h2><span>{expertLead}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{expert.map(([title,description])=><article key={title}><h4>{title}</h4><p>{description}</p></article>)}</div></div></section>

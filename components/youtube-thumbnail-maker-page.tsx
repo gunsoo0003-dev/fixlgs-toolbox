@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from 'next/link';
 import {YoutubeThumbnailMakerTool} from './youtube-thumbnail-maker-tool';
 import {ToolboxSubpageShell} from './toolbox-subpage-shell';
@@ -31,14 +32,8 @@ export function YoutubeThumbnailMakerPage({locale}:{locale:Locale}){
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <YoutubeThumbnailMakerTool locale={locale}/>
-      <section className="toolbox-next-work">
-        <div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{nextLabel}</h2></div>
-        <div className="toolbox-next-work-grid"><article className="toolbox-next-work-card"><span>020</span><h3>{locale==='ko'?<>유튜브 채널<br/>배너 제작기</>:locale==='ja'?'YouTubeチャンネルバナー作成ツール':'YouTube Channel Banner Maker'}</h3><div className="toolbox-next-work-card-foot"><span>{locale==='ko'?'준비 중':locale==='ja'?'準備中':'PLANNED'}</span><strong>↗</strong></div></article></div>
-      </section>
-      <section className="toolbox-next-work tool019-related-tools">
-        <div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{relatedLabel}</h2></div>
-        <div className="toolbox-next-work-grid">{related.map(([n,name,slug])=><Link key={n} href={`/${locale}/${slug}`} className="toolbox-next-work-card"><span>{n}</span><h3>{name}</h3><div className="toolbox-next-work-card-foot"><span>{available}</span><strong>↗</strong></div></Link>)}</div>
-      </section>
+      <ToolNavigation locale={locale} currentTool={19} />
+      
     </div></section>
     <section className="toolbox-tool-guide"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{locale==='ko'?'사용 방법':locale==='ja'?'使い方':'How to use'}</h2></div><ol>{t.steps.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,'0')}</span><p>{x}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-use-cases--editorial tool019-use-cases"><div className="toolbox-tool-format-guide-head"><p>USE CASES</p><h2>{locale==='ko'?'활용 예시':locale==='ja'?'活用例':'Use cases'}</h2></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.examples.map(([title,description],i)=><article key={title}><strong>{String(i+1).padStart(2,'0')}</strong><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>

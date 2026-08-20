@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { ToolboxSubpageShell } from '@/components/toolbox-subpage-shell';
@@ -51,8 +52,8 @@ export function BlogOpenGraphImageMakerPage({locale}:{locale:Locale}){
 
     <section className="toolbox-tool-detail-body"><div>
       <BlogOpenGraphImageMakerTool locale={locale}/>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>023</span><h3>{locale==='ko'?'앱 아이콘·파비콘 생성기':locale==='en'?'App Icon & Favicon Generator':'アプリアイコン・ファビコン生成'}</h3><div className="toolbox-next-work-card-foot"><span>{coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work toolbox-related-tools"><div><p>RELATED TOOLS</p><h2>{relatedTitle}</h2></div><div className="toolbox-next-work-grid">{related.map(item=><Link key={item.n} href={item.href} className="toolbox-next-work-card"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={22} />
+      
     </div></section>
 
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,'0')}</span><p>{s.split('\n').map((line,j)=><Fragment key={j}>{line}{j<s.split('\n').length-1?<br/>:null}</Fragment>)}</p></li>)}</ol></section>

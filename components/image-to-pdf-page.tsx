@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { ToolboxSubpageShell } from "./toolbox-subpage-shell";
@@ -216,8 +217,8 @@ export function ImageToPdfPage({ locale }: { locale: Locale }) {
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <ImageToPdfTool locale={locale} />
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>027</span><h3>{locale === "ko" ? "PDF 이미지 변환기" : locale === "en" ? "PDF to Image Converter" : "PDF画像変換ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map(x => <Link key={x.n} href={x.href} className="toolbox-next-work-card"><span>{x.n}</span><h3>{x.name}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "ja" ? "利用可能" : "AVAILABLE"}</span><strong>↗</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={26} />
+      
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((s, i) => <li key={s}><span>{String(i + 1).padStart(2, "0")}</span><p>{s}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-use-cases--editorial"><div className="toolbox-tool-format-guide-head"><p>USE CASES</p><h2>{locale === "ko" ? "활용 예시" : locale === "ja" ? "活用例" : "Use cases"}</h2></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.examples.map(([title, description], i) => <article key={title}><strong>{String(i + 1).padStart(2, "0")}</strong><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>

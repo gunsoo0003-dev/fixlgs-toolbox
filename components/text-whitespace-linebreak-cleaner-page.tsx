@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { TextWhitespaceLinebreakCleanerTool } from "@/components/text-whitespace-linebreak-cleaner-tool";
@@ -56,8 +57,8 @@ export function TextWhitespaceLinebreakCleanerPage({ locale }: { locale: Locale 
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <TextWhitespaceLinebreakCleanerTool locale={locale}/>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>038</span><h3>{locale === "ko" ? "대소문자·문장 형식 변환기" : locale === "ja" ? "大文字・小文字・文形式変換ツール" : "Text Case & Sentence Converter"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item) => item.active && item.slug ? <Link key={item.n} className="toolbox-next-work-card" href={`/${locale}/${item.slug}`}><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{t.available}</span><strong>↗</strong></div></Link> : <div key={item.n} className="toolbox-next-work-card is-disabled"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={37} />
+      
     </div></section>
 
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,index) => <li key={step}><span>{String(index+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>

@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { ImageMergerTool } from "@/components/image-merger-tool";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -29,7 +30,7 @@ export function ImageMergerPage({locale}:{locale:Locale}){
      <div className="toolbox-tool-detail-heading"><h1>{t.title}</h1><p>{t.desc}</p></div>
      <div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{locale==="ko"?"브라우저에서 바로 처리":locale==="en"?"PROCESS IN YOUR BROWSER":"ブラウザ内で処理"}</span></div>
    </section>
-   <section className="toolbox-tool-detail-body"><div><ImageMergerTool locale={locale}/><section className="toolbox-next-work"><div><p>NEXT WORK</p><h2>{nextTitle}</h2></div><div className="toolbox-next-work-grid">{nextCards.map(c=>c.href?<Link key={c.n} href={c.href} className="toolbox-next-work-card"><span>{c.n}</span><h3>{c.name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>:<div key={c.n} className="toolbox-next-work-card is-disabled"><span>{c.n}</span><h3>{c.name}</h3><div className="toolbox-next-work-card-foot"><span>{soon}</span><strong>·</strong></div></div>)}</div></section></div></section>
+   <section className="toolbox-tool-detail-body"><div><ImageMergerTool locale={locale}/><ToolNavigation locale={locale} currentTool={13} /></div></section>
    <section className="toolbox-tool-guide tool013-how-to tool013-how-to-grid"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{locale==="ko"?"사용 방법":locale==="en"?"How to use":"使い方"}</h2></div><ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,"0")}</span><p>{s}</p></li>)}</ol></section>
    <section className="toolbox-tool-format-guide toolbox-tool-expert-post tool013-format-guide">
      <div className="toolbox-tool-format-guide-head"><p>IMAGE MERGING GUIDE</p><h2>{locale==="ko"?"이미지를 자연스럽고 안전하게 합치는 기준":locale==="en"?"How to merge images cleanly and safely":"画像を自然かつ安全に結合する基準"}</h2><span>{locale==="ko"?"방향, 크기 기준, 정렬, 간격, 배경과 출력 형식을 목적에 맞게 선택하면 이미지 왜곡과 불필요한 화질 저하를 줄일 수 있습니다.":locale==="en"?"Choose direction, sizing basis, alignment, spacing, background, and output format for the job to avoid distortion and unnecessary quality loss.":"方向、サイズ基準、配置、間隔、背景、出力形式を目的に合わせて選ぶと、変形や不要な画質低下を抑えられます。"}</span></div>

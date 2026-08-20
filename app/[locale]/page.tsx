@@ -4,7 +4,8 @@ import { ToolboxFaqList } from "@/components/toolbox-faq-list";
 import { notFound } from 'next/navigation';
 import LanguageSwitcher from '@/components/toolbox/LanguageSwitcher';
 import ThemeToggle from '@/components/toolbox/ThemeToggle';
-import { categories as siteCategories, tool001Slug } from '@/lib/site';
+import { categories as siteCategories, tool001Slug, tool028Slug, tool036Slug, tool045Slug, tool055Slug, tool066Slug } from '@/lib/site';
+import { ToolboxHomeHero } from '@/components/toolbox-home-hero';
 
 type Locale = 'ko' | 'en' | 'ja';
 
@@ -137,7 +138,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
   const locale = rawLocale;
   const copy = copies[locale];
   const tools = popularTools[locale];
-  const categories = categoryBase.map(([index, name], i) => ({ index, name, local: categoryText[locale][i][0], desc: categoryText[locale][i][1] }));
+  const categories = categoryBase.slice(0, 8).map(([index, name], i) => ({ index, name, local: categoryText[locale][i][0], desc: categoryText[locale][i][1] }));
 
   return (
     <main className={`toolbox-site toolbox-locale-${locale}`}>
@@ -153,45 +154,22 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
         <div className="toolbox-utilities"><LanguageSwitcher locale={locale} /></div>
       </header>
 
-      <section className="toolbox-hero">
-        <div className="toolbox-hero-copy">
-          <p>{copy.hero.eyebrow}</p>
-          {locale === 'ja' ? (
-            <h1 className="toolbox-hero-title toolbox-hero-title-ja">
-              <span>必要なときに、</span>
-              <strong><span>すぐ使える</span><span>ツール。</span></strong>
-            </h1>
-          ) : (
-            <h1 className="toolbox-hero-title">
-              <span>{copy.hero.title1}</span>
-              <strong><span>{copy.hero.title2}</span></strong>
-            </h1>
-          )}
-          <span>{copy.hero.description}</span>
-        </div>
-        <div className="toolbox-search-block">
-          <label htmlFor="toolbox-search">{copy.search.label}</label>
-          <div className="toolbox-search-shell"><input id="toolbox-search" type="search" placeholder={copy.search.placeholder} /><button type="button" aria-label={copy.search.label}>↗</button></div>
-          <div className="toolbox-quick-links"><span>{copy.search.quick}</span>{copy.search.links.map((item) => <button type="button" key={item}>{item}</button>)}</div>
-        </div>
-        <div className="toolbox-hero-blue" aria-hidden="true"><span>136+</span><small>TOOLS SYSTEM</small></div>
-      </section>
+      <ToolboxHomeHero locale={locale} hero={copy.hero} search={copy.search} />
 
       <section id="popular" className="toolbox-section toolbox-popular-section">
         <div className="toolbox-section-head"><div><p>{copy.popular.eyebrow}</p><h2>{copy.popular.title}</h2></div><span>{copy.popular.note}</span></div>
         <div className="toolbox-tool-grid">
           {tools.map((tool, index) => {
+            const popularSlugs = [tool001Slug, tool028Slug, tool036Slug, tool045Slug, tool055Slug, tool066Slug] as const;
             const content = (
               <>
                 <div className="toolbox-tool-card-top"><span>{tool.meta}</span><b>{String(index + 1).padStart(2, '0')}</b></div>
                 <strong className="toolbox-tool-mark">{tool.mark}</strong><div><h3>{tool.name}</h3><p>{tool.desc}</p></div>
-                <div className="toolbox-tool-card-action"><span>{index === 0 ? tool.name : copy.popular.status}</span><i aria-hidden="true">↗</i></div>
+                <div className="toolbox-tool-card-action"><span>{tool.name}</span><i aria-hidden="true">↗</i></div>
               </>
             );
-            return index === 0 ? (
-              <Link className="toolbox-tool-card is-featured" href={`/${locale}/${tool001Slug}`} key={tool.name}>{content}</Link>
-            ) : (
-              <article className="toolbox-tool-card" key={tool.name}>{content}</article>
+            return (
+              <Link className={`toolbox-tool-card ${index === 0 ? 'is-featured' : ''}`.trim()} href={`/${locale}/${popularSlugs[index]}`} key={tool.name}>{content}</Link>
             );
           })}
         </div>

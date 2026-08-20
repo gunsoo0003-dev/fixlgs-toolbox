@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import type { Locale } from "@/lib/site";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -47,8 +48,8 @@ export function TextFindReplacePage({locale}:{locale:Locale}){
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <TextFindReplaceTool locale={locale}/>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/text-diff-compare`}><span>043</span><h3>{locale==="ko"?"두 텍스트 비교기":locale==="ja"?"2つのテキスト比較ツール":"Text Diff & Compare"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/text-extractor`}><span>041</span><h3>{locale==="ko"?"텍스트 추출기":locale==="ja"?"テキスト抽出ツール":"Text Data Extractor"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link><Link className="toolbox-next-work-card" href={`/${locale}/delimiter-list-converter`}><span>040</span><h3>{locale==="ko"?"구분자·목록 변환기":locale==="ja"?"区切り文字・リスト変換ツール":"Delimiter & List Converter"}</h3><div className="toolbox-next-work-card-foot"><span>Available</span><strong>↗</strong></div></Link></div></section>
+      <ToolNavigation locale={locale} currentTool={42} />
+      
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,"0")}</span><p>{x}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>EXPERT POST</p><h2>{expertTitle}</h2><span>{expertLead}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-direction-grid toolbox-tool-practical-grid">{expert.map(([title,description])=><article key={title}><h4>{title}</h4><p>{description}</p></article>)}</div></div></section>

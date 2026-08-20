@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { ToolboxSubpageShell } from "./toolbox-subpage-shell";
 import { ToolboxFaqList } from "./toolbox-faq-list";
@@ -160,14 +161,8 @@ export function YoutubeChannelBannerPage({ locale }: { locale: Locale }) {
 
     <section className="toolbox-tool-detail-body"><div>
       <YoutubeChannelBannerTool locale={locale} />
-      <section className="toolbox-next-work">
-        <div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{nextLabel}</h2></div>
-        <div className="toolbox-next-work-grid"><article className="toolbox-next-work-card"><span>021</span><h3>{locale === "ko" ? "SNS 이미지 제작기" : locale === "ja" ? "SNS画像作成ツール" : "SNS Image Maker"}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "준비 중" : locale === "ja" ? "準備中" : "PLANNED"}</span><strong>↗</strong></div></article></div>
-      </section>
-      <section className="toolbox-next-work tool020-related-tools">
-        <div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{relatedLabel}</h2></div>
-        <div className="toolbox-next-work-grid">{related.map(([n, name, slug]) => <Link key={n} href={`/${locale}/${slug}`} className="toolbox-next-work-card"><span>{n}</span><h3>{name}</h3><div className="toolbox-next-work-card-foot"><span>{available}</span><strong>↗</strong></div></Link>)}</div>
-      </section>
+      <ToolNavigation locale={locale} currentTool={20} />
+      
     </div></section>
 
     <section className="toolbox-tool-guide"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{locale === "ko" ? "사용 방법" : locale === "en" ? "How to use" : "使い方"}</h2></div><ol>{t.steps.map((x, i) => <li key={x}><span>{String(i + 1).padStart(2, "0")}</span><p>{x}</p></li>)}</ol></section>

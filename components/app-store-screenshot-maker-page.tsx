@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { AppStoreScreenshotMakerTool } from "./app-store-screenshot-maker-tool";
 import { ToolboxFaqList } from "./toolbox-faq-list";
@@ -103,8 +104,8 @@ export function AppStoreScreenshotMakerPage({ locale }: { locale: Locale }) {
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <AppStoreScreenshotMakerTool locale={locale} />
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>025</span><h3>{locale === "ko" ? "증명사진·여권사진 제작기" : locale === "en" ? "ID & Passport Photo Maker" : "証明写真・パスポート写真作成ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item)=><Link key={item.n} href={item.href} className="toolbox-next-work-card"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{locale === "ko" ? "사용 가능" : locale === "ja" ? "利用可能" : "AVAILABLE"}</span><strong>↗</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={24} />
+      
     </div></section>
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,i)=><li key={step}><span>{String(i+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>
     <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.guide.map(([n,title,desc])=><article key={n}><strong>{n}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>

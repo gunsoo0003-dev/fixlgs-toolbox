@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const locale of locales) {
     entries.push({ url: `${baseUrl}/${locale}`, changeFrequency: "weekly", priority: 1 });
-    for (const category of categories) {
+    for (const category of categories.slice(0, 8)) {
       entries.push({
         url: `${baseUrl}/${locale}/category/${category.slug}`,
         changeFrequency: "weekly",

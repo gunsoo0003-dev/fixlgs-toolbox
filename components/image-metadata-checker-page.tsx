@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from 'next/link';
 import { ImageMetadataCheckerTool } from '@/components/image-metadata-checker-tool';
 import styles from './image-metadata-checker-tool.module.css';
@@ -116,8 +117,8 @@ export function ImageMetadataCheckerPage({ locale }: { locale: Locale }) {
     </section>
 
     <section className="toolbox-tool-detail-body"><div><ImageMetadataCheckerTool locale={locale}/>
-      <section className="toolbox-next-work"><div><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>019</span><h3>{locale === 'ko' ? '유튜브 썸네일 제작기' : locale === 'en' ? 'YouTube Thumbnail Maker' : 'YouTubeサムネイル作成'}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work toolbox-related-tools"><div><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item) => <Link key={item.n} href={item.href} className="toolbox-next-work-card"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{t.available}</span><strong>↗</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={18} />
+      
     </div></section>
 
     <section className={`toolbox-tool-guide tool018-how-to ${styles.howTo}`}><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,index) => <li key={step}><span>{String(index+1).padStart(2,'0')}</span><p>{step}</p></li>)}</ol></section>

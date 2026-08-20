@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { SocialMediaImageMakerTool } from "./social-media-image-maker-tool";
 import { ToolboxFaqList } from "./toolbox-faq-list";
@@ -249,29 +250,9 @@ export function SocialMediaImageMakerPage({ locale }: { locale: Locale }) {
         <div>
           <SocialMediaImageMakerTool locale={locale} />
 
-          <section className="toolbox-next-work">
-            <div><p>NEXT WORK</p><h2>{t.next}</h2></div>
-            <div className="toolbox-next-work-grid">
-              <div className="toolbox-next-work-card is-disabled">
-                <span>022</span>
-                <h3>{locale === "ko" ? "블로그·오픈그래프 이미지 제작기" : locale === "en" ? "Blog & Open Graph Image Maker" : "ブログ・OG画像作成ツール"}</h3>
-                <div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div>
-              </div>
-            </div>
-          </section>
+          <ToolNavigation locale={locale} currentTool={21} />
 
-          <section className="toolbox-next-work toolbox-related-tools">
-            <div><p>RELATED TOOLS</p><h2>{t.related}</h2></div>
-            <div className="toolbox-next-work-grid">
-              {related.map((item) => (
-                <Link key={item.n} href={item.href} className="toolbox-next-work-card">
-                  <span>{item.n}</span>
-                  <h3>{item.name}</h3>
-                  <div className="toolbox-next-work-card-foot"><span>{t.available}</span><strong>↗</strong></div>
-                </Link>
-              ))}
-            </div>
-          </section>
+          
         </div>
       </section>
 

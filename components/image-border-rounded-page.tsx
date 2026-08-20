@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { ImageBorderRoundedTool } from "@/components/image-border-rounded-tool";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -173,17 +174,7 @@ export function ImageBorderRoundedPage({ locale }: { locale: Locale }) {
       <section className="toolbox-tool-detail-body">
         <div>
           <ImageBorderRoundedTool locale={locale} />
-          <section className="toolbox-next-work">
-            <div><p>NEXT WORK</p><h2>{locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業"}</h2></div>
-            <div className="toolbox-next-work-grid">
-              {[
-                ["011", locale === "ko" ? "이미지 여백·배경 추가기" : locale === "en" ? "Image Padding & Background Tool" : "画像余白・背景追加ツール", "image-padding-background-tool"],
-                ["004", locale === "ko" ? "이미지 압축기" : locale === "en" ? "Image Compressor" : "画像圧縮ツール", "image-compressor"],
-                ["006", locale === "ko" ? "이미지 크기 변경기" : locale === "en" ? "Image Resizer" : "画像サイズ変更ツール", "image-resizer"],
-                ["001", locale === "ko" ? "JPG·PNG·WebP 이미지 변환기" : locale === "en" ? "JPG, PNG & WebP Image Converter" : "JPG・PNG・WebP画像変換ツール", "jpg-png-webp-image-converter"],
-              ].map(([n, name, slug]) => <Link key={n} href={`/${locale}/${slug}`} className="toolbox-next-work-card"><span>{n}</span><h3>{name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>)}
-            </div>
-          </section>
+          <ToolNavigation locale={locale} currentTool={12} />
         </div>
       </section>
 

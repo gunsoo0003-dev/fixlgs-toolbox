@@ -756,7 +756,8 @@
     "tool068:final": "node scripts/tool-068/run-validation-full.mjs final",
     "tool069:final": "node scripts/tool-069/run-validation-full.mjs final",
     "tool070:final": "node scripts/tool-070/run-validation-full.mjs final",
-    "tool071:final": "node scripts/tool-071/run-validation-full.mjs final"
+    "tool071:final": "node scripts/tool-071/run-validation-full.mjs final",
+    "check:adsense-final": "node scripts/toolbox/check-adsense-final.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

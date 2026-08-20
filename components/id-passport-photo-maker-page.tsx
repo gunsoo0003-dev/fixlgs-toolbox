@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { IdPassportPhotoMakerTool } from "./id-passport-photo-maker-tool";
 import { ToolboxFaqList } from "./toolbox-faq-list";
@@ -170,8 +171,8 @@ export function IdPassportPhotoMakerPage({locale}:{locale:Locale}){
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <IdPassportPhotoMakerTool locale={locale}/>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>026</span><h3>{locale==="ko"?"이미지 PDF 변환기":locale==="en"?"Image to PDF Converter":"画像PDF変換ツール"}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.map((item)=><Link key={item.n} className="toolbox-next-work-card" href={item.href}><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>OPEN</span><strong>→</strong></div></Link>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={25} />
+      
       <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,i)=><li key={step}><span>{String(i+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>
       <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>WORKFLOW GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.guide.map(([n,title,desc])=><article key={n}><strong>{n}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
       <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{t.caution}</h2><span>{locale === "ko" ? "여권·증명사진은 제출처 규격과 원본 촬영 조건을 함께 확인한 뒤 저장하세요." : locale === "ja" ? "パスポート・証明写真は提出先の規格と元写真の撮影条件を確認してから保存してください。" : "Check both the recipient requirements and the source-photo conditions before exporting an ID or passport photo."}</span></div><ul className="toolbox-tool-info-band-list">{t.cautions.map((x)=><li key={x}>{x}</li>)}</ul></section>

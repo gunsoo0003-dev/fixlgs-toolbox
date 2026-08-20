@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { BeforeAfterImageTool } from "@/components/before-after-image-tool";
 import styles from "@/components/before-after-image-tool.module.css";
@@ -102,7 +103,7 @@ export function BeforeAfterImagePage({locale}:{locale:Locale}){
   return <ToolboxSubpageShell locale={locale} appName={appName}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
     <section className="toolbox-tool-detail-hero"><Link className="toolbox-subpage-back" href={`/${locale}/category/image-edit`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">15 · IMAGE EDIT</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title1}</span><span className="toolbox-tool-title-line">{t.title2}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{locale==="ko"?"브라우저에서 바로 처리":locale==="en"?"PROCESS IN YOUR BROWSER":"ブラウザ内で処理"}</span></div></section>
-    <section className="toolbox-tool-detail-body"><div><BeforeAfterImageTool locale={locale}/><section className="toolbox-next-work"><div><p>NEXT WORK</p><h2>{nextTitle}</h2></div><div className="toolbox-next-work-grid">{cards.map(c=>c.href?<Link key={c.n} href={c.href} className="toolbox-next-work-card"><span>{c.n}</span><h3>{c.name}</h3><div className="toolbox-next-work-card-foot"><span>{ready}</span><strong>↗</strong></div></Link>:<div key={c.n} className="toolbox-next-work-card is-disabled"><span>{c.n}</span><h3>{c.name}</h3><div className="toolbox-next-work-card-foot"><span>{soon}</span><strong>·</strong></div></div>)}</div></section></div></section>
+    <section className="toolbox-tool-detail-body"><div><BeforeAfterImageTool locale={locale}/><ToolNavigation locale={locale} currentTool={15} /></div></section>
 
     <section className={`toolbox-tool-guide toolbox-tool-guide--five ${styles.howTo}`}><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{locale==="ko"?"사용 방법":locale==="en"?"How to use":"使い方"}</h2></div><ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,"0")}</span><p>{s}</p></li>)}</ol></section>
 

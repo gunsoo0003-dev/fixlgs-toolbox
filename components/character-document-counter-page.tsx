@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { CharacterDocumentCounterTool } from "@/components/character-document-counter-tool";
 import { ToolboxFaqList } from "@/components/toolbox-faq-list";
@@ -56,8 +57,8 @@ export function CharacterDocumentCounterPage({ locale }: { locale: Locale }) {
     <section className="toolbox-tool-detail-body"><div>
       <CharacterDocumentCounterTool locale={locale}/>
 
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/${related[0].slug}`}><span>037</span><h3>{related[0].name}</h3><div className="toolbox-next-work-card-foot"><span>{t.available}</span><strong>↗</strong></div></Link></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid">{related.slice(1).map((item)=><div key={item.n} className="toolbox-next-work-card is-disabled"><span>{item.n}</span><h3>{item.name}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={36} />
+      
     </div></section>
 
     <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,index)=><li key={step}><span>{String(index+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>

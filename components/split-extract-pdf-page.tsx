@@ -1,3 +1,4 @@
+import { ToolNavigation } from "@/components/tool-navigation";
 import Link from "next/link";
 import { tool028Slug, type Locale } from "@/lib/site";
 import { SplitExtractPdfTool } from "./split-extract-pdf-tool";
@@ -72,8 +73,8 @@ export function SplitExtractPdfPage({locale}:{locale:Locale}){
     </section>
     <section className="toolbox-tool-detail-body"><div>
       <SplitExtractPdfTool locale={locale}/>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>NEXT WORK</p><h2>{t.next}</h2></div><div className="toolbox-next-work-grid"><div className="toolbox-next-work-card is-disabled"><span>030</span><h3>{disabled[1][1]}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div></div></section>
-      <section className="toolbox-next-work"><div className="toolbox-next-work-head"><p>RELATED TOOLS</p><h2>{t.related}</h2></div><div className="toolbox-next-work-grid"><Link className="toolbox-next-work-card" href={`/${locale}/${tool028Slug}`}><span>028</span><h3>{disabled[0][1]}</h3><div className="toolbox-next-work-card-foot"><span>{locale==="ko"?"바로가기":locale==="ja"?"開く":"Open tool"}</span><strong>→</strong></div></Link>{disabled.slice(1).map(([n,name])=><div key={n} className="toolbox-next-work-card is-disabled"><span>{n}</span><h3>{name}</h3><div className="toolbox-next-work-card-foot"><span>{t.coming}</span><strong>·</strong></div></div>)}</div></section>
+      <ToolNavigation locale={locale} currentTool={29} />
+      
     </div></section>
       <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((step,i)=><li key={step}><span>{String(i+1).padStart(2,"0")}</span><p>{step}</p></li>)}</ol></section>
       <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head toolbox-tool-expert-post--compact-copy"><div className="toolbox-tool-format-guide-head"><p>PRACTICAL GUIDE</p><h2>{t.guideTitle}</h2><span>{t.desc}</span></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{t.guide.map(([n,title,desc])=><article key={n}><strong>{n}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
