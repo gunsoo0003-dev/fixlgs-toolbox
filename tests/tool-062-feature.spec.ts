@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL062 third discount and copy action exist',async({page})=>{await page.goto('/ja/discount-price-calculator');await page.getByTestId('tool-062-additional-toggle').check();await page.getByRole('button',{name:'3回目の割引を追加'}).click();await expect(page.getByTestId('tool-062-third-rate')).toBeVisible();await expect(page.getByRole('button',{name:'結果をコピー'})).toBeVisible();});

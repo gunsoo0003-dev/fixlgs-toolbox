@@ -269,6 +269,9 @@ export const tool057Slug = "speed-fuel-energy-converter" as const;
 export const tool058Slug = "data-cooking-unit-converter" as const;
 export const tool059Slug = "pixel-print-size-converter" as const;
 export const tool060Slug = "shoe-clothing-size-converter" as const;
+export const tool061Slug = "percentage-percent-change-calculator" as const;
+export const tool062Slug = "discount-price-calculator" as const;
+export const tool063Slug = "ratio-proportion-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -374,6 +377,12 @@ export const tool059Titles: Record<Locale, string> = { ko: "픽셀·인쇄 크�
 export const tool059Descriptions: Record<Locale, string> = { ko: "픽셀 크기와 PPI로 인쇄 크기를 계산하고 필요한 픽셀, 실제 PPI, 종횡비를 확인합니다.", en: "Calculate print size from pixels and PPI, find required pixels, effective PPI, and aspect ratio.", ja: "ピクセルとPPIから印刷サイズを計算し、必要ピクセル・実効PPI・アスペクト比を確認できます。" };
 export const tool060Titles: Record<Locale, string> = { ko: "신발·의류 사이즈 변환기", en: "Shoe & Clothing Size Converter", ja: "靴・衣類サイズ変換ツール" };
 export const tool060Descriptions: Record<Locale, string> = { ko: "한국·미국·영국·유럽·일본의 신발·의류 사이즈를 남성·여성·아동별로 비교합니다.", en: "Compare shoe and clothing sizes across Korea, US, UK, EU, and Japan for men, women, and kids.", ja: "韓国・米国・英国・EU・日本の靴・衣類サイズをメンズ・レディース・キッズ別に比較します。" };
+export const tool061Titles: Record<Locale, string> = { ko: "퍼센트·증감률 계산기", en: "Percentage & Percent Change Calculator", ja: "パーセント・増減率計算機" };
+export const tool061Descriptions: Record<Locale, string> = { ko: "전체의 몇 %, 증가율·감소율과 퍼센트 적용 후 값을 계산하고 실제 계산식을 함께 확인합니다.", en: "Calculate percentages, increases, decreases, and values after a percent change with clear formulas.", ja: "割合、増加率・減少率、パーセント適用後の値を計算し、計算式も確認できます。" };
+export const tool062Titles: Record<Locale, string> = { ko: "할인 가격 계산기", en: "Discount Price Calculator", ja: "割引価格計算ツール" };
+export const tool062Descriptions: Record<Locale, string> = { ko: "정가와 할인율로 할인금액·최종가격·실질 할인율을 계산하고 추가 할인도 순차 적용합니다.", en: "Calculate savings, final price, and effective discount, including sequential additional discounts.", ja: "元の価格と割引率から割引額・最終価格・実質割引率を計算し、追加割引も順番に適用します。" };
+export const tool063Titles: Record<Locale, string> = { ko: "비율·비례 계산기", en: "Ratio & Proportion Calculator", ja: "比率・比例計算ツール" };
+export const tool063Descriptions: Record<Locale, string> = { ko: "비율 단순화, 비례식의 빈칸, 동치 비율, 배율을 한 페이지에서 계산합니다.", en: "Simplify ratios, solve missing proportion values, check equivalence, and scale ratios on one page.", ja: "比率の簡単化、比例式の未知数、同値比、倍率を1ページで計算します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -1004,6 +1013,27 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool061Titles,
+      description: tool061Descriptions,
+      href: `/${"ko"}/${tool061Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool062Titles,
+      description: tool062Descriptions,
+      href: `/${"ko"}/${tool062Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool063Titles,
+      description: tool063Descriptions,
+      href: `/${"ko"}/${tool063Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1149,7 +1179,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "unit-calc") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool055Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool056Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool057Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool058Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool059Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool060Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool055Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool056Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool057Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool058Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool059Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool060Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool061Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool062Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool063Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

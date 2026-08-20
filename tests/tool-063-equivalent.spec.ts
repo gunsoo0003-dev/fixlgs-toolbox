@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL063 equivalent',async({page})=>{await page.goto('/ko/ratio-proportion-calculator');await page.getByTestId('tool063-tab-equivalent').click();await page.getByTestId('tool063-a').fill('3');await page.getByTestId('tool063-b').fill('5');await page.getByTestId('tool063-c').fill('12');await page.getByTestId('tool063-d').fill('20');await expect(page.getByTestId('tool063-main-result')).toContainText('동치');});

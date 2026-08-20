@@ -1,0 +1,4 @@
+import {expect,test} from '@playwright/test';
+test('TOOL062 zero and full discount',async({page})=>{await page.goto('/en/discount-price-calculator');await page.getByTestId('tool-062-rate').fill('0');await expect(page.getByTestId('tool-062-final')).toContainText('100,000');await page.getByTestId('tool-062-rate').fill('100');await expect(page.getByTestId('tool-062-final')).toContainText('0');});
+test('TOOL062 101 percent rejected',async({page})=>{await page.goto('/en/discount-price-calculator');await page.getByTestId('tool-062-rate').fill('101');await expect(page.locator('p[role="alert"]')).toBeVisible();});
+test('TOOL062 reverse 100 percent rejected',async({page})=>{await page.goto('/en/discount-price-calculator');await page.getByTestId('tool-062-mode-reverse').click();await page.getByTestId('tool-062-rate').fill('100');await expect(page.locator('p[role="alert"]')).toContainText('100%');});

@@ -1,0 +1,11 @@
+[
+ {"id":"F01","mode":"percentageOf","a":20,"b":150,"expected":30},
+ {"id":"F02","mode":"partOfWhole","a":45,"b":180,"expected":25},
+ {"id":"F03A","mode":"percentChange","a":80,"b":100,"expected":25,"direction":"increase"},
+ {"id":"F03B","mode":"percentChange","a":100,"b":80,"expected":-20,"direction":"decrease"},
+ {"id":"C01A","mode":"applyPercent","a":120,"p":15,"direction":"increase","expected":138},
+ {"id":"C01B","mode":"applyPercent","a":120,"p":15,"direction":"decrease","expected":102},
+ {"id":"C02A","mode":"reversePercent","a":120,"p":20,"direction":"increase","expected":100},
+ {"id":"C02B","mode":"reversePercent","a":120,"p":20,"direction":"decrease","expected":150},
+ {"id":"GT100","mode":"percentageOf","a":150,"b":200,"expected":300}
+]

@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL062 reverse 80 at 20 gives 100',async({page})=>{await page.goto('/en/discount-price-calculator');await page.getByTestId('tool-062-mode-reverse').click();await page.getByTestId('tool-062-final-input').fill('80');await page.getByTestId('tool-062-rate').fill('20');await expect(page.getByTestId('tool-062-reverse-result')).toContainText('100');});
+test('TOOL062 find rate 150 to 100',async({page})=>{await page.goto('/en/discount-price-calculator');await page.getByTestId('tool-062-mode-rate').click();await page.getByTestId('tool-062-original').fill('150');await page.getByTestId('tool-062-final-input').fill('100');await expect(page.getByTestId('tool-062-rate-result')).toContainText('33.3333%');});

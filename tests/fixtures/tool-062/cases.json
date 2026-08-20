@@ -1,0 +1,13 @@
+{
+  "basic": [
+    {"original":100000,"rates":[20],"final":80000,"savings":20000,"effective":20},
+    {"original":279,"rates":[20],"final":223.2,"savings":55.8,"effective":20}
+  ],
+  "stacked": [
+    {"original":100,"rates":[30,10],"final":63,"effective":37},
+    {"original":100,"rates":[20,10],"final":72,"effective":28}
+  ],
+  "reverse": [{"final":80,"rate":20,"original":100}],
+  "findRate": [{"original":150,"final":100,"rate":33.33333333333333}],
+  "boundary": {"zeroRate":0,"fullRate":100,"overRate":101,"maxPrice":1000000000000000,"maxRatePrecision":8,"maxStackSteps":3,"maxInputLength":30}
+}

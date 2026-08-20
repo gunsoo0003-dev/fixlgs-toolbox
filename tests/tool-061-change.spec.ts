@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('061 change denominator uses original',async({page})=>{await page.goto('/ko/percentage-percent-change-calculator');await page.getByTestId('tool061-mode-percentChange').click();await page.getByTestId('tool061-a').fill('80');await page.getByTestId('tool061-b').fill('100');await expect(page.getByTestId('tool061-main-result')).toContainText('25');await page.getByTestId('tool061-a').fill('100');await page.getByTestId('tool061-b').fill('80');await expect(page.getByTestId('tool061-main-result')).toContainText('-20');});

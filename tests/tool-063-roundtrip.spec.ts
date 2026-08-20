@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL063 roundtrip',async({page})=>{await page.goto('/en/ratio-proportion-calculator');await page.getByTestId('tool063-tab-scale').click();await page.getByTestId('tool063-a').fill('4');await page.getByTestId('tool063-b').fill('7');await page.getByTestId('tool063-k').fill('2');await expect(page.getByTestId('tool063-main-result')).toHaveText('8:14');});

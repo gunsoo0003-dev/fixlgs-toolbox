@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL063 proportion',async({page})=>{await page.goto('/ko/ratio-proportion-calculator');await page.getByTestId('tool063-tab-proportion').click();await page.getByTestId('tool063-a').fill('2');await page.getByTestId('tool063-b').fill('3');await page.getByTestId('tool063-c').fill('10');await expect(page.getByTestId('tool063-main-result')).toContainText('15');});

@@ -1,0 +1,50 @@
+TOOL063 PACKAGE VERIFY
+ZIP=/mnt/data/FIXLGS_TOOLBOX_063_비율_비례_계산기_보조작업장_최종전달_20260819.zip
+ZIP_BYTES=375039
+EXPECTED_FILES=36
+ACTUAL_FILES=36
+REQUIRED:
+PASS lib/tool-063-ratio-proportion.ts
+PASS components/tool-063-ratio-proportion-calculator.tsx
+PASS components/tool-063-ratio-proportion-calculator.module.css
+PASS components/tool-063-ratio-proportion-calculator-page.tsx
+PASS app/[locale]/ratio-proportion-calculator/page.tsx
+PASS docs/tool-063/HANDOFF_063.md
+PASS docs/tool-063/source/FIXLGS_TOOLBOX_063_비율_비례_계산기_제작전달서.pdf
+COMMON_FILES_IN_ZIP:
+SHA256_VERIFY:
+app/[locale]/ratio-proportion-calculator/page.tsx: OK
+components/tool-063-ratio-proportion-calculator-page.tsx: OK
+components/tool-063-ratio-proportion-calculator.module.css: OK
+components/tool-063-ratio-proportion-calculator.tsx: OK
+docs/tool-063/CHANGE_MAP_063.md: OK
+docs/tool-063/CHECKLIST_063.md: OK
+docs/tool-063/DESIGN_CODE_CHECK_063.md: OK
+docs/tool-063/FAILURE_MAP_063.md: OK
+docs/tool-063/HANDOFF_063.md: OK
+docs/tool-063/LIMIT_BRIEFING_063.md: OK
+docs/tool-063/PACKAGE_MANIFEST_063.txt: OK
+docs/tool-063/REQ_MASTER_063.md: OK
+docs/tool-063/evidence/COMMON_PROTECTION_VERIFY_063.txt: OK
+docs/tool-063/evidence/NPM_CI_063.txt: OK
+docs/tool-063/evidence/STATIC_FINAL_063.txt: OK
+docs/tool-063/evidence/STATIC_VALIDATION_063.txt: OK
+docs/tool-063/evidence/TSC_FULL_063.txt: OK
+docs/tool-063/source/FIXLGS_TOOLBOX_063_비율_비례_계산기_제작전달서.pdf: OK
+lib/tool-063-ratio-proportion.ts: OK
+scripts/tool-063/check-design.mjs: OK
+scripts/tool-063/check-harness.mjs: OK
+scripts/tool-063/check-logic.mjs: OK
+scripts/tool-063/check-source.mjs: OK
+scripts/tool-063/run-static-validation.mjs: OK
+tests/fixtures/tool-063/cases.json: OK
+tests/tool-063-boundary.spec.ts: OK
+tests/tool-063-core.spec.ts: OK
+tests/tool-063-equivalent.spec.ts: OK
+tests/tool-063-feature.spec.ts: OK
+tests/tool-063-limit.spec.ts: OK
+tests/tool-063-preflight.spec.ts: OK
+tests/tool-063-proportion.spec.ts: OK
+tests/tool-063-ratio.spec.ts: OK
+tests/tool-063-regression.spec.ts: OK
+tests/tool-063-roundtrip.spec.ts: OK

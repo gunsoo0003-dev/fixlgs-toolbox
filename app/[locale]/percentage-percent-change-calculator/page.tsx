@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool061PercentagePercentChangeCalculatorPage} from '@/components/tool-061-percentage-percent-change-calculator-page';
+const meta={ko:{title:'퍼센트·증감률 계산기 | FIXLGS TOOLBOX',description:'전체의 몇 %, 증가율·감소율, 퍼센트 적용 후 값을 빠르게 계산합니다.'},en:{title:'Percentage & Percent Change Calculator | FIXLGS TOOLBOX',description:'Calculate percentages, percent increases and decreases, and values after a percentage change.'},ja:{title:'パーセント・増減率計算機 | FIXLGS TOOLBOX',description:'全体の何パーセントか、増加率・減少率、割合適用後の値をすばやく計算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/percentage-percent-change-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/percentage-percent-change-calculator',en:'/en/percentage-percent-change-calculator',ja:'/ja/percentage-percent-change-calculator','x-default':'/ko/percentage-percent-change-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool061PercentagePercentChangeCalculatorPage locale={locale as Locale}/>}

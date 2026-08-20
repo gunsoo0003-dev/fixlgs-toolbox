@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL062 100000 at 20 percent',async({page})=>{await page.goto('/ko/discount-price-calculator');await page.getByTestId('tool-062-original').fill('100000');await page.getByTestId('tool-062-rate').fill('20');await expect(page.getByTestId('tool-062-final')).toContainText('80,000');await expect(page.getByTestId('tool-062-savings')).toContainText('20,000');await expect(page.getByTestId('tool-062-effective')).toContainText('20%');});

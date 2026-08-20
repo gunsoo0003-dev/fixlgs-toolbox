@@ -1,0 +1,96 @@
+
+=== check-source.mjs ===
+PASS required lib/tool-063-ratio-proportion.ts
+PASS required components/tool-063-ratio-proportion-calculator.tsx
+PASS required components/tool-063-ratio-proportion-calculator.module.css
+PASS required components/tool-063-ratio-proportion-calculator-page.tsx
+PASS required app/[locale]/ratio-proportion-calculator/page.tsx
+PASS required tests/fixtures/tool-063/cases.json
+PASS contract maxAbsInput:1e15
+PASS contract maxPrecision:8
+PASS contract maxTerms:3
+PASS contract maxProportionFields:4
+PASS contract maxInputChars:30
+PASS contract simplifyRatio
+PASS contract equivalentRatio
+PASS contract solveProportion
+PASS contract scaleRatio
+PASS contract normalizeRatio
+PASS canonical/hreflang
+PASS FAQPage actual FAQ
+PASS five question modes
+PASS no server/API
+PASS no global TOOL063 contamination
+RESULT SOURCE PASS=21 FAIL=0
+
+=== check-design.mjs ===
+PASS shared ToolboxSubpageShell
+PASS shared toolbox-tool-detail-hero
+PASS shared toolbox-tool-detail-body
+PASS shared toolbox-next-work
+PASS shared toolbox-tool-guide toolbox-tool-guide--five
+PASS shared toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head
+PASS shared toolbox-tool-info-band
+PASS shared toolbox-tool-faq
+PASS lower order
+PASS 5 tabs desktop
+PASS mobile tabs one column
+PASS black primary action
+PASS no legacy/important
+RESULT DESIGN PASS=13 FAIL=0
+
+=== check-harness.mjs ===
+PASS spec preflight
+PASS spec preflight no skip/fixme/only
+PASS spec core
+PASS spec core no skip/fixme/only
+PASS spec feature
+PASS spec feature no skip/fixme/only
+PASS spec proportion
+PASS spec proportion no skip/fixme/only
+PASS spec ratio
+PASS spec ratio no skip/fixme/only
+PASS spec equivalent
+PASS spec equivalent no skip/fixme/only
+PASS spec boundary
+PASS spec boundary no skip/fixme/only
+PASS spec roundtrip
+PASS spec roundtrip no skip/fixme/only
+PASS spec regression
+PASS spec regression no skip/fixme/only
+PASS spec limit
+PASS spec limit no skip/fixme/only
+PASS fixture
+PASS runner
+RESULT HARNESS PASS=22 FAIL=0
+
+=== check-logic.mjs ===
+PASS 12:18 -> 2:3
+PASS 25:10 -> 5:2
+PASS 0.5:1.5 -> 1:3
+PASS 2:6:4 -> 1:3:2
+PASS 3:5 = 12:20
+PASS 3:5 != 12:19
+PASS 2:3=10:x -> 15
+PASS x:4=3:2 -> 6
+PASS A unknown position
+PASS B unknown position
+PASS C unknown position
+PASS D unknown position
+PASS 4:7 x2
+PASS 30:8 -> 1:n
+PASS 30:8 -> n:1
+PASS fraction parser
+PASS limits contract
+PASS 0:0 blocked
+PASS zero denominator blocked
+PASS negative blocked
+PASS limit blocked
+RESULT LOGIC PASS=21 FAIL=0
+(node:1147) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1147) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/data/tool063_work/lib/tool-063-ratio-proportion.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/data/tool063_work/package.json.
+
+TOOL063 STATIC PASS groups_failed=0
