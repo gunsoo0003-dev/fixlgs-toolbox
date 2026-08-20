@@ -132,6 +132,12 @@
   width:100%;
   transform:none;
 }
+/* Full-width section divider opt-in for tools that keep the format-head layout. */
+.toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start.toolbox-tool-info-band--full-divider::before{
+  left:50%;
+  width:100vw;
+  transform:translateX(-50%);
+}
 .toolbox-tool-info-band--format-head .toolbox-tool-info-band-head>span{
   max-width:880px;
   margin-top:26px;

@@ -694,7 +694,8 @@
     "tool063:boundary": "node scripts/tool-063/run-validation-full.mjs boundary-only",
     "tool063:regression": "node scripts/tool-063/run-validation-full.mjs regression-only",
     "tool063:limit": "node scripts/tool-063/run-validation-full.mjs limit-only",
-    "tool063:final": "node scripts/tool-063/run-validation-full.mjs final"
+    "tool063:final": "node scripts/tool-063/run-validation-full.mjs final",
+    "divider:027-063": "node scripts/divider-027-063/run-divider-validation.mjs"
   },
   "dependencies": {
     "next": "16.2.12",
