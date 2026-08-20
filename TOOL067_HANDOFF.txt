@@ -1,0 +1,52 @@
+FIXLGS TOOLBOX HANDOFF
+TOOL067 | 판매가격·마진 계산기
+Category: H. 사업·금융 계산기 / business-finance
+Slug: selling-price-margin-calculator
+Expected URL: /{ko|en|ja}/selling-price-margin-calculator
+Status: 보조작업장 READY / 주작업장 통합 FINAL 필요
+
+[구현]
+- Cost + Selling -> Profit / Margin / Markup
+- Cost + Target Margin -> Target Selling Price
+- Selling + Target Margin -> Allowed Cost
+- helper 수준 Selling + Profit -> Cost 역산 함수 포함
+- negative margin/loss 지원
+- target margin 100% 차단
+- amount >=0, amount <=1e15, input <=30 chars, display precision <=8
+- Currency KRW/USD/JPY/EUR은 표시용. 환율 변환 없음.
+- KO/EN/JA, Copy/Reset, Formula, FAQ, structured data, canonical/hreflang source 구현.
+
+[범위 제외]
+VAT, 세금, 배송, 판매수수료, 광고비, 운영비, net profit, break-even, 환율 계산.
+
+[디자인]
+MAIN TOOL062 / SUB TOOL063.
+공통 shell/classes 재사용 + 067 전용 module.css.
+전역 공통 CSS 변경 없음. legacy sealed 참조 없음.
+
+[보조작업장 실제 정적/로직 증거]
+LOGIC PASS=19 FAIL=0
+SOURCE PASS=16 FAIL=0
+DESIGN-CODE PASS=14 FAIL=0
+HARNESS-STRUCTURE PASS=14 FAIL=0
+COMMON PROTECTION PASS=10 FAIL=0
+SPEC STRUCTURE PASS=28 FAIL=0
+
+[실행환경 제한]
+제공된 다음작업용 ZIP에는 node_modules와 .git이 포함되어 있지 않음.
+전체 npx tsc --noEmit 시도는 기존 프로젝트 전반에서 next/react/@playwright/test 모듈 타입 부재로 실행 불가.
+따라서 실제 Playwright, 실브라우저 viewport, production build, 통합 regression은 최신 지시서에 따라 주작업장 통합검증으로 이관.
+
+[주작업장 필수 통합 작업]
+1. 이 ZIP의 신규 전용 구현 파일을 최신 프로젝트 동일 상대경로에 이식.
+2. business-finance category/tool registry에 067 카드와 slug 등록.
+3. 066/068/069 관련 도구 링크 가용 상태에 맞게 연결.
+4. sitemap KO/EN/JA 및 robots 영향 확인.
+5. 필요 시 package.json에 tool067 검수 script 연결. 보조작업장에서는 package.json 수정하지 않음.
+6. 실제 browser/PC/mobile/KO/EN/JA/light/dark/overflow 확인.
+7. Playwright preflight/core/feature/margin/markup/target/boundary/roundtrip/regression/limit/design 실행.
+8. production build + 061~066/068+common regression + 통합 FINAL.
+9. 배포 후 Search Console URL 검사/색인 요청.
+
+[의존성]
+신규 npm/외부 OSS 없음. 서버/API/키/비용/외부전송 없음.

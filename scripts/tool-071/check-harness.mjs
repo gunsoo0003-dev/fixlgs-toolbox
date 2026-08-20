@@ -1,0 +1,5 @@
+import fs from 'node:fs';let pass=0,fail=0;const check=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const files=['tests/tool-071-core.spec.ts','tests/tool-071-boundary.spec.ts','tests/tool-071-feature.spec.ts','tests/tool-071-limit.spec.ts','tests/tool-071-regression.spec.ts','tests/tool-071-design.spec.ts','tests/tool-071-preflight.spec.ts'];for(const f of files)check(`exists ${f}`,fs.existsSync(f));
+const fixture=JSON.parse(fs.readFileSync('tests/fixtures/tool-071/cases.json','utf8'));check('8 core fixtures',fixture.core?.length===8);check('all KPI fixtures',new Set(fixture.core.map(x=>x.metric)).size===8);check('raw-vs-rounded fixture',fixture.rawVsRounded?.metric==='ctr');
+const merged=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');for(const token of ['tool071-root','tool071-result','tool071-denominator','tool071-error'])check(`selector ${token}`,merged.includes(token));
+console.log(`RESULT HARNESS_STRUCTURE PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

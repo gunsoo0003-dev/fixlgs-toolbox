@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL069 base fixture',async({page})=>{await page.goto('/ko/break-even-point-calculator');await expect(page.getByTestId('tool069-root')).toBeVisible();await expect(page.getByTestId('tool069-contribution')).toContainText('4,000');await expect(page.getByTestId('tool069-be-units')).toContainText('750');await expect(page.getByTestId('tool069-be-revenue')).toContainText('7,500,000')});

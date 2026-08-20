@@ -1,0 +1,6 @@
+import fs from 'node:fs';
+const required=['lib/tool-070-unit-price.ts','components/tool-070-unit-price-comparison.tsx','components/tool-070-unit-price-comparison-page.tsx','components/tool-070-unit-price-comparison.module.css','tests/fixtures/tool-070/cases.json'];let pass=0,fail=0;const check=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++};
+for(const f of required)check(`exists ${f}`,fs.existsSync(f));
+const engine=fs.readFileSync(required[0],'utf8');for(const token of ['maxPrice:1e15','maxQuantity:1e15','maxBundleCount:1e6','weightToGrams','volumeToMl','normalizeQuantity','compareTool070','Number.EPSILON','UNIT_CATEGORY_MISMATCH'])check(`engine ${token}`,engine.includes(token));
+const ui=fs.readFileSync(required[1],'utf8');for(const token of ['tool070-root','tool070-workspace','tool070-mode-${id}','tool070-${prefix}-price','tool070-display-unit','tool070-result-a','tool070-result-b','tool070-winner','tool070-difference','tool070-savings','tool070-savings-rate','tool070-equal-quantity','tool070-formula','tool070-copy','tool070-reset'])check(`ui ${token}`,ui.includes(token));
+check('no network API',!ui.includes('fetch(')&&!ui.includes('axios'));check('no global CSS import',!ui.includes('globals.css'));console.log(`RESULT SOURCE PASS=${pass} FAIL=${fail} TOOL=070`);process.exitCode=fail?1:0;

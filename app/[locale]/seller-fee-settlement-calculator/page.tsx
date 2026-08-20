@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool068SellerFeeSettlementCalculatorPage} from '@/components/tool-068-seller-fee-settlement-calculator-page';
+const meta={ko:{title:'판매 수수료·정산금 계산기 | FIXLGS TOOLBOX',description:'판매금액에서 수수료·배송비·기타 비용을 차감해 예상 정산금과 순이익을 계산합니다.'},en:{title:'Seller Fee & Settlement Calculator | FIXLGS TOOLBOX',description:'Calculate estimated settlement and net profit after commissions, shipping, and other costs.'},ja:{title:'販売手数料・精算金計算ツール | FIXLGS TOOLBOX',description:'販売金額から手数料・送料・その他費用を差し引き、精算金と純利益を計算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/seller-fee-settlement-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/seller-fee-settlement-calculator',en:'/en/seller-fee-settlement-calculator',ja:'/ja/seller-fee-settlement-calculator','x-default':'/ko/seller-fee-settlement-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool068SellerFeeSettlementCalculatorPage locale={locale as Locale}/>}

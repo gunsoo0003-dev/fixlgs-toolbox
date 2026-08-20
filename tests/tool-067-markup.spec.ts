@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('30 percent markup is 23.0769 percent margin',async({page})=>{await page.goto('/en/selling-price-margin-calculator');await page.getByTestId('tool-067-cost').fill('10000');await page.getByTestId('tool-067-selling').fill('13000');await expect(page.getByTestId('tool-067-markup')).toHaveText('30%');await expect(page.getByTestId('tool-067-margin')).toHaveText('23.0769%');});

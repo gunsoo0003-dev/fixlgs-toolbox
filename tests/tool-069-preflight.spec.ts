@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';for(const l of ['ko','en','ja'])test(`${l} route`,async({page})=>{await page.goto(`/${l}/break-even-point-calculator`);await expect(page.getByTestId('tool069-root')).toBeVisible()});

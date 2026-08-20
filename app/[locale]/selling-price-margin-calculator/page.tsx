@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool067SellingPriceMarginCalculatorPage} from '@/components/tool-067-selling-price-margin-calculator-page';
+const meta={ko:{title:'판매가격·마진 계산기 | 목표 마진 판매가 계산 | FIXLGS TOOLBOX',description:'원가와 판매가로 마진액과 마진율을 계산하고 목표 마진율에 맞는 판매가격과 허용 원가를 역산합니다.'},en:{title:'Selling Price & Margin Calculator | Target Margin Price | FIXLGS TOOLBOX',description:'Calculate profit and margin from cost and selling price, then find target selling price and allowed cost from a target margin.'},ja:{title:'販売価格・利益率計算ツール | 目標販売価格 | FIXLGS TOOLBOX',description:'原価と販売価格から利益額・利益率を計算し、目標利益率から販売価格と許容原価を逆算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/selling-price-margin-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/selling-price-margin-calculator',en:'/en/selling-price-margin-calculator',ja:'/ja/selling-price-margin-calculator','x-default':'/ko/selling-price-margin-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool067SellingPriceMarginCalculatorPage locale={locale as Locale}/>}

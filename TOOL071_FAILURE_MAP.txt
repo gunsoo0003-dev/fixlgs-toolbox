@@ -1,0 +1,12 @@
+TOOL071 FAILURE RESPONSE MAP
+1. 계산값 불일치 -> lib/tool-071-ad-sales-performance.ts calculateTool071 + tests/fixtures/tool-071/cases.json 대조
+2. 분모 0인데 결과 표시 -> calculateTool071 ZERO_DENOMINATOR + tool071-error 상태 확인
+3. KPI 바꾼 뒤 이전 값 혼입 -> switchMetric reset a/b/status 확인
+4. ROAS가 ROI처럼 표시 -> roas schema/output + ratioValue/percentValue + page ROAS/ROI 안내 확인
+5. CAC 정의 혼동 -> cac schema denominatorKey=newCustomers + 안내 문구 확인
+6. AOV 고객수 혼용 -> aov schema denominatorKey=orders 확인
+7. A/B selector 실패 -> dynamic data-testid tool071-compare-${prefix}-*와 spec 대조
+8. KO/EN/JA 페이지 실패 -> route + copy 객체 + Locale import 확인
+9. 스타일 충돌 -> tool-071 module.css selector scope 확인, global CSS 수정 금지
+10. 통합 route/category/sitemap 누락 -> 주작업장 최신 site/category/sitemap 연결부 확인
+11. Playwright 환경 실패 -> playwright.tool071.config.ts baseURL/port/route 확인, PRODUCT_FAIL과 HARNESS_ERROR 분리

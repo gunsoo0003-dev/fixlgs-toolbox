@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('amount over 1e15 rejected',async({page})=>{await page.goto('/en/break-even-point-calculator');await page.getByTestId('tool069-fixed').fill('1000000000000001');await expect(page.getByTestId('tool069-root').getByRole('alert')).toBeVisible()});

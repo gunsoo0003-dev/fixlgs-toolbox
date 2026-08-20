@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL070 kg and L conversion selectors',async({page})=>{await page.goto('/en/unit-price-comparison-calculator');await page.getByTestId('tool070-mode-weight').click();await expect(page.getByTestId('tool070-b-unit')).toHaveValue('kg');await page.getByTestId('tool070-display-unit').selectOption('1kg');await expect(page.getByTestId('tool070-result-b')).toContainText('10,000');await page.getByTestId('tool070-mode-volume').click();await expect(page.getByTestId('tool070-b-unit')).toHaveValue('L')});

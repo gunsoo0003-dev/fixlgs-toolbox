@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool071AdSalesPerformanceCalculatorPage} from '@/components/tool-071-ad-sales-performance-calculator-page';
+const meta={ko:{title:'광고·매출 성과 계산기 | FIXLGS TOOLBOX',description:'CTR, CPC, CPM, 전환율, CAC, ROAS, ROI, 객단가를 계산하고 공식과 분모를 함께 확인합니다.'},en:{title:'Ad & Sales Performance Calculator | FIXLGS TOOLBOX',description:'Calculate CTR, CPC, CPM, conversion rate, CAC, ROAS, ROI, and AOV with formulas and denominators.'},ja:{title:'広告・売上成果計算ツール | FIXLGS TOOLBOX',description:'CTR、CPC、CPM、コンバージョン率、CAC、ROAS、ROI、客単価を計算し、式と分母も確認します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/ad-sales-performance-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/ad-sales-performance-calculator',en:'/en/ad-sales-performance-calculator',ja:'/ja/ad-sales-performance-calculator','x-default':'/ko/ad-sales-performance-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool071AdSalesPerformanceCalculatorPage locale={locale as Locale}/>}

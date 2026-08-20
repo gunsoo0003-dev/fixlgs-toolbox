@@ -1,0 +1,4 @@
+import {expect,test} from '@playwright/test';
+const path=(locale='ko')=>`/${locale}/ad-sales-performance-calculator`;
+const cases=[['ctr','1000','50000','2%'],['cpc','100000','2000','50'],['cpm','100000','50000','2,000'],['cvr','50','1000','5%'],['cac','500000','20','25,000'],['roas','2000000','500000','4x'],['roi','2000000','500000','300%'],['aov','3000000','100','30,000']] as const;
+test.describe('TOOL071 core 8 KPI',()=>{for(const [metric,a,b,expected] of cases)test(metric,async({page})=>{await page.goto(path());await page.getByTestId(`tool071-metric-${metric}`).click();await page.getByTestId('tool071-input-a').fill(a);await page.getByTestId('tool071-input-b').fill(b);await expect(page.getByTestId('tool071-result')).toContainText(expected);await expect(page.getByTestId('tool071-denominator')).toBeVisible()})});

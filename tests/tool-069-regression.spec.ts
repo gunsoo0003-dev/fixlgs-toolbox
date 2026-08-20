@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('TOOL066 source route still responds',async({page})=>{await page.goto('/ko/vat-calculator');await expect(page.getByTestId('tool066-root')).toBeVisible()});

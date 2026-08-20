@@ -1,0 +1,27 @@
+TOOL071 CHANGE MAP
+NEW ONLY:
+lib/tool-071-ad-sales-performance.ts
+components/tool-071-ad-sales-performance-calculator.tsx
+components/tool-071-ad-sales-performance-calculator-page.tsx
+components/tool-071-ad-sales-performance-calculator.module.css
+app/[locale]/ad-sales-performance-calculator/page.tsx
+tests/fixtures/tool-071/cases.json
+tests/tool-071-*.spec.ts
+playwright.tool071.config.ts
+scripts/tool-071/*
+TOOL071_REQ_MASTER.md
+TOOL071_CHECKLIST.md
+TOOL071_DESIGN_CODE_CHECK.md
+TOOL071_STATIC_VALIDATION_RESULT.txt
+HANDOFF_TOOL071.txt
+TOOL071_CHANGE_MAP.txt
+TOOL071_FAILURE_MAP.txt
+PACKAGE_MANIFEST_TOOL071.txt
+
+NOT MODIFIED:
+app/globals.css
+styles/* common/global/sealed files
+lib/site.ts
+app/sitemap.ts
+existing components/tools/tests
+package.json/package-lock.json

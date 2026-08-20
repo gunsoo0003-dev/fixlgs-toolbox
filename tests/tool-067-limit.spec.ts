@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('service amount limit accepts 1e15 and rejects larger',async({page})=>{await page.goto('/en/selling-price-margin-calculator');await page.getByTestId('tool-067-cost').fill('1000000000000000');await page.getByTestId('tool-067-selling').fill('1000000000000000');await expect(page.getByTestId('tool-067-margin')).toHaveText('0%');await page.getByTestId('tool-067-cost').fill('1000000000000001');await expect(page.getByTestId('tool-067-root').getByRole('alert')).toContainText('service limit');});

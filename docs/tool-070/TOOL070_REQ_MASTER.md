@@ -1,0 +1,14 @@
+# TOOL070 REQ MASTER
+- 070-F01: 개당 가격 — 9900/10=990
+- 070-F02: 100g/1kg — 6000/500g=1200/100g, 10000/1kg=1000/100g
+- 070-F03: 100mL/1L — 1500/300mL=500/100mL, 4200/1L=420/100mL
+- 070-F04: 묶음상품 — 2500/(6×250mL)=166.6667/100mL
+- 070-C01: A/B comparison — 표시 반올림 전 normalized unit price
+- 070-C02: savings — 동일 기준량 비용 차이
+- 070-C03: canonical normalization — g/mL base
+- 070-C04: round-trip conversion — kg↔g, L↔mL
+- 070-C05: quantity zero error
+- 070-U01: PC 2열 / mobile A/B 세로 구조
+- 070-L01: KO/EN/JA copy
+- 070-S01: page component JSON-LD/canonical 후보 구조, 실제 route/head 연결은 주작업장
+- 070-Q01: 보조작업장 static gates PASS, 통합 FINAL은 주작업장

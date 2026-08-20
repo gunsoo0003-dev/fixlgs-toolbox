@@ -1,0 +1,22 @@
+TOOL067 FAILURE MAP
+
+1. 마진값 오류
+   - lib/tool-067-margin.ts calculateTool067Margin
+   - 분모가 Selling인지 확인. Markup 분모 Cost와 혼동 금지.
+2. 목표 판매가 오류
+   - calculateTool067TargetPrice
+   - target 100% singularity, target 0/20/25/99 fixture 확인.
+3. 허용 원가 오류
+   - calculateTool067AllowedCost
+   - Selling × (1 - target/100) 확인.
+4. 손실 상태 오류
+   - cost 10000 / selling 8000 -> profit -2000, margin -25%, markup -20%.
+5. selector/HARNESS 오류
+   - components/tool-067-selling-price-margin-calculator.tsx data-testid
+   - scripts/tool-067/check-harness.mjs 및 tests/tool-067-*.spec.ts 대조.
+6. 다국어/줄바꿈
+   - component/page KO/EN/JA copy와 module.css 560px breakpoint 확인.
+7. 공통 CSS 충돌
+   - 전용 module.css만 수정. globals/styles/legacy sealed 수정 금지.
+8. category/sitemap/registry 미노출
+   - 보조작업장 공통파일 보호 때문에 주작업장 CHANGE MAP의 연결 항목 적용.

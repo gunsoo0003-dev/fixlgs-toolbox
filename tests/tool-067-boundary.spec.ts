@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('100 percent target margin is rejected',async({page})=>{await page.goto('/en/selling-price-margin-calculator');await page.getByTestId('tool-067-mode-target').click();await page.getByTestId('tool-067-target-margin').fill('100');await expect(page.getByTestId('tool-067-root').getByRole('alert')).toContainText('below 100%');});
+test('selling zero is rejected',async({page})=>{await page.goto('/en/selling-price-margin-calculator');await page.getByTestId('tool-067-selling').fill('0');await expect(page.getByTestId('tool-067-root').getByRole('alert')).toContainText('selling price is zero');});

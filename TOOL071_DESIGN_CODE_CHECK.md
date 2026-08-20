@@ -1,0 +1,12 @@
+# TOOL071 DESIGN CODE CHECK
+- MAIN 기준: TOOL066 부가세 계산기
+- 기준 선정 이유: 같은 H. 사업·금융 계산기, 숫자 입력→즉시 결과→공식/주의→HOW TO/FAQ 흐름
+- 공식 common 재사용: ToolboxSubpageShell, toolbox-tool-detail-hero/body, toolbox-next-work, toolbox-tool-guide, toolbox-tool-format-guide, toolbox-tool-faq
+- 신규 기능 UI: components/tool-071-ad-sales-performance-calculator.module.css에만 위치
+- app/globals.css 및 styles 전역 CSS 신규 TOOL071 selector: 0건
+- legacy-site-sealed.css / legacy-tools-sealed.css 직접 사용: 0건
+- Primary Action: 검정 배경 + 흰색 글자
+- responsive: 820px / 560px 전용 module breakpoint
+- 정상 특화 차이: 8 KPI selector grid, A/B comparison. KPI 선택형 기능상 필요
+- DESIGN-CODE 판정: static checker 통과 시 PASS
+- 실제 PC/mobile/KO/EN/JA/light/dark 브라우저 렌더링: 최신 상위 지시대로 주작업장 통합검증

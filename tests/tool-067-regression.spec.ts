@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('067 page has no console errors and 061-063 routes remain reachable',async({page})=>{const errors:string[]=[];page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});for(const p of ['/ko/selling-price-margin-calculator','/ko/percentage-percent-change-calculator','/ko/discount-price-calculator','/ko/ratio-proportion-calculator']){const r=await page.goto(p);expect(r?.ok()).toBeTruthy()}expect(errors).toEqual([]);});

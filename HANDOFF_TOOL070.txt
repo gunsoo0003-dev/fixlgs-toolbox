@@ -1,0 +1,110 @@
+FIXLGS TOOLBOX | TOOL070 | HANDOFF
+작성일: 2026-08-20
+
+[기본 정보]
+도구 번호: 070
+도구명: 단가 비교 계산기 / Unit Price Comparison Calculator / 単価比較計算ツール
+카테고리: H. 사업·금융 계산기
+예상 slug: unit-price-comparison-calculator
+예상 URL: /{ko|en|ja}/unit-price-comparison-calculator
+보조작업장 상태: READY
+
+[구현 완료 기능]
+1. 개당 가격 비교
+2. 100g / 1kg 단가 비교
+3. 100mL / 1L 단가 비교
+4. 묶음상품 비교: count × per-item quantity
+5. A/B normalized unit price 비교
+6. 표시 반올림 전 내부값으로 A/B winner 판정
+7. 단가 차이 / 절약액 / 절약률 / 동일 기준량 비용
+8. g 및 mL canonical base
+9. kg↔g / L↔mL 변환 함수
+10. Copy / Reset / 표시 소수점 0~8
+11. KO/EN/JA UI 및 SEO 본문/FAQ/사용방법
+12. 가격 0 허용, quantity/weight/volume > 0 검증
+13. 서비스 유효상한: price<=1e15, quantity/base total<=1e15, bundle count<=1e6, input length<=30
+
+[전용 이식 파일]
+components/tool-070-unit-price-comparison.tsx
+components/tool-070-unit-price-comparison-page.tsx
+components/tool-070-unit-price-comparison.module.css
+lib/tool-070-unit-price.ts
+tests/fixtures/tool-070/cases.json
+tests/tool-070-preflight.spec.ts
+tests/tool-070-core.spec.ts
+tests/tool-070-feature.spec.ts
+tests/tool-070-bundle.spec.ts
+tests/tool-070-comparison.spec.ts
+tests/tool-070-conversion.spec.ts
+tests/tool-070-boundary.spec.ts
+tests/tool-070-regression.spec.ts
+tests/tool-070-limit.spec.ts
+tests/tool-070-design.spec.ts
+scripts/tool-070/check-source.mjs
+scripts/tool-070/check-design.mjs
+scripts/tool-070/check-harness.mjs
+scripts/tool-070/check-logic.mjs
+scripts/tool-070/check-secret-scan.mjs
+scripts/tool-070/run-static-validation.mjs
+playwright.tool070.config.ts
+docs/tool-070/TOOL070_REQ_MASTER.md
+docs/tool-070/TOOL070_CHECKLIST.md
+docs/tool-070/TOOL070_DESIGN_CODE_CHECK.md
+
+[디자인 기준]
+MAIN: TOOL066 부가세 계산기
+- 사업·금융 계산기 page shell / 작업영역 / result / copy-reset 흐름
+- Primary Action: black background + white text
+SUB: TOOL056 무게 변환 / TOOL058 요리·부피 단위 변환
+- g/kg, mL/L 정규화 패턴 참고
+신규 기능 CSS는 전용 module.css에만 작성.
+
+[공통파일 보호]
+확인 대상 12개 SHA-256 baseline 대조 PASS.
+app/globals.css 변경 없음
+styles/global-base.css 변경 없음
+styles/toolbox-common.css 변경 없음
+styles/toolbox-detail-common.css 변경 없음
+styles/theme.css 변경 없음
+styles/toolbox-compat.css 변경 없음
+styles/legacy-site-sealed.css 변경 없음
+styles/legacy-tools-sealed.css 변경 없음
+lib/site.ts 변경 없음
+app/sitemap.ts 변경 없음
+package.json 변경 없음
+package-lock.json 변경 없음
+신규 OSS 추가 없음.
+
+[보조작업장 검수 결과]
+SOURCE static: PASS 31 / FAIL 0
+DESIGN-CODE: PASS 14 / FAIL 0
+HARNESS STRUCTURE: PASS
+Independent formula fixture: PASS
+SECRET SCAN: PASS
+Static validation aggregate: PASS 5/5
+lib/tool-070-unit-price.ts strict TypeScript compile: PASS
+TOOL070 TS/TSX syntax transpile check: PASS 14 files / 0 errors
+
+[검수 중 수정]
+- 최초 source checker가 동적 data-testid(tool070-${prefix}-price)를 고정 문자열로 찾는 HARNESS_ERROR 2건 발견.
+- 제품 코드는 변경하지 않고 checker를 동적 selector 계약에 맞게 수정.
+- 재검수 후 SOURCE PASS 31/31.
+
+[주작업장 통합검증]
+최신 최상위 보조작업장 규칙에 따라 아래는 주작업장 책임:
+1. 실제 route 생성 및 lib/site.ts/category 연결
+2. canonical/hreflang metadata route 연결
+3. sitemap 등록 및 robots 영향 확인
+4. 실제 localhost/브라우저 진입
+5. Playwright preflight/core/feature/bundle/comparison/conversion/boundary/regression/limit/design 실행
+6. PC/mobile KO/EN/JA 실제 렌더링
+7. light/dark, 실제 일본어 줄바꿈/overflow
+8. production build
+9. 061~069/071+common 통합 regression
+10. 통합 FINAL / 배포 / Search Console / 색인
+
+[통합 주의사항]
+- TOOL070 가격÷총량 semantics를 055~058 단위 변환 helper 또는 062/066/067/068 계산엔진에 결합하지 말 것.
+- A/B winner 판정을 화면 반올림값으로 변경하지 말 것.
+- 묶음상품은 count만으로 계산하지 말고 count × per-item quantity를 총량으로 사용할 것.
+- coupon/shipping/member price/point 자동판정 기능을 추가하지 말 것.

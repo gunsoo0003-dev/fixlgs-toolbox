@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+const x=JSON.parse(fs.readFileSync('tests/fixtures/tool-068/cases.json','utf8'));const fails=[];
+for(const c of x.core){const fee=c.sale*c.rate/100+c.fixedFee;const settlement=c.sale+c.buyerShipping-fee-c.sellerShipping-c.otherCost;const profit=settlement-c.productCost;if(Math.abs(fee-c.fee)>1e-9)fails.push(`${c.id}:fee`);if(Math.abs(settlement-c.settlement)>1e-9)fails.push(`${c.id}:settlement`);if(c.netProfit!==undefined&&Math.abs(profit-c.netProfit)>1e-9)fails.push(`${c.id}:profit`)}
+const t=x.target;const required=(t.productCost+t.sellerShipping+t.otherCost+t.fixedFee+t.targetProfit-t.buyerShipping)/(1-t.rate/100);if(Math.abs(required-t.requiredSale)>1e-9)fails.push('target');console.log(JSON.stringify({check:'TOOL068 independent formula fixture',fails},null,2));process.exitCode=fails.length?1:0;

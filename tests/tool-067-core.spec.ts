@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('10000 / 15000 -> profit 5000 margin 33.3333 markup 50',async({page})=>{await page.goto('/ko/selling-price-margin-calculator');await page.getByTestId('tool-067-cost').fill('10000');await page.getByTestId('tool-067-selling').fill('15000');await expect(page.getByTestId('tool-067-profit')).toContainText('5,000');await expect(page.getByTestId('tool-067-margin')).toHaveText('33.3333%');await expect(page.getByTestId('tool-067-markup')).toHaveText('50%');});

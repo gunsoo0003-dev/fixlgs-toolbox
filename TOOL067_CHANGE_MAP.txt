@@ -1,0 +1,39 @@
+TOOL067 CHANGE MAP
+
+[신규 이식 파일]
+app/[locale]/selling-price-margin-calculator/page.tsx
+components/tool-067-selling-price-margin-calculator-page.tsx
+components/tool-067-selling-price-margin-calculator.tsx
+components/tool-067-selling-price-margin-calculator.module.css
+lib/tool-067-margin.ts
+
+[신규 검수 파일]
+tests/fixtures/tool-067/cases.json
+tests/tool-067-preflight.spec.ts
+tests/tool-067-core.spec.ts
+tests/tool-067-feature.spec.ts
+tests/tool-067-margin.spec.ts
+tests/tool-067-markup.spec.ts
+tests/tool-067-target.spec.ts
+tests/tool-067-boundary.spec.ts
+tests/tool-067-roundtrip.spec.ts
+tests/tool-067-regression.spec.ts
+tests/tool-067-limit.spec.ts
+tests/tool-067-design.spec.ts
+scripts/tool-067/check-logic.mjs
+scripts/tool-067/check-source.mjs
+scripts/tool-067/check-design.mjs
+scripts/tool-067/check-harness.mjs
+scripts/tool-067/check-protection.mjs
+scripts/tool-067/check-specs.mjs
+
+[주작업장 연결 필요]
+- business-finance 카테고리 카드 TOOL067 등록
+- site/tool registry 및 관련 도구 066/068/069 연결
+- sitemap KO/EN/JA 등록 및 robots 영향 확인
+- 필요 시 package.json에 TOOL067 검수 실행 script 등록
+- 최신 통합본에서 canonical/hreflang/structured data 실검증
+- 배포/Search Console/색인 요청
+
+[공통파일 변경]
+보조작업장 변경 없음.

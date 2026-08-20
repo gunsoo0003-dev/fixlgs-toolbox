@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL068 core settlement fixture',async({page})=>{await page.goto('/ko/seller-fee-settlement-calculator');await page.getByTestId('tool068-sale').fill('100000');await page.getByTestId('tool068-rate').fill('10');await page.getByTestId('tool068-seller-shipping').fill('3000');await page.getByTestId('tool068-other-cost').fill('2000');await expect(page.getByTestId('tool068-result-fee')).toContainText('10,000');await expect(page.getByTestId('tool068-result-settlement')).toContainText('85,000')});

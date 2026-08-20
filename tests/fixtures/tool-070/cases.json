@@ -1,0 +1,10 @@
+{
+  "items": {"a":{"price":9900,"quantity":10,"unit":"item"},"b":{"price":17800,"quantity":20,"unit":"item"},"display":"item","aUnitPrice":990,"bUnitPrice":890,"winner":"B","difference":100},
+  "weight": {"a":{"price":6000,"quantity":500,"unit":"g"},"b":{"price":10000,"quantity":1,"unit":"kg"},"display":"100g","aUnitPrice":1200,"bUnitPrice":1000,"winner":"B","difference":200},
+  "volume": {"a":{"price":1500,"quantity":300,"unit":"mL"},"b":{"price":4200,"quantity":1,"unit":"L"},"display":"100mL","aUnitPrice":500,"bUnitPrice":420,"winner":"B","difference":80},
+  "bundleVolume": {"a":{"price":2500,"count":6,"quantity":250,"unit":"mL"},"b":{"price":4200,"count":1,"quantity":1,"unit":"L"},"display":"100mL","aUnitPrice":166.66666666666666,"bUnitPrice":420,"winner":"A"},
+  "equal": {"a":{"price":5000,"quantity":500,"unit":"g"},"b":{"price":10000,"quantity":1,"unit":"kg"},"display":"1kg","winner":"equal","unitPrice":10000},
+  "roundTrip": {"kg":1,"g":1000,"liter":1,"ml":1000},
+  "limits": {"maxPrice":1000000000000000,"maxQuantity":1000000000000000,"maxBundleCount":1000000,"maxInputChars":30,"maxDisplayPrecision":8},
+  "invalid": ["negative price","zero quantity","negative quantity","bundle count zero","bundle count above 1000000","unit category mismatch","NaN","Infinity"]
+}

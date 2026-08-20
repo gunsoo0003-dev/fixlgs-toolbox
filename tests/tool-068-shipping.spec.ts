@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL068 buyer seller shipping ownership',async({page})=>{await page.goto('/ja/seller-fee-settlement-calculator');await page.getByTestId('tool068-mode-profit').click();await page.getByTestId('tool068-buyer-shipping').fill('5000');await page.getByTestId('tool068-seller-shipping').fill('3000');await expect(page.getByTestId('tool068-result-settlement')).toContainText('90,000');await expect(page.getByTestId('tool068-result-profit')).toContainText('40,000')});

@@ -1,0 +1,12 @@
+{
+  "core":[
+    {"id":"sale-10","sale":100000,"rate":10,"fixedFee":0,"sellerShipping":0,"otherCost":0,"buyerShipping":0,"productCost":0,"fee":10000,"settlement":90000},
+    {"id":"shipping","sale":100000,"rate":10,"fixedFee":0,"sellerShipping":3000,"otherCost":0,"buyerShipping":0,"productCost":0,"fee":10000,"settlement":87000},
+    {"id":"mixed-fee","sale":100000,"rate":3,"fixedFee":300,"sellerShipping":3000,"otherCost":0,"buyerShipping":0,"productCost":0,"fee":3300,"settlement":93700},
+    {"id":"profit","sale":100000,"rate":10,"fixedFee":0,"sellerShipping":3000,"otherCost":2000,"buyerShipping":0,"productCost":50000,"fee":10000,"settlement":85000,"netProfit":35000},
+    {"id":"buyer-shipping","sale":100000,"rate":10,"fixedFee":0,"sellerShipping":3000,"otherCost":2000,"buyerShipping":5000,"productCost":50000,"settlement":90000,"netProfit":40000}
+  ],
+  "target":{"rate":10,"fixedFee":0,"sellerShipping":3000,"otherCost":2000,"buyerShipping":0,"productCost":50000,"targetProfit":20000,"requiredSale":83333.33333333333},
+  "boundaries":{"zeroFee":{"sale":100000,"rate":0,"settlement":100000},"fullFee":{"sale":100000,"rate":100,"settlement":0}},
+  "limits":{"maxAmount":1000000000000000,"maxRate":100,"maxInputChars":30,"maxCostLines":10}
+}

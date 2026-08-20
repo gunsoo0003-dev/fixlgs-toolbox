@@ -1,0 +1,16 @@
+{
+  "core":[
+    {"cost":10000,"selling":15000,"profit":5000,"margin":33.33333333333333,"markup":50},
+    {"cost":10000,"selling":8000,"profit":-2000,"margin":-25,"markup":-20,"loss":true}
+  ],
+  "target":[
+    {"cost":10000,"margin":20,"price":12500},
+    {"cost":10000,"margin":25,"price":13333.333333333334},
+    {"cost":10000,"margin":0,"price":10000},
+    {"cost":10000,"margin":99,"price":999999.9999999991}
+  ],
+  "allowed":[{"selling":20000,"margin":25,"cost":15000}],
+  "markup":[{"cost":10000,"markup":30,"selling":13000,"margin":23.076923076923077}],
+  "boundary":{"target100":"TARGET_MARGIN_RANGE","selling0":"ZERO_SELLING","negative":"NEGATIVE_AMOUNT"},
+  "limits":{"maxAbsAmount":1000000000000000,"maxPrecision":8,"maxInputChars":30}
+}

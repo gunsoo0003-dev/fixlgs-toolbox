@@ -1,0 +1,88 @@
+TOOL068 | 판매 수수료·정산금 계산기
+Category: H. 사업·금융 계산기
+Slug: seller-fee-settlement-calculator
+Expected URL: /{ko|en|ja}/seller-fee-settlement-calculator
+Auxiliary status: CODE PASS / FUNCTION-STATIC PASS / DESIGN-CODE PASS / HARNESS-STRUCTURE PASS / COMMON FILE PROTECTION PASS
+
+[IMPLEMENTED]
+- 3 modes: Settlement / Net Profit / Target Profit
+- sale amount, commission rate, fixed fee
+- seller-paid shipping / buyer-paid shipping split
+- other cost
+- product cost
+- settlement vs net profit separation
+- net margin / effective fee rate
+- reverse required sale amount for target profit
+- formula + line-item breakdown
+- copy/reset
+- KO/EN/JA
+- WebApplication/BreadcrumbList/FAQPage JSON-LD
+- route metadata canonical/hreflang/x-default
+- local browser calculation only; no API/server/account/key
+
+[FORMULA]
+commission = sale * rate / 100
+fee = commission + fixedFee
+settlement = sale + buyerShipping - fee - sellerShipping - otherCost
+netProfit = settlement - productCost
+netMargin = netProfit / (sale + buyerShipping) * 100
+effectiveFeeRate = fee / sale * 100
+requiredSale = (productCost + sellerShipping + otherCost + fixedFee + targetProfit - buyerShipping) / (1 - rate/100)
+
+[MAIN DESIGN REFERENCE]
+TOOL066 VAT Calculator
+Reason: same Business & Finance category and closest numeric input/result/formula information architecture.
+
+[DEDICATED IMPLEMENTATION FILES]
+lib/tool-068-seller-fee.ts
+components/tool-068-seller-fee-settlement-calculator.tsx
+components/tool-068-seller-fee-settlement-calculator-page.tsx
+components/tool-068-seller-fee-settlement-calculator.module.css
+app/[locale]/seller-fee-settlement-calculator/page.tsx
+
+[DEDICATED QA FILES]
+playwright.tool068.config.ts
+tests/fixtures/tool-068/cases.json
+tests/tool-068-preflight.spec.ts
+tests/tool-068-core.spec.ts
+tests/tool-068-feature.spec.ts
+tests/tool-068-shipping.spec.ts
+tests/tool-068-reverse.spec.ts
+tests/tool-068-boundary.spec.ts
+tests/tool-068-limit.spec.ts
+tests/tool-068-design.spec.ts
+tests/tool-068-regression.spec.ts
+scripts/tool-068/check-source.mjs
+scripts/tool-068/check-design.mjs
+scripts/tool-068/check-harness.mjs
+scripts/tool-068/check-logic.mjs
+scripts/tool-068/check-secret-scan.mjs
+scripts/tool-068/run-static-validation.mjs
+
+[AUXILIARY STATIC EVIDENCE]
+node scripts/tool-068/run-static-validation.mjs => PASS 5/5
+Independent fixtures: PASS
+Common/global TOOL068 selector pollution: 0
+Secret/network scan: PASS
+
+[TYPE/RUNTIME NOTE]
+A full `npx tsc --noEmit` was attempted. One TOOL068 syntax issue was found and fixed. The baseline ZIP contains no node_modules, so the subsequent project-wide typecheck cannot resolve next/react/@playwright/test and is not a product-specific FAIL. Re-run after dependencies are installed in the main workspace.
+
+[COMMON FILES]
+No existing common file was modified.
+Do NOT overwrite app/globals.css, styles global files, lib/site.ts, app/sitemap.ts, common components, or prior tool files from this package.
+
+[MAIN WORKSPACE INTEGRATION REQUIRED]
+1. Register tool068 slug/title/description/category card in current lib/site.ts using latest project conventions.
+2. Add TOOL068 KO/EN/JA URLs to current sitemap implementation.
+3. Verify robots remains unblocked.
+4. Connect related tools/next work links only after current TOOL067/069 routes are present.
+5. Run dependency-installed typecheck.
+6. Run actual browser/Playwright desktop/mobile KO/EN/JA, light/dark, overflow and interaction checks.
+7. Run full regression, production build, integrated FINAL, deploy/Search Console/indexing.
+
+[DEPENDENCY]
+No new npm package added.
+
+[READY]
+Ready for main-workspace integration of dedicated TOOL068 files only.

@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+for(const locale of ['ko','en','ja'])test(`TOOL068 design contract ${locale}`,async({page})=>{await page.goto(`/${locale}/seller-fee-settlement-calculator`);await expect(page.getByTestId('tool068-root').getByRole('tab')).toHaveCount(3);for(const id of ['tool068-sale','tool068-rate','tool068-fixed-fee','tool068-seller-shipping','tool068-other-cost','tool068-buyer-shipping','tool068-reset','tool068-copy','tool068-result','tool068-rate-notice'])await expect(page.getByTestId(id)).toBeVisible()});

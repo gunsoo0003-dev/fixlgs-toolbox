@@ -1,0 +1,110 @@
+FIXLGS TOOLBOX HANDOFF
+TOOL071 | 광고·매출 성과 계산기
+CATEGORY: H. 사업·금융 계산기
+SLUG: ad-sales-performance-calculator
+EXPECTED URL: /{ko|en|ja}/ad-sales-performance-calculator
+STATUS: AUXILIARY WORKSPACE READY / MAIN WORK INTEGRATION REQUIRED
+
+1. 구현 기능
+- CTR = clicks / impressions × 100
+- CPC = ad spend / clicks
+- CPM = ad spend / impressions × 1,000
+- CVR = conversions / clicks × 100
+- CAC = acquisition spend / new customers
+- ROAS = attributed revenue / ad spend, x + % 동시 표시
+- ROI = (return - cost) / cost × 100
+- AOV = revenue / orders
+- 각 KPI 독립 schema, 공식 표시, 실제 denominator 표시
+- 0 denominator 오류 처리
+- raw input 계산 후 최종 표시 단계 반올림
+- A/B 동일 KPI 2세트 비교
+- 표시 정밀도 0~8
+- copy/reset
+- KO/EN/JA
+- WebApplication/BreadcrumbList/FAQPage, canonical/hreflang route metadata
+- 브라우저 로컬 계산, 외부 API/서버/로그인/외부 전송 없음
+
+2. 서비스 상한
+- amount <= 1e15
+- count <= 1e12
+- input <= 30 chars
+- display precision <= 8
+- A/B <= 2 sets
+
+3. 주작업장 이식 대상 전용 파일
+- lib/tool-071-ad-sales-performance.ts
+- components/tool-071-ad-sales-performance-calculator.tsx
+- components/tool-071-ad-sales-performance-calculator-page.tsx
+- components/tool-071-ad-sales-performance-calculator.module.css
+- app/[locale]/ad-sales-performance-calculator/page.tsx
+- tests/fixtures/tool-071/cases.json
+- tests/tool-071-preflight.spec.ts
+- tests/tool-071-core.spec.ts
+- tests/tool-071-feature.spec.ts
+- tests/tool-071-boundary.spec.ts
+- tests/tool-071-limit.spec.ts
+- tests/tool-071-regression.spec.ts
+- tests/tool-071-design.spec.ts
+- playwright.tool071.config.ts
+- scripts/tool-071/check-source.mjs
+- scripts/tool-071/check-design.mjs
+- scripts/tool-071/check-harness.mjs
+- scripts/tool-071/check-logic.mjs
+- scripts/tool-071/check-secret-scan.mjs
+- scripts/tool-071/check-syntax.mjs
+- scripts/tool-071/run-static-validation.mjs
+
+4. 검수자료/전달자료
+- TOOL071_REQ_MASTER.md
+- TOOL071_CHECKLIST.md
+- TOOL071_DESIGN_CODE_CHECK.md
+- TOOL071_STATIC_VALIDATION_RESULT.txt
+- TOOL071_CHANGE_MAP.txt
+- TOOL071_FAILURE_MAP.txt
+- PACKAGE_MANIFEST_TOOL071.txt
+- 원본 FIXLGS_TOOLBOX_071_광고_매출_성과_계산기_제작전달서(1).pdf
+
+5. DESIGN-CODE
+- MAIN: TOOL066 부가세 계산기
+- 같은 H 카테고리, 수치 입력→결과→공식/안내→HOW TO/FAQ 구조를 기준으로 비교
+- 공식 common class 재사용
+- 신규 기능 CSS는 tool-071 module.css에만 위치
+- app/globals.css 및 styles 전역 CSS 수정 없음
+- legacy-site-sealed.css / legacy-tools-sealed.css 직접 사용 없음
+
+6. 검수 결과
+- SOURCE 35 PASS / 0 FAIL
+- DESIGN-CODE 19 PASS / 0 FAIL
+- HARNESS STRUCTURE 14 PASS / 0 FAIL
+- LOGIC 20 PASS / 0 FAIL
+- SECRET SCAN PASS
+- TS/TSX syntax PASS
+- TOOL071 STATIC VALIDATION PASS 6/6
+- 최초 검수에서 A/B 동적 selector를 고정 문자열로 찾던 HARNESS_ERROR 1건 발견, check-source.mjs만 수정 후 재검수 PASS. 제품 코드 수정 없음.
+
+7. 신규 OSS / dependency
+- 신규 패키지 없음
+- package.json/package-lock.json 수정 없음
+
+8. 공통파일 변경
+- 없음
+- site.ts/category card/sitemap/robots/common CSS/common component는 보조작업장 보호 규칙에 따라 수정하지 않음
+
+9. 주작업장 통합 이식 필요
+- 최신 프로젝트의 business-finance category card에 TOOL071 등록
+- 최신 site data/slug 등록이 필요한 구조이면 TOOL071 반영
+- sitemap에 KO/EN/JA 071 URL 반영
+- 관련 도구 067/070 및 NEXT 072 실제 링크 상태는 최신 통합본 기준 연결
+- package script가 필요한 운영 방식이면 tool071 검수 명령 등록
+
+10. 주작업장 통합검증
+- 실제 localhost/browser
+- PC/mobile 실제 viewport
+- KO/EN/JA 실제 렌더링 및 일본어 줄바꿈
+- light/dark/hover/touch/scroll
+- Playwright preflight/core/feature/boundary/limit/regression/design
+- production build
+- 061~070/072 포함 최신 전체 regression
+- common CSS/layout 영향
+- sitemap/robots/category/SEO 실제 연결
+- FINAL FAIL0/SKIP0 및 공식 결과 ZIP 생성

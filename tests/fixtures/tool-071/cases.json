@@ -1,0 +1,15 @@
+{
+  "core": [
+    {"metric":"ctr","a":1000,"b":50000,"value":2},
+    {"metric":"cpc","a":100000,"b":2000,"value":50},
+    {"metric":"cpm","a":100000,"b":50000,"value":2000},
+    {"metric":"cvr","a":50,"b":1000,"value":5},
+    {"metric":"cac","a":500000,"b":20,"value":25000},
+    {"metric":"roas","a":2000000,"b":500000,"value":4,"percent":400},
+    {"metric":"roi","a":2000000,"b":500000,"value":300},
+    {"metric":"aov","a":3000000,"b":100,"value":30000}
+  ],
+  "limits":{"maxAmount":1000000000000000,"maxCount":1000000000000,"maxInputChars":30,"maxDisplayPrecision":8,"maxCompareSets":2},
+  "invalid":["zero denominator","negative input","NaN","Infinity","amount > 1e15","count > 1e12"],
+  "rawVsRounded":{"metric":"ctr","a":1,"b":3,"raw":33.33333333333333,"display2":"33.33%"}
+}

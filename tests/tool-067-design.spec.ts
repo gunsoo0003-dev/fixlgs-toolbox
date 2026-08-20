@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+for(const locale of ['ko','en','ja'] as const)test(`${locale} structural design`,async({page})=>{await page.goto(`/${locale}/selling-price-margin-calculator`);await expect(page.getByTestId('tool-067-root')).toBeVisible();await expect(page.locator('.toolbox-tool-detail-hero')).toBeVisible();await expect(page.locator('.toolbox-tool-guide')).toBeVisible();await expect(page.locator('.toolbox-tool-faq')).toBeVisible();});

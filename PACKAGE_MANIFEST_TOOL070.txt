@@ -1,0 +1,11 @@
+FIXLGS TOOLBOX TOOL070 PACKAGE MANIFEST
+Package purpose: 주작업장 이식용 TOOL070 전용 구현 + 검수자료 + HANDOFF + 원본 제작전달서
+Common/global files: NOT INCLUDED
+New OSS: NONE
+Expected implementation files: 4
+Expected Playwright config: 1
+Expected test fixture/spec files: 11
+Expected checker scripts: 6
+Expected docs/HANDOFF/manifest: 5
+Expected evidence logs: 4
+Expected original production brief PDF: 1

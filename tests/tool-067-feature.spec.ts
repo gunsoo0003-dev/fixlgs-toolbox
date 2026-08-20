@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('three modes and copy/reset controls exist',async({page})=>{await page.goto('/en/selling-price-margin-calculator');for(const id of ['tool-067-mode-margin','tool-067-mode-target','tool-067-mode-allowed'])await expect(page.getByTestId(id)).toBeVisible();await expect(page.getByRole('button',{name:'Copy result'})).toBeVisible();await expect(page.getByRole('button',{name:'Reset'})).toBeVisible();});

@@ -126,7 +126,7 @@ export const categories: Category[] = [
       en: "VAT, margin, break-even, payroll, investing, and loans.",
       ja: "VAT、利益率、損益、給与、投資、融資。",
     },
-    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
+    toolCountLabel: { ko: "6개 사용 가능", en: "6 available", ja: "6件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -275,6 +275,11 @@ export const tool063Slug = "ratio-proportion-calculator" as const;
 export const tool064Slug = "statistics-calculator" as const;
 export const tool065Slug = "fraction-decimal-calculator" as const;
 export const tool066Slug = "vat-calculator" as const;
+export const tool067Slug = "selling-price-margin-calculator" as const;
+export const tool068Slug = "seller-fee-settlement-calculator" as const;
+export const tool069Slug = "break-even-point-calculator" as const;
+export const tool070Slug = "unit-price-comparison-calculator" as const;
+export const tool071Slug = "ad-sales-performance-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -392,6 +397,16 @@ export const tool065Titles: Record<Locale, string> = { ko: "분수·소수 계�
 export const tool065Descriptions: Record<Locale, string> = { ko: "분수 사칙연산과 약분을 정확하게 계산하고 분수와 소수를 서로 변환합니다.", en: "Calculate exact fraction arithmetic, simplify fractions, and convert between fractions and decimals.", ja: "分数の四則演算と約分を正確に計算し、分数と小数を相互変換します。" };
 export const tool066Titles: Record<Locale, string> = { ko: "부가세 계산기", en: "VAT Calculator", ja: "消費税計算ツール" };
 export const tool066Descriptions: Record<Locale, string> = { ko: "공급가액에서 부가세와 합계금액을 계산하고 부가세 포함 금액에서 공급가액과 세액을 역산합니다.", en: "Calculate VAT and totals from a net amount, or reverse a VAT-inclusive total into net amount and tax.", ja: "税抜価格から消費税と税込価格を計算し、税込総額から税抜価格と税額を逆算します。" };
+export const tool067Titles: Record<Locale, string> = { ko: "판매가격·마진 계산기", en: "Selling Price & Margin Calculator", ja: "販売価格・利益率計算ツール" };
+export const tool067Descriptions: Record<Locale, string> = { ko: "원가와 판매가로 마진액과 마진율을 계산하고 목표 마진율에 맞는 판매가격과 허용 원가를 역산합니다.", en: "Calculate profit and margin from cost and selling price, then find target selling price and allowed cost from a target margin.", ja: "原価と販売価格から利益額・利益率を計算し、目標利益率から販売価格と許容原価を逆算します。" };
+export const tool068Titles: Record<Locale, string> = { ko: "판매 수수료·정산금 계산기", en: "Seller Fee & Settlement Calculator", ja: "販売手数料・精算金計算ツール" };
+export const tool068Descriptions: Record<Locale, string> = { ko: "판매금액에서 수수료·배송비·기타 비용을 차감해 예상 정산금과 순이익을 계산합니다.", en: "Calculate estimated settlement and net profit after commissions, shipping, and other costs.", ja: "販売金額から手数料・送料・その他費用を差し引き、精算金と純利益を計算します。" };
+export const tool069Titles: Record<Locale, string> = { ko: "손익분기점 계산기", en: "Break-even Point Calculator", ja: "損益分岐点計算ツール" };
+export const tool069Descriptions: Record<Locale, string> = { ko: "고정비·판매가·변동비로 상품당 이익과 손익분기 판매량·매출을 계산합니다.", en: "Calculate contribution margin, break-even units, and break-even revenue from fixed costs, selling price, and variable cost.", ja: "固定費・販売価格・変動費から限界利益と損益分岐点の販売数量・売上を計算します。" };
+export const tool070Titles: Record<Locale, string> = { ko: "단가 비교 계산기", en: "Unit Price Comparison Calculator", ja: "単価比較計算ツール" };
+export const tool070Descriptions: Record<Locale, string> = { ko: "개당·100g·1kg·100mL·1L 기준 단가를 정규화해 A/B 상품의 실제 단가와 절약액을 비교합니다.", en: "Normalize per-item, weight, and volume prices to compare actual unit prices and savings between products A and B.", ja: "個数・重量・容量の単価を共通基準に正規化し、商品A/Bの実質単価と節約額を比較します。" };
+export const tool071Titles: Record<Locale, string> = { ko: "광고·매출 성과 계산기", en: "Ad & Sales Performance Calculator", ja: "広告・売上成果計算ツール" };
+export const tool071Descriptions: Record<Locale, string> = { ko: "CTR, CPC, CPM, 전환율, CAC, ROAS, ROI, 객단가를 계산하고 공식과 분모를 함께 확인합니다.", en: "Calculate CTR, CPC, CPM, conversion rate, CAC, ROAS, ROI, and AOV with formulas and denominators.", ja: "CTR、CPC、CPM、コンバージョン率、CAC、ROAS、ROI、客単価を計算し、式と分母も確認します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -1066,6 +1081,41 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool067Titles,
+      description: tool067Descriptions,
+      href: `/${"ko"}/${tool067Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool068Titles,
+      description: tool068Descriptions,
+      href: `/${"ko"}/${tool068Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool069Titles,
+      description: tool069Descriptions,
+      href: `/${"ko"}/${tool069Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool070Titles,
+      description: tool070Descriptions,
+      href: `/${"ko"}/${tool070Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool071Titles,
+      description: tool071Descriptions,
+      href: `/${"ko"}/${tool071Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1215,7 +1265,14 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "business-finance") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool066Slug}` } : item);
+    return cards.map((item, index) =>
+      index === 0 ? { ...item, href: `/${locale}/${tool066Slug}` } :
+      index === 1 ? { ...item, href: `/${locale}/${tool067Slug}` } :
+      index === 2 ? { ...item, href: `/${locale}/${tool068Slug}` } :
+      index === 3 ? { ...item, href: `/${locale}/${tool069Slug}` } :
+      index === 4 ? { ...item, href: `/${locale}/${tool070Slug}` } :
+      index === 5 ? { ...item, href: `/${locale}/${tool071Slug}` } : item
+    );
   }
 
   if (categorySlug === "image-edit") {
