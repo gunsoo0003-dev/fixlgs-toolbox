@@ -1,0 +1,13 @@
+{
+  "core": [
+    {"id":"exclusive-10","mode":"exclusive","amount":100000,"rate":10,"supply":100000,"vat":10000,"total":110000},
+    {"id":"inclusive-10","mode":"inclusive","amount":110000,"rate":10,"supply":100000,"vat":10000,"total":110000},
+    {"id":"million-10","mode":"exclusive","amount":1000000,"rate":10,"supply":1000000,"vat":100000,"total":1100000},
+    {"id":"custom-5","mode":"exclusive","amount":100000,"rate":5,"supply":100000,"vat":5000,"total":105000},
+    {"id":"zero-rate","mode":"exclusive","amount":100000,"rate":0,"supply":100000,"vat":0,"total":100000},
+    {"id":"zero-amount","mode":"exclusive","amount":0,"rate":10,"supply":0,"vat":0,"total":0}
+  ],
+  "reverseRate": {"supply":500000,"vat":50000,"rate":10,"total":550000},
+  "limits": {"maxAmount":1000000000000000,"maxRate":100,"maxInputChars":30,"maxDisplayPrecision":2},
+  "invalid": ["negative amount","NaN","Infinity","rate below 0","rate above 100","zero supply with positive VAT"]
+}

@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL066 inclusive uses reverse formula',async({page})=>{await page.goto('/ja/vat-calculator');await page.getByTestId('tool066-mode-inclusive').click();await page.getByTestId('tool066-amount').fill('110000');await expect(page.getByTestId('tool066-result-supply')).toContainText('100,000');await expect(page.getByTestId('tool066-result-vat')).toContainText('10,000');await expect(page.getByTestId('tool066-formula')).toContainText('total − supply')});

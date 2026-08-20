@@ -40,6 +40,7 @@ const tools = [
   ['063', 'ratio-proportion-calculator'],
   ['064', 'statistics-calculator'],
   ['065', 'fraction-decimal-calculator'],
+  ['066', 'vat-calculator'],
 ] as const;
 
 const locales = ['ko', 'en', 'ja'] as const;

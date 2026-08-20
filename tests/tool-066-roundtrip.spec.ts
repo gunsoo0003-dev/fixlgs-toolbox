@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL066 supply-total-supply roundtrip',async({page})=>{await page.goto('/ko/vat-calculator');await page.getByTestId('tool066-amount').fill('123456');const total=(await page.getByTestId('tool066-result-total').textContent())?.replace(/,/g,'')||'';await page.getByTestId('tool066-mode-inclusive').click();await page.getByTestId('tool066-amount').fill(total);await expect(page.getByTestId('tool066-result-supply')).toContainText('123,456')});

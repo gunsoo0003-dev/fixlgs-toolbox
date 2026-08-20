@@ -1,0 +1,26 @@
+import fs from 'node:fs';
+const css=fs.readFileSync('components/tool-066-vat-calculator.module.css','utf8');
+const page=fs.readFileSync('components/tool-066-vat-calculator-page.tsx','utf8');
+const common=fs.readFileSync('styles/toolbox-detail-common.css','utf8');
+const ui=fs.readFileSync('components/tool-066-vat-calculator.tsx','utf8');
+let pass=0,fail=0;function check(name,ok){console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++}
+for(const token of ['ToolboxSubpageShell','toolbox-tool-detail-hero','toolbox-tool-detail-body','toolbox-next-work','toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head','toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head','toolbox-tool-faq'])check(`common contract ${token}`,page.includes(token));
+const seq=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'].map(x=>page.indexOf(x));check('lower section exact order',seq.every((v,i)=>v>=0&&(i===0||v>seq[i-1])));
+for(const token of ["['EXCLUDED'","['INCLUDED'","['10 / 110'","['RATE'","['ROUNDING'","['SCOPE'"])check(`expert card ${token.replace("['",'')}`,page.includes(token));
+for(const id of ['tool066-root','tool066-workspace','tool066-amount','tool066-rate','tool066-vat-input','tool066-toggle-excluded','tool066-toggle-included','tool066-rate-10','tool066-rate-0','tool066-reset','tool066-copy','tool066-precision','tool066-result','tool066-result-supply','tool066-result-vat','tool066-result-total','tool066-result-rate','tool066-formula','tool066-legal-warning','tool066-error','tool066-custom-warning'])check(`runtime testid ${id}`,ui.includes(`data-testid=\"${id}\"`));
+check('dynamic mode testid template',ui.includes('data-testid={`tool066-mode-${id}`}'));
+check('3-mode source contract',ui.includes("['exclusive',t.exclusive]")&&ui.includes("['inclusive',t.inclusive]")&&ui.includes("['reverse-rate',t.reverse]"));
+check('mode-state linkage',ui.includes("setIncludedState(next==='inclusive'?'included':'excluded')")&&ui.includes("if(next==='reverse-rate'){setAmount('500000');setVatInput('50000')}"));
+check('toggle-mode linkage',ui.includes("if(mode==='inclusive')switchMode('exclusive')")&&ui.includes("if(mode==='exclusive')switchMode('inclusive')"));
+check('desktop business input grid',css.includes('grid-template-columns:minmax(0,1.5fr) minmax(170px,.8fr)'));
+check('reverse input two-column grid',css.includes('.inputGridReverse{grid-template-columns:1fr 1fr}'));
+check('desktop result three columns',css.includes('.resultGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))'));
+check('mobile result reflow',css.includes('@media(max-width:820px)')&&css.includes('.resultGrid{grid-template-columns:1fr}'));
+check('narrow mobile tabs stack',css.includes('@media(max-width:560px)')&&css.includes('.tabs{grid-template-columns:1fr}'));
+check('narrow mobile actions two columns',css.includes('.actionRow{display:grid;grid-template-columns:1fr 1fr}'));
+check('narrow reverse input stacks',css.includes('.inputGridReverse{grid-template-columns:1fr}'));
+check('common divider automatic contract',common.includes('.toolbox-tool-info-band--format-head.toolbox-tool-info-band--section-start::before')&&common.includes('width:100vw'));
+check('wide-head multilingual wrap contract',common.includes('.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head h2{white-space:normal'));
+check('no per-tool divider modifier',!page.includes('toolbox-tool-info-band--full-divider'));
+check('global pollution absent',!css.includes('app/globals.css')&&!page.includes('legacy-tools-sealed'));
+console.log(`RESULT DESIGN-CODE PASS=${pass} FAIL=${fail} ACTUAL_DOM=YES COMMON_DIVIDER=AUTO TOOL=066`);process.exitCode=fail?1:0;

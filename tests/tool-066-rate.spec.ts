@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL066 exact rate fixtures',async({page})=>{await page.goto('/en/vat-calculator');await page.getByTestId('tool066-amount').fill('100000');await page.getByTestId('tool066-rate').fill('5');await expect(page.getByTestId('tool066-result-vat')).toContainText('5,000');await expect(page.getByTestId('tool066-result-total')).toContainText('105,000');await expect(page.getByTestId('tool066-custom-warning')).toContainText('reference')});
