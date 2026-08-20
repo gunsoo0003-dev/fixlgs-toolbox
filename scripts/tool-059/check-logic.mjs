@@ -1,0 +1,7 @@
+import {pixelsToPrint,printToPixels,effectivePpi,aspectRatio,TOOL059_LIMITS,TOOL059_PPI_PRESETS,TOOL059_PRESETS} from '../../lib/tool-059-pixel-print.ts';
+let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};const near=(a,b,e=1e-8)=>Math.abs(a-b)<=e*Math.max(1,Math.abs(b));
+let a=pixelsToPrint(3000,2000,300);c('3000x2000@300 = 10x6.6667in',near(a.widthIn,10)&&near(a.heightIn,20/3));c('cm conversion',near(a.widthCm,25.4)&&near(a.heightCm,16.9333333333));
+let b=printToPixels(210,297,'mm',300);c('A4@300 ~= 2480x3508',b.widthPx===2480&&b.heightPx===3508);let d=printToPixels(8,10,'in',300);c('8x10@300 = 2400x3000',d.widthPx===2400&&d.heightPx===3000);
+let e=effectivePpi(1200,1800,4,6,'in');c('1200x1800 over 4x6 = 300ppi',near(e.effectivePpi,300));c('same pixels 150/300 physical 2x',near(pixelsToPrint(1200,1800,150).widthIn,2*pixelsToPrint(1200,1800,300).widthIn));c('ratio 3:2',aspectRatio(3000,2000).label==='3:2');c('PPI presets exact',JSON.stringify(TOOL059_PPI_PRESETS)==='[72,96,150,200,240,300,600]');c('preset count <=30',TOOL059_PRESETS.length<=TOOL059_LIMITS.maxPresets);
+for(const [name,fn] of [['zero pixel',()=>pixelsToPrint(0,100,300)],['negative ppi',()=>pixelsToPrint(100,100,-1)],['pixel over',()=>pixelsToPrint(100001,100,300)],['ppi over',()=>pixelsToPrint(100,100,2401)]]){let ok=false;try{fn()}catch{ok=true}c(name,ok)}
+console.log(`RESULT LOGIC PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

@@ -1,0 +1,11 @@
+import fs from 'node:fs';let pass=0,fail=0;const c=(n,v)=>{console.log(`${v?'PASS':'FAIL'} ${n}`);v?pass++:fail++;};const css=fs.readFileSync('components/tool-060-shoe-clothing-size-converter.module.css','utf8');const page=fs.readFileSync('components/tool-060-shoe-clothing-size-converter-page.tsx','utf8');
+for(const token of ['ToolboxSubpageShell','toolbox-tool-detail-hero','toolbox-tool-detail-body','toolbox-next-work','toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'])c(`common class ${token}`,page.includes(token));
+const order=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'].map(x=>page.indexOf(x));c('lower DOM exact order HOWTO -> EXPERT -> NOTES -> FAQ',order.every((v,i)=>v>=0&&(i===0||v>order[i-1])));
+c('expert exact common classes',page.includes('toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head'));
+for(const h of ['숫자 하나보다 실제 치수를 함께 확인하세요','Use measurements together with size labels','数字だけでなく実測値も確認してください'])c(`locale expert heading ${h}`,page.includes(h));
+for(const marker of ['SHOES','FOOT LENGTH','TOPS','BOTTOMS','KIDS','BRAND CHART'])c(`expert content marker ${marker}`,page.includes(marker));
+c('expert cards source six',(page.match(/\['(?:SHOES|FOOT LENGTH|TOPS|BOTTOMS|KIDS|BRAND CHART)'/g)||[]).length>=6);
+for(const h of ['자주 묻는 질문','Frequently asked questions','よくある質問'])c(`FAQ locale heading ${h}`,page.includes(h));
+c('category link exact',page.includes('/category/unit-calc'));
+for(const token of ['@media(max-width:820px)','@media(max-width:520px)','var(--blue)','var(--tb-line)'])c(`css ${token}`,css.includes(token));for(const f of ['app/globals.css','styles/global-base.css','styles/toolbox-common.css','styles/toolbox-detail-common.css','styles/legacy-site-sealed.css','styles/legacy-tools-sealed.css'])c(`no global contamination ${f}`,!fs.existsSync(f)||!fs.readFileSync(f,'utf8').includes('tool060'));
+console.log(`RESULT DESIGN PASS=${pass} FAIL=${fail}`);if(fail)process.exit(1);

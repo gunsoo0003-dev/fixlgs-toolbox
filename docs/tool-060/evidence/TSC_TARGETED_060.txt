@@ -1,0 +1,16 @@
+app/[locale]/shoe-clothing-size-converter/page.tsx(1,29): error TS2307: Cannot find module 'next' or its corresponding type declarations.
+app/[locale]/shoe-clothing-size-converter/page.tsx(2,24): error TS2307: Cannot find module 'next/navigation' or its corresponding type declarations.
+app/[locale]/shoe-clothing-size-converter/page.tsx(3,35): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+app/[locale]/shoe-clothing-size-converter/page.tsx(4,52): error TS2307: Cannot find module '@/components/tool-060-shoe-clothing-size-converter-page' or its corresponding type declarations.
+app/[locale]/shoe-clothing-size-converter/page.tsx(7,165): error TS2875: This JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+components/tool-060-shoe-clothing-size-converter-page.tsx(1,18): error TS2307: Cannot find module 'next/link' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter-page.tsx(2,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter-page.tsx(3,48): error TS2307: Cannot find module '@/components/tool-060-shoe-clothing-size-converter' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter-page.tsx(4,30): error TS2307: Cannot find module '@/components/toolbox-faq-list' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter-page.tsx(5,35): error TS2307: Cannot find module '@/components/toolbox-subpage-shell' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter-page.tsx(11,841): error TS2875: This JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+components/tool-060-shoe-clothing-size-converter.tsx(2,32): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter.tsx(3,27): error TS2307: Cannot find module '@/lib/site' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter.tsx(4,224): error TS2307: Cannot find module '@/lib/tool-060-sizes' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter.tsx(5,20): error TS2307: Cannot find module './tool-060-shoe-clothing-size-converter.module.css' or its corresponding type declarations.
+components/tool-060-shoe-clothing-size-converter.tsx(20,9): error TS2875: This JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.

@@ -1,0 +1,16 @@
+{
+  "pixelsToPrint":[
+    {"pixels":[3000,2000],"ppi":300,"inches":[10,6.6666666667],"cm":[25.4,16.9333333333]},
+    {"pixels":[1200,1800],"ppi":300,"inches":[4,6],"cm":[10.16,15.24]},
+    {"pixels":[1080,1350],"ppi":300,"inches":[3.6,4.5],"cm":[9.144,11.43]}
+  ],
+  "printToPixels":[
+    {"physical":[210,297],"unit":"mm","ppi":300,"pixels":[2480,3508]},
+    {"physical":[8,10],"unit":"in","ppi":300,"pixels":[2400,3000]},
+    {"physical":[4,6],"unit":"in","ppi":300,"pixels":[1200,1800]}
+  ],
+  "effectivePpi":[{"pixels":[1200,1800],"physical":[4,6],"unit":"in","ppi":300}],
+  "ratios":[[3,2],[4,3],[4,5],[16,9]],
+  "ppiPresets":[72,96,150,200,240,300,600],
+  "limits":{"maxPixels":100000,"maxPhysicalInches":10000,"maxPpi":2400,"maxPrecision":6,"maxPresets":30}
+}

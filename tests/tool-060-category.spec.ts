@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL060 clothing women tops',async({page})=>{await page.goto('/ko/shoe-clothing-size-converter');await page.getByTestId('tool060-mode-clothing').click();await page.getByTestId('tool060-gender-women').click();await page.getByTestId('tool060-item-tops').click();await page.getByTestId('tool060-size').selectOption('wt66');await expect(page.getByTestId('tool060-result-US')).toContainText('6-8');});

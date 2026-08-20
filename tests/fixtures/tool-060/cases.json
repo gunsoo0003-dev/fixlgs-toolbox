@@ -1,0 +1,8 @@
+{
+  "shoeMenKr270":{"mode":"shoes","gender":"men","system":"KR","size":"270","expect":{"US":"9","UK":"8","EU":"42.5","JP":"27","footLengthMm":270}},
+  "shoeWomenKr250":{"mode":"shoes","gender":"women","system":"KR","size":"250","expect":{"US":"8","UK":"6","EU":"39","JP":"25","footLengthMm":250}},
+  "shoeKidsKr200":{"mode":"shoes","gender":"kids","system":"KR","size":"200","expect":{"US":"1Y","UK":"13.5","EU":"32","JP":"20"}},
+  "womenTopKr66":{"mode":"clothing","gender":"women","item":"tops","system":"KR","size":"66 / M","expect":{"US":"6-8","UK":"10-12","EU":"38-40","JP":"11-13"}},
+  "menTopKr100":{"mode":"clothing","gender":"men","item":"tops","system":"KR","size":"100 / L","expect":{"US":"L","UK":"38","EU":"48","JP":"L"}},
+  "kidsBottomKr120":{"mode":"clothing","gender":"kids","item":"bottoms","system":"KR","size":"120","expect":{"US":"6","UK":"6-7","EU":"116-122","JP":"120"}}
+}

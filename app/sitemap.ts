@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { categories, locales, tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug, tool010Slug, tool011Slug, tool012Slug, tool013Slug, tool014Slug, tool015Slug, tool016Slug, tool017Slug, tool018Slug, tool019Slug, tool020Slug, tool021Slug, tool022Slug, tool023Slug, tool024Slug, tool025Slug, tool026Slug, tool027Slug, tool028Slug, tool029Slug, tool030Slug, tool031Slug, tool032Slug, tool033Slug, tool034Slug, tool035Slug, tool036Slug, tool037Slug, tool038Slug, tool039Slug, tool040Slug, tool041Slug, tool042Slug, tool043Slug, tool044Slug, tool045Slug, tool046Slug, tool047Slug, tool048Slug, tool049Slug, tool050Slug, tool051Slug, tool052Slug, tool053Slug, tool054Slug, tool055Slug, tool056Slug, tool057Slug, tool058Slug } from "@/lib/site";
+import { categories, locales, tool001Slug, tool002Slug, tool003Slug, tool004Slug, tool005Slug, tool006Slug, tool007Slug, tool008Slug, tool009Slug, tool010Slug, tool011Slug, tool012Slug, tool013Slug, tool014Slug, tool015Slug, tool016Slug, tool017Slug, tool018Slug, tool019Slug, tool020Slug, tool021Slug, tool022Slug, tool023Slug, tool024Slug, tool025Slug, tool026Slug, tool027Slug, tool028Slug, tool029Slug, tool030Slug, tool031Slug, tool032Slug, tool033Slug, tool034Slug, tool035Slug, tool036Slug, tool037Slug, tool038Slug, tool039Slug, tool040Slug, tool041Slug, tool042Slug, tool043Slug, tool044Slug, tool045Slug, tool046Slug, tool047Slug, tool048Slug, tool049Slug, tool050Slug, tool051Slug, tool052Slug, tool053Slug, tool054Slug, tool055Slug, tool056Slug, tool057Slug, tool058Slug, tool059Slug, tool060Slug } from "@/lib/site";
 
 const baseUrl = "https://toolbox.fixlgs.com";
 
@@ -302,6 +302,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
     entries.push({
       url: `${baseUrl}/${locale}/${tool058Slug}`,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    });
+    entries.push({
+      url: `${baseUrl}/${locale}/${tool059Slug}`,
+      changeFrequency: "weekly",
+      priority: 0.95,
+    });
+    entries.push({
+      url: `${baseUrl}/${locale}/${tool060Slug}`,
       changeFrequency: "weekly",
       priority: 0.95,
     });

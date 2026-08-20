@@ -267,6 +267,8 @@ export const tool055Slug = "length-area-volume-converter" as const;
 export const tool056Slug = "weight-temperature-pressure-converter" as const;
 export const tool057Slug = "speed-fuel-energy-converter" as const;
 export const tool058Slug = "data-cooking-unit-converter" as const;
+export const tool059Slug = "pixel-print-size-converter" as const;
+export const tool060Slug = "shoe-clothing-size-converter" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -368,6 +370,10 @@ export const tool057Titles: Record<Locale, string> = { ko: "속도·연비·에�
 export const tool057Descriptions: Record<Locale, string> = { ko: "속도, 연비, 에너지·전력·마력 단위를 빠르게 변환하고 대표 단위를 한눈에 비교합니다.", en: "Convert speed, fuel economy, energy, power, and horsepower units and compare common equivalents.", ja: "速度、燃費、エネルギー・電力・馬力の単位を変換し、代表的な換算値をまとめて比較できます。" };
 export const tool058Titles: Record<Locale, string> = { ko: "데이터·요리 단위 변환기", en: "Data & Cooking Unit Converter", ja: "データ・料理単位変換ツール" };
 export const tool058Descriptions: Record<Locale, string> = { ko: "bit·byte와 1000·1024 기준의 데이터 단위, 컵·큰술·작은술·mL 요리 단위를 한 페이지에서 변환합니다.", en: "Convert bit/byte data sizes with decimal or binary notation and common cooking measures on one page.", ja: "bit・byteの1000・1024基準と、カップ・大さじ・小さじ・mLの料理単位を1ページで変換します。" };
+export const tool059Titles: Record<Locale, string> = { ko: "픽셀·인쇄 크기 변환기", en: "Pixel & Print Size Converter", ja: "ピクセル・印刷サイズ変換ツール" };
+export const tool059Descriptions: Record<Locale, string> = { ko: "픽셀 크기와 PPI로 인쇄 크기를 계산하고 필요한 픽셀, 실제 PPI, 종횡비를 확인합니다.", en: "Calculate print size from pixels and PPI, find required pixels, effective PPI, and aspect ratio.", ja: "ピクセルとPPIから印刷サイズを計算し、必要ピクセル・実効PPI・アスペクト比を確認できます。" };
+export const tool060Titles: Record<Locale, string> = { ko: "신발·의류 사이즈 변환기", en: "Shoe & Clothing Size Converter", ja: "靴・衣類サイズ変換ツール" };
+export const tool060Descriptions: Record<Locale, string> = { ko: "한국·미국·영국·유럽·일본의 신발·의류 사이즈를 남성·여성·아동별로 비교합니다.", en: "Compare shoe and clothing sizes across Korea, US, UK, EU, and Japan for men, women, and kids.", ja: "韓国・米国・英国・EU・日本の靴・衣類サイズをメンズ・レディース・キッズ別に比較します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -984,6 +990,20 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool059Titles,
+      description: tool059Descriptions,
+      href: `/${"ko"}/${tool059Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool060Titles,
+      description: tool060Descriptions,
+      href: `/${"ko"}/${tool060Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1129,7 +1149,7 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "unit-calc") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool055Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool056Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool057Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool058Slug}` } : item);
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool055Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool056Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool057Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool058Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool059Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool060Slug}` } : item);
   }
 
   if (categorySlug === "image-edit") {

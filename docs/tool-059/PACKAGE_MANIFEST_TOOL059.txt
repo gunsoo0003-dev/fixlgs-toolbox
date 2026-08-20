@@ -1,0 +1,10 @@
+TOOL059 PACKAGE MANIFEST
+- 구현코드: 5 files
+- route: 1 file (구현코드에 포함)
+- Playwright specs: 9 files
+- fixture: 1 file
+- static checker/runner: 5 files
+- 전달/증거 문서: HANDOFF, REQ MASTER, CHECKLIST, DESIGN CODE CHECK, STATIC RESULT, PACKAGE MANIFEST
+- 원본 제작전달서: FIXLGS_TOOLBOX_059_픽셀_인쇄_크기_변환기_제작전달서(1).pdf
+- 공통파일: 포함하지 않음
+- 신규 dependency: 없음

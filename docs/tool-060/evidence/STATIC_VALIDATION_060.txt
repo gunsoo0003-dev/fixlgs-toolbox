@@ -1,0 +1,11 @@
+SOURCE PASS
+LOGIC PASS
+DESIGN PASS · MAIN TOOL058 · common shell reused · module CSS isolated
+HARNESS FAIL
+selector missing tool060-mode-shoes
+selector missing tool060-mode-clothing
+selector missing tool060-gender-men
+selector missing tool060-gender-women
+selector missing tool060-gender-kids
+SECRET SCAN PASS
+STATIC FINAL FAIL · FAIL 1

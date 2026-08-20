@@ -1,0 +1,77 @@
+FIXLGS TOOLBOX TOOL059 HANDOFF
+도구 번호: 059
+도구명: 픽셀·인쇄 크기 변환기 / Pixel & Print Size Converter
+카테고리: G. 단위·일반 계산기
+slug: pixel-print-size-converter
+예상 URL: /{ko|en|ja}/pixel-print-size-converter
+보조작업장 상태: READY (STATIC/CODE PACKAGE)
+
+1. 구현 기능
+- Pixels → Print Size: pixel width/height + PPI → inch/cm/mm.
+- Print Size → Required Pixels: physical width/height + unit + PPI → rounded required pixels.
+- Pixels + Physical Size → Effective PPI.
+- aspect ratio + orientation + megapixels.
+- aspect ratio lock ON/OFF, OFF warning, ratio mismatch warning.
+- A4/A5/A6/Letter/4×6/5×7/8×10/Business card presets.
+- 72/96/150/200/240/300/600 PPI quick presets.
+- print readiness reference indicator.
+- Copy/Reset, KO/EN/JA, local-only notice, HOW TO/notes/FAQ/related tool.
+- route metadata canonical + ko/en/ja/x-default hreflang.
+
+2. 제외/보류
+- 실제 이미지 upload/resize/upscale/interpolation/DPI metadata write 없음.
+- bleed/crop/fit 자동 편집 없음.
+- printer profile/CMYK/output-shop lookup/PDF generation 없음.
+
+3. 이식 대상 전용 파일
+- app/[locale]/pixel-print-size-converter/page.tsx
+- components/tool-059-pixel-print-converter.tsx
+- components/tool-059-pixel-print-converter-page.tsx
+- components/tool-059-pixel-print-converter.module.css
+- lib/tool-059-pixel-print.ts
+- tests/fixtures/tool-059/cases.json
+- tests/tool-059-preflight.spec.ts
+- tests/tool-059-core.spec.ts
+- tests/tool-059-feature.spec.ts
+- tests/tool-059-unit.spec.ts
+- tests/tool-059-resolution.spec.ts
+- tests/tool-059-ratio.spec.ts
+- tests/tool-059-boundary.spec.ts
+- tests/tool-059-regression.spec.ts
+- tests/tool-059-limit.spec.ts
+- scripts/tool-059/check-source.mjs
+- scripts/tool-059/check-logic.mjs
+- scripts/tool-059/check-design.mjs
+- scripts/tool-059/check-harness.mjs
+- scripts/tool-059/run-static-validation.mjs
+
+4. 공통파일 보호
+- app/globals.css 및 7개 styles 전역/sealed CSS baseline SHA256 동일.
+- components/toolbox-subpage-shell.tsx, toolbox-faq-list.tsx, lib/site.ts, app/sitemap.ts, package.json, package-lock.json baseline SHA256 동일.
+- 신규 OSS/dependency 없음.
+
+5. 주작업장 이식 시 필요한 공통 연결 후보 (보조작업장에서는 수정하지 않음)
+- lib/site.ts: unit-calc 카테고리 TOOL059 카드/slug/title LIVE 등록.
+- app/sitemap.ts: KO/EN/JA TOOL059 URL 등록.
+- 필요 시 관련 도구/카테고리 navigation 등록.
+- package scripts에 TOOL059 Playwright/checker 실행 alias가 필요하면 주작업장 정책에 맞춰 등록.
+
+6. 검증 결과
+- Source: PASS 29 / FAIL 0.
+- Formula logic: PASS 13 / FAIL 0.
+- DESIGN-CODE: PASS 14 / FAIL 0.
+- HARNESS-STRUCTURE: PASS 18 / FAIL 0.
+- isolated lib TypeScript: PASS.
+- 전체 project tsc: node_modules 제외 사본이라 Next/React/@playwright types 미존재로 실행환경 의존 FAIL; TOOL059 제품 오류로 판정하지 않음.
+
+7. 주작업장 통합검증 전용
+- 실제 localhost/browser entry.
+- Playwright preflight/core/feature/unit/resolution/ratio/boundary/regression/limit 실행.
+- PC/mobile, KO/EN/JA, Japanese mobile wrapping, light/dark, overflow/hover/touch.
+- production build, 전체 regression, 공통 CSS/layout 영향.
+- site/category/sitemap/robots 통합, 배포, Search Console, 색인.
+
+8. 알려진 harness 수정 이력
+- 최초 source checker가 동적 mode data-testid를 literal selector로 오판하여 3 FAIL 발생.
+- 제품 코드 변경 없이 checker를 dynamic template + mode enum 대조로 수정.
+- 재실행 후 STATIC FINAL PASS FAIL=0.

@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('inch cm mm outputs',async({page})=>{await page.goto('/en/pixel-print-size-converter');await page.getByTestId('tool059-width-px').fill('3000');await page.getByTestId('tool059-height-px').fill('2000');await page.getByTestId('tool059-ppi').fill('300');await expect(page.getByTestId('tool059-result')).toContainText('inch');await expect(page.getByTestId('tool059-result')).toContainText('cm');await expect(page.getByTestId('tool059-result')).toContainText('mm');});

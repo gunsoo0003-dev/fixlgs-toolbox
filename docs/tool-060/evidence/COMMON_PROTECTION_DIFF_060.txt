@@ -1,0 +1,9 @@
+TOOL060 COMMON FILE PROTECTION DIFF
+PASS app/globals.css
+PASS styles/global-base.css
+PASS styles/toolbox-common.css
+PASS styles/toolbox-detail-common.css
+PASS styles/theme.css
+PASS styles/toolbox-compat.css
+PASS styles/legacy-site-sealed.css
+PASS styles/legacy-tools-sealed.css

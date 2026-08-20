@@ -1,0 +1,4 @@
+import {expect,test} from '@playwright/test';
+test('zero blocked',async({page})=>{await page.goto('/ko/pixel-print-size-converter');await page.getByTestId('tool059-width-px').fill('0');await expect(page.getByTestId('tool059-error')).toBeVisible();});
+test('pixel max accepted and over rejected',async({page})=>{await page.goto('/en/pixel-print-size-converter');await page.getByTestId('tool059-width-px').fill('100000');await expect(page.getByTestId('tool059-error')).toHaveCount(0);await page.getByTestId('tool059-width-px').fill('100001');await expect(page.getByTestId('tool059-error')).toBeVisible();});
+test('ppi max accepted and over rejected',async({page})=>{await page.goto('/en/pixel-print-size-converter');await page.getByTestId('tool059-ppi').fill('2400');await expect(page.getByTestId('tool059-error')).toHaveCount(0);await page.getByTestId('tool059-ppi').fill('2401');await expect(page.getByTestId('tool059-error')).toBeVisible();});

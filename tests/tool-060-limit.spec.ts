@@ -1,0 +1,3 @@
+import {expect,test} from '@playwright/test';
+test('TOOL060 result country cards are exactly five',async({page})=>{await page.goto('/en/shoe-clothing-size-converter');await page.getByTestId('tool060-size').selectOption('m270');for(const s of ['KR','US','UK','EU','JP'])await expect(page.getByTestId(`tool060-result-${s}`)).toHaveCount(1);await expect(page.locator('[data-testid^="tool060-result-"]')).toHaveCount(5)});
+test('TOOL060 foot lookup rejects invalid and distant values',async({page})=>{await page.goto('/en/shoe-clothing-size-converter');for(const v of ['0','999']){await page.getByTestId('tool060-foot').fill(v);await page.getByTestId('tool060-foot-find').click();await expect(page.getByTestId('tool060-result')).toContainText('supported reference range')}});
