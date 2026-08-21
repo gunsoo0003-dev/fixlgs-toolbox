@@ -1,0 +1,24 @@
+{
+  "tool": "084",
+  "component": "components/tool-084-paint-wallpaper-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 1130
+    },
+    "en": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 2191
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 1062
+    }
+  }
+}

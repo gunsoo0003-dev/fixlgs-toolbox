@@ -1,0 +1,18 @@
+{
+  "paint":[
+    {"name":"reference","area":50,"coats":2,"coverage":10,"waste":10,"containerVolume":4,"expected":{"totalSurface":100,"adjustedSurface":110.00000000000001,"paintVolume":11.000000000000002,"containers":3}},
+    {"name":"zero-waste","area":50,"coats":2,"coverage":10,"waste":0,"containerVolume":4,"expected":{"totalSurface":100,"adjustedSurface":100,"paintVolume":10,"containers":3}},
+    {"name":"no-container","area":50,"coats":2,"coverage":10,"waste":10,"containerVolume":null,"expected":{"containers":null}}
+  ],
+  "wallpaper":[
+    {"name":"reference","area":40,"usableAreaPerRoll":5,"waste":10,"expected":{"adjustedArea":44,"rolls":9}},
+    {"name":"zero-waste","area":40,"usableAreaPerRoll":5,"waste":0,"expected":{"adjustedArea":40,"rolls":8}}
+  ],
+  "errors":[
+    {"name":"coverage-zero","kind":"paint","error":"COVERAGE_REQUIRED"},
+    {"name":"roll-zero","kind":"wallpaper","error":"ROLL_AREA_REQUIRED"},
+    {"name":"coats-zero","kind":"paint","error":"COATS_REQUIRED"},
+    {"name":"coats-decimal","kind":"paint","error":"COATS_INTEGER"},
+    {"name":"waste-over","kind":"paint","error":"WASTE_RANGE"}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "tool": "082",
+  "component": "components/tool-082-building-ratio-page.tsx",
+  "locales": {
+    "ko": {"steps": 6, "notes": 6, "faqs": 8, "chars": 1512},
+    "en": {"steps": 6, "notes": 6, "faqs": 8, "chars": 2892},
+    "ja": {"steps": 6, "notes": 6, "faqs": 8, "chars": 1421}
+  }
+}

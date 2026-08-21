@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const page=fs.readFileSync('components/tool-083-room-area-calculator-page.tsx','utf8');const ui=fs.readFileSync('components/tool-083-room-area-calculator.tsx','utf8');const css=fs.readFileSync('components/tool-083-room-area-calculator.module.css','utf8');
+const lower=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'];const pos=lower.map(x=>page.indexOf(x));
+c('lower section order HOWTO>EXPERT>NOTES>FAQ',pos.every((v,i)=>v>=0&&(i===0||v>pos[i-1])));
+c('common detail shell',page.includes('ToolboxSubpageShell')&&page.includes('toolbox-tool-detail-hero')&&page.includes('toolbox-tool-detail-body'));
+c('navigation current tool 83',page.includes('currentTool={83}'));
+c('category route real-estate-build',page.includes('/category/real-estate-build'));
+c('expert six cards',['FLOOR','CEILING','WALL','OPENING','NET WALL','TOTAL'].every(x=>page.includes(x)));
+c('FAQ progressive disclosure',page.includes('ToolboxFaqList')&&page.includes('initialCount={4}'));
+c('calculator root and opening-row DOM',ui.includes('data-testid="tool083-root"')&&ui.includes('data-testid="tool083-opening-row"'));
+c('mobile breakpoints',css.includes('@media(max-width:560px)')&&css.includes('@media(max-width:900px)'));
+c('design tokens reused',['var(--tb-line)','var(--tb-panel)','var(--blue)'].every(x=>css.includes(x)));
+c('no important/global mutation',!css.includes('!important')&&!css.includes(':global(')&&!css.includes('.toolbox-tool-'));
+console.log(`RESULT TOOL083 DESIGN-CODE PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

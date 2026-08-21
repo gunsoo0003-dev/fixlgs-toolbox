@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL082 page keeps current and target contracts separated',async({page})=>{await page.goto('/ko/building-coverage-floor-area-ratio-calculator');await expect(page.getByTestId('tool082-current-formula')).toContainText('building area');await expect(page.getByTestId('tool082-current-formula')).toContainText('gross floor area');await expect(page.getByTestId('tool082-target-formula')).toContainText('target coverage');await expect(page.getByTestId('tool082-target-formula')).toContainText('target FAR')});

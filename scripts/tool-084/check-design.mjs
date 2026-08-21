@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const page=fs.readFileSync('components/tool-084-paint-wallpaper-calculator-page.tsx','utf8');const ui=fs.readFileSync('components/tool-084-paint-wallpaper-calculator.tsx','utf8');const css=fs.readFileSync('components/tool-084-paint-wallpaper-calculator.module.css','utf8');
+const lower=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'];const pos=lower.map(x=>page.indexOf(x));
+c('lower section order HOWTO>EXPERT>NOTES>FAQ',pos.every((v,i)=>v>=0&&(i===0||v>pos[i-1])));
+c('common detail shell',page.includes('ToolboxSubpageShell')&&page.includes('toolbox-tool-detail-hero')&&page.includes('toolbox-tool-detail-body'));
+c('navigation current tool 84',page.includes('currentTool={84}'));
+c('category route real-estate-build',page.includes('/category/real-estate-build'));
+c('FAQ progressive disclosure',page.includes('ToolboxFaqList')&&page.includes('initialCount={4}'));
+c('paint/wallpaper tabs in product DOM',ui.includes('role="tablist"')&&ui.includes('data-testid="tool084-tab-paint"')&&ui.includes('data-testid="tool084-tab-wallpaper"'));
+c('mobile breakpoints',css.includes('@media(max-width:820px)')&&css.includes('@media(max-width:560px)'));
+c('responsive grid contract',css.includes('grid-template-columns'));
+c('design tokens reused',['var(--tb-line)','var(--tb-panel)','var(--blue)'].every(x=>css.includes(x)));
+c('primary action black',css.includes('background:#111')&&css.includes('color:#fff'));
+c('no important/global mutation',!css.includes('!important')&&!css.includes(':global(')&&!css.includes('.toolbox-tool-'));
+console.log(`RESULT TOOL084 DESIGN-CODE PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

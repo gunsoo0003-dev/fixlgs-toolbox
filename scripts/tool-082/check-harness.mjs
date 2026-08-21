@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const ui=fs.readFileSync('components/tool-082-building-ratio.tsx','utf8');
+const page=fs.readFileSync('components/tool-082-building-ratio-page.tsx','utf8');
+const specs=['tests/tool-082-preflight.spec.ts','tests/tool-082-core.spec.ts','tests/tool-082-target.spec.ts','tests/tool-082-boundary.spec.ts','tests/tool-082-regression.spec.ts','tests/tool-082-limit.spec.ts'];
+for(const s of specs)c(`spec exists ${s}`,fs.existsSync(s));
+const ids=['tool082-root','tool082-workspace','tool082-current-card','tool082-target-card','tool082-site','tool082-building','tool082-gross','tool082-target-coverage','tool082-target-far','tool082-result-coverage','tool082-result-far','tool082-result-possible-building','tool082-result-possible-gross','tool082-current-error','tool082-target-error','tool082-reset','tool082-copy','tool082-legal-warning'];
+for(const id of ids)c(`product testid ${id}`,ui.includes(`data-testid="${id}"`));
+const joined=specs.filter(fs.existsSync).map(x=>fs.readFileSync(x,'utf8')).join('\n');
+c('browser route contract',joined.includes('/building-coverage-floor-area-ratio-calculator'));
+c('runtime pageerror coverage',joined.includes('pageerror'));
+c('runtime console error coverage',joined.includes("type() === 'error'")||joined.includes("type()==='error'"));
+c('error to recovery/state transition coverage',/recover|recovery|reset/i.test(joined));
+c('no previous tool selector residue',!joined.includes('tool076-')&&!joined.includes('tool075-')&&!joined.includes('tool081-'));
+c('fixture exists',fs.existsSync('tests/fixtures/tool-082/cases.json'));
+c('playwright config exists',fs.existsSync('playwright.tool082.config.ts'));
+c('page lower-contract survives',page.includes('ToolboxFaqList')&&page.includes('IMPORTANT NOTES')&&page.includes('BUILDING RATIO GUIDE'));
+console.log(`RESULT TOOL082 HARNESS-STRUCTURE PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

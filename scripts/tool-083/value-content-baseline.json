@@ -1,0 +1,24 @@
+{
+  "tool": "083",
+  "component": "components/tool-083-room-area-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 968
+    },
+    "en": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 1785
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 987
+    }
+  }
+}

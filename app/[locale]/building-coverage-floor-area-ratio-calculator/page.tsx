@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool082BuildingRatioPage} from '@/components/tool-082-building-ratio-page';
+const meta={ko:{title:'건폐율·용적률 계산기 | FIXLGS TOOLBOX',description:'대지면적·건축면적·연면적으로 건폐율과 용적률을 계산하고 목표 비율의 가능 면적을 역산합니다.'},en:{title:'Building Coverage & Floor Area Ratio Calculator | FIXLGS TOOLBOX',description:'Calculate building coverage and FAR, then reverse-calculate possible building and gross floor areas from target ratios.'},ja:{title:'建蔽率・容積率計算ツール | FIXLGS TOOLBOX',description:'敷地・建築・延べ床面積から建蔽率・容積率と目標比率による可能面積を計算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/building-coverage-floor-area-ratio-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/building-coverage-floor-area-ratio-calculator',en:'/en/building-coverage-floor-area-ratio-calculator',ja:'/ja/building-coverage-floor-area-ratio-calculator','x-default':'/ko/building-coverage-floor-area-ratio-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool082BuildingRatioPage locale={locale as Locale}/>}
