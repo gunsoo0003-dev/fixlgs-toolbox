@@ -1,0 +1,7 @@
+{
+  "basic": {"existingQty":100,"existingPrice":10000,"lots":[{"qty":50,"price":8000}],"targetReturn":10,"expect":{"totalShares":150,"totalCost":1400000,"averageCost":9333.333333333334,"breakEvenPrice":9333.333333333334,"targetSellPrice":10266.666666666668}},
+  "multiBuy": {"existingQty":100,"existingPrice":10000,"lots":[{"qty":50,"price":8000},{"qty":100,"price":12000}],"expect":{"totalShares":250,"totalCost":2600000,"averageCost":10400}},
+  "targetZero": {"existingQty":100,"existingPrice":10000,"lots":[],"targetReturn":0,"expect":{"targetSellPrice":10000}},
+  "decimalShares": {"existingQty":0.5,"existingPrice":10000,"lots":[{"qty":0.25,"price":8000}],"expect":{"totalShares":0.75}},
+  "errors": ["existingQty=0","additionalPrice<0","rows>100"]
+}

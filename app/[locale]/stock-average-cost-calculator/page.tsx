@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool078StockAverageCostCalculatorPage} from '@/components/tool-078-stock-average-cost-calculator-page';
+const meta={ko:{title:'주식 평균단가 계산기 | FIXLGS TOOLBOX',description:'기존 보유 수량·단가와 여러 번의 추가 매수를 가중평균해 평균단가, 손익분기 가격, 목표 매도가를 계산합니다.'},en:{title:'Stock Average Cost Calculator | FIXLGS TOOLBOX',description:'Calculate weighted average stock cost, break-even reference, and target sell price from existing shares and multiple additional buys.'},ja:{title:'株式平均取得単価計算ツール | FIXLGS TOOLBOX',description:'既存保有株数・単価と複数回の追加購入から加重平均取得単価、損益分岐価格、目標売却価格を計算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/stock-average-cost-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/stock-average-cost-calculator',en:'/en/stock-average-cost-calculator',ja:'/ja/stock-average-cost-calculator','x-default':'/ko/stock-average-cost-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool078StockAverageCostCalculatorPage locale={locale as Locale}/>}

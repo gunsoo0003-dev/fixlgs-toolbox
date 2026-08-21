@@ -1,0 +1,6 @@
+import {expect,test} from '@playwright/test';
+const url='/ko/stock-average-cost-calculator';
+test('TOOL078 normal',async({page})=>{await page.goto(url);await expect(page.getByTestId('tool078-root')).toBeVisible();await expect(page.getByTestId('tool078-average-cost')).toBeVisible()});
+test('TOOL078 error survives and recovers',async({page})=>{await page.goto(url);await page.getByTestId('tool078-existing-qty').fill('0');await expect(page.getByTestId('tool078-error')).toBeVisible();await expect(page.getByTestId('tool078-root')).toBeVisible();await page.getByTestId('tool078-existing-qty').fill('100');await expect(page.getByTestId('tool078-average-cost')).toBeVisible()});
+test('TOOL078 boundary and row transition',async({page})=>{await page.goto(url);await page.getByTestId('tool078-existing-price').fill('1000000000000001');await expect(page.getByTestId('tool078-error')).toBeVisible();await page.getByTestId('tool078-existing-price').fill('10000');await page.getByTestId('tool078-add-row').click();await expect(page.getByTestId('tool078-root')).toBeVisible()});
+for(const locale of ['ko','en','ja'])test(`TOOL078 locale ${locale}`,async({page})=>{await page.goto(`/${locale}/stock-average-cost-calculator`);await expect(page.getByTestId('tool078-root')).toBeVisible()});

@@ -777,7 +777,22 @@
     "tool076:static": "node scripts/tool-076/run-static-validation.mjs",
     "tool076:secret": "node scripts/tool-076/check-secret-scan.mjs",
     "tool076:browser": "playwright test --config=playwright.tool076.config.ts",
-    "tool076:final": "node scripts/tool-076/run-validation-full.mjs final"
+    "tool076:final": "node scripts/tool-076/run-validation-full.mjs final",
+    "tool077:static": "node scripts/tool-077/run-static-validation.mjs",
+    "tool077:secret": "node scripts/tool-077/check-secret-scan.mjs",
+    "tool077:browser": "playwright test --config=playwright.tool077.config.ts",
+    "tool077:final": "node scripts/tool-077/run-validation-full.mjs final",
+    "tool078:static": "node scripts/tool-078/run-static-validation.mjs",
+    "tool078:secret": "node scripts/tool-078/check-secret-scan.mjs",
+    "tool078:browser": "playwright test --config=playwright.tool078.config.ts",
+    "tool078:final": "node scripts/tool-078/run-validation-full.mjs final",
+    "tool079:static": "node scripts/tool-079/run-static-validation.mjs",
+    "tool079:browser": "playwright test --config=playwright.tool079.config.ts",
+    "tool079:final": "node scripts/tool-079/run-validation-full.mjs final",
+    "tool080:static": "node scripts/tool-080/run-static-validation.mjs",
+    "tool080:secret": "node scripts/tool-080/check-secret-scan.mjs",
+    "tool080:browser": "playwright test --config=playwright.tool080.config.ts",
+    "tool080:final": "node scripts/tool-080/run-validation-full.mjs final"
   },
   "dependencies": {
     "next": "16.2.12",

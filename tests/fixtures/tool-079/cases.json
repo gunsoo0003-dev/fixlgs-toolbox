@@ -1,0 +1,9 @@
+{
+  "core":[
+    {"name":"base yield","sharePrice":50000,"annualDps":2000,"shares":100,"yield":4,"dividend":200000},
+    {"name":"lower price","sharePrice":40000,"annualDps":2000,"shares":100,"yield":5,"dividend":200000},
+    {"name":"zero dps","sharePrice":50000,"annualDps":0,"shares":100,"yield":0,"dividend":0},
+    {"name":"zero shares","sharePrice":50000,"annualDps":2000,"shares":0,"yield":4,"dividend":0}
+  ],
+  "limits":{"sharePrice":1000000000000000,"annualDps":1000000000000000,"shares":1000000000,"inputChars":30,"yieldPrecision":8,"scenarios":4}
+}
