@@ -126,7 +126,7 @@ export const categories: Category[] = [
       en: "VAT, margin, break-even, payroll, investing, and loans.",
       ja: "VAT、利益率、損益、給与、投資、融資。",
     },
-    toolCountLabel: { ko: "6개 사용 가능", en: "6 available", ja: "6件利用可能" },
+    toolCountLabel: { ko: "11개 사용 가능", en: "11 available", ja: "11件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -280,6 +280,11 @@ export const tool068Slug = "seller-fee-settlement-calculator" as const;
 export const tool069Slug = "break-even-point-calculator" as const;
 export const tool070Slug = "unit-price-comparison-calculator" as const;
 export const tool071Slug = "ad-sales-performance-calculator" as const;
+export const tool072Slug = "salary-converter" as const;
+export const tool073Slug = "deposit-savings-calculator" as const;
+export const tool074Slug = "compound-growth-future-value-calculator" as const;
+export const tool075Slug = "loan-interest-calculator" as const;
+export const tool076Slug = "credit-card-installment-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -407,6 +412,16 @@ export const tool070Titles: Record<Locale, string> = { ko: "단가 비교 계산
 export const tool070Descriptions: Record<Locale, string> = { ko: "개당·100g·1kg·100mL·1L 기준 단가를 정규화해 A/B 상품의 실제 단가와 절약액을 비교합니다.", en: "Normalize per-item, weight, and volume prices to compare actual unit prices and savings between products A and B.", ja: "個数・重量・容量の単価を共通基準に正規化し、商品A/Bの実質単価と節約額を比較します。" };
 export const tool071Titles: Record<Locale, string> = { ko: "광고·매출 성과 계산기", en: "Ad & Sales Performance Calculator", ja: "広告・売上成果計算ツール" };
 export const tool071Descriptions: Record<Locale, string> = { ko: "CTR, CPC, CPM, 전환율, CAC, ROAS, ROI, 객단가를 계산하고 공식과 분모를 함께 확인합니다.", en: "Calculate CTR, CPC, CPM, conversion rate, CAC, ROAS, ROI, and AOV with formulas and denominators.", ja: "CTR、CPC、CPM、コンバージョン率、CAC、ROAS、ROI、客単価を計算し、式と分母も確認します。" };
+export const tool072Titles: Record<Locale, string> = { ko: "시급·월급·연봉 환산기", en: "Hourly, Monthly & Annual Salary Converter", ja: "時給・月給・年収換算ツール" };
+export const tool072Descriptions: Record<Locale, string> = { ko: "시급·일급·월급·연봉을 근무시간 기준으로 상호 환산하고 적용한 근무시간 가정을 함께 확인합니다.", en: "Convert hourly, daily, monthly and annual pay with editable paid-hour assumptions.", ja: "時給・日給・月給・年収を編集可能な勤務時間条件で相互換算します。" };
+export const tool073Titles: Record<Locale, string> = { ko: "예금·적금 계산기", en: "Deposit & Savings Calculator", ja: "預金・積立計算ツール" };
+export const tool073Descriptions: Record<Locale, string> = { ko: "예금과 적금의 총 원금, 세전 이자, 만기금액과 세후 참고값을 계산합니다.", en: "Calculate principal, pre-tax interest, maturity amounts, and reference after-tax values for deposits and savings.", ja: "預金と積立の元本合計、税引前利息、満期額、税引後参考値を計算します。" };
+export const tool074Titles: Record<Locale, string> = { ko: "복리·미래자산 계산기", en: "Compound Growth & Future Value Calculator", ja: "複利・将来資産計算ツール" };
+export const tool074Descriptions: Record<Locale, string> = { ko: "원금·추가 납입·이율·기간·복리 주기를 반영해 미래자산과 목표금액 차이를 계산합니다.", en: "Project future value from principal, recurring contributions, rate, term, and compounding frequency.", ja: "元金・追加積立・利率・期間・複利周期から将来資産と目標額との差を計算します。" };
+export const tool075Titles: Record<Locale, string> = { ko: "대출이자 계산기", en: "Loan Interest Calculator", ja: "ローン利息計算ツール" };
+export const tool075Descriptions: Record<Locale, string> = { ko: "원리금 균등·원금 균등·만기일시 상환의 월별 상환액과 총이자를 계산합니다.", en: "Calculate monthly schedules and total interest for equal-payment, equal-principal, and bullet repayment methods.", ja: "元利均等・元金均等・元金一括返済の月別返済額と総利息を計算します。" };
+export const tool076Titles: Record<Locale, string> = { ko: "카드 할부 계산기", en: "Credit Card Installment Calculator", ja: "クレジットカード分割払い計算ツール" };
+export const tool076Descriptions: Record<Locale, string> = { ko: "구매금액·할부개월·총 할부 수수료율로 월 납부액과 총 수수료를 계산합니다.", en: "Calculate monthly payments and total installment fees from purchase amount, installment months and fee rate.", ja: "購入金額・分割回数・手数料率から月々の支払額と総手数料を計算します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -1116,6 +1131,41 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    {
+      title: tool072Titles,
+      description: tool072Descriptions,
+      href: `/${"ko"}/${tool072Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool073Titles,
+      description: tool073Descriptions,
+      href: `/${"ko"}/${tool073Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool074Titles,
+      description: tool074Descriptions,
+      href: `/${"ko"}/${tool074Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool075Titles,
+      description: tool075Descriptions,
+      href: `/${"ko"}/${tool075Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+    {
+      title: tool076Titles,
+      description: tool076Descriptions,
+      href: `/${"ko"}/${tool076Slug}`,
+      status: "LIVE",
+      active: true,
+    },
   ],
   "image-edit": [
     {
@@ -1271,7 +1321,12 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
       index === 2 ? { ...item, href: `/${locale}/${tool068Slug}` } :
       index === 3 ? { ...item, href: `/${locale}/${tool069Slug}` } :
       index === 4 ? { ...item, href: `/${locale}/${tool070Slug}` } :
-      index === 5 ? { ...item, href: `/${locale}/${tool071Slug}` } : item
+      index === 5 ? { ...item, href: `/${locale}/${tool071Slug}` } :
+      index === 6 ? { ...item, href: `/${locale}/${tool072Slug}` } :
+      index === 7 ? { ...item, href: `/${locale}/${tool073Slug}` } :
+      index === 8 ? { ...item, href: `/${locale}/${tool074Slug}` } :
+      index === 9 ? { ...item, href: `/${locale}/${tool075Slug}` } :
+      index === 10 ? { ...item, href: `/${locale}/${tool076Slug}` } : item
     );
   }
 
@@ -1355,6 +1410,11 @@ export const publicTools = [
   { number: 69, slug: tool069Slug, titles: tool069Titles, category: "business-finance" },
   { number: 70, slug: tool070Slug, titles: tool070Titles, category: "business-finance" },
   { number: 71, slug: tool071Slug, titles: tool071Titles, category: "business-finance" },
+  { number: 72, slug: tool072Slug, titles: tool072Titles, category: "business-finance" },
+  { number: 73, slug: tool073Slug, titles: tool073Titles, category: "business-finance" },
+  { number: 74, slug: tool074Slug, titles: tool074Titles, category: "business-finance" },
+  { number: 75, slug: tool075Slug, titles: tool075Titles, category: "business-finance" },
+  { number: 76, slug: tool076Slug, titles: tool076Titles, category: "business-finance" },
 ] as const;
 
 export const publicCategorySlugs = categories.slice(0, 8).map((category) => category.slug);

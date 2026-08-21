@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL073 savings timing reference',async({page})=>{await page.goto('/ko/deposit-savings-calculator');await page.getByTestId('tool073-mode-savings').click();await expect(page.getByTestId('tool073-result-principal')).toContainText('6,000,000');await expect(page.getByTestId('tool073-result-gross-interest')).toContainText('97,500');const txt=await page.getByTestId('tool073-result-gross-interest').innerText();expect(Number(txt.replace(/[^0-9.-]/g,''))).toBeLessThan(180000)});

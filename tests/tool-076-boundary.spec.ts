@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL076 invalid months/rate',async({page})=>{await page.goto('/ko/credit-card-installment-calculator');await page.getByTestId('tool076-months').fill('0');await expect(page.getByTestId('tool076-error')).toBeVisible();await page.getByTestId('tool076-months').fill('12');await page.getByTestId('tool076-rate').fill('101');await expect(page.getByTestId('tool076-error')).toBeVisible()});

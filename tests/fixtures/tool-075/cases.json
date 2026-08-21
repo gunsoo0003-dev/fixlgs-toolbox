@@ -1,0 +1,6 @@
+{
+  "standard": {"principal":100000000,"annualRate":5,"months":240},
+  "zeroRate": {"principal":100000000,"annualRate":0,"months":240},
+  "normalization": {"months":12,"years":1},
+  "limits": {"principal":1000000000000000,"annualRate":100,"months":1200,"inputChars":30,"precision":8}
+}

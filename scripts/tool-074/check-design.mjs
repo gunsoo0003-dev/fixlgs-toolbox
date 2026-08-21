@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+let fail=0;const c=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);if(!o)fail++};
+const css=fs.readFileSync('components/tool-074-compound-growth-calculator.module.css','utf8');
+const page=fs.readFileSync('components/tool-074-compound-growth-page.tsx','utf8');
+c('MAIN reference common detail hero',page.includes('toolbox-tool-detail-hero'));
+c('common next work',page.includes('toolbox-next-work')||page.includes('ToolNavigation'));
+c('common how-to',page.includes('toolbox-tool-guide'));
+c('expert exact common contract',page.includes('toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head')&&page.includes('toolbox-tool-format-grid')&&page.includes('<article key={tag}><strong>{tag}</strong><h3>{title}</h3><p>{body}</p></article>')&&/\['06','/.test(page));
+c('important notes exact common contract',page.includes('toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head')&&page.includes('toolbox-tool-info-band-head')&&page.includes('toolbox-tool-info-band-list'));
+c('common FAQ',page.includes('toolbox-tool-faq'));
+c('responsive 820',css.includes('@media(max-width:820px)'));
+c('responsive 560',css.includes('@media(max-width:560px)'));
+c('local module only',!css.includes('.toolbox-'));
+c('no important',!css.includes('!important'));
+console.log(`TOOL074 DESIGN-CODE ${fail?'FAIL':'PASS'} FAIL=${fail}`);process.exitCode=fail?1:0;

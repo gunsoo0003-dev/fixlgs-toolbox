@@ -1,0 +1,2 @@
+import {spawnSync} from 'node:child_process';
+const checks=[['delivery-static','scripts/tool-072/run-static-validation-core.mjs'],['integration','scripts/tool-072/check-integration.mjs']];let fail=0;for(const [name,file] of checks){console.log(`\n===== ${name} =====`);const r=spawnSync(process.execPath,[file],{stdio:'inherit'});if((r.status??1)!==0)fail++;}console.log(`\nTOOL072 STATIC+INTEGRATION: ${fail?'FAIL':'PASS'}`);process.exitCode=fail?1:0;

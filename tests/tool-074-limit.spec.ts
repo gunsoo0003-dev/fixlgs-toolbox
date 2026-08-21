@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('TOOL074 service amount limit',async({page})=>{await page.goto('/en/compound-growth-future-value-calculator');const input=page.getByTestId('tool074-principal');await input.fill('1000000000000001');await expect(input).toHaveValue('1000000000000001');await expect(page.getByTestId('tool074-result')).toContainText('Enter a valid number.')});
+test('TOOL074 max term allowed',async({page})=>{await page.goto('/en/compound-growth-future-value-calculator');await page.getByTestId('tool074-term').fill('100');await expect(page.getByTestId('tool074-future-value')).toBeVisible()});

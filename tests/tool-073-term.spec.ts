@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL073 12 months equals 1 year',async({page})=>{await page.goto('/ko/deposit-savings-calculator');await page.getByTestId('tool073-term').fill('12');const twelve=await page.getByTestId('tool073-result-gross-interest').innerText();await page.getByTestId('tool073-term').fill('1');await page.getByTestId('tool073-term-unit').selectOption('years');await expect(page.getByTestId('tool073-result-gross-interest')).toHaveText(twelve);await expect(page.getByTestId('tool073-assumption-term')).toContainText('12')});

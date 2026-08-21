@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+for(const locale of ['ko','en','ja'])test(`TOOL074 ${locale} renders core contract`,async({page})=>{await page.goto(`/${locale}/compound-growth-future-value-calculator`);await expect(page.getByTestId('tool074-root')).toBeVisible();await expect(page.getByTestId('tool074-future-value')).toBeVisible();await expect(page.getByTestId('tool074-assumption-warning')).toBeVisible()});

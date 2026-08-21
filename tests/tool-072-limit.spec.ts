@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('profile service limits',async({page})=>{await page.goto('/ko/salary-converter');await page.getByTestId('tool072-hours-day').fill('25');await expect(page.getByTestId('tool072-error')).toBeVisible();await page.getByTestId('tool072-hours-day').fill('24');await page.getByTestId('tool072-workdays-month').fill('31');await page.getByTestId('tool072-months-year').fill('12');await expect(page.getByTestId('tool072-result')).toBeVisible()});

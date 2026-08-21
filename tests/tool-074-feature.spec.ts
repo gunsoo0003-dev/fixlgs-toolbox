@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('TOOL074 goal and reverse outputs',async({page})=>{await page.goto('/en/compound-growth-future-value-calculator');await expect(page.getByTestId('tool074-goal-status')).toBeVisible();await expect(page.getByTestId('tool074-required-contribution')).toBeVisible();await expect(page.getByTestId('tool074-required-principal')).toBeVisible()});
+test('TOOL074 timing changes future value',async({page})=>{await page.goto('/en/compound-growth-future-value-calculator');const end=await page.getByTestId('tool074-future-value').textContent();await page.getByTestId('tool074-timing-beginning').click();const beginning=await page.getByTestId('tool074-future-value').textContent();expect(beginning).not.toBe(end)});

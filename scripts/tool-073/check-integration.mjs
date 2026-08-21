@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++};
+const site=fs.readFileSync('lib/site.ts','utf8');const sitemap=fs.readFileSync('app/sitemap.ts','utf8');const page=fs.readFileSync('components/tool-073-deposit-savings-calculator-page.tsx','utf8');
+c('site slug',site.includes('tool073Slug = "deposit-savings-calculator"'));
+c('public tool number',site.includes('{ number: 73, slug: tool073Slug'));
+c('business category live count',site.includes('11개 사용 가능')&&site.includes('11 available'));
+c('sitemap slug',sitemap.includes('tool073Slug'));
+c('route exists',fs.existsSync('app/[locale]/deposit-savings-calculator/page.tsx'));
+c('shared navigation',page.includes('ToolNavigation')&&page.includes('currentTool={73}'));
+const order=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'].map(x=>page.indexOf(x));
+c('lower section exact order',order.every((v,i)=>v>=0&&(i===0||v>order[i-1])));
+c('common FAQ head',page.includes('toolbox-tool-guide-head')&&page.includes('Frequently asked questions'));
+console.log(`TOOL073 INTEGRATION PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

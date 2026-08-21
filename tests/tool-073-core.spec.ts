@@ -1,0 +1,5 @@
+import {expect,test} from '@playwright/test';
+test.describe('TOOL073 core',()=>{
+ test('deposit 10,000,000 @ 3% for 12 months',async({page})=>{await page.goto('/ko/deposit-savings-calculator');await page.getByTestId('tool073-amount').fill('10000000');await page.getByTestId('tool073-rate').fill('3');await page.getByTestId('tool073-term').fill('12');await expect(page.getByTestId('tool073-result-principal')).toContainText('10,000,000');await expect(page.getByTestId('tool073-result-gross-interest')).toContainText('300,000');await expect(page.getByTestId('tool073-result-gross-maturity')).toContainText('10,300,000')});
+ test('savings 500,000 monthly @ 3% for 12 months',async({page})=>{await page.goto('/ko/deposit-savings-calculator');await page.getByTestId('tool073-mode-savings').click();await expect(page.getByTestId('tool073-result-principal')).toContainText('6,000,000');await expect(page.getByTestId('tool073-result-gross-interest')).toContainText('97,500');await expect(page.getByTestId('tool073-result-gross-maturity')).toContainText('6,097,500')});
+});

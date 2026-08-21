@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const required=['components/tool-075-loan-calculator.tsx','components/tool-075-loan-calculator-page.tsx','components/tool-075-loan-calculator.module.css','lib/tool-075-loan.ts','app/[locale]/loan-interest-calculator/page.tsx','tests/fixtures/tool-075/cases.json'];
+const missing=required.filter(f=>!fs.existsSync(f)); if(missing.length)throw new Error(`missing: ${missing.join(', ')}`);
+const component=fs.readFileSync('components/tool-075-loan-calculator.tsx','utf8');
+const engine=fs.readFileSync('lib/tool-075-loan.ts','utf8');
+for(const token of ['equal-payment','equal-principal','bullet','tool075-schedule','tool075-row-first','tool075-row-last','tool075-schedule-toggle','scheduleExpanded','slice(0,scheduleExpanded?result.schedule.length:12)','aria-expanded={scheduleExpanded}'])if(!component.includes(token))throw new Error(`component token missing: ${token}`);
+for(const token of ['maxMonths: 1200','maxAnnualRate: 100','calculateTool075EqualPayment','calculateTool075EqualPrincipal','calculateTool075Bullet','balance:isLast?0:principal'])if(!engine.includes(token))throw new Error(`engine token missing: ${token}`);
+const feature=fs.readFileSync('tests/tool-075-feature.spec.ts','utf8');
+for(const token of ["toHaveCount(0)","tool075-schedule-toggle","aria-expanded','false","aria-expanded','true","tool075-row-last"])if(!feature.includes(token))throw new Error(`feature checker stale: ${token}`);
+const css=fs.readFileSync('components/tool-075-loan-calculator.module.css','utf8');
+if(css.includes('.toolbox-tool-info-band')||css.includes('.toolbox-tool-expert-post'))throw new Error('common lower-section CSS override detected');
+console.log('TOOL075 STATIC PASS');

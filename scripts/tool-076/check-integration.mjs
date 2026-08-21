@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++};
+const site=fs.readFileSync('lib/site.ts','utf8');const sitemap=fs.readFileSync('app/sitemap.ts','utf8');const page=fs.readFileSync('components/tool-076-card-installment-page.tsx','utf8');
+c('site slug',site.includes('tool076Slug = "credit-card-installment-calculator"'));
+c('public tool number',site.includes('{ number: 76, slug: tool076Slug'));
+c('business category live count',site.includes('11개 사용 가능')&&site.includes('11 available'));
+c('sitemap slug',sitemap.includes('tool076Slug'));
+c('route exists',fs.existsSync('app/[locale]/credit-card-installment-calculator/page.tsx'));
+c('shared navigation',page.includes('ToolNavigation')&&page.includes('currentTool={76}'));
+const order=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'].map(x=>page.indexOf(x));
+c('lower section exact order',order.every((v,i)=>v>=0&&(i===0||v>order[i-1])));
+c('common FAQ head',page.includes('toolbox-tool-guide-head')&&page.includes('Frequently asked questions'));
+console.log(`TOOL076 INTEGRATION PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

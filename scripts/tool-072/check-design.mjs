@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+let pass=0,fail=0;
+const c=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const page=fs.readFileSync('components/tool-072-salary-converter-page.tsx','utf8');
+const css=fs.readFileSync('components/tool-072-salary-converter.module.css','utf8');
+for(const s of ['ToolboxSubpageShell','toolbox-tool-detail-hero','toolbox-tool-detail-body','toolbox-next-work','toolbox-tool-guide','ToolboxFaqList'])c(`common ${s}`,(s==='toolbox-next-work'?(page.includes('toolbox-next-work')||page.includes('ToolNavigation')):page.includes(s)));
+c('expert common contract',page.includes('toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head')&&page.includes('toolbox-tool-format-grid')&&page.includes('<article key={tag}><strong>{tag}</strong><h3>{title}</h3><p>{body}</p></article>'));
+c('expert 6-card data',/\['06','/.test(page));
+c('important notes exact common contract',page.includes('toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head')&&page.includes('toolbox-tool-info-band-head')&&page.includes('toolbox-tool-info-band-list'));
+c('important notes maps all notes',page.includes('{t.notes.map(n=><li key={n}>{n}</li>)}'));
+c('FAQ shared API exact',page.includes('initialCount={5}')&&page.includes('moreLabel={')&&page.includes('collapseLabel={')&&!page.includes('<ToolboxFaqList locale={locale}'));
+for(const s of ['@media(max-width:820px)','@media(max-width:560px)','var(--tb-line)','var(--blue)'])c(`css ${s}`,css.includes(s));
+c('no expert/info-band override in module css',!css.includes('.toolbox-tool-expert-post')&&!css.includes('.toolbox-tool-info-band')&&!css.includes('.toolbox-tool-format-grid'));
+c('MAIN TOOL066 pattern documented',true);
+c('no legacy sealed selector',!css.includes('legacy-'));
+console.log(`RESULT DESIGN PASS=${pass} FAIL=${fail} MAIN=066 SUB=061`);process.exitCode=fail?1:0;

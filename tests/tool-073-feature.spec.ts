@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL073 mode switch, copy and formula',async({page})=>{await page.goto('/en/deposit-savings-calculator');await expect(page.getByTestId('tool073-formula')).toContainText('principal');await page.getByTestId('tool073-mode-savings').click();await expect(page.getByTestId('tool073-formula')).toContainText('monthly deposit');await expect(page.getByTestId('tool073-copy')).toBeEnabled()});

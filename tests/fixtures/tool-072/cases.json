@@ -1,0 +1,15 @@
+{
+  "tool":"072",
+  "slug":"salary-converter",
+  "defaults":{"hoursPerDay":8,"workdaysPerMonth":20,"monthsPerYear":12},
+  "cases":[
+    {"id":"hourly-daily","unit":"hourly","amount":15000,"expect":{"daily":120000}},
+    {"id":"hourly-monthly","unit":"hourly","amount":15000,"expect":{"monthly":2400000}},
+    {"id":"monthly-hourly-direct","unit":"monthly","amount":3000000,"monthlyPaidHours":160,"expect":{"hourly":18750}},
+    {"id":"annual-monthly","unit":"annual","amount":48000000,"expect":{"monthly":4000000}},
+    {"id":"annual-hourly-direct","unit":"annual","amount":48000000,"annualPaidHours":1920,"expect":{"hourly":25000}},
+    {"id":"derived-annual-hours","hoursPerDay":8,"workdaysPerMonth":20,"monthsPerYear":12,"expect":{"annualPaidHours":1920}},
+    {"id":"zero-hours-error","hoursPerDay":0,"expectError":"HOURS_DAY_ZERO"}
+  ],
+  "limits":{"salary":1000000000000000,"hoursPerDay":24,"workdaysPerMonth":31,"monthsPerYear":12,"annualPaidHours":8784,"precision":8,"inputChars":30}
+}

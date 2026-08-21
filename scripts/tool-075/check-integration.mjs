@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+let pass=0,fail=0;const c=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++};
+const site=fs.readFileSync('lib/site.ts','utf8');const sitemap=fs.readFileSync('app/sitemap.ts','utf8');const page=fs.readFileSync('components/tool-075-loan-calculator-page.tsx','utf8');
+c('site slug',site.includes('tool075Slug = "loan-interest-calculator"'));
+c('public tool number',site.includes('{ number: 75, slug: tool075Slug'));
+c('business category live count',site.includes('11개 사용 가능')&&site.includes('11 available'));
+c('sitemap slug',sitemap.includes('tool075Slug'));
+c('route exists',fs.existsSync('app/[locale]/loan-interest-calculator/page.tsx'));
+c('shared navigation',page.includes('ToolNavigation')&&page.includes('currentTool={75}'));
+const order=['toolbox-tool-guide toolbox-tool-guide--five','toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start','toolbox-tool-faq'].map(x=>page.indexOf(x));
+c('lower section exact order',order.every((v,i)=>v>=0&&(i===0||v>order[i-1])));
+c('expert exact common contract',page.includes('toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head')&&page.includes('toolbox-tool-format-grid')&&page.includes('<article key={tag}><strong>{tag}</strong><h3>{title}</h3><p>{body}</p></article>')&&/\['06','/.test(page));
+c('important notes exact common contract',page.includes('toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head')&&page.includes('toolbox-tool-info-band-head')&&page.includes('toolbox-tool-info-band-list'));
+c('common FAQ head',page.includes('toolbox-tool-guide-head')&&page.includes('Frequently asked questions'));
+console.log(`TOOL075 INTEGRATION PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

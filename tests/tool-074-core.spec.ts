@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('TOOL074 annual principal fixture',async({page})=>{await page.goto('/ko/compound-growth-future-value-calculator');await page.getByTestId('tool074-contribution').fill('0');await page.getByTestId('tool074-frequency-annual').click();await expect(page.getByTestId('tool074-future-value')).toContainText('14,802,443')});
+test('TOOL074 monthly recurring contribution',async({page})=>{await page.goto('/ko/compound-growth-future-value-calculator');await page.getByTestId('tool074-principal').fill('0');await expect(page.getByTestId('tool074-future-value')).toContainText('44,174,941')});

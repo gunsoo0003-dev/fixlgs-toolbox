@@ -1,0 +1,13 @@
+{
+  "core": [
+    {"id":"deposit-10m-3pct-12m","mode":"deposit","amount":10000000,"rate":3,"term":12,"unit":"months","tax":0,"principal":10000000,"grossInterest":300000,"grossMaturity":10300000},
+    {"id":"deposit-10m-3pct-1y","mode":"deposit","amount":10000000,"rate":3,"term":1,"unit":"years","tax":0,"principal":10000000,"grossInterest":300000,"grossMaturity":10300000},
+    {"id":"savings-500k-3pct-12m","mode":"savings","amount":500000,"rate":3,"term":12,"unit":"months","tax":0,"principal":6000000,"grossInterest":97500,"grossMaturity":6097500},
+    {"id":"zero-rate","mode":"deposit","amount":10000000,"rate":0,"term":12,"unit":"months","tax":0,"principal":10000000,"grossInterest":0,"grossMaturity":10000000},
+    {"id":"zero-principal","mode":"deposit","amount":0,"rate":3,"term":12,"unit":"months","tax":0,"principal":0,"grossInterest":0,"grossMaturity":0},
+    {"id":"zero-monthly","mode":"savings","amount":0,"rate":3,"term":12,"unit":"months","tax":0,"principal":0,"grossInterest":0,"grossMaturity":0}
+  ],
+  "afterTax": {"mode":"deposit","amount":10000000,"rate":3,"term":12,"unit":"months","tax":10,"grossInterest":300000,"afterTaxInterest":270000,"afterTaxMaturity":10270000},
+  "limits": {"maxAmount":1000000000000000,"maxRate":100,"maxMonths":1200,"maxTaxRate":100,"maxInputChars":30,"maxDisplayPrecision":8},
+  "invalid": ["negative amount","NaN","Infinity","rate below 0","rate above 100","term zero","term above 1200 months","fractional month after normalization","tax below 0","tax above 100","total savings principal above 1e15"]
+}

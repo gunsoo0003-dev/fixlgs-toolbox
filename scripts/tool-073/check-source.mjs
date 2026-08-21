@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const required=['lib/tool-073-deposit-savings.ts','components/tool-073-deposit-savings-calculator.tsx','components/tool-073-deposit-savings-calculator-page.tsx','components/tool-073-deposit-savings-calculator.module.css','app/[locale]/deposit-savings-calculator/page.tsx','tests/fixtures/tool-073/cases.json'];
+let pass=0,fail=0;const check=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${name}`);ok?pass++:fail++};
+for(const file of required)check(`exists ${file}`,fs.existsSync(file));
+const engine=fs.readFileSync('lib/tool-073-deposit-savings.ts','utf8');
+for(const token of ['calculateTool073Deposit','calculateTool073Savings','normalizeTool073Term','maxAmount: 1e15','maxRate: 100','maxMonths: 1200','maxTaxRate: 100','months*(months+1)/2','grossInterest*(1-taxRate/100)'])check(`engine ${token}`,engine.includes(token));
+const ui=fs.readFileSync('components/tool-073-deposit-savings-calculator.tsx','utf8');
+for(const id of ['tool073-root','tool073-workspace','tool073-amount','tool073-rate','tool073-term','tool073-term-unit','tool073-tax-rate','tool073-reset','tool073-copy','tool073-result','tool073-result-principal','tool073-result-gross-interest','tool073-result-gross-maturity','tool073-result-aftertax-interest','tool073-result-aftertax-maturity','tool073-formula','tool073-reference-warning','tool073-error'])check(`ui ${id}`,ui.includes(`data-testid="${id}"`));
+check('two modes',ui.includes("['deposit',t.deposit]")&&ui.includes("['savings',t.savings]"));
+const route=fs.readFileSync('app/[locale]/deposit-savings-calculator/page.tsx','utf8');for(const token of ['canonical','x-default','/ko/deposit-savings-calculator','/en/deposit-savings-calculator','/ja/deposit-savings-calculator'])check(`route ${token}`,route.includes(token));
+check('no network API',!ui.includes('fetch(')&&!ui.includes('axios')&&!engine.includes('fetch('));
+console.log(`RESULT SOURCE PASS=${pass} FAIL=${fail} TOOL=073`);process.exitCode=fail?1:0;

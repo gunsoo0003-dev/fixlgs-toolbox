@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test';
+test('TOOL073 deposit simple reference',async({page})=>{await page.goto('/ko/deposit-savings-calculator');await page.getByTestId('tool073-amount').fill('10000000');await page.getByTestId('tool073-rate').fill('3');await page.getByTestId('tool073-term').fill('12');await expect(page.getByTestId('tool073-formula')).toContainText('principal × 3/100 × 12/12');await expect(page.getByTestId('tool073-result-gross-interest')).toContainText('300,000')});
