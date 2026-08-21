@@ -1,0 +1,24 @@
+{
+  "tool": "077",
+  "component": "components/tool-077-investment-return-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1015
+    },
+    "en": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1938
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 970
+    }
+  }
+}

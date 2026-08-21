@@ -167,7 +167,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
         </div>
         <div className="toolbox-subpage-card-grid">
           {toolCards.map((tool, index) => {
-            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : categorySlug === "pdf" ? index + 26 : categorySlug === "text" ? index + 36 : categorySlug === "date-time" ? index + 45 : categorySlug === "unit-calc" ? index + 55 : categorySlug === "business-finance" ? index + 66 : index + 1;
+            const toolNumber = categorySlug === "image-edit" ? index + 8 : categorySlug === "content-image" ? index + 19 : categorySlug === "pdf" ? index + 26 : categorySlug === "text" ? index + 36 : categorySlug === "date-time" ? index + 45 : categorySlug === "unit-calc" ? index + 55 : categorySlug === "business-finance" ? index + 66 : categorySlug === "real-estate-build" ? index + 81 : index + 1;
             const imageEditTitleLines: Record<Locale, string[][]> = {
               ko: [
                 ["이미지 자르기", "회전 도구"],

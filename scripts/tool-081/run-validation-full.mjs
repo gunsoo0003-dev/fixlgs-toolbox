@@ -1,0 +1,111 @@
+import {spawnSync} from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
+const mode=process.argv[2]||'final';
+if(mode!=='final'){
+  console.error(`UNKNOWN_MODE=${mode}`);
+  process.exit(2);
+}
+
+const isWin=process.platform==='win32';
+const resultDir=path.join(process.env.USERPROFILE||os.homedir(),'Desktop');
+fs.mkdirSync(resultDir,{recursive:true});
+const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+const txt=path.join(resultDir,`081_final_검수결과_${stamp}.txt`);
+const rows=[];
+
+function run(name,cmd,args=[],shell=false){
+  const r=spawnSync(cmd,args,{encoding:'utf8',stdio:['ignore','pipe','pipe'],shell});
+  const out=(r.stdout||'')+(r.stderr||'')+(r.error?`\nSPAWN_ERROR=${r.error.message}`:'');
+  const exit=r.status??(r.error?127:1);
+  process.stdout.write(`\n=== ${name} ===\n${out}`);
+  rows.push({name,exit,output:out});
+  return exit===0;
+}
+
+function npmRun(name,script){
+  return isWin?run(name,`npm run ${script}`,[],true):run(name,'npm',['run',script]);
+}
+
+function statusOf(name){
+  const row=rows.find(x=>x.name===name);
+  if(!row)return 'SKIP';
+  return row.exit===0?'PASS':'FAIL';
+}
+
+function failureExcerpt(output,maxLines=220){
+  const lines=String(output||'').split(/\r?\n/);
+  if(lines.length<=maxLines)return lines.join('\n').trim();
+  return `[... ${lines.length-maxLines} earlier lines omitted ...]\n${lines.slice(-maxLines).join('\n').trim()}`;
+}
+
+npmRun('static','tool081:static');
+run('secret',process.execPath,['scripts/tool-081/check-secret-scan.mjs']);
+
+const bins=['playwright','next','tsc'].map(x=>path.resolve('node_modules','.bin',isWin?`${x}.cmd`:x));
+const missingBins=bins.filter(x=>!fs.existsSync(x));
+const deps=missingBins.length===0;
+
+if(deps){
+  isWin?run('typescript','npx tsc --noEmit',[],true):run('typescript','npx',['tsc','--noEmit']);
+  isWin
+    ?run('browser','npx playwright test --config=playwright.tool081.config.ts --workers=1 --reporter=list',[],true)
+    :run('browser','npx',['playwright','test','--config=playwright.tool081.config.ts','--workers=1','--reporter=list']);
+  npmRun('production-build','build');
+}else{
+  const message=`missing local bins: ${missingBins.map(x=>path.basename(x)).join(', ')}`;
+  rows.push({name:'dependency-preflight',exit:1,output:message});
+  console.log(`\n=== dependency-preflight ===\n${message}`);
+}
+
+const stageNames=['static','secret','typescript','browser','production-build'];
+const pass=rows.filter(x=>x.exit===0).length;
+const fail=rows.filter(x=>x.exit!==0).length;
+const environmentBlock=deps?0:1;
+const status=fail?'FAIL':'PASS';
+const sentinel=`FINAL_SENTINEL=TOOL081_${status}`;
+const failedRows=rows.filter(x=>x.exit!==0);
+
+const summaryLines=[
+  '========================================',
+  ' TOOL081 FINAL SUMMARY',
+  '========================================',
+  `STATIC             ${statusOf('static')}`,
+  `SECRET             ${statusOf('secret')}`,
+  `TYPESCRIPT         ${statusOf('typescript')}`,
+  `BROWSER            ${statusOf('browser')}`,
+  `PRODUCTION BUILD   ${statusOf('production-build')}`,
+  '----------------------------------------',
+  `PASS               ${pass}`,
+  `FAIL               ${fail}`,
+  `ENVIRONMENT_BLOCK  ${environmentBlock}`,
+  `FINAL STATUS       ${status}`,
+  sentinel,
+  '========================================'
+];
+
+let failureSection='';
+if(failedRows.length){
+  const blocks=failedRows.map(row=>[
+    `[${row.name.toUpperCase()}] EXIT=${row.exit}`,
+    failureExcerpt(row.output)||'(no output captured)'
+  ].join('\n'));
+  failureSection=[
+    '',
+    '========================================',
+    ' FAILED STAGE LOGS',
+    '========================================',
+    ...blocks.flatMap((block,i)=>i?["----------------------------------------",block]:[block]),
+    '========================================'
+  ].join('\n');
+}
+
+const summary=summaryLines.join('\n');
+const detail=rows.map(x=>`\ncheck\t${x.name}\tEXIT=${x.exit}\n${x.output}`).join('\n');
+const fileBody=`TOOL081 MODE=final\nPASS=${pass}\nFAIL=${fail}\nENVIRONMENT_BLOCK=${environmentBlock}\nSTATUS=${status}\n${sentinel}\n\n${summary}${failureSection}\n${detail}\n`;
+fs.writeFileSync(txt,fileBody,'utf8');
+
+console.log(`\n\n${summary}${failureSection}\nRESULT_TXT=${txt}`);
+process.exitCode=fail?1:0;

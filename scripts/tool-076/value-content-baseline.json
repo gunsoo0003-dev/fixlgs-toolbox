@@ -1,0 +1,24 @@
+{
+  "tool": "076",
+  "component": "components/tool-076-card-installment-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1222
+    },
+    "en": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 2225
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1087
+    }
+  }
+}

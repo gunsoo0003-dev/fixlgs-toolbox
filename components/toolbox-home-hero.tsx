@@ -39,7 +39,7 @@ export function ToolboxHomeHero({ locale, hero, search }: Props) {
     return publicTools.filter((tool) => {
       const haystack = `${tool.titles[locale]} ${tool.slug}`.toLocaleLowerCase();
       return tokens.every((token) => haystack.includes(token));
-    }).slice(0, 8);
+    }).slice(0, 9);
   }, [locale, normalized]);
   const t = resultLabels[locale];
 

@@ -1,0 +1,24 @@
+{
+  "tool": "075",
+  "component": "components/tool-075-loan-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1084
+    },
+    "en": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 2304
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1066
+    }
+  }
+}

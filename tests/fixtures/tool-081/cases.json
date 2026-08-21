@@ -1,0 +1,11 @@
+{
+  "conversion": [
+    {"value":84,"unit":"sqm","expectedSqm":84,"expectedPyeong":25.410000952875034},
+    {"value":25,"unit":"pyeong","expectedSqm":82.644625,"expectedPyeong":25}
+  ],
+  "price": [
+    {"totalPrice":500000000,"area":100,"unit":"sqm","expectedPerSqm":5000000,"expectedPerPyeong":16528925},
+    {"totalPrice":500000000,"area":80,"unit":"sqm","expectedPerSqm":6250000,"expectedPerPyeong":20661156.25}
+  ],
+  "boundary": {"zeroPrice":0,"zeroArea":0,"maxAreaSqm":1000000000,"maxPrice":1000000000000000,"maxPrecision":8,"maxInputChars":30}
+}

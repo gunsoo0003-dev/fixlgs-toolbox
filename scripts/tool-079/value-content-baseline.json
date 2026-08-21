@@ -1,0 +1,24 @@
+{
+  "tool": "079",
+  "component": "components/tool-079-dividend-yield-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 966
+    },
+    "en": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1829
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 962
+    }
+  }
+}

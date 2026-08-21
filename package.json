@@ -792,7 +792,11 @@
     "tool080:static": "node scripts/tool-080/run-static-validation.mjs",
     "tool080:secret": "node scripts/tool-080/check-secret-scan.mjs",
     "tool080:browser": "playwright test --config=playwright.tool080.config.ts",
-    "tool080:final": "node scripts/tool-080/run-validation-full.mjs final"
+    "tool080:final": "node scripts/tool-080/run-validation-full.mjs final",
+    "tool081:static": "node scripts/tool-081/run-static-validation.mjs",
+    "tool081:secret": "node scripts/tool-081/check-secret-scan.mjs",
+    "tool081:browser": "playwright test -c playwright.tool081.config.ts",
+    "tool081:final": "node scripts/tool-081/run-validation-full.mjs"
   },
   "dependencies": {
     "next": "16.2.12",

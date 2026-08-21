@@ -1,0 +1,24 @@
+{
+  "tool": "074",
+  "component": "components/tool-074-compound-growth-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1072
+    },
+    "en": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 2319
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1034
+    }
+  }
+}

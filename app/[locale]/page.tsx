@@ -138,7 +138,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
   const locale = rawLocale;
   const copy = copies[locale];
   const tools = popularTools[locale];
-  const categories = categoryBase.slice(0, 8).map(([index, name], i) => ({ index, name, local: categoryText[locale][i][0], desc: categoryText[locale][i][1] }));
+  const categories = categoryBase.slice(0, 9).map(([index, name], i) => ({ index, name, local: categoryText[locale][i][0], desc: categoryText[locale][i][1] }));
 
   return (
     <main className={`toolbox-site toolbox-locale-${locale}`}>

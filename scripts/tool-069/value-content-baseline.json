@@ -1,0 +1,24 @@
+{
+  "tool": "069",
+  "component": "components/tool-069-break-even-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 5,
+      "faqs": 6,
+      "chars": 880
+    },
+    "en": {
+      "steps": 6,
+      "notes": 5,
+      "faqs": 6,
+      "chars": 1719
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 5,
+      "faqs": 6,
+      "chars": 872
+    }
+  }
+}

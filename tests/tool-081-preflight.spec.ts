@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL081 preflight KO route and selectors',async({page})=>{await page.goto('/ko/area-price-per-unit-calculator');await expect(page.getByTestId('tool081-root')).toBeVisible();await expect(page.getByTestId('tool081-convert-area')).toBeVisible();await expect(page.getByTestId('tool081-total-price')).toBeVisible();await expect(page.getByTestId('tool081-result')).toBeVisible()});

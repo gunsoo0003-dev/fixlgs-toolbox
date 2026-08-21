@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('84 sqm conversion and price fixtures',async({page})=>{await page.goto('/ko/area-price-per-unit-calculator');await expect(page.getByTestId('tool081-convert-pyeong')).toContainText('25.41');await expect(page.getByTestId('tool081-supply-price-sqm')).toContainText('5,000,000');await expect(page.getByTestId('tool081-exclusive-price-sqm')).toContainText('6,250,000')});

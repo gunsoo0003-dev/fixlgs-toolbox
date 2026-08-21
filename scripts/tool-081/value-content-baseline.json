@@ -1,0 +1,24 @@
+{
+  "tool": "081",
+  "component": "components/tool-081-area-price-calculator-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 1582
+    },
+    "en": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 3041
+    },
+    "ja": {
+      "steps": 6,
+      "notes": 6,
+      "faqs": 8,
+      "chars": 1535
+    }
+  }
+}

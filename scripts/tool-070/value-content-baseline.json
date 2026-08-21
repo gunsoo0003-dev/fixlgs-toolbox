@@ -1,0 +1,24 @@
+{
+  "tool": "070",
+  "component": "components/tool-070-unit-price-comparison-page.tsx",
+  "locales": {
+    "ko": {
+      "steps": 7,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1038
+    },
+    "en": {
+      "steps": 7,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 2021
+    },
+    "ja": {
+      "steps": 7,
+      "notes": 7,
+      "faqs": 8,
+      "chars": 1043
+    }
+  }
+}

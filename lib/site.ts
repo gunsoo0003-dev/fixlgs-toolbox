@@ -138,7 +138,7 @@ export const categories: Category[] = [
       en: "Area, materials, quantities, and heating/cooling.",
       ja: "面積、資材、数量、空調計算。",
     },
-    toolCountLabel: { ko: "제작 예정", en: "Planned", ja: "制作予定" },
+    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -289,6 +289,7 @@ export const tool077Slug = "investment-return-calculator" as const;
 export const tool078Slug = "stock-average-cost-calculator" as const;
 export const tool079Slug = "dividend-yield-calculator" as const;
 export const tool080Slug = "rental-yield-calculator" as const;
+export const tool081Slug = "area-price-per-unit-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -434,6 +435,8 @@ export const tool079Titles: Record<Locale, string> = { ko: "배당수익률 계�
 export const tool079Descriptions: Record<Locale, string> = { ko: "주가와 주당 배당금으로 배당수익률과 예상 연간 배당금을 계산합니다.", en: "Calculate dividend yield and expected annual dividends from share price, dividend per share, and shares held.", ja: "株価と1株当たり配当金から配当利回りと予想年間配当金を計算します。" };
 export const tool080Titles: Record<Locale, string> = { ko: "임대수익률 계산기", en: "Rental Yield Calculator", ja: "賃貸利回り計算ツール" };
 export const tool080Descriptions: Record<Locale, string> = { ko: "매입가·보증금·월세·관리비·대출이자를 바탕으로 표면 수익률과 실질 수익률을 계산합니다.", en: "Calculate gross and net rental yield from purchase price, deposit, rent, management cost, and loan interest.", ja: "購入価格・保証金・家賃・管理費・ローン利息から表面利回りと実質利回りを計算します。" };
+export const tool081Titles: Record<Locale, string> = { ko: "평수·평당가격 계산기", en: "Area & Price per Unit Calculator", ja: "坪数・坪単価計算ツール" };
+export const tool081Descriptions: Record<Locale, string> = { ko: "㎡와 평을 변환하고 공급·전용면적을 기준으로 ㎡당 가격과 평당 가격을 계산합니다.", en: "Convert square meters and pyeong, then calculate price per square meter and per pyeong from gross or exclusive area.", ja: "㎡と坪を換算し、供給面積・専有面積を基準に㎡単価と坪単価を計算します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -1207,6 +1210,15 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       active: true,
     },
   ],
+  "real-estate-build": [
+    {
+      title: tool081Titles,
+      description: tool081Descriptions,
+      href: `/${"ko"}/${tool081Slug}`,
+      status: "LIVE",
+      active: true,
+    },
+  ],
   "image-edit": [
     {
       title: tool008Titles,
@@ -1374,6 +1386,10 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
     );
   }
 
+  if (categorySlug === "real-estate-build") {
+    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool081Slug}` } : item);
+  }
+
   if (categorySlug === "image-edit") {
     return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool008Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool009Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool010Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool011Slug}` } : index === 4 ? { ...item, href: `/${locale}/${tool012Slug}` } : index === 5 ? { ...item, href: `/${locale}/${tool013Slug}` } : index === 6 ? { ...item, href: `/${locale}/${tool014Slug}` } : index === 7 ? { ...item, href: `/${locale}/${tool015Slug}` } : index === 8 ? { ...item, href: `/${locale}/${tool016Slug}` } : index === 9 ? { ...item, href: `/${locale}/${tool017Slug}` } : index === 10 ? { ...item, href: `/${locale}/${tool018Slug}` } : item);
   }
@@ -1463,6 +1479,7 @@ export const publicTools = [
   { number: 78, slug: tool078Slug, titles: tool078Titles, category: "business-finance" },
   { number: 79, slug: tool079Slug, titles: tool079Titles, category: "business-finance" },
   { number: 80, slug: tool080Slug, titles: tool080Titles, category: "business-finance" },
+  { number: 81, slug: tool081Slug, titles: tool081Titles, category: "real-estate-build" },
 ] as const;
 
-export const publicCategorySlugs = categories.slice(0, 8).map((category) => category.slug);
+export const publicCategorySlugs = categories.slice(0, 9).map((category) => category.slug);

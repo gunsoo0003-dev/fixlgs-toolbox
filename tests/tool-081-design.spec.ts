@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+for(const locale of ['ko','en','ja'])test(`TOOL081 ${locale} main structure`,async({page})=>{await page.goto(`/${locale}/area-price-per-unit-calculator`);await expect(page.getByTestId('tool081-root')).toBeVisible();await expect(page.locator('.toolbox-tool-guide')).toBeVisible();await expect(page.locator('.toolbox-tool-expert-post')).toBeVisible();await expect(page.locator('.toolbox-tool-info-band')).toBeVisible();await expect(page.locator('.toolbox-tool-faq')).toBeVisible()});

@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('pyeong conversion, copy and reset controls exist',async({page})=>{await page.goto('/ko/area-price-per-unit-calculator');await page.getByTestId('tool081-convert-unit').selectOption('pyeong');await page.getByTestId('tool081-convert-area').fill('25');await expect(page.getByTestId('tool081-convert-sqm')).toContainText('82.64');await expect(page.getByTestId('tool081-copy')).toBeEnabled();await expect(page.getByTestId('tool081-reset')).toBeVisible()});
