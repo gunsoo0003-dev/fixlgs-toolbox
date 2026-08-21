@@ -1,0 +1,16 @@
+{
+  "stair": [
+    {"name":"2.4m 12 steps 0.28m tread","height":2.4,"unit":"m","steps":12,"basis":"tread","value":0.28,"riser":0.2,"run":3.36,"angle":35.537678,"length":4.129358},
+    {"name":"2.4m 12 steps 3.36m run","height":2.4,"unit":"m","steps":12,"basis":"run","value":3.36,"riser":0.2,"tread":0.28}
+  ],
+  "ramp": [
+    {"name":"2m rise 4m run","height":2,"unit":"m","basis":"run","value":4,"slope":50,"angle":26.565051,"length":4.472136},
+    {"name":"1m rise 10 percent","height":1,"unit":"m","basis":"slope","value":10,"run":10,"angle":5.710593},
+    {"name":"1m rise angle roundtrip","height":1,"unit":"m","basis":"angle","value":26.5650511771,"run":2,"slope":50}
+  ],
+  "errors": [
+    {"name":"zero step","kind":"stair","height":2.4,"steps":0,"basis":"tread","value":0.28,"error":"STEPS_INVALID"},
+    {"name":"zero run","kind":"ramp","height":2,"basis":"run","value":0,"error":"RUN_ZERO"}
+  ],
+  "limits":{"heightRunM":1000000,"steps":1000,"treadM":10,"slopePct":1000,"angleDeg":89.999,"precision":8,"inputChars":30}
+}

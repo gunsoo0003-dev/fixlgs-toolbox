@@ -1,0 +1,2 @@
+import{test,expect}from'@playwright/test';
+for(const locale of ['ko','en','ja'])test(`${locale} core fixture`,async({page})=>{await page.goto(`/${locale}/deck-plywood-sheet-quantity-calculator`);await expect(page.getByTestId('tool086-root')).toBeVisible();await expect(page.getByTestId('tool086-required')).toHaveText('7');await expect(page.getByTestId('tool086-sheet-area')).toContainText('2.88');await page.getByTestId('tool086-direction-90').click();await expect(page.getByTestId('tool086-required')).toHaveText('7')});

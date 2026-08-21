@@ -1,0 +1,13 @@
+{
+  "tool":"088",
+  "slug":"concrete-volume-calculator",
+  "cases":[
+    {"id":"base","length":5,"lengthUnit":"m","width":4,"widthUnit":"m","thickness":0.15,"thicknessUnit":"m","extraRate":0,"base":3,"adjusted":3},
+    {"id":"extra5","length":5,"lengthUnit":"m","width":4,"widthUnit":"m","thickness":15,"thicknessUnit":"cm","extraRate":5,"deliveryVolume":6,"base":3,"adjusted":3.15,"deliveries":1},
+    {"id":"extra10","length":8,"lengthUnit":"m","width":3,"widthUnit":"m","thickness":200,"thicknessUnit":"mm","extraRate":10,"deliveryVolume":4,"base":4.8,"adjusted":5.28,"deliveries":2},
+    {"id":"roundtrip","millimeter":150,"centimeter":15,"meter":0.15},
+    {"id":"zeroDimension","length":0,"error":"DIMENSION_ZERO"},
+    {"id":"zeroDelivery","deliveryVolume":0,"error":"DELIVERY_ZERO"}
+  ],
+  "limits":{"lengthM":1000000,"widthM":1000000,"thicknessM":1000,"extraRate":100,"deliveryM3":1000000,"precision":8,"inputChars":30}
+}

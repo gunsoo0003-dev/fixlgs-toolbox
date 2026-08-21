@@ -1,0 +1,6 @@
+import fs from 'node:fs';let pass=0,fail=0;const check=(n,o)=>{console.log(`${o?'PASS':'FAIL'} ${n}`);o?pass++:fail++};
+const files=['lib/tool-090-stair-ramp.ts','components/tool-090-stair-ramp-calculator.tsx','components/tool-090-stair-ramp-calculator-page.tsx','components/tool-090-stair-ramp-calculator.module.css','app/[locale]/stair-ramp-calculator/page.tsx'];for(const f of files)check(`exists ${f}`,fs.existsSync(f));
+const lib=fs.readFileSync(files[0],'utf8'),comp=fs.readFileSync(files[1],'utf8'),page=fs.readFileSync(files[2],'utf8'),route=fs.readFileSync(files[4],'utf8');
+for(const token of ['calculateTool090Stair','calculateTool090Ramp','Math.atan','Math.hypot','maxSteps:1000','maxTreadM:10','maxSlopePct:1000','maxAngleDeg:89.999'])check(`lib token ${token}`,lib.includes(token));
+for(const token of ['tool090-mode-stair','tool090-mode-ramp','tool090-result-riser','tool090-result-tread','tool090-result-slope','tool090-result-angle','tool090-legal-note'])check(`selector ${token}`,comp.includes(token));
+check('KO title',page.includes('계단·경사로 계산기'));check('EN title',page.includes('Stair & Ramp Calculator'));check('JA title',page.includes('階段・スロープ計算ツール'));check('route slug',route.includes('stair-ramp-calculator'));check('canonical hreflang',route.includes("'x-default'"));console.log(`RESULT SOURCE PASS=${pass} FAIL=${fail}`);process.exitCode=fail?1:0;

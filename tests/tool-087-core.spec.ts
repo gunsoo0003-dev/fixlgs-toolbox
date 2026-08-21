@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL087 example calculation',async({page})=>{await page.goto('/ko/brick-block-quantity-calculator');await expect(page.getByTestId('tool087-root')).toBeVisible();await expect(page.getByTestId('tool087-wall-area')).toHaveText('12');await expect(page.getByTestId('tool087-module-size')).toContainText('200');await expect(page.getByTestId('tool087-recommended')).toHaveText('941');await expect(page.getByTestId('tool087-cost')).toHaveText('470,500');});

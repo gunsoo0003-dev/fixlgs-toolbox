@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool088ConcreteVolumeCalculatorPage} from '@/components/tool-088-concrete-volume-calculator-page';
+const meta={ko:{title:'콘크리트 부피 계산기 | FIXLGS TOOLBOX',description:'길이·폭·두께로 콘크리트 부피를 ㎥로 계산하고 여유분과 입력한 기준량으로 레미콘 참고 횟수를 확인합니다.'},en:{title:'Concrete Volume Calculator | FIXLGS TOOLBOX',description:'Calculate concrete volume in m³ from length, width, and thickness, add an allowance, and estimate reference deliveries from your own per-delivery volume.'},ja:{title:'コンクリート体積計算ツール | FIXLGS TOOLBOX',description:'長さ・幅・厚さからコンクリート体積をm³で計算し、余裕率と入力した基準量から生コン参考回数を確認します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/concrete-volume-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/concrete-volume-calculator',en:'/en/concrete-volume-calculator',ja:'/ja/concrete-volume-calculator','x-default':'/ko/concrete-volume-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool088ConcreteVolumeCalculatorPage locale={locale as Locale}/>}

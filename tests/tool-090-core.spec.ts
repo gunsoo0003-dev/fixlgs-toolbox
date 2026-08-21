@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('stair fixture',async({page})=>{await page.goto('/ko/stair-ramp-calculator');await expect(page.getByTestId('tool090-result-riser')).toContainText('0.2');await expect(page.getByTestId('tool090-result-run')).toContainText('3.36')});

@@ -138,7 +138,7 @@ export const categories: Category[] = [
       en: "Area, materials, quantities, and heating/cooling.",
       ja: "面積、資材、数量、空調計算。",
     },
-    toolCountLabel: { ko: "1개 사용 가능", en: "1 available", ja: "1件利用可能" },
+    toolCountLabel: { ko: "10개 사용 가능", en: "10 available", ja: "10件利用可能" },
     accent: "#0868D7",
   },
   {
@@ -293,6 +293,12 @@ export const tool081Slug = "area-price-per-unit-calculator" as const;
 export const tool082Slug = "building-coverage-floor-area-ratio-calculator" as const;
 export const tool083Slug = "room-wall-ceiling-area-calculator" as const;
 export const tool084Slug = "paint-wallpaper-quantity-calculator" as const;
+export const tool085Slug = "flooring-material-quantity-calculator" as const;
+export const tool086Slug = "deck-plywood-sheet-quantity-calculator" as const;
+export const tool087Slug = "brick-block-quantity-calculator" as const;
+export const tool088Slug = "concrete-volume-calculator" as const;
+export const tool089Slug = "roof-area-slope-calculator" as const;
+export const tool090Slug = "stair-ramp-calculator" as const;
 
 export const tool009Titles: Record<Locale, string> = { ko: "이미지 밝기·색상 보정기", en: "Image Brightness & Color Adjuster", ja: "画像の明るさ・色補正ツール" };
 export const tool009Descriptions: Record<Locale, string> = { ko: "사진의 밝기와 색감을 브라우저에서 빠르게 보정하세요.", en: "Quickly adjust image brightness and colors in your browser.", ja: "画像の明るさや色味をブラウザで簡単に補正できます。" };
@@ -446,6 +452,18 @@ export const tool083Titles: Record<Locale, string> = { ko: "방·벽·천장 면
 export const tool083Descriptions: Record<Locale, string> = { ko: "방 치수와 문·창문을 입력해 바닥·벽·천장 및 총 시공면적을 계산합니다.", en: "Calculate floor, wall, ceiling, and total construction area from room dimensions and openings.", ja: "部屋寸法と開口部から床・壁・天井・総施工面積を計算します。" };
 export const tool084Titles: Record<Locale, string> = { ko: "페인트·벽지 수량 계산기", en: "Paint & Wallpaper Quantity Calculator", ja: "塗料・壁紙数量計算ツール" };
 export const tool084Descriptions: Record<Locale, string> = { ko: "도장 면적·횟수·도포율·벽지 유효면적·손실률로 페인트와 벽지 구매 수량을 계산합니다.", en: "Calculate paint volume, containers, and wallpaper rolls from area, coats, coverage, usable roll area, and waste.", ja: "施工面積・回数・塗布面積・壁紙有効面積・ロス率から塗料と壁紙の購入数量を計算します。" };
+export const tool085Titles: Record<Locale, string> = { ko: "장판·타일·마루 수량 계산기", en: "Flooring Material Quantity Calculator", ja: "床材数量計算ツール" };
+export const tool085Descriptions: Record<Locale, string> = { ko: "바닥면적과 자재 규격으로 장판·타일·마루 필요 수량, 박스 수, 손실률 반영량과 예상 비용을 계산합니다.", en: "Calculate flooring units, boxes, waste-adjusted quantity, and estimated cost from floor area and product specifications.", ja: "床面積と材料規格から必要数量、箱数、ロス込み数量、予想費用を計算します。" };
+export const tool086Titles: Record<Locale, string> = { ko: "데크·합판·판재 수량 계산기", en: "Deck, Plywood & Sheet Material Quantity Calculator", ja: "デッキ・合板・板材数量計算ツール" };
+export const tool086Descriptions: Record<Locale, string> = { ko: "판재 규격과 배치 방향으로 필요한 장수와 자투리·예상 비용을 계산합니다.", en: "Calculate required sheet counts, offcut area, and estimated cost from material size and layout direction.", ja: "材料規格と配置方向から必要枚数・端材面積・予想費用を計算します。" };
+export const tool087Titles: Record<Locale, string> = { ko: "벽돌·블록 수량 계산기", en: "Brick & Block Quantity Calculator", ja: "レンガ・ブロック数量計算ツール" };
+export const tool087Descriptions: Record<Locale, string> = { ko: "벽 길이·높이와 자재 규격, 줄눈, 손실률로 벽돌·블록 필요 수량과 구매 권장 개수를 계산합니다.", en: "Calculate brick or block quantity and recommended purchase count from wall size, material size, mortar joint, and waste rate.", ja: "壁サイズ、材料サイズ、目地幅、ロス率からレンガ・ブロックの必要数量と推奨購入個数を計算します。" };
+export const tool088Titles: Record<Locale, string> = { ko: "콘크리트 부피 계산기", en: "Concrete Volume Calculator", ja: "コンクリート体積計算ツール" };
+export const tool088Descriptions: Record<Locale, string> = { ko: "길이·폭·두께로 콘크리트 부피를 ㎥로 계산하고 여유분과 입력한 기준량으로 레미콘 참고 횟수를 확인합니다.", en: "Calculate concrete volume in m³ from length, width, and thickness, add an allowance, and estimate reference deliveries from your own per-delivery volume.", ja: "長さ・幅・厚さからコンクリート体積をm³で計算し、余裕率と入力した基準量から生コン参考回数を確認します。" };
+export const tool089Titles: Record<Locale, string> = { ko: "지붕 면적·경사 계산기", en: "Roof Area & Slope Calculator", ja: "屋根面積・勾配計算ツール" };
+export const tool089Descriptions: Record<Locale, string> = { ko: "폭·길이와 지붕 경사를 입력해 실제 경사면적과 자재 여유 포함 참고면적을 계산합니다.", en: "Calculate actual sloped roof area and material reference area from horizontal width, length, slope, and allowance.", ja: "水平の幅・長さと屋根勾配から実際の屋根面積と材料余裕込み参考面積を計算します。" };
+export const tool090Titles: Record<Locale, string> = { ko: "계단·경사로 계산기", en: "Stair & Ramp Calculator", ja: "階段・スロープ計算ツール" };
+export const tool090Descriptions: Record<Locale, string> = { ko: "전체 높이와 수평거리, 계단 수와 단너비로 경사길이·경사율·경사각·단높이를 계산합니다.", en: "Calculate stair riser and tread dimensions, horizontal run, sloped length, slope percentage, and slope angle.", ja: "全高・水平距離・段数・踏面から斜長、勾配率、勾配角、蹴上げを計算します。" };
 
 export const tool008Titles: Record<Locale, string> = { ko: "이미지 자르기·회전기", en: "Image Cropper & Rotator", ja: "画像切り抜き・回転ツール" };
 export const tool008Descriptions: Record<Locale, string> = { ko: "이미지에서 필요한 영역을 자르고 회전·반전해 원하는 구도로 저장합니다.", en: "Crop the area you need, rotate or flip the image, and save it with your preferred composition.", ja: "画像の必要な範囲を切り抜き、回転・反転して希望する構図で保存します。" };
@@ -1248,6 +1266,12 @@ const categoryToolPresets: Record<string, ToolCardData[]> = {
       status: "LIVE",
       active: true,
     },
+    { title: tool085Titles, description: tool085Descriptions, href: `/${"ko"}/${tool085Slug}`, status: "LIVE", active: true },
+    { title: tool086Titles, description: tool086Descriptions, href: `/${"ko"}/${tool086Slug}`, status: "LIVE", active: true },
+    { title: tool087Titles, description: tool087Descriptions, href: `/${"ko"}/${tool087Slug}`, status: "LIVE", active: true },
+    { title: tool088Titles, description: tool088Descriptions, href: `/${"ko"}/${tool088Slug}`, status: "LIVE", active: true },
+    { title: tool089Titles, description: tool089Descriptions, href: `/${"ko"}/${tool089Slug}`, status: "LIVE", active: true },
+    { title: tool090Titles, description: tool090Descriptions, href: `/${"ko"}/${tool090Slug}`, status: "LIVE", active: true },
   ],
   "image-edit": [
     {
@@ -1417,7 +1441,8 @@ export function getCategoryToolCards(categorySlug: string, locale: Locale): Tool
   }
 
   if (categorySlug === "real-estate-build") {
-    return cards.map((item, index) => index === 0 ? { ...item, href: `/${locale}/${tool081Slug}` } : index === 1 ? { ...item, href: `/${locale}/${tool082Slug}` } : index === 2 ? { ...item, href: `/${locale}/${tool083Slug}` } : index === 3 ? { ...item, href: `/${locale}/${tool084Slug}` } : item);
+    const slugs = [tool081Slug, tool082Slug, tool083Slug, tool084Slug, tool085Slug, tool086Slug, tool087Slug, tool088Slug, tool089Slug, tool090Slug] as const;
+    return cards.map((item, index) => slugs[index] ? { ...item, href: `/${locale}/${slugs[index]}` } : item);
   }
 
   if (categorySlug === "image-edit") {
@@ -1513,6 +1538,12 @@ export const publicTools = [
   { number: 82, slug: tool082Slug, titles: tool082Titles, category: "real-estate-build" },
   { number: 83, slug: tool083Slug, titles: tool083Titles, category: "real-estate-build" },
   { number: 84, slug: tool084Slug, titles: tool084Titles, category: "real-estate-build" },
+  { number: 85, slug: tool085Slug, titles: tool085Titles, category: "real-estate-build" },
+  { number: 86, slug: tool086Slug, titles: tool086Titles, category: "real-estate-build" },
+  { number: 87, slug: tool087Slug, titles: tool087Titles, category: "real-estate-build" },
+  { number: 88, slug: tool088Slug, titles: tool088Titles, category: "real-estate-build" },
+  { number: 89, slug: tool089Slug, titles: tool089Titles, category: "real-estate-build" },
+  { number: 90, slug: tool090Slug, titles: tool090Titles, category: "real-estate-build" },
 ] as const;
 
 export const publicCategorySlugs = categories.slice(0, 9).map((category) => category.slug);

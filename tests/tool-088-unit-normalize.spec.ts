@@ -1,0 +1,2 @@
+import {test,expect} from '@playwright/test';
+test('TOOL088 unit normalization mm cm m',async({page})=>{await page.goto('/ko/concrete-volume-calculator');await page.getByTestId('tool088-thickness').fill('150');await page.getByTestId('tool088-thickness-unit').selectOption('mm');await expect(page.getByTestId('tool088-base-volume')).toHaveText('3');await page.getByTestId('tool088-thickness').fill('0.15');await page.getByTestId('tool088-thickness-unit').selectOption('m');await expect(page.getByTestId('tool088-base-volume')).toHaveText('3');});

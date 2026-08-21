@@ -7,7 +7,7 @@ let pass=0,fail=0;const check=(name,ok)=>{console.log(`${ok?'PASS':'FAIL'} ${nam
 const how='toolbox-tool-guide toolbox-tool-guide--five',expert='toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head',notes='toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head',faq='toolbox-tool-faq';
 for(const token of ['ToolboxSubpageShell','toolbox-tool-detail-hero','toolbox-tool-detail-body',how,expert,notes,faq])check(`common ${token}`,page.includes(token));
 const seq=[how,'toolbox-tool-format-guide toolbox-tool-expert-post','toolbox-tool-info-band toolbox-tool-info-band--section-start',faq].map(x=>page.indexOf(x));check('HOW TO -> EXPERT -> NOTES -> FAQ',seq.every((v,i)=>v>=0&&(i===0||v>seq[i-1])));
-check('approved KO expert headline',page.includes('같은 기준의 단가로 비교합니다'));
+check('approved KO expert headline',page.includes('단가 비교 가이드'));
 check('expert six article contract',page.includes('><article')&&['ITEM','WEIGHT','VOLUME','BUNDLE','COMPARE','SAVINGS'].every(x=>page.includes(`'${x}'`)));
 check('expert shared wide-head css exists',detailCss.includes('.toolbox-tool-expert-post--wide-head .toolbox-tool-format-guide-head')&&detailCss.includes('overflow-wrap:anywhere'));
 check('expert shared grid article css exists',commonCss.includes('.toolbox-tool-format-grid article{')&&commonCss.includes('min-width:0'));

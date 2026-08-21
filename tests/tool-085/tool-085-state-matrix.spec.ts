@@ -1,0 +1,4 @@
+import {test,expect} from '@playwright/test';
+const route=(locale:string)=>`/${locale}/flooring-material-quantity-calculator`;
+for(const locale of ['ko','en','ja'])test(`TOOL085 ${locale} route and core selectors`,async({page})=>{await page.goto(route(locale));await expect(page.getByTestId('tool085-root')).toBeVisible();await expect(page.getByTestId('tool085-floor-area')).toBeVisible();await expect(page.getByTestId('tool085-material-tile')).toBeVisible();await expect(page.getByTestId('tool085-required-units')).toHaveText('62');await expect(page.getByTestId('tool085-box-count')).toHaveText('6')});
+test('TOOL085 material tabs and reset',async({page})=>{await page.goto(route('ko'));await page.getByTestId('tool085-material-wood').click();await expect(page.getByTestId('tool085-usable-area')).toBeVisible();await page.getByTestId('tool085-reset').click();await expect(page.getByTestId('tool085-material-tile')).toHaveAttribute('aria-selected','true')});

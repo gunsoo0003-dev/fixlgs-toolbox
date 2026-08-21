@@ -1,0 +1,7 @@
+{
+  "canonical30":{"width":5,"length":10,"mode":"angle","slopeA":30,"extra":10,"horizontal":50,"slopedWidth":5.7735026919,"actual":57.735026919,"material":63.5085296109},
+  "flat":{"width":5,"length":10,"mode":"angle","slopeA":0,"extra":0,"actual":50},
+  "riseRun":{"width":5,"length":10,"mode":"riseRun","slopeA":4,"slopeB":12,"angle":18.4349488229},
+  "percent":{"width":5,"length":10,"mode":"percent","slopeA":50,"angle":26.5650511771},
+  "invalidNear90":{"width":5,"length":10,"mode":"angle","slopeA":89.999,"extra":10}
+}

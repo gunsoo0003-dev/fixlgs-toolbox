@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('step limit',async({page})=>{await page.goto('/ko/stair-ramp-calculator');await page.getByTestId('tool090-steps').fill('1001');await expect(page.getByTestId('tool090-error')).toBeVisible()});

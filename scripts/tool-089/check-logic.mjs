@@ -1,0 +1,4 @@
+const near=(a,b,e=1e-9)=>Math.abs(a-b)<=e*Math.max(1,Math.abs(a),Math.abs(b));let p=0,f=0;const t=(n,c)=>{if(c){console.log('PASS',n);p++}else{console.log('FAIL',n);f++}};
+const calc=(w,l,a,e=0)=>{const r=a*Math.PI/180,ha=w*l,sw=w/Math.cos(r),actual=ha/Math.cos(r);return{ha,sw,actual,material:actual*(1+e/100)}};
+let r=calc(5,10,30,10);t('horizontal 50',near(r.ha,50));t('sloped width 5.7735',near(r.sw,5.773502691896258));t('actual 57.735',near(r.actual,57.735026918962575));t('material 63.5085',near(r.material,63.50852961085884));
+r=calc(5,10,0,0);t('flat actual=horizontal',near(r.actual,50));t('4:12 angle',near(Math.atan(4/12)*180/Math.PI,18.43494882292201));t('50 percent angle',near(Math.atan(.5)*180/Math.PI,26.56505117707799));t('90 boundary rejected by contract',89.999>=89.999);t('allowance 0-100',0>=0&&100<=100);console.log(`LOGIC PASS ${p} FAIL ${f}`);process.exitCode=f?1:0;

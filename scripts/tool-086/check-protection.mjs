@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+const protectedFiles=['app/globals.css','styles/global-base.css','styles/toolbox-common.css','styles/toolbox-detail-common.css','styles/theme.css','styles/toolbox-compat.css','styles/legacy-site-sealed.css','styles/legacy-tools-sealed.css'];let fail=0;
+for(const file of protectedFiles){const text=fs.existsSync(file)?fs.readFileSync(file,'utf8'):'';const ok=!/tool-?086|tool086/i.test(text);console.log(`${ok?'PASS':'FAIL'} protected ${file} no TOOL086 contamination`);if(!ok)fail++;}
+const moduleFile='components/tool-086-sheet-material-calculator.module.css';const moduleText=fs.readFileSync(moduleFile,'utf8');const legacyOk=!/legacy-(?:site|tools)-sealed/i.test(moduleText);console.log(`${legacyOk?'PASS':'FAIL'} no sealed legacy reference`);if(!legacyOk)fail++;console.log(`PROTECTION PASS=${protectedFiles.length+1-fail} FAIL=${fail}`);process.exitCode=fail?1:0;

@@ -1,0 +1,7 @@
+{
+  "tile": {"floorArea":20,"wasteRate":10,"widthMm":600,"heightMm":600,"unitsPerBox":12,"adjustedArea":22,"requiredUnits":62,"boxCount":6},
+  "wood": {"floorArea":30,"wasteRate":8,"usableAreaPerUnit":2.2,"areaPerBox":2.2,"adjustedArea":32.4,"requiredUnits":15,"boxCount":15,"boxPrice":30000,"estimatedCost":450000},
+  "vinyl": {"floorArea":25,"wasteRate":10,"usableAreaPerUnit":10,"adjustedArea":27.5,"requiredUnits":3},
+  "errors": ["floorArea=0","spec=0","price<0"],
+  "limits": {"maxFloorArea":10000000,"maxWasteRate":100,"maxInputChars":30}
+}

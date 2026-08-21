@@ -1,0 +1,7 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {locales,type Locale} from '@/lib/site';
+import {Tool087MasonryQuantityPage} from '@/components/tool-087-masonry-quantity-page';
+const meta={ko:{title:'벽돌·블록 수량 계산기 | FIXLGS TOOLBOX',description:'벽 길이·높이와 자재 규격, 줄눈, 손실률로 벽돌·블록 필요 수량과 구매 권장 개수를 계산합니다.'},en:{title:'Brick & Block Quantity Calculator | FIXLGS TOOLBOX',description:'Calculate brick or block quantity and recommended purchase count from wall size, material size, mortar joint, and waste rate.'},ja:{title:'レンガ・ブロック数量計算ツール | FIXLGS TOOLBOX',description:'壁サイズ、材料サイズ、目地幅、ロス率からレンガ・ブロックの必要数量と推奨購入個数を計算します。'}} as const;
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{const {locale}=await params;if(!locales.includes(locale as Locale))return{};const l=locale as Locale,path=`/${l}/brick-block-quantity-calculator`;return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:'/ko/brick-block-quantity-calculator',en:'/en/brick-block-quantity-calculator',ja:'/ja/brick-block-quantity-calculator','x-default':'/ko/brick-block-quantity-calculator'}}}}
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <Tool087MasonryQuantityPage locale={locale as Locale}/>}

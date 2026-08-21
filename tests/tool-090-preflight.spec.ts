@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('TOOL090 preflight',async({page})=>{await page.goto('/ko/stair-ramp-calculator');await expect(page.getByTestId('tool090-root')).toBeVisible();await expect(page.getByTestId('tool090-mode-stair')).toBeVisible();await expect(page.getByTestId('tool090-mode-ramp')).toBeVisible()});

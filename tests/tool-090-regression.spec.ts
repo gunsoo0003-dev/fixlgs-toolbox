@@ -1,0 +1,1 @@
+import {test,expect} from '@playwright/test';test('TOOL081 baseline route remains reachable after integration',async({page})=>{await page.goto('/ko/area-price-per-unit-calculator');await expect(page.getByTestId('tool081-root')).toBeVisible()});

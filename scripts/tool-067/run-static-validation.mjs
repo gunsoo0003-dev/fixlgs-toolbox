@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 const checks = [
+  ["check-finalized-design.mjs", []],
   ["check-value-content.mjs", []],
   ["check-source.mjs", []],
   ["check-protection.mjs", []],

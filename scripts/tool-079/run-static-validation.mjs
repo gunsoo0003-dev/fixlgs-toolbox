@@ -1,5 +1,5 @@
 import {spawnSync} from 'node:child_process';
-const scripts=['check-value-content.mjs',"check-static.mjs", "check-design-code.mjs", "check-protection.mjs", "check-harness.mjs", "check-browser-ready.mjs", "check-secret-scan.mjs"];
+const scripts=['check-finalized-design.mjs','check-value-content.mjs',"check-static.mjs", "check-design-code.mjs", "check-protection.mjs", "check-harness.mjs", "check-browser-ready.mjs", "check-secret-scan.mjs"];
 let failed=0;
 for(const script of scripts){
  const r=spawnSync(process.execPath,[`scripts/tool-079/${script}`],{encoding:'utf8'});

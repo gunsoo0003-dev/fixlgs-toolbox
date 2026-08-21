@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('TOOL087 zero joint and zero waste',async({page})=>{await page.goto('/en/brick-block-quantity-calculator');await page.getByTestId('tool087-joint-same').fill('0');await page.getByTestId('tool087-waste-rate').fill('0');await expect(page.getByTestId('tool087-recommended')).toBeVisible();});
+test('TOOL087 split joint',async({page})=>{await page.goto('/ko/brick-block-quantity-calculator');await page.getByTestId('tool087-split-joint').check();await expect(page.getByTestId('tool087-joint-horizontal')).toBeVisible();await expect(page.getByTestId('tool087-joint-vertical')).toBeVisible();});

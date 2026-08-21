@@ -1,0 +1,5 @@
+{
+  "example":{"wallLengthM":5,"wallHeightM":2.4,"materialWidthMm":190,"materialHeightMm":57,"jointHorizontalMm":10,"jointVerticalMm":10,"wasteRate":5,"unitPrice":500,"wallAreaM2":12,"moduleWidthMm":200,"moduleHeightMm":67,"rawQuantity":895.5223880597015,"lossAdjustedQuantity":940.2985074626866,"recommendedPurchaseQuantity":941,"estimatedCost":470500},
+  "zeroJoint":{"wallLengthM":5,"wallHeightM":2.4,"materialWidthMm":190,"materialHeightMm":57,"jointHorizontalMm":0,"jointVerticalMm":0,"wasteRate":0},
+  "limits":{"wallMeters":1000000,"materialMeters":1000,"jointMeters":0.5,"wasteRate":100,"unitPrice":1000000000000000,"inputChars":30,"precision":8}
+}

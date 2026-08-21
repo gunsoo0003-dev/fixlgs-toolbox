@@ -1,0 +1,232 @@
+{
+  "066": {
+    "page": "components/tool-066-vat-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "부가세 계산 핵심",
+      "ja": "消費税計算の要点",
+      "en": "VAT calculation essentials"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "067": {
+    "page": "components/tool-067-selling-price-margin-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "마진·마크업 계산 가이드",
+      "ja": "利益率・マークアップ計算ガイド",
+      "en": "Margin and markup guide"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "068": {
+    "page": "components/tool-068-seller-fee-settlement-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "정산금·순이익 계산 가이드",
+      "ja": "精算金・純利益計算ガイド",
+      "en": "Settlement and net profit guide"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "069": {
+    "page": "components/tool-069-break-even-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "손익분기점 계산 핵심",
+      "ja": "損益分岐点計算の要点",
+      "en": "Break-even calculation essentials"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "070": {
+    "page": "components/tool-070-unit-price-comparison-page.tsx",
+    "expertTitle": {
+      "ko": "단가 비교 가이드",
+      "ja": "単価比較ガイド",
+      "en": "Unit price comparison guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "071": {
+    "page": "components/tool-071-ad-sales-performance-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "광고·매출 지표 가이드",
+      "ja": "広告・売上指標ガイド",
+      "en": "Advertising and sales KPI guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "072": {
+    "page": "components/tool-072-salary-converter-page.tsx",
+    "expertTitle": {
+      "ko": "급여 환산 핵심",
+      "ja": "給与換算の要点",
+      "en": "Salary conversion essentials"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "073": {
+    "page": "components/tool-073-deposit-savings-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "예금·적금 이자 구조",
+      "ja": "預金・積立の利息構造",
+      "en": "Deposit and savings interest"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "074": {
+    "page": "components/tool-074-compound-growth-page.tsx",
+    "expertTitle": {
+      "ko": "복리 계산 핵심",
+      "ja": "複利計算の要点",
+      "en": "Compound growth essentials"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "075": {
+    "page": "components/tool-075-loan-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "상환방식 비교",
+      "ja": "返済方式の比較",
+      "en": "Repayment method comparison"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "076": {
+    "page": "components/tool-076-card-installment-page.tsx",
+    "expertTitle": {
+      "ko": "할부 수수료 해석",
+      "ja": "分割手数料の見方",
+      "en": "Understanding installment fees"
+    },
+    "faqInitialCount": 5,
+    "requiresToolNavigation": true
+  },
+  "077": {
+    "page": "components/tool-077-investment-return-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "투자수익률 해석 가이드",
+      "ja": "投資収益率ガイド",
+      "en": "Investment return guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "078": {
+    "page": "components/tool-078-stock-average-cost-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "주식 평균단가 가이드",
+      "ja": "株式平均取得単価ガイド",
+      "en": "Stock average cost guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "079": {
+    "page": "components/tool-079-dividend-yield-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "배당수익률 계산 가이드",
+      "ja": "配当利回り計算ガイド",
+      "en": "Dividend yield guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "080": {
+    "page": "components/tool-080-rental-yield-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "임대수익률 계산 가이드",
+      "ja": "賃貸利回り計算ガイド",
+      "en": "Rental yield guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "083": {
+    "page": "components/tool-083-room-area-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "방·벽·천장 면적 가이드",
+      "ja": "部屋・壁・天井面積ガイド",
+      "en": "Room, wall and ceiling area guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "084": {
+    "page": "components/tool-084-paint-wallpaper-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "페인트·벽지 구매량 가이드",
+      "ja": "塗料・壁紙購入量ガイド",
+      "en": "Paint and wallpaper quantity guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": true
+  },
+  "085": {
+    "page": "components/tool-085-floor-material-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "바닥재 구매 수량 가이드",
+      "ja": "床材の購入数量ガイド",
+      "en": "Flooring purchase quantity guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  },
+  "086": {
+    "page": "components/tool-086-sheet-material-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "판재 수량·배치 가이드",
+      "ja": "板材の数量・配置ガイド",
+      "en": "Sheet quantity and layout guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  },
+  "087": {
+    "page": "components/tool-087-masonry-quantity-page.tsx",
+    "expertTitle": {
+      "ko": "벽돌·블록 구매 수량 가이드",
+      "ja": "レンガ・ブロック購入数量ガイド",
+      "en": "Brick and block quantity guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  },
+  "088": {
+    "page": "components/tool-088-concrete-volume-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "콘크리트 주문량 계산 가이드",
+      "ja": "コンクリート注文量の計算ガイド",
+      "en": "Concrete ordering quantity guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  },
+  "089": {
+    "page": "components/tool-089-roof-area-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "지붕 경사면적 계산 가이드",
+      "ja": "屋根の勾配面積計算ガイド",
+      "en": "Roof slope area guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  },
+  "090": {
+    "page": "components/tool-090-stair-ramp-calculator-page.tsx",
+    "expertTitle": {
+      "ko": "계단·경사로 치수 가이드",
+      "ja": "階段・スロープ寸法ガイド",
+      "en": "Stair and ramp dimension guide"
+    },
+    "faqInitialCount": 4,
+    "requiresToolNavigation": false
+  }
+}
