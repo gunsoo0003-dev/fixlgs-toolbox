@@ -12,8 +12,8 @@ const meta={
 export async function generateMetadata({params}:{params:Promise<{locale:string}>}):Promise<Metadata>{
  const {locale}=await params;
  if(!locales.includes(locale as Locale))return{};
- const l=locale as Locale,path=`/${l}/date-add-subtract-calculator`;
- return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:"/ko/date-add-subtract-calculator",en:"/en/date-add-subtract-calculator",ja:"/ja/date-add-subtract-calculator","x-default":"/ko/date-add-subtract-calculator"}}};
+ const l=locale as Locale,path=`https://fixlgs.com/tools/${l}/date-add-subtract-calculator`;
+ return{title:meta[l].title,description:meta[l].description,alternates:{canonical:path,languages:{ko:"https://fixlgs.com/tools/ko/date-add-subtract-calculator",en:"https://fixlgs.com/tools/en/date-add-subtract-calculator",ja:"https://fixlgs.com/tools/ja/date-add-subtract-calculator","x-default":"https://fixlgs.com/tools/ko/date-add-subtract-calculator"}}};
 }
 
 export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!locales.includes(locale as Locale))notFound();return <DateAddSubtractCalculatorPage locale={locale as Locale}/>;}

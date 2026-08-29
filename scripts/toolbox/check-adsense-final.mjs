@@ -18,6 +18,8 @@ const hero = read('components/toolbox-home-hero.tsx');
 const nav = read('components/tool-navigation.tsx');
 const sitemap = read('app/sitemap.ts');
 const categoryPage = read('app/[locale]/category/[categorySlug]/page.tsx');
+const rootLayout = read('app/layout.tsx');
+const robotsFile = read('app/robots.ts');
 
 console.log('=== FIXLGS TOOLBOX ADSENSE FINAL STATIC CHECK ===');
 
@@ -113,6 +115,20 @@ for (const [slug, count] of expectedCounts) {
   const block = site.slice(categoryIndex, nextIndex === -1 ? site.length : nextIndex);
   check(`category count ${slug} = ${count}`, block.includes(`ko: "${count}개 사용 가능"`) && block.includes(`en: "${count} available"`) && block.includes(`ja: "${count}件利用可能"`));
 }
+
+
+// 8) Main-domain path migration SEO integrity
+check('metadataBase uses main /tools path', rootLayout.includes("metadataBase: new URL('https://fixlgs.com/tools')") || rootLayout.includes('metadataBase: new URL("https://fixlgs.com/tools")'));
+check('sitemap base URL uses main /tools path', sitemap.includes('const baseUrl = "https://fixlgs.com/tools"') || sitemap.includes("const baseUrl = 'https://fixlgs.com/tools'"));
+check('robots exposes main /tools sitemap', robotsFile.includes('https://fixlgs.com/tools/sitemap.xml'));
+check('robots blocks internal validation routes', ['/tools/dev/', '/tools/tool020-harness', '/tools/__tool020-harness'].every((x) => robotsFile.includes(x)));
+const relativeSeoFiles = sourceFiles.filter((file) => {
+  const text = fs.readFileSync(file, 'utf8');
+  return /(?:const\s+)?path\s*=\s*`\/\$\{(?:l|locale|current)\}\//.test(text) ||
+    /canonical\s*:\s*["']\/(?:ko|en|ja)(?:\/|["'])/.test(text) ||
+    /(?:ko|en|ja)\s*:\s*["']\/(?:ko|en|ja)(?:\/|["'])/.test(text);
+});
+check('no relative canonical/hreflang paths after /tools migration', relativeSeoFiles.length === 0, relativeSeoFiles.length ? `${relativeSeoFiles.length} files` : '0');
 
 console.log(`\nADSENSE FINAL STATIC CHECK: ${fail === 0 ? 'PASS' : 'FAIL'} (${pass}/${pass + fail})`);
 process.exitCode = fail ? 1 : 0;
