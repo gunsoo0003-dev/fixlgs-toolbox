@@ -122,6 +122,8 @@ check('metadataBase uses main /tools path', rootLayout.includes("metadataBase: n
 check('sitemap base URL uses main /tools path', sitemap.includes('const baseUrl = "https://fixlgs.com/tools"') || sitemap.includes("const baseUrl = 'https://fixlgs.com/tools'"));
 check('robots exposes main /tools sitemap', robotsFile.includes('https://fixlgs.com/tools/sitemap.xml'));
 check('robots blocks internal validation routes', ['/tools/dev/', '/tools/tool020-harness', '/tools/__tool020-harness'].every((x) => robotsFile.includes(x)));
+const internalNoindexFiles = ['app/dev/validation/page.tsx', 'app/tool020-harness/page.tsx', 'app/__tool020-harness/page.tsx'];
+check('internal validation pages declare noindex', internalNoindexFiles.every((file) => { const text = read(file); return text.includes('robots: { index: false, follow: false'); }));
 const relativeSeoFiles = sourceFiles.filter((file) => {
   const text = fs.readFileSync(file, 'utf8');
   return /(?:const\s+)?path\s*=\s*`\/\$\{(?:l|locale|current)\}\//.test(text) ||
