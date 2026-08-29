@@ -1,0 +1,14 @@
+TOOL073 실패 대응지도
+
+금액 입력 오류 -> lib/tool-073-deposit-savings.ts parseTool073Number/assertFiniteNonNegative -> components/tool-073-deposit-savings-calculator.tsx calculation error mapping
+금리 오류 -> validateTool073Rate -> tool073-rate
+기간 오류 -> normalizeTool073Term -> tool073-term / tool073-term-unit
+참고 세율 오류 -> validateTool073TaxRate -> tool073-tax-rate
+예금 공식 오류 -> calculateTool073Deposit -> tests/tool-073-deposit.spec.ts
+적금 timing 오류 -> calculateTool073Savings -> tests/tool-073-savings.spec.ts + fixture 97,500
+세후 reference 오류 -> applyReferenceTax -> tests/tool-073-aftertax.spec.ts
+12m=1y 오류 -> normalizeTool073Term -> tests/tool-073-term.spec.ts
+모바일 overflow/layout -> components/tool-073-deposit-savings-calculator.module.css @media max-width 980/620
+selector/harness 오류 -> scripts/tool-073/check-harness.mjs + tests/tool-073-*.spec.ts
+route/canonical 오류 -> app/[locale]/deposit-savings-calculator/page.tsx
+통합 카드/sitemap 누락 -> 주작업장 lib/site.ts / app/sitemap.ts

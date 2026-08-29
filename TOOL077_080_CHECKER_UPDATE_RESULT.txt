@@ -1,0 +1,33 @@
+TOOL077~080 DESIGN COMPLETE CHECKER UPDATE
+DATE=2026-08-21
+PRODUCT_CODE_CHANGE=0
+CHECKER_ONLY=YES
+
+UPDATED:
+- actual DOM/testid/state based design checkers 077~080
+- browser-ready self-check 077~080
+- browser state matrix specs 077~080
+- 078 existing browser spec strengthened
+- error-state DOM survival + recovery tests
+- details open -> visible/actionable -> action tests where applicable
+- pageerror + console.error runtime gate
+- 079 dedicated secret scan added
+- 079 FINAL runner fake secret PASS removed
+- static runners include browser readiness
+
+IMPORTANT:
+This patch was generated from the uploaded completed-design code analysis.
+It has not been executed against the user's Windows repository in this environment.
+Run static first, then FINAL independently in order 077 -> 078 -> 079 -> 080.
+
+COMMANDS:
+npm run tool077:static
+npm run tool078:static
+npm run tool079:static
+npm run tool080:static
+
+Then:
+npm run tool077:final
+npm run tool078:final
+npm run tool079:final
+npm run tool080:final

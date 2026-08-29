@@ -1,0 +1,38 @@
+FIXLGS TOOLBOX TOOL077~080 주작업장 통합 패치
+Date: 2026-08-21
+
+[통합 완료]
+- TOOL077 투자수익률 계산기
+- TOOL078 주식 평균단가 계산기
+- TOOL079 배당수익률 계산기
+- TOOL080 임대수익률 계산기
+- lib/site.ts public registry/category 077~080 연결
+- app/sitemap.ts 077~080 다국어 경로 연결
+- ToolNavigation 077~080 연속 흐름 정합
+- TOOL077 잘못된 078 slug(stock-average-price-calculator) 제거
+- TOOL079 expert 6 article / FAQ shared class / ToolNavigation 정합
+- package tool077~080 static/browser/final scripts 준비
+- Playwright state matrix: normal/boundary/error recovery/state transition/KO-EN-JA 준비
+
+[검수 완료]
+- TOOL077 source 17/17, harness 6/6, logic 12/12, secret PASS, syntax PASS
+- TOOL078 static 6/6 PASS
+- TOOL079 integration structure PASS (navigation/expert6/FAQ)
+- TOOL080 source 29/29, design 13/13, harness 10/10, logic 11/11, secret PASS, syntax PASS
+- common registry/sitemap/package/route integration PASS
+
+[선행 BLOCKER]
+사용자가 제공한 FIXLGS_TOOLBOX_076_다음작업용_20260821.zip에는 styles/ 폴더가 없습니다.
+app/globals.css는 ../styles/theme.css, toolbox-compat.css, global-base.css,
+legacy-site-sealed.css, toolbox-common.css, legacy-tools-sealed.css,
+toolbox-detail-common.css를 import하므로 이 기준 ZIP 단독으로 production build가 불가능합니다.
+따라서 browser/TypeScript/production build FULL FINAL은 실제 프로젝트의 styles/와 node_modules가 있는
+주작업장에 본 패치를 덮어쓴 뒤 실행해야 합니다.
+
+[적용 후 실행]
+npm run tool077:final
+npm run tool078:final
+npm run tool079:final
+npm run tool080:final
+
+주의: 이 ZIP은 전체 프로젝트가 아니라 승인된 TOOL077~080 통합 패치입니다.

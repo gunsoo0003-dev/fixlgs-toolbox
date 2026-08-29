@@ -1,0 +1,27 @@
+TOOL081 VALUE CONTENT APPLIED
+DATE=2026-08-21
+SCOPE=CONTENT ONLY / DESIGN CLASSES AND CALCULATION ENGINE PRESERVED
+
+APPLIED
+- Hero description expanded with practical property-comparison context
+- HOW TO: 6 richer steps including simple conversion, unit-price workflow, same-basis comparison, 84m2 example, 500M KRW/25 pyeong example, official-document check
+- EXPERT: 6 mini-guides with conversion, examples, gross/exclusive basis, per-unit comparison, rounding guidance
+- IMPORTANT NOTES: 6 practical cautions
+- FAQ: 8 user-intent questions and detailed answers
+- KO/EN/JA all updated
+- FAQ JSON-LD automatically follows expanded FAQ data
+
+STATIC_VALIDATION
+SOURCE=27/27 PASS
+DESIGN=12/12 PASS
+HARNESS=15/15 PASS
+LOGIC=7/7 PASS
+COMMON_PROTECTION=10/10 PASS
+SECRET_SCAN=PASS
+STATIC=6/6 PASS
+
+UNCHANGED
+- Tool081 calculator engine
+- Calculator input/result UI structure
+- TOOLBOX common section order: HOW TO -> EXPERT -> IMPORTANT NOTES -> FAQ
+- Common CSS contracts

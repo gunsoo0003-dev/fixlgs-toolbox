@@ -1,0 +1,24 @@
+TOOL073 보조작업장 최종 체크리스트
+
+REQ 073-F01 예금: PASS - 10,000,000@3%@12m => 300,000 / 10,300,000
+REQ 073-F02 적금: PASS - 500,000/month@3%@12m => principal 6,000,000 / interest 97,500
+REQ 073-F03 월납: PASS - monthly amount input + n months
+REQ 073-F04 금리: PASS - annual rate 0..100
+REQ 073-F05 세전: PASS - gross interest / gross maturity
+REQ 073-F06 세후 참고: PASS - reference tax only on interest
+REQ 073-C01 적금 timing: PASS - 97,500 < 180,000
+REQ 073-C02 term normalization: PASS - 12m = 1y
+REQ 073-C03 reference label UI: PASS - REFERENCE warning + tax help
+REQ 073-C04 zero/invalid boundary: PASS - fixture/spec/static coverage
+REQ 073-Q01 FINAL/FAIL0/SKIP0: 주작업장 통합 FINAL 전용
+
+CODE PASS: PASS
+FUNCTION-STATIC PASS: PASS
+DESIGN-CODE PASS: PASS (MAIN=066)
+HARNESS-STRUCTURE PASS: PASS
+PACKAGE PASS: PASS
+COMMON FILE PROTECTION PASS: PASS
+PROJECT-WIDE TSC: 주작업장 통합검증 (supplied ZIP missing Next/React/Playwright installed modules)
+PLAYWRIGHT/REAL BROWSER: 주작업장 통합검증
+PRODUCTION BUILD: 주작업장 통합검증
+INTEGRATED REGRESSION/FINAL: 주작업장 통합검증

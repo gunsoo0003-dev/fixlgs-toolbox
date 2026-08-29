@@ -1,0 +1,15 @@
+# TOOL076 REQ MASTER
+- 076-F01 구매금액: `tool076-purchase`, 0..1e15
+- 076-F02 할부 개월: `tool076-months`, integer 1..120
+- 076-F03 총 할부 수수료율: `tool076-rate`, 0..100%
+- 076-F04 월 납부액: `tool076-result-monthly = total / months`
+- 076-F05 총 수수료: `tool076-result-fee = purchase × rate / 100`
+- 076-C01 총 납부액: `tool076-result-total = purchase + fee`
+- 076-C02 무이자: rate=0 → fee=0
+- 076-C03 scenario: 3/6/12/24, 동일 purchase/rate
+- 076-C04 rounding: 내부 full precision, 표시 2자리; 실제 원단위 청구 규칙은 미모델링
+- 076-C05 fee-rate definition visible: `tool076-fee-definition`
+- 076-U01 PC/mobile: 전용 CSS breakpoint 900/560
+- 076-L01 KO/EN/JA: page/component copy 3언어
+- 076-S01 canonical/hreflang: 전용 route metadata
+- 076-Q01 보조작업장: static gates + package/handoff. Runtime FINAL은 주작업장.

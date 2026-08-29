@@ -1,0 +1,7 @@
+FIXLGS TOOLBOX TOOL053 Unix Timestamp Converter auxiliary delivery
+MAIN design baseline: TOOL047
+SUB design baseline: TOOL046
+Static results: SOURCE 45/45, LOGIC 14/14, DESIGN-CODE 20/20, HARNESS-STRUCTURE 22/22
+Common/global files included: NONE
+New dependencies: NONE
+Main workspace required: site.ts/sitemap registration, runtime Playwright/type/build/integrated FINAL/deploy/indexing

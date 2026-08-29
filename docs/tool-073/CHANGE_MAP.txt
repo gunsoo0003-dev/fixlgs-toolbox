@@ -1,0 +1,24 @@
+TOOL073 변경지도
+
+신규 구현 파일:
+- lib/tool-073-deposit-savings.ts : 계산 엔진/정규화/상한/포맷
+- components/tool-073-deposit-savings-calculator.tsx : 입력/결과/모드/복사/초기화
+- components/tool-073-deposit-savings-calculator.module.css : 전용 반응형 UI
+- components/tool-073-deposit-savings-calculator-page.tsx : KO/EN/JA 콘텐츠, FAQ, JSON-LD, 공통 섹션
+- app/[locale]/deposit-savings-calculator/page.tsx : locale route + canonical/hreflang metadata
+
+검수:
+- tests/fixtures/tool-073/cases.json
+- tests/tool-073-*.spec.ts 10개
+- scripts/tool-073/*.mjs 6개
+
+주작업장 연결 필요:
+- lib/site.ts: TOOL073 slug/title/card 정식 등록
+- app/sitemap.ts: TOOL073 ko/en/ja URL 등록
+- 관련 도구/다음 작업 링크를 최신 통합본 기준으로 활성화
+
+수정하지 않은 보호영역:
+- app/globals.css
+- styles/* 공통/legacy CSS
+- 기존 완료 tool components/lib/tests
+- package.json/package-lock.json

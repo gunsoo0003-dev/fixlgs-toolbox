@@ -1,0 +1,117 @@
+
+### check-source.mjs
+PASS exists lib/tool-076-installment.ts
+PASS exists components/tool-076-card-installment.tsx
+PASS exists components/tool-076-card-installment-page.tsx
+PASS exists components/tool-076-card-installment.module.css
+PASS exists app/[locale]/credit-card-installment-calculator/page.tsx
+PASS exists tests/fixtures/tool-076/cases.json
+PASS exists playwright.tool076.config.ts
+PASS engine maxPurchase:1e15
+PASS engine maxRate:100
+PASS engine maxMonths:120
+PASS engine maxScenarios:4
+PASS engine purchase*(rate/100)
+PASS engine totalPayment/months
+PASS engine compareTool076
+PASS engine interestFree:rate===0
+PASS ui tool076-purchase
+PASS ui tool076-months
+PASS ui tool076-rate
+PASS ui tool076-result-monthly
+PASS ui tool076-result-fee
+PASS ui tool076-result-total
+PASS ui tool076-fee-definition
+PASS ui tool076-mode-compare
+PASS ui tool076-scenario-
+PASS ui tool076-reference-warning
+PASS ui tool076-copy
+PASS ui tool076-reset
+PASS no network call
+PASS route canonical
+PASS route x-default
+PASS route /ko/credit-card-installment-calculator
+PASS route /en/credit-card-installment-calculator
+PASS route /ja/credit-card-installment-calculator
+RESULT SOURCE PASS=33 FAIL=0
+
+
+### check-design.mjs
+PASS common shell ToolboxSubpageShell
+PASS common shell toolbox-tool-detail-hero
+PASS common shell toolbox-tool-detail-body
+PASS common shell toolbox-next-work
+PASS common shell toolbox-tool-guide toolbox-tool-guide--five
+PASS common shell toolbox-tool-format-guide toolbox-tool-expert-post
+PASS common shell toolbox-tool-info-band
+PASS common shell ToolboxFaqList
+PASS module css only
+PASS mobile breakpoint
+PASS large-number wrap
+PASS no legacy selector
+PASS primary common files not imported for override
+RESULT DESIGN-CODE PASS=13 FAIL=0
+
+
+### check-harness.mjs
+PASS exists tests/tool-076-preflight.spec.ts
+PASS tests/tool-076-preflight.spec.ts selector tool076-root
+PASS tests/tool-076-preflight.spec.ts selector tool076-fee-definition
+PASS exists tests/tool-076-core.spec.ts
+PASS tests/tool-076-core.spec.ts selector tool076-root
+PASS tests/tool-076-core.spec.ts selector tool076-purchase
+PASS tests/tool-076-core.spec.ts selector tool076-months
+PASS tests/tool-076-core.spec.ts selector tool076-rate
+PASS tests/tool-076-core.spec.ts selector tool076-result-fee
+PASS tests/tool-076-core.spec.ts selector tool076-result-total
+PASS tests/tool-076-core.spec.ts selector tool076-result-monthly
+PASS exists tests/tool-076-zero-rate.spec.ts
+PASS tests/tool-076-zero-rate.spec.ts selector tool076-rate
+PASS tests/tool-076-zero-rate.spec.ts selector tool076-result-fee
+PASS tests/tool-076-zero-rate.spec.ts selector tool076-reference-warning
+PASS exists tests/tool-076-scenario.spec.ts
+PASS tests/tool-076-scenario.spec.ts selector tool076-mode-compare
+PASS tests/tool-076-scenario.spec.ts selector tool076-scenario-assumption
+PASS exists tests/tool-076-boundary.spec.ts
+PASS tests/tool-076-boundary.spec.ts selector tool076-months
+PASS tests/tool-076-boundary.spec.ts selector tool076-error
+PASS tests/tool-076-boundary.spec.ts selector tool076-months
+PASS tests/tool-076-boundary.spec.ts selector tool076-rate
+PASS tests/tool-076-boundary.spec.ts selector tool076-error
+PASS exists tests/tool-076-limit.spec.ts
+PASS tests/tool-076-limit.spec.ts selector tool076-purchase
+PASS tests/tool-076-limit.spec.ts selector tool076-error
+PASS tests/tool-076-limit.spec.ts selector tool076-purchase
+PASS tests/tool-076-limit.spec.ts selector tool076-months
+PASS tests/tool-076-limit.spec.ts selector tool076-error
+PASS fixture exists
+PASS playwright config targets 076
+RESULT HARNESS-STRUCTURE PASS=32 FAIL=0
+
+
+### check-logic.mjs
+PASS fixture 0 fee
+PASS fixture 0 total
+PASS fixture 0 monthly
+PASS fixture 1 fee
+PASS fixture 1 total
+PASS fixture 1 monthly
+PASS fixture 2 fee
+PASS fixture 2 total
+PASS fixture 2 monthly
+PASS fixture 3 fee
+PASS fixture 3 total
+PASS fixture 3 monthly
+PASS scenario months
+PASS same-rate total fee tie
+PASS same-rate total payment tie
+PASS 24m lowest monthly
+PASS zero rate fee0
+RESULT LOGIC PASS=17 FAIL=0
+
+
+### check-copy-residue.mjs
+PASS no 066/VAT/loan-engine copy residue in TOOL076 implementation
+
+
+TOOL076 STATIC VALIDATION: PASS (5/5)

@@ -1,0 +1,28 @@
+FIXLGS TOOLBOX TOOL082~084 DESIGN CHECKER UPDATE
+DATE=2026-08-21
+
+SCOPE
+- Product code is authority; validators were aligned to completed design/DOM contracts.
+- No calculator formula or product UI code was changed in this checker update.
+
+TOOL082
+- DESIGN: lower section order, shell/navigation/category, 6 expert cards, FAQ disclosure, workspace DOM, responsive 2->1 column, tokens, overflow, no global mutation.
+- HARNESS: all current/target input/result/error/action testids, route, runtime pageerror/console gates, error recovery/state transition, residue check.
+- PROTECTION: protected common styles exist and TOOL082 styles remain module-isolated.
+- STATIC: PASS 7/7.
+
+TOOL083
+- DESIGN: lower section order, shell/navigation/category, expert 6-card contract, FAQ disclosure, opening-row DOM, responsive breakpoints/tokens, no global mutation.
+- HARNESS: current testids, route, runtime pageerror/console gates, reference assertions, recovery, dynamic opening coverage, residue check.
+- STATIC: PASS 8/8.
+
+TOOL084
+- DESIGN: lower section order, shell/navigation/category, FAQ disclosure, paint/wallpaper tab DOM, responsive grid/tokens, primary action, no global mutation.
+- HARNESS: paint+wallpaper input/result testids, route, runtime pageerror/console gates, tab transition, error recovery, residue check.
+- Browser state matrix now records pageerror and console error on every test.
+- STATIC: PASS 8/8.
+
+FINAL
+TOOL082 STATIC PASS 7/7
+TOOL083 STATIC PASS 8/8
+TOOL084 STATIC PASS 8/8

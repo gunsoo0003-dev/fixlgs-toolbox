@@ -1,0 +1,14 @@
+TOOL083/084 FINAL FAIL FIX - 2026-08-21
+
+TOOL083
+- Product logic unchanged.
+- Fixed browser recovery test: previous recovery state still had opening area 100m2 > wall area 80m2.
+- Recovery now corrects opening dimensions to 0.5m x 0.5m and verifies error removal/result DOM survival/runtime error absence.
+- STATIC PASS 8/8.
+
+TOOL084
+- Product logic unchanged.
+- Removed Unix find/grep dependencies from protection and secret scan checkers.
+- Replaced with cross-platform Node fs/path traversal.
+- STATIC PASS 8/8.
+- SECRET SCAN PASS (18 files).

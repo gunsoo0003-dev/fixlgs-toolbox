@@ -1,0 +1,32 @@
+TOOL056~058 DESIGN-COMPLETE CHECKER UPDATE
+DATE=2026-08-19
+
+DESIGN_CODE_CONFIRM=PASS
+- TOOL056/057/058 lower DOM: HOW TO -> EXPERT POST -> IMPORTANT NOTES -> FAQ
+- Expert post exact common classes confirmed
+- Expert content expanded to 6 cards for KO/EN/JA
+- FAQ locale large headings confirmed
+
+CHECKER_UPDATE
+- check-design.mjs strengthened for 056/057/058
+- runtime design specs enforce KO/EN/JA heading, 6 expert cards, exact lower-section order
+- runtime design specs collect pageerror and console error
+- TOOL057/058 received independent design spec
+- TOOL057/058 FULL FINAL now includes DESIGN stage
+- tool056:design / tool057:design / tool058:design scripts added
+- harness inventories design specs and blocks skip/fixme/only where applicable
+
+STATIC_SELF_CHECK
+TOOL056=PASS FAIL=0
+TOOL057=PASS FAIL=0
+TOOL058=PASS FAIL=0
+
+SECRET_SCAN
+### SECRET 056
+RESULT SECRET_SCAN PASS scanned=1587 findings=0
+### SECRET 057
+RESULT SECRET_SCAN PASS scanned=1587 findings=0
+### SECRET 058
+RESULT SECRET_SCAN PASS scanned=1587 findings=0
+
+FINAL_STATUS=CHECKER_UPDATE_READY

@@ -1,0 +1,24 @@
+TOOL056~058 EXPERT CONTENT REVISION
+DATE=2026-08-19
+SCOPE=Expert/reference content only; product calculation engine and layout contract unchanged.
+
+TOOL056
+- Expanded from 3 to 6 expert cards.
+- Added mass quick reference, temperature formulas, pressure references, absolute zero, gauge/absolute pressure caution.
+
+TOOL057
+- Expanded from 3 to 6 expert cards.
+- Added reciprocal fuel-economy explanation, US/UK MPG distinction, energy vs power, hp vs PS, quick speed references.
+
+TOOL058
+- Expanded from 3 to 6 expert cards.
+- Added decimal/binary distinction, bit vs byte, displayed-capacity explanation, cooking reference and quick relationships.
+
+LOCALES=KO/EN/JA
+STATIC_056=PASS
+STATIC_057=PASS
+STATIC_058=PASS
+SECRET_SCAN_056=scanned 1584 findings 0
+SECRET_SCAN_057=scanned 1584 findings 0
+SECRET_SCAN_058=scanned 1584 findings 0
+RUNTIME_FINAL=NOT_RUN_IN_THIS_ENVIRONMENT

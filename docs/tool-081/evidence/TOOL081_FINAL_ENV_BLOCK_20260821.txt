@@ -1,0 +1,111 @@
+TOOL081 MODE=final
+PASS=2
+FAIL=1
+ENVIRONMENT_BLOCK=1
+STATUS=FAIL
+FINAL_SENTINEL=TOOL081_FAIL
+
+check	static	EXIT=0
+
+> fixlgs-toolbox@0.1.0 tool081:static
+> node scripts/tool-081/run-static-validation.mjs
+
+
+### check-source.mjs
+PASS exists lib/tool-081-area-price.ts
+PASS exists components/tool-081-area-price-calculator.tsx
+PASS exists components/tool-081-area-price-calculator-page.tsx
+PASS exists components/tool-081-area-price-calculator.module.css
+PASS exists app/[locale]/area-price-per-unit-calculator/page.tsx
+PASS exists tests/fixtures/tool-081/cases.json
+PASS exists playwright.tool081.config.ts
+PASS engine TOOL081_PYEONG_SQM=3.305785
+PASS engine maxAreaSqm:1e9
+PASS engine maxPrice:1e15
+PASS engine maxDisplayPrecision:8
+PASS engine price per m² = total price ÷ area(m²)
+PASS engine price per pyeong = total price ÷ area(pyeong)
+PASS ui tool081-root
+PASS ui tool081-convert-area
+PASS ui tool081-${prefix}-area
+PASS ui tool081-${prefix}-unit
+PASS ui tool081-total-price
+PASS ui tool081-result
+PASS ui tool081-formula
+PASS ui navigator.clipboard
+PASS no network API
+PASS route canonical
+PASS route x-default
+PASS route /ko/area-price-per-unit-calculator
+PASS route /en/area-price-per-unit-calculator
+PASS route /ja/area-price-per-unit-calculator
+RESULT SOURCE PASS=27 FAIL=0 TOOL=081
+
+### check-design.mjs
+PASS common ToolboxSubpageShell
+PASS common toolbox-tool-detail-hero
+PASS common toolbox-tool-detail-body
+PASS common toolbox-tool-guide toolbox-tool-guide--five
+PASS common toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head
+PASS common toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head
+PASS common toolbox-tool-faq
+PASS HOW TO -> EXPERT -> NOTES -> FAQ
+PASS MAIN baseline TOOL070 pattern preserved
+PASS mobile breakpoint
+PASS long value overflow protection
+PASS no per-tool common global override
+RESULT TOOL081 DESIGN-CODE PASS=12 FAIL=0 MAIN=070
+
+### check-harness.mjs
+PASS exists tests/tool-081-preflight.spec.ts
+PASS exists tests/tool-081-core.spec.ts
+PASS exists tests/tool-081-feature.spec.ts
+PASS exists tests/tool-081-boundary.spec.ts
+PASS exists tests/tool-081-limit.spec.ts
+PASS exists tests/tool-081-regression.spec.ts
+PASS exists tests/tool-081-design.spec.ts
+PASS conversion fixtures
+PASS unit-price fixtures
+PASS limits fixed
+PASS selector tool081-root
+PASS selector tool081-convert-pyeong
+PASS selector tool081-supply-price-sqm
+PASS selector tool081-exclusive-price-sqm
+PASS selector tool081-error
+RESULT HARNESS_STRUCTURE PASS=15 FAIL=0
+
+### check-logic.mjs
+PASS 84 sqm -> ~25.410001 pyeong
+PASS 25 pyeong -> 82.644625 sqm
+PASS roundtrip 84 sqm
+PASS 500m / 100sqm = 5m/sqm
+PASS 500m / 100sqm = 16,528,925/pyeong raw
+PASS 500m / 80sqm = 6.25m/sqm
+PASS zero price valid arithmetic
+RESULT LOGIC PASS=7 FAIL=0
+
+### check-protection.mjs
+PASS protected file exists app/globals.css
+PASS protected file exists styles/global-base.css
+PASS protected file exists styles/toolbox-common.css
+PASS protected file exists styles/toolbox-detail-common.css
+PASS protected file exists styles/theme.css
+PASS protected file exists styles/toolbox-compat.css
+PASS protected file exists styles/legacy-site-sealed.css
+PASS protected file exists styles/legacy-tools-sealed.css
+PASS no legacy sealed selector usage
+PASS no global selector override
+RESULT COMMON_PROTECTION STRUCTURE PASS=10 FAIL=0
+
+### check-secret-scan.mjs
+PASS TOOL081 secret scan
+
+TOOL081 STATIC VALIDATION: PASS (6/6)
+
+
+check	secret	EXIT=0
+PASS TOOL081 secret scan
+
+
+check	dependency-preflight	EXIT=1
+missing local bins: playwright/next/tsc

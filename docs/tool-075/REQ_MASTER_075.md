@@ -1,0 +1,16 @@
+# TOOL075 REQ MASTER
+- 075-F01 원리금 균등: `calculateTool075EqualPayment`
+- 075-F02 원금 균등: `calculateTool075EqualPrincipal`
+- 075-F03 만기일시: `calculateTool075Bullet`
+- 075-F04 월별 상환표: `tool075-schedule`, first/last row testids
+- 075-F05 총이자: schedule interest 합계
+- 075-C01 총상환액: principal + interest
+- 075-C02 잔액 0: 마지막 row balance=0
+- 075-C03 rate0: interest=0 branch
+- 075-C04 기간 정규화: years×12
+- 075-C05 rounding: 내부 full precision + final principal adjustment
+- 075-C06 합계 일치: schedule totals
+- 075-U01 method UX: 3 tabs + PC/mobile responsive CSS
+- 075-L01 KO/EN/JA: page/calculator copy
+- 075-S01 canonical/hreflang: route metadata
+- 075-Q01 보조작업장 READY: static/design/harness/package/common protection

@@ -1,0 +1,20 @@
+TOOL078/079 CHECKER HOTFIX
+DATE=2026-08-21
+TYPE=CHECKER ONLY
+PRODUCT_CHANGE=NONE
+
+CAUSE
+Playwright strict-mode collision:
+locator('details').locator('summary') matched the tool's own advanced <details> plus FAQ <details>.
+
+FIX
+Scope the advanced <details> lookup inside:
+- [data-testid="tool078-root"]
+- [data-testid="tool079-root"]
+
+This preserves the required sequence:
+open details -> verify visible/enabled/editable -> manipulate control.
+
+RECHECK
+npm run tool078:final
+npm run tool079:final

@@ -1,0 +1,32 @@
+FIXLGS TOOLBOX AdSense final cleanup working report
+Date: 2026-08-20
+Base: FIXLGS_TOOLBOX_071_다음작업용_20260820.zip
+
+APPLIED
+1. Hide categories 09-11 from home navigation.
+2. Exclude categories 09-11 from sitemap and category static params/direct public routing.
+3. Unify TOOL001-071 NEXT WORK / RELATED TOOLS via components/tool-navigation.tsx.
+4. NEXT WORK links to the actual next published tool through TOOL070; TOOL071 has no NEXT WORK section.
+5. RELATED TOOLS uses published tools from the same category only.
+6. CTA standardized: 도구 열기 / Open tool / ツールを開く.
+7. Home search activated with live search-results card section, max 8 results.
+8. Popular-search buttons populate the search field.
+9. Five previously non-clickable POPULAR TOOLS cards connected: TOOL028, 036, 045, 055, 066.
+10. Hero count changed from 136+ to 71+.
+11. Category available-tool counts updated to 7 / 11 / 7 / 10 / 9 / 10 / 11 / 6.
+12. Category FAQ text cleaned so hidden/planned tools are not promoted on public category pages.
+
+STATIC VERIFICATION
+- ToolNavigation coverage: 71/71 unique tools, no missing tool number.
+- Public tool registry: 71 entries.
+- Route existence check for TOOL001-071: PASS.
+- href="#", javascript:void(0), empty href, empty onClick scan: no matches in app/components/lib scan.
+- TypeScript parse-level diagnostics: no TS1xxx syntax errors in modified scope.
+
+BUILD STATUS
+- npm run build could not execute because the supplied ZIP did not contain node_modules (next: not found).
+- npm ci --offline could not restore dependencies because qpdf-wasm-esm-embedded@1.1.1 was not present in the local npm cache.
+- This is an environment/dependency availability limitation, not a confirmed source-code build failure.
+
+GIT / DEPLOY
+- Supplied ZIP contains no .git directory, so commit/push/Vercel deployment was not performed from this workspace.

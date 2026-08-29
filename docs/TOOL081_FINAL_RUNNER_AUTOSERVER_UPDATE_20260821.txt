@@ -1,0 +1,27 @@
+TOOL081 FINAL RUNNER UPDATE
+DATE=2026-08-21
+
+CAUSE
+- Previous browser stage ran against http://127.0.0.1:3000 without ensuring a Next server was running.
+- All 20 Playwright tests failed with ERR_CONNECTION_REFUSED before reaching product assertions.
+
+FIX
+- playwright.tool081.config.ts now uses Playwright webServer.
+- Command: npm run dev -- --hostname 127.0.0.1 --port 3000
+- Readiness URL: /ko/area-price-per-unit-calculator
+- reuseExistingServer=true
+- timeout=120000
+- Browser tests start only after server readiness.
+- Playwright owns server shutdown when it started the server.
+
+FINAL OUTPUT
+- Terminal ends with TOOL081 FINAL SUMMARY.
+- Stage results: STATIC / SECRET / TYPESCRIPT / BROWSER / PRODUCTION BUILD.
+- Failed stage logs are repeated at the bottom.
+- Desktop RESULT_TXT contains the same summary and failed-stage logs.
+
+LOCAL VALIDATION IN DELIVERY ENVIRONMENT
+- run-validation-full.mjs syntax: PASS
+- tool081:static: PASS (7/7)
+- Full dynamic FINAL cannot be completed in packaging environment because node_modules local bins are not included in archive.
+- Dependency-preflight correctly reports ENVIRONMENT_BLOCK=1 and prints the final summary/failure section.

@@ -1699,3 +1699,44 @@ html[data-theme="dark"] .toolbox-tool-format-notes article+article{
   .toolbox-tool-result-grid article>div{display:block}
 }
 
+
+
+/* TOOLBOX editorial information — reused from the former AdSense review home */
+.toolbox-editorial-about{background:var(--tb-bg);border-top:1px solid var(--tb-line)}
+.toolbox-editorial-about .toolbox-section-head{grid-template-columns:1fr}
+.toolbox-editorial-about .toolbox-section-head h2{font-size:clamp(38px,4vw,58px);line-height:1.08}
+.toolbox-editorial-about-copy{display:grid;grid-template-columns:1fr;gap:0;width:min(var(--tb-container),100%);margin-inline:auto;padding-top:6px;border-top:1px solid var(--tb-line-strong)}
+.toolbox-editorial-about-copy p{margin:0;padding:28px 0;color:var(--tb-muted);font-size:clamp(16px,1.35vw,19px);line-height:1.9;letter-spacing:-.02em}
+.toolbox-editorial-about-copy p+p{border-top:1px solid var(--tb-line)}
+.toolbox-editorial-guides{background:var(--tb-soft);border-top:1px solid var(--tb-line)}
+.toolbox-editorial-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;width:min(var(--tb-container),100%);margin-inline:auto;background:var(--tb-line);border:1px solid var(--tb-line)}
+.toolbox-editorial-guide-card{display:flex;min-height:310px;flex-direction:column;padding:30px;background:var(--tb-panel);color:var(--tb-fg);text-decoration:none;transition:background .2s ease,transform .2s ease}
+.toolbox-editorial-guide-card:hover{position:relative;z-index:1;background:var(--tb-bg);transform:translateY(-2px)}
+.toolbox-editorial-guide-card>div{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.toolbox-editorial-guide-card>div span{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.16em}
+.toolbox-editorial-guide-card>div b{color:var(--tb-muted);font-size:10px;letter-spacing:.16em}
+.toolbox-editorial-guide-card h3{margin:48px 0 14px;font-size:clamp(25px,2.3vw,36px);font-weight:500;line-height:1.18;letter-spacing:-.045em}
+.toolbox-editorial-guide-card p{margin:0;color:var(--tb-muted);font-size:15px;line-height:1.75}
+.toolbox-editorial-guide-card>strong{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:28px;color:var(--tb-fg);font-size:12px;letter-spacing:.04em}
+.toolbox-editorial-guide-card>strong i{color:var(--blue);font-style:normal;font-size:18px}
+.toolbox-editorial-principles{display:grid;grid-template-columns:1fr;gap:42px;padding:clamp(90px,10vw,150px) max(var(--tb-gutter),calc((100vw - var(--tb-container))/2));background:var(--tb-bg);color:var(--tb-fg);border-top:1px solid var(--tb-line)}
+.toolbox-editorial-principles-head p{margin:0 0 18px;color:var(--blue);font-size:10px;font-weight:900;letter-spacing:.2em}
+.toolbox-editorial-principles-head h2{margin:0;font-size:clamp(38px,4vw,58px);font-weight:400;line-height:1.08;letter-spacing:-.055em}
+.toolbox-editorial-principle-list{border-top:1px solid var(--tb-line-strong)}
+.toolbox-editorial-principle-list article{display:grid;grid-template-columns:54px 1fr;gap:22px;padding:30px 0;border-bottom:1px solid var(--tb-line)}
+.toolbox-editorial-principle-list article>b{color:var(--blue);font-size:11px;letter-spacing:.15em}
+.toolbox-editorial-principle-list h3{margin:0 0 10px;font-size:24px;font-weight:500;letter-spacing:-.03em}
+.toolbox-editorial-principle-list p{margin:0;color:var(--tb-muted);font-size:15px;line-height:1.75}
+@media(min-width:721px){
+  html[lang="ko"] .toolbox-editorial-about .toolbox-section-head h2,
+  html[lang="ko"] .toolbox-editorial-principles-head h2{white-space:nowrap}
+}
+@media(max-width:720px){
+  .toolbox-editorial-about-copy,.toolbox-editorial-guide-grid{grid-template-columns:1fr}
+  .toolbox-editorial-about-copy p{padding:24px 0}
+  .toolbox-editorial-guide-card{min-height:280px;padding:24px}
+  .toolbox-editorial-guide-card h3{margin-top:36px}
+  .toolbox-editorial-principles{grid-template-columns:1fr;gap:30px;padding-left:18px;padding-right:18px}
+  .toolbox-editorial-about .toolbox-section-head h2,
+  .toolbox-editorial-principles-head h2{font-size:clamp(36px,11vw,52px)}
+}
