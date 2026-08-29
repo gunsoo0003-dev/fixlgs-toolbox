@@ -221,17 +221,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const copy = copies[locale];
-  const canonical = `https://toolbox.fixlgs.com/${locale}`;
+  const canonical = `https://fixlgs.com/tools/${locale}`;
   return {
     title: copy.metadata.title,
     description: copy.metadata.description,
     alternates: {
       canonical,
       languages: {
-        'ko-KR': 'https://toolbox.fixlgs.com/ko',
-        'en': 'https://toolbox.fixlgs.com/en',
-        'ja-JP': 'https://toolbox.fixlgs.com/ja',
-        'x-default': 'https://toolbox.fixlgs.com/ko',
+        'ko-KR': 'https://fixlgs.com/tools/ko',
+        'en': 'https://fixlgs.com/tools/en',
+        'ja-JP': 'https://fixlgs.com/tools/ja',
+        'x-default': 'https://fixlgs.com/tools/ko',
       },
     },
   };
@@ -248,7 +248,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
   return (
     <main className={`toolbox-site toolbox-locale-${locale}`}>
       <header className="toolbox-header">
-        <Link href="/" className="toolbox-wordmark" aria-label={copy.footer.home}>
+        <Link href="https://fixlgs.com/" className="toolbox-wordmark" aria-label={copy.footer.home}>
           <strong>FIXLGS</strong><span>TOOLBOX</span>
         </Link>
         <nav className="toolbox-nav" aria-label={`${copy.nav[0]} / ${copy.nav[1]}`}>
@@ -328,7 +328,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
         <ToolboxFaqList items={copy.faq.items} initialCount={5} moreLabel={copy.faq.more} collapseLabel={copy.faq.collapse} />
       </section>
 
-      <footer className="toolbox-footer"><Link href="/">{copy.footer.home}</Link><span>TOOLBOX · 2026</span><div><Link href="https://fixlgs.com/privacy">{copy.footer.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.footer.terms}</Link><Link href={`https://fixlgs.com/contact?app=${encodeURIComponent('FIXLGS TOOLBOX')}`}>{copy.footer.contact}</Link></div></footer>
+      <footer className="toolbox-footer"><Link href="https://fixlgs.com/">{copy.footer.home}</Link><span>TOOLBOX · 2026</span><div><Link href="https://fixlgs.com/privacy">{copy.footer.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.footer.terms}</Link><Link href={`https://fixlgs.com/contact?app=${encodeURIComponent('FIXLGS TOOLBOX')}`}>{copy.footer.contact}</Link></div></footer>
     </main>
   );
 }

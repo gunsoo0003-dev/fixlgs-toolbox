@@ -12,14 +12,14 @@ const copy={
 } as const;
 
 export function DateAddSubtractCalculatorPage({locale}:{locale:Locale}){
- const t=copy[locale],url=`https://toolbox.fixlgs.com/${locale}/date-add-subtract-calculator`;
+ const t=copy[locale],url=`https://fixlgs.com/tools/${locale}/date-add-subtract-calculator`;
  const related=[
   {n:"045",slug:"date-difference-calculator",name:locale==="ko"?"날짜 차이 계산기":locale==="ja"?"日付差計算ツール":"Date Difference Calculator",available:true},
   {n:"047",slug:"dday-anniversary-calculator",name:locale==="ko"?"디데이·기념일 계산기":locale==="ja"?"Dデイ・記念日計算ツール":"D-Day & Anniversary Calculator",available:true},
   {n:"050",slug:"business-day-calculator",name:locale==="ko"?"평일·영업일 계산기":locale==="ja"?"平日・営業日計算ツール":"Weekday & Business Day Calculator",available:false},
   {n:"051",slug:"time-calculator",name:locale==="ko"?"시간 계산기":locale==="ja"?"時間計算ツール":"Time Calculator",available:false}
  ];
- const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/date-time`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+ const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/date-time`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
  return <ToolboxSubpageShell locale={locale} appName={t.title}><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
  <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description"><Link className="toolbox-subpage-back" href={`/${locale}/category/date-time`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">046 · DATE & TIME</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{t.local}</span></div></section>
  <section className="toolbox-tool-detail-body"><div><DateAddSubtractCalculatorTool locale={locale}/><ToolNavigation locale={locale} currentTool={46} /></div></section>

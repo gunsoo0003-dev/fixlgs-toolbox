@@ -10,11 +10,11 @@ test.describe('018 route, locale, SEO and protected-route regression', () => {
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(expected);
       await expect(page).toHaveTitle(expectedTitle);
       await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /DPI|PPI/);
-      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://toolbox.fixlgs.com/${locale}/image-metadata-checker`);
-      await expect(page.locator('link[rel="alternate"][hreflang="ko"]')).toHaveAttribute('href', 'https://toolbox.fixlgs.com/ko/image-metadata-checker');
-      await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', 'https://toolbox.fixlgs.com/en/image-metadata-checker');
-      await expect(page.locator('link[rel="alternate"][hreflang="ja"]')).toHaveAttribute('href', 'https://toolbox.fixlgs.com/ja/image-metadata-checker');
-      await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', 'https://toolbox.fixlgs.com/en/image-metadata-checker');
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://fixlgs.com/tools/${locale}/image-metadata-checker`);
+      await expect(page.locator('link[rel="alternate"][hreflang="ko"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/ko/image-metadata-checker');
+      await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/en/image-metadata-checker');
+      await expect(page.locator('link[rel="alternate"][hreflang="ja"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/ja/image-metadata-checker');
+      await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/en/image-metadata-checker');
       await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
       const ld = await page.locator('script[type="application/ld+json"]').textContent();
       expect(ld).toContain('WebApplication');

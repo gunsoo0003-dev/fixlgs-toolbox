@@ -82,7 +82,7 @@ const pageCopy = {
 
 export function AppStoreScreenshotMakerPage({ locale }: { locale: Locale }) {
   const t = pageCopy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/app-store-screenshot-maker`;
+  const url = `https://fixlgs.com/tools/${locale}/app-store-screenshot-maker`;
   const related = [
     { n: "021", name: locale === "ko" ? "SNS 이미지 제작기" : locale === "en" ? "Social Media Image Maker" : "SNS画像作成ツール", href: `/${locale}/social-media-image-maker` },
     { n: "016", name: locale === "ko" ? "이미지에 글자 넣기" : locale === "en" ? "Add Text to Image" : "画像文字入れツール", href: `/${locale}/add-text-to-image` },
@@ -90,7 +90,7 @@ export function AppStoreScreenshotMakerPage({ locale }: { locale: Locale }) {
   ];
   const jsonLd = { "@context": "https://schema.org", "@graph": [
     { "@type": "WebApplication", name: t.title, applicationCategory: "MultimediaApplication", operatingSystem: "Any", url, description: t.desc, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, featureList: ["App Store presets", "Google Play presets", "Portrait and landscape", "Korean English Japanese localization", "Multiple screenshot batch export", "Device frame", "No Stretch", "ZIP export"] },
-    { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/content-image` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
+    { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/content-image` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
     { "@type": "FAQPage", mainEntity: t.faqs.map(([q,a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }
   ]};
 

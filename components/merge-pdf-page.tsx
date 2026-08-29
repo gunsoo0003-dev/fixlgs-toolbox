@@ -151,7 +151,7 @@ const copy = {
 
 export function MergePdfPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/merge-pdf`;
+  const url = `https://fixlgs.com/tools/${locale}/merge-pdf`;
   const related = [
     { n: "026", slug: "image-to-pdf", name: locale === "ko" ? "이미지 PDF 변환기" : locale === "en" ? "Image to PDF Converter" : "画像PDF変換ツール" },
     { n: "027", slug: "pdf-to-image-converter", name: locale === "ko" ? "PDF 이미지 변환기" : locale === "en" ? "PDF to Image Converter" : "PDF画像変換ツール" },
@@ -160,7 +160,7 @@ export function MergePdfPage({ locale }: { locale: Locale }) {
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "WebApplication", name: t.title, applicationCategory: "UtilitiesApplication", operatingSystem: "Any", url, description: t.desc, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, featureList: ["Merge multiple PDFs", "Reorder PDF files", "Page preview", "Custom output filename", "Browser-local processing"] },
-      { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/pdf` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
+      { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/pdf` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
       { "@type": "FAQPage", mainEntity: t.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
     ],
   };

@@ -54,8 +54,8 @@ const copy = {
 export function SplitExtractPdfPage({locale}:{locale:Locale}){
   const t=copy[locale];
   const jsonLd=[
-    {"@context":"https://schema.org","@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://toolbox.fixlgs.com/${locale}/split-extract-pdf`,description:t.desc},
-    {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"FIXLGS TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/pdf`},{"@type":"ListItem",position:3,name:t.title,item:`https://toolbox.fixlgs.com/${locale}/split-extract-pdf`}]},
+    {"@context":"https://schema.org","@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://fixlgs.com/tools/${locale}/split-extract-pdf`,description:t.desc},
+    {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"FIXLGS TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/pdf`},{"@type":"ListItem",position:3,name:t.title,item:`https://fixlgs.com/tools/${locale}/split-extract-pdf`}]},
     {"@context":"https://schema.org","@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}
   ];
   const disabled=[

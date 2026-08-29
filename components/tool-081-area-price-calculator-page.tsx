@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type {Locale} from '@/lib/site';
 import {Tool081AreaPriceCalculator} from '@/components/tool-081-area-price-calculator';
+import {ToolNavigation} from '@/components/tool-navigation';
 import {ToolboxFaqList} from '@/components/toolbox-faq-list';
 import {ToolboxSubpageShell} from '@/components/toolbox-subpage-shell';
 
@@ -129,8 +130,8 @@ const expert={
 
 export function Tool081AreaPriceCalculatorPage({locale}:{locale:Locale}){
  const t=copy[locale];
- const url=`https://toolbox.fixlgs.com/${locale}/area-price-per-unit-calculator`;
- const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+ const url=`https://fixlgs.com/tools/${locale}/area-price-per-unit-calculator`;
+ const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
  return <ToolboxSubpageShell locale={locale} appName={t.title}>
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
   <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
@@ -139,7 +140,7 @@ export function Tool081AreaPriceCalculatorPage({locale}:{locale:Locale}){
    <div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div>
    <div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{t.local}</span></div>
   </section>
-  <section className="toolbox-tool-detail-body"><div><Tool081AreaPriceCalculator locale={locale}/></div></section>
+  <section className="toolbox-tool-detail-body"><div><Tool081AreaPriceCalculator locale={locale}/><ToolNavigation locale={locale} currentTool={81}/></div></section>
   <section className="toolbox-tool-guide toolbox-tool-guide--five">
    <div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div>
    <ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,'0')}</span><p>{s}</p></li>)}</ol>

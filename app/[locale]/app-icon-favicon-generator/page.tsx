@@ -18,17 +18,17 @@ export async function generateMetadata({params}:{params:Promise<{locale:string}>
   const {locale}=await params;
   if(!locales.includes(locale as Locale)) notFound();
   const current=locale as Locale;
-  const canonical=`https://toolbox.fixlgs.com/${current}/app-icon-favicon-generator`;
+  const canonical=`https://fixlgs.com/tools/${current}/app-icon-favicon-generator`;
   return {
     title:titles[current],
     description:descriptions[current],
     alternates:{
       canonical,
       languages:{
-        ko:'https://toolbox.fixlgs.com/ko/app-icon-favicon-generator',
-        en:'https://toolbox.fixlgs.com/en/app-icon-favicon-generator',
-        ja:'https://toolbox.fixlgs.com/ja/app-icon-favicon-generator',
-        'x-default':'https://toolbox.fixlgs.com/ko/app-icon-favicon-generator',
+        ko:'https://fixlgs.com/tools/ko/app-icon-favicon-generator',
+        en:'https://fixlgs.com/tools/en/app-icon-favicon-generator',
+        ja:'https://fixlgs.com/tools/ja/app-icon-favicon-generator',
+        'x-default':'https://fixlgs.com/tools/ko/app-icon-favicon-generator',
       },
     },
   };

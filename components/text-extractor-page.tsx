@@ -13,13 +13,13 @@ const copy = {
 
 export function TextExtractorPage({locale}:{locale:Locale}){
   const t=copy[locale];
-  const url=`https://toolbox.fixlgs.com/${locale}/text-extractor`;
+  const url=`https://fixlgs.com/tools/${locale}/text-extractor`;
   const related=[
     {n:"040",slug:"delimiter-list-converter",name:locale==="ko"?"구분자·목록 변환기":locale==="ja"?"区切り文字・リスト変換ツール":"Delimiter & List Converter",active:true},
     {n:"042",slug:"text-find-replace",name:locale==="ko"?"텍스트 찾기·바꾸기":locale==="ja"?"テキスト検索・置換":"Text Find & Replace",active:true},
     {n:"043",slug:"text-compare",name:locale==="ko"?"두 텍스트 비교기":locale==="ja"?"2つのテキスト比較ツール":"Text Comparison Tool",active:false},
   ];
-  const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+  const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
   return <ToolboxSubpageShell locale={locale} appName={t.title}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
     <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description"><Link className="toolbox-subpage-back" href={`/${locale}/category/text`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">041 · TEXT</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{t.local}</span></div></section>

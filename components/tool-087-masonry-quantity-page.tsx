@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type {Locale} from '@/lib/site';
 import {Tool087MasonryQuantity} from '@/components/tool-087-masonry-quantity';
+import {ToolNavigation} from '@/components/tool-navigation';
 import {ToolboxFaqList} from '@/components/toolbox-faq-list';
 import {ToolboxSubpageShell} from '@/components/toolbox-subpage-shell';
 
@@ -16,12 +17,12 @@ const expert={
 } as const;
 
 export function Tool087MasonryQuantityPage({locale}:{locale:Locale}){
- const t=copy[locale],url=`https://toolbox.fixlgs.com/${locale}/brick-block-quantity-calculator`;
- const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+ const t=copy[locale],url=`https://fixlgs.com/tools/${locale}/brick-block-quantity-calculator`;
+ const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
  return <ToolboxSubpageShell locale={locale} appName={t.title}>
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
   <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description"><Link className="toolbox-subpage-back" href={`/${locale}/category/real-estate-build`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">087 · REAL ESTATE & BUILD</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{t.local}</span></div></section>
-  <section className="toolbox-tool-detail-body"><div><Tool087MasonryQuantity locale={locale}/></div></section>
+  <section className="toolbox-tool-detail-body"><div><Tool087MasonryQuantity locale={locale}/><ToolNavigation locale={locale} currentTool={87}/></div></section>
   <section className="toolbox-tool-guide toolbox-tool-guide--five"><div className="toolbox-tool-guide-head"><p>HOW TO USE</p><h2>{t.how}</h2></div><ol>{t.steps.map((s,i)=><li key={s}><span>{String(i+1).padStart(2,'0')}</span><p>{s}</p></li>)}</ol></section>
   <section className="toolbox-tool-format-guide toolbox-tool-expert-post toolbox-tool-expert-post--wide-head"><div className="toolbox-tool-format-guide-head"><p>MASONRY QUANTITY</p><h2>{locale==='ko'?'벽돌·블록 구매 수량 가이드':locale==='ja'?'レンガ・ブロック購入数量ガイド':'Brick and block quantity guide'}</h2></div><div className="toolbox-tool-format-body"><div className="toolbox-tool-format-grid">{expert[locale].map(([tag,title,desc])=><article key={tag}><strong>{tag}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
   <section className="toolbox-tool-info-band toolbox-tool-info-band--section-start toolbox-tool-info-band--bottom-gap toolbox-tool-info-band--left-head toolbox-tool-info-band--format-head"><div className="toolbox-tool-info-band-head"><p>IMPORTANT NOTES</p><h2>{locale==='ko'?'주의사항':locale==='ja'?'注意事項':'Important notes'}</h2></div><ul className="toolbox-tool-info-band-list">{t.notes.map(n=><li key={n}>{n}</li>)}</ul></section>

@@ -35,7 +35,7 @@ const copy = {
 
 export function TextWhitespaceLinebreakCleanerPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/text-whitespace-linebreak-cleaner`;
+  const url = `https://fixlgs.com/tools/${locale}/text-whitespace-linebreak-cleaner`;
   const related = [
     { n:"036", slug:"character-document-counter", name:locale === "ko" ? "글자 수·문서 통계 계산기" : locale === "ja" ? "文字数・文書統計カウンター" : "Character & Document Statistics Counter", active:true },
     { n:"039", name:locale === "ko" ? "목록 정렬·중복 제거기" : locale === "ja" ? "リスト並べ替え・重複削除" : "List Sort & Duplicate Remover", active:false },
@@ -43,7 +43,7 @@ export function TextWhitespaceLinebreakCleanerPage({ locale }: { locale: Locale 
   ];
   const jsonLd = { "@context":"https://schema.org", "@graph":[
     { "@type":"WebApplication", name:t.title, applicationCategory:"UtilitiesApplication", operatingSystem:"Any", url, description:t.desc, offers:{"@type":"Offer",price:"0",priceCurrency:"USD"} },
-    { "@type":"BreadcrumbList", itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}] },
+    { "@type":"BreadcrumbList", itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}] },
     { "@type":"FAQPage", mainEntity:t.faqs.map(([q,a]) => ({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}})) },
   ]};
 

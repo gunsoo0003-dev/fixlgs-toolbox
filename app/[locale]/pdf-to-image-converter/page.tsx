@@ -18,17 +18,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const current = locale as Locale;
-  const canonical = `https://toolbox.fixlgs.com/${current}/pdf-to-image-converter`;
+  const canonical = `https://fixlgs.com/tools/${current}/pdf-to-image-converter`;
   return {
     title: titles[current],
     description: descriptions[current],
     alternates: {
       canonical,
       languages: {
-        ko: "https://toolbox.fixlgs.com/ko/pdf-to-image-converter",
-        en: "https://toolbox.fixlgs.com/en/pdf-to-image-converter",
-        ja: "https://toolbox.fixlgs.com/ja/pdf-to-image-converter",
-        "x-default": "https://toolbox.fixlgs.com/en/pdf-to-image-converter",
+        ko: "https://fixlgs.com/tools/ko/pdf-to-image-converter",
+        en: "https://fixlgs.com/tools/en/pdf-to-image-converter",
+        ja: "https://fixlgs.com/tools/ja/pdf-to-image-converter",
+        "x-default": "https://fixlgs.com/tools/en/pdf-to-image-converter",
       },
     },
     openGraph: { title: titles[current], description: descriptions[current], url: canonical, type: "website" },

@@ -10,8 +10,8 @@ export async function generateMetadata({params}:{params:Promise<{locale:string}>
   const {locale}=await params;
   if(!locales.includes(locale as Locale)) notFound();
   const current=locale as Locale;
-  const canonical=`https://toolbox.fixlgs.com/${current}/app-store-screenshot-maker`;
-  return { title:title[current], description:desc[current], alternates:{canonical,languages:{ko:"https://toolbox.fixlgs.com/ko/app-store-screenshot-maker",en:"https://toolbox.fixlgs.com/en/app-store-screenshot-maker",ja:"https://toolbox.fixlgs.com/ja/app-store-screenshot-maker","x-default":"https://toolbox.fixlgs.com/ko/app-store-screenshot-maker"}}, openGraph:{title:title[current],description:desc[current],url:canonical,type:"website"} };
+  const canonical=`https://fixlgs.com/tools/${current}/app-store-screenshot-maker`;
+  return { title:title[current], description:desc[current], alternates:{canonical,languages:{ko:"https://fixlgs.com/tools/ko/app-store-screenshot-maker",en:"https://fixlgs.com/tools/en/app-store-screenshot-maker",ja:"https://fixlgs.com/tools/ja/app-store-screenshot-maker","x-default":"https://fixlgs.com/tools/ko/app-store-screenshot-maker"}}, openGraph:{title:title[current],description:desc[current],url:canonical,type:"website"} };
 }
 
 export default async function Page({params}:{params:Promise<{locale:string}>}){

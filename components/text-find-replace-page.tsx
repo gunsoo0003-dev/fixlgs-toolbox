@@ -39,7 +39,7 @@ export function TextFindReplacePage({locale}:{locale:Locale}){
     ["Large jobs must respect both input and output limits","Input length, rule count, find/replacement size, and final result size have separate limits because long replacements can expand output significantly."]
   ] as const;
   return <ToolboxSubpageShell locale={locale} appName={t.title}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://toolbox.fixlgs.com/${locale}/text-find-replace`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://fixlgs.com/tools/${locale}/text-find-replace`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
     <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
       <Link className="toolbox-subpage-back" href={`/${locale}/category/text`}>← {t.back}</Link>
       <p className="toolbox-subpage-eyebrow">042 · TEXT</p>

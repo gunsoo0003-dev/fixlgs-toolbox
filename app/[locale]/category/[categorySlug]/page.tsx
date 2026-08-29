@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `${category.titles[current]} - TOOLBOX`,
     description: category.descriptions[current],
-    alternates: { canonical: `https://toolbox.fixlgs.com/${current}/category/${category.slug}` },
+    alternates: { canonical: `https://fixlgs.com/tools/${current}/category/${category.slug}` },
   };
 }
 

@@ -30,7 +30,7 @@ const copy = {
     copy: "결과 복사", save: "TXT 다운로드", copied: "결과를 복사했습니다.", saved: "TXT 파일을 저장했습니다.", copyFailed: "복사하지 못했습니다. 결과를 직접 선택해 복사해 주세요.",
     emptyInput: "추출할 텍스트를 입력해 주세요.", noType: "추출 유형을 하나 이상 선택해 주세요.", inputTooLong: "입력이 서비스 상한을 초과했습니다.", perTypeTooMany: "한 유형의 결과가 서비스 상한을 초과했습니다.", totalTooMany: "전체 추출 결과가 서비스 상한을 초과했습니다.", invalidFile: "TXT, MD, CSV 텍스트 파일만 사용할 수 있습니다.", readFailed: "파일 내용을 읽지 못했습니다. 다른 파일로 다시 시도해 주세요.", replaceWarning: "새 파일을 불러오면 현재 원문, 결과와 추출 유형이 초기화됩니다. 계속하시겠습니까?", cancelReplace: "취소", confirmReplace: "확인",
     limit: `서비스 상한: ${TOOL041_MAX_CHARS.toLocaleString("ko-KR")}자 · 유형당 ${TOOL041_MAX_MATCHES_PER_TYPE.toLocaleString("ko-KR")}건 · 전체 ${TOOL041_MAX_TOTAL_RESULTS.toLocaleString("ko-KR")}건`,
-    sampleText: "FIXLGS 문의 hello@example.com\n웹 https://toolbox.fixlgs.com\n전화 010-1234-5678\n가격 12,500원 #웹도구 #FIXLGS",
+    sampleText: "FIXLGS 문의 hello@example.com\n웹 https://fixlgs.com/tools\n전화 010-1234-5678\n가격 12,500원 #웹도구 #FIXLGS",
   },
   en: {
     local: "Text you type or load and extracted results stay in this browser and are not sent to or stored on a server.",
@@ -41,7 +41,7 @@ const copy = {
     copy: "Copy results", save: "Download TXT", copied: "Results copied.", saved: "TXT file saved.", copyFailed: "Could not write to the clipboard. Select and copy the results manually.",
     emptyInput: "Enter text to extract.", noType: "Select at least one extraction type.", inputTooLong: "The input exceeds the service limit.", perTypeTooMany: "A result type exceeds the service limit.", totalTooMany: "The total extracted result count exceeds the service limit.", invalidFile: "Only TXT, MD, and CSV text files are supported.", readFailed: "Could not read this file. Please try another file.", replaceWarning: "Loading a new file will reset the current source, results, and extraction types. Continue?", cancelReplace: "Cancel", confirmReplace: "Continue",
     limit: `Service limit: ${TOOL041_MAX_CHARS.toLocaleString("en-US")} characters · ${TOOL041_MAX_MATCHES_PER_TYPE.toLocaleString("en-US")} per type · ${TOOL041_MAX_TOTAL_RESULTS.toLocaleString("en-US")} total`,
-    sampleText: "Contact FIXLGS at hello@example.com\nWeb https://toolbox.fixlgs.com\nPhone +82 10-1234-5678\nPrice 12,500 #webtools #FIXLGS",
+    sampleText: "Contact FIXLGS at hello@example.com\nWeb https://fixlgs.com/tools\nPhone +82 10-1234-5678\nPrice 12,500 #webtools #FIXLGS",
   },
   ja: {
     local: "入力・読込した原文と抽出結果はサーバーへ送信・保存せず、このブラウザ内だけで処理します。",
@@ -52,7 +52,7 @@ const copy = {
     copy: "結果をコピー", save: "TXTをダウンロード", copied: "結果をコピーしました。", saved: "TXTファイルを保存しました。", copyFailed: "クリップボードへコピーできませんでした。結果を選択して手動でコピーしてください。",
     emptyInput: "抽出するテキストを入力してください。", noType: "抽出タイプを1つ以上選択してください。", inputTooLong: "入力がサービス上限を超えています。", perTypeTooMany: "1種類の結果がサービス上限を超えています。", totalTooMany: "抽出結果の合計がサービス上限を超えています。", invalidFile: "TXT・MD・CSVのテキストファイルのみ使用できます。", readFailed: "ファイルを読み込めませんでした。別のファイルで再試行してください。", replaceWarning: "新しいファイルを読み込むと、現在の原文・結果・抽出タイプが初期化されます。続けますか？", cancelReplace: "キャンセル", confirmReplace: "確認",
     limit: `サービス上限: ${TOOL041_MAX_CHARS.toLocaleString("ja-JP")}文字 · 種類ごと${TOOL041_MAX_MATCHES_PER_TYPE.toLocaleString("ja-JP")}件 · 全体${TOOL041_MAX_TOTAL_RESULTS.toLocaleString("ja-JP")}件`,
-    sampleText: "FIXLGS hello@example.com\nWeb https://toolbox.fixlgs.com\n電話 010-1234-5678\n価格 12,500 #ウェブツール #FIXLGS",
+    sampleText: "FIXLGS hello@example.com\nWeb https://fixlgs.com/tools\n電話 010-1234-5678\n価格 12,500 #ウェブツール #FIXLGS",
   },
 } as const;
 

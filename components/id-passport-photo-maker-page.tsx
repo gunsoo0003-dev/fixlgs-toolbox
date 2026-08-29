@@ -154,13 +154,13 @@ const copy = {
 
 export function IdPassportPhotoMakerPage({locale}:{locale:Locale}){
   const t=copy[locale];
-  const url=`https://toolbox.fixlgs.com/${locale}/id-passport-photo-maker`;
+  const url=`https://fixlgs.com/tools/${locale}/id-passport-photo-maker`;
   const related=[
     {n:"006",name:locale==="ko"?"이미지 크기 변경기":locale==="en"?"Image Resizer":"画像サイズ変更ツール",href:`/${locale}/image-resizer`},
     {n:"008",name:locale==="ko"?"이미지 자르기·회전기":locale==="en"?"Image Cropper & Rotator":"画像切り抜き・回転ツール",href:`/${locale}/image-cropper-rotator`},
     {n:"018",name:locale==="ko"?"이미지 정보·메타데이터 검사기":locale==="en"?"Image Info & Metadata Checker":"画像情報・メタデータチェッカー",href:`/${locale}/image-metadata-checker`},
   ];
-  const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"MultimediaApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"},featureList:["Passport photo presets","ID and employment photo presets","Face position guide","No Stretch crop","Digital JPG/PNG export","A4 actual-size print layout"]},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/content-image`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+  const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"MultimediaApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"},featureList:["Passport photo presets","ID and employment photo presets","Face position guide","No Stretch crop","Digital JPG/PNG export","A4 actual-size print layout"]},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/content-image`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
   return <ToolboxSubpageShell locale={locale} appName={t.title}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
     <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">

@@ -57,7 +57,7 @@ Actual Playwright/TypeScript/production-build FINAL was not executed in this con
 
 
 ## v16 pre-deploy Android local-server / Page Not Found fix
-- v15 실기기 결과에서 운영 URL `https://toolbox.fixlgs.com/ko/id-passport-photo-maker`가 아직 미배포라 404였는데도 W1이 PASS되고 이후 selector timeout이 PRODUCT_FAIL로 오분류되는 문제를 확인했다.
+- v15 실기기 결과에서 운영 URL `https://fixlgs.com/tools/ko/id-passport-photo-maker`가 아직 미배포라 404였는데도 W1이 PASS되고 이후 selector timeout이 PRODUCT_FAIL로 오분류되는 문제를 확인했다.
 - TOOL025 단독 명령은 이제 별도 `--base-url`이 없으면 자동으로 pre-deploy local mode를 사용한다.
 - PC에서 Next.js dev server를 `127.0.0.1:3025`로 자동 실행하고, 해당 025 route의 HTTP 200/404 여부를 먼저 검증한다.
 - `adb reverse tcp:3025 tcp:3025`를 설정하여 Galaxy Chrome이 같은 `http://127.0.0.1:3025/ko/id-passport-photo-maker`를 연다.

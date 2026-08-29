@@ -18,14 +18,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const current = locale as Locale;
-  const canonical = `https://toolbox.fixlgs.com/${current}/pdf-signature`;
+  const canonical = `https://fixlgs.com/tools/${current}/pdf-signature`;
   return {
     title: titles[current], description: descriptions[current],
     alternates: { canonical, languages: {
-      ko: "https://toolbox.fixlgs.com/ko/pdf-signature",
-      en: "https://toolbox.fixlgs.com/en/pdf-signature",
-      ja: "https://toolbox.fixlgs.com/ja/pdf-signature",
-      "x-default": "https://toolbox.fixlgs.com/en/pdf-signature",
+      ko: "https://fixlgs.com/tools/ko/pdf-signature",
+      en: "https://fixlgs.com/tools/en/pdf-signature",
+      ja: "https://fixlgs.com/tools/ja/pdf-signature",
+      "x-default": "https://fixlgs.com/tools/en/pdf-signature",
     } },
     openGraph: { title: titles[current], description: descriptions[current], url: canonical, type: "website" },
   };

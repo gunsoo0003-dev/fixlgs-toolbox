@@ -48,11 +48,11 @@ test.describe("TOOLBOX 007 complete automatic validation", () => {
     expect(sitemap.ok()).toBeTruthy();
     const xml = await sitemap.text();
     for (const locale of ["ko", "en", "ja"]) {
-      expect(xml).toContain(`https://toolbox.fixlgs.com/${locale}/web-image-optimizer`);
+      expect(xml).toContain(`https://fixlgs.com/tools/${locale}/web-image-optimizer`);
     }
     const robots = await request.get("/robots.txt");
     expect(robots.ok()).toBeTruthy();
-    expect(await robots.text()).toContain("https://toolbox.fixlgs.com/sitemap.xml");
+    expect(await robots.text()).toContain("https://fixlgs.com/tools/sitemap.xml");
   });
 
   test("inherits verified workbench and 001 action-button geometry", async ({ page }, testInfo) => {

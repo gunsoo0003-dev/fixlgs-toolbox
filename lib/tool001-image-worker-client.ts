@@ -37,7 +37,7 @@ export function runTool001WorkerConversion(args: {
       reject(new Error("worker-unavailable"));
       return;
     }
-    const worker = new Worker("/workers/tool001-image-worker.js");
+    const worker = new Worker("/tools/workers/tool001-image-worker.js");
     const diagnostic = getWorkerDiagnosticFault();
     const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const timeout = window.setTimeout(() => {

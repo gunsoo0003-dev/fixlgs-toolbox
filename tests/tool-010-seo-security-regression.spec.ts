@@ -26,7 +26,7 @@ test.describe("010 SEO, privacy and additive regression", () => {
     for (const route of slugs) expect(sitemap).toContain(route);
     const robots = await (await request.get("/robots.txt")).text();
     expect(robots).toContain("Allow: /");
-    expect(robots).toContain("https://toolbox.fixlgs.com/sitemap.xml");
+    expect(robots).toContain("https://fixlgs.com/tools/sitemap.xml");
     expect(robots).not.toContain("image-mosaic-blur-tool");
   });
 

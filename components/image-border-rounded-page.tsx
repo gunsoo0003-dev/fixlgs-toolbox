@@ -149,11 +149,11 @@ const copy = {
 
 export function ImageBorderRoundedPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/image-border-rounded-corners-tool`;
+  const url = `https://fixlgs.com/tools/${locale}/image-border-rounded-corners-tool`;
   const jsonLd = [
     { "@context": "https://schema.org", "@type": "WebApplication", name: t.title, applicationCategory: "MultimediaApplication", operatingSystem: "Any", offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, url, description: t.desc },
     { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: t.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
-    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/image-edit` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/image-edit` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] },
   ];
 
   const ready = locale === "ko" ? "사용 가능" : locale === "en" ? "Available" : "利用可能";

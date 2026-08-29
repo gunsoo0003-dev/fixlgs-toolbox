@@ -18,10 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const current = locale as Locale;
-  const canonical = `https://toolbox.fixlgs.com/${current}/split-extract-pdf`;
+  const canonical = `https://fixlgs.com/tools/${current}/split-extract-pdf`;
   return {
     title: title[current], description: description[current],
-    alternates: { canonical, languages: { ko: "https://toolbox.fixlgs.com/ko/split-extract-pdf", en: "https://toolbox.fixlgs.com/en/split-extract-pdf", ja: "https://toolbox.fixlgs.com/ja/split-extract-pdf", "x-default": "https://toolbox.fixlgs.com/ko/split-extract-pdf" } },
+    alternates: { canonical, languages: { ko: "https://fixlgs.com/tools/ko/split-extract-pdf", en: "https://fixlgs.com/tools/en/split-extract-pdf", ja: "https://fixlgs.com/tools/ja/split-extract-pdf", "x-default": "https://fixlgs.com/tools/ko/split-extract-pdf" } },
     openGraph: { title: title[current], description: description[current], url: canonical, type: "website" },
   };
 }

@@ -126,7 +126,7 @@ export const categories: Category[] = [
       en: "VAT, margin, break-even, payroll, investing, and loans.",
       ja: "VAT、利益率、損益、給与、投資、融資。",
     },
-    toolCountLabel: { ko: "11개 사용 가능", en: "11 available", ja: "11件利用可能" },
+    toolCountLabel: { ko: "15개 사용 가능", en: "15 available", ja: "15件利用可能" },
     accent: "#0868D7",
   },
   {

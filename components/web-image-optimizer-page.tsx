@@ -21,7 +21,7 @@ export function WebImageOptimizerPage({ locale }: { locale: Locale }) {
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Any",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      url: `https://toolbox.fixlgs.com/${locale}/web-image-optimizer`,
+      url: `https://fixlgs.com/tools/${locale}/web-image-optimizer`,
       description: t.desc,
     },
     {
@@ -37,8 +37,8 @@ export function WebImageOptimizerPage({ locale }: { locale: Locale }) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` },
-        { "@type": "ListItem", position: 2, name: t.title, item: `https://toolbox.fixlgs.com/${locale}/web-image-optimizer` },
+        { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` },
+        { "@type": "ListItem", position: 2, name: t.title, item: `https://fixlgs.com/tools/${locale}/web-image-optimizer` },
       ],
     },
   ];

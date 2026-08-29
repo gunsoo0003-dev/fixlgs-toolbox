@@ -33,7 +33,7 @@ const FLOW_CHECKLIST = [
 ];
 
 const args = parseArgs(process.argv);
-let BASE = String(args['base-url'] || 'https://toolbox.fixlgs.com').replace(/\/$/, '');
+let BASE = String(args['base-url'] || 'https://fixlgs.com/tools').replace(/\/$/, '');
 const BASE_EXPLICIT = Boolean(args['base-url']);
 let autoReversePort = null;
 const LOCALE = String(args.locale || 'ko');

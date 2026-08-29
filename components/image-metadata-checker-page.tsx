@@ -54,7 +54,7 @@ const copy = {
 
 export function ImageMetadataCheckerPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/image-metadata-checker`;
+  const url = `https://fixlgs.com/tools/${locale}/image-metadata-checker`;
   const related = [
     { n: '007', name: locale === 'ko' ? '웹 이미지 최적화기' : locale === 'en' ? 'Web Image Optimizer' : 'Web画像最適化ツール', href: `/${locale}/web-image-optimizer` },
     { n: '004', name: locale === 'ko' ? '이미지 압축기' : locale === 'en' ? 'Image Compressor' : '画像圧縮ツール', href: `/${locale}/image-compressor` },
@@ -63,7 +63,7 @@ export function ImageMetadataCheckerPage({ locale }: { locale: Locale }) {
   const jsonLd = {
     '@context': 'https://schema.org', '@graph': [
       { '@type': 'WebApplication', name: t.title, applicationCategory: 'MultimediaApplication', operatingSystem: 'Any', url, description: t.desc, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, featureList: ['Image metadata','EXIF','GPS','DPI / PPI','Print size','Metadata removal','Browser local processing'] },
-      { '@type': 'BreadcrumbList', itemListElement: [ { '@type': 'ListItem', position: 1, name: 'TOOLBOX', item: `https://toolbox.fixlgs.com/${locale}` }, { '@type': 'ListItem', position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/image-edit` }, { '@type': 'ListItem', position: 3, name: t.title, item: url } ] },
+      { '@type': 'BreadcrumbList', itemListElement: [ { '@type': 'ListItem', position: 1, name: 'TOOLBOX', item: `https://fixlgs.com/tools/${locale}` }, { '@type': 'ListItem', position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/image-edit` }, { '@type': 'ListItem', position: 3, name: t.title, item: url } ] },
       { '@type': 'FAQPage', mainEntity: t.faqs.map(([q,a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ],
   };

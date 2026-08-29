@@ -37,13 +37,13 @@ test('011 SEO sitemap robots category registration are present', async ({ reques
   expect(sitemapResponse.ok()).toBeTruthy();
   const sitemap = await sitemapResponse.text();
   for (const url of Object.values(TOOL011)) {
-    expect(sitemap).toContain(`https://toolbox.fixlgs.com${url}`);
+    expect(sitemap).toContain(`https://fixlgs.com/tools${url}`);
   }
 
   const robotsResponse = await request.get('/robots.txt');
   expect(robotsResponse.ok()).toBeTruthy();
   const robots = await robotsResponse.text();
-  expect(robots).toContain('https://toolbox.fixlgs.com/sitemap.xml');
+  expect(robots).toContain('https://fixlgs.com/tools/sitemap.xml');
 
   for (const locale of ['ko', 'en', 'ja'] as const) {
     const categoryResponse = await request.get(`/${locale}/category/image-edit`);

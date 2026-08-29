@@ -49,9 +49,9 @@ export function TargetSizeCompressorPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const appName = locale === "ko" ? "목표 용량 이미지 압축기" : locale === "en" ? "Target Size Image Compressor" : "目標容量画像圧縮ツール";
   const jsonLd = [
-    { "@context": "https://schema.org", "@type": "WebApplication", name: appName, applicationCategory: "MultimediaApplication", operatingSystem: "Any", offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, url: `https://toolbox.fixlgs.com/${locale}/target-size-image-compressor`, description: t.desc },
+    { "@context": "https://schema.org", "@type": "WebApplication", name: appName, applicationCategory: "MultimediaApplication", operatingSystem: "Any", offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, url: `https://fixlgs.com/tools/${locale}/target-size-image-compressor`, description: t.desc },
     { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: t.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
-    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` }, { "@type": "ListItem", position: 2, name: appName, item: `https://toolbox.fixlgs.com/${locale}/target-size-image-compressor` }] },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` }, { "@type": "ListItem", position: 2, name: appName, item: `https://fixlgs.com/tools/${locale}/target-size-image-compressor` }] },
   ];
   const next = locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業";
   const available = locale === "ko" ? "사용 가능" : locale === "en" ? "Available" : "利用可能";

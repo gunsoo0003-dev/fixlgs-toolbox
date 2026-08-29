@@ -24,9 +24,9 @@ console.log('=== FIXLGS TOOLBOX ADSENSE FINAL STATIC CHECK ===');
 // 1) Public inventory / route registry
 const publicBlock = site.match(/export const publicTools = \[([\s\S]*?)\] as const;/)?.[1] ?? '';
 const toolNumbers = [...publicBlock.matchAll(/number:\s*(\d+)/g)].map((m) => Number(m[1]));
-const expectedNumbers = Array.from({ length: 71 }, (_, i) => i + 1);
-check('publicTools contains exactly TOOL001~071', JSON.stringify(toolNumbers) === JSON.stringify(expectedNumbers), `${toolNumbers.length} tools`);
-check('public category slugs are 01~08 only', site.includes('export const publicCategorySlugs = categories.slice(0, 8).map'));
+const expectedNumbers = Array.from({ length: 90 }, (_, i) => i + 1);
+check('publicTools contains exactly TOOL001~090', JSON.stringify(toolNumbers) === JSON.stringify(expectedNumbers), `${toolNumbers.length} tools`);
+check('public category slugs are 01~09 only', site.includes('export const publicCategorySlugs = categories.slice(0, 9).map'));
 
 const slugDefs = new Map([...site.matchAll(/export const tool(\d{3})Slug\s*=\s*["']([^"']+)["']/g)].map((m) => [Number(m[1]), m[2]]));
 let routeMissing = 0;
@@ -37,12 +37,12 @@ for (const n of expectedNumbers) {
   const dynamicRoute = n <= 21 && dynamicToolRoute.includes(`tool${String(n).padStart(3, '0')}Slug`);
   if (!slug || (!explicitRoute && !dynamicRoute)) routeMissing++;
 }
-check('TOOL001~071 route coverage exists', routeMissing === 0, routeMissing ? `${routeMissing} missing` : '71/71');
+check('TOOL001~090 route coverage exists', routeMissing === 0, routeMissing ? `${routeMissing} missing` : '90/90');
 
 // 2) Hidden future categories / sitemap
-check('home exposes only first 8 categories', home.includes('siteCategories.slice(0, 8)') || home.includes('categoryBase.slice(0, 8)') || /const categories\s*=\s*categoryBase\.slice\(0,\s*8\)/.test(home));
-check('sitemap exposes only first 8 categories', sitemap.includes('categories.slice(0, 8)'));
-for (const slug of ['real-estate-build', 'qr-design-dev-seo', 'document-life-health-random']) {
+check('home exposes only first 9 categories', home.includes('siteCategories.slice(0, 9)') || home.includes('categoryBase.slice(0, 9)') || /const categories\s*=\s*categoryBase\.slice\(0,\s*9\)/.test(home));
+check('sitemap exposes only first 9 categories', sitemap.includes('categories.slice(0, 9)'));
+for (const slug of ['qr-design-dev-seo', 'document-life-health-random']) {
   check(`future category not hardcoded in sitemap: ${slug}`, !sitemap.includes(`/category/${slug}`));
 }
 
@@ -50,8 +50,8 @@ for (const slug of ['real-estate-build', 'qr-design-dev-seo', 'document-life-hea
 check('home search is interactive client component', hero.includes('"use client"') && hero.includes('useState') && hero.includes('useMemo'));
 check('search results use publicTools registry', hero.includes('publicTools.filter'));
 check('search result cards link to localized tool slug', hero.includes('href={`/${locale}/${tool.slug}`}'));
-check('search result cap is 8', hero.includes('.slice(0, 8)'));
-check('home tool count shows 71+', hero.includes('<span>71+</span>'));
+check('search result cap is 9', hero.includes('.slice(0, 9)'));
+check('home tool count shows 90+', hero.includes('<span>90+</span>'));
 check('home no legacy 136+ badge', !hero.includes('136+'));
 
 for (const token of ['tool028Slug', 'tool036Slug', 'tool045Slug', 'tool055Slug', 'tool066Slug']) {
@@ -61,7 +61,7 @@ for (const token of ['tool028Slug', 'tool036Slug', 'tool045Slug', 'tool055Slug',
 // 4) Common NEXT / RELATED navigation
 check('common ToolNavigation uses publicTools registry', nav.includes('publicTools.find') && nav.includes('publicTools.filter'));
 check('next tool is conditional', nav.includes('{nextTool ? (') && nav.includes(') : null}'));
-check('TOOL071 has no synthetic TOOL072 fallback', !nav.includes('72') && !nav.includes('tool072'));
+check('TOOL090 has no synthetic TOOL091 fallback', !nav.includes('91') && !nav.includes('tool091'));
 for (const [locale, label] of [['ko', '도구 열기'], ['en', 'Open tool'], ['ja', 'ツールを開く']]) {
   check(`navigation CTA ${locale}`, nav.includes(`open: "${label}"`));
 }
@@ -82,7 +82,7 @@ for (const dir of ['components', 'app/[locale]']) {
 const sourceText = sourceFiles.map((f) => fs.readFileSync(f, 'utf8')).join('\n');
 const toolNavRefs = [...sourceText.matchAll(/<ToolNavigation\s+locale=\{[^}]+\}\s+currentTool=\{(\d+)\}/g)].map((m) => Number(m[1]));
 const uniqueToolNav = [...new Set(toolNavRefs)].sort((a, b) => a - b);
-check('ToolNavigation applied to TOOL001~071', JSON.stringify(uniqueToolNav) === JSON.stringify(expectedNumbers), `${uniqueToolNav.length}/71`);
+check('ToolNavigation applied to TOOL001~090', JSON.stringify(uniqueToolNav) === JSON.stringify(expectedNumbers), `${uniqueToolNav.length}/90`);
 
 // 5) Fake-link / placeholder regressions
 check('no href="#"', !/href\s*=\s*["']#["']/.test(sourceText));
@@ -105,7 +105,7 @@ check('category page has guide + expert + FAQ sections', ['toolbox-category-guid
 // 7) Public category count labels match current published tools
 const expectedCounts = new Map([
   ['image-convert', 7], ['image-edit', 11], ['content-image', 7], ['pdf', 10],
-  ['text', 9], ['date-time', 10], ['unit-calc', 11], ['business-finance', 6],
+  ['text', 9], ['date-time', 10], ['unit-calc', 11], ['business-finance', 15], ['real-estate-build', 10],
 ]);
 for (const [slug, count] of expectedCounts) {
   const categoryIndex = site.indexOf(`slug: "${slug}"`);

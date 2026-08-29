@@ -206,16 +206,16 @@ export function ImageWatermarkPage({ locale }: { locale: Locale }) {
         name: t.title,
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Any",
-        url: `https://toolbox.fixlgs.com/${locale}/image-watermark-tool`,
+        url: `https://fixlgs.com/tools/${locale}/image-watermark-tool`,
         description: t.desc,
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` },
-          { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/image-edit` },
-          { "@type": "ListItem", position: 3, name: t.title, item: `https://toolbox.fixlgs.com/${locale}/image-watermark-tool` },
+          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` },
+          { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/image-edit` },
+          { "@type": "ListItem", position: 3, name: t.title, item: `https://fixlgs.com/tools/${locale}/image-watermark-tool` },
         ],
       },
       {

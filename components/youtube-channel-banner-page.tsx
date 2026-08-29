@@ -146,10 +146,10 @@ export function YoutubeChannelBannerPage({ locale }: { locale: Locale }) {
     ["017", locale === "ko" ? "이미지 워터마크 넣기" : locale === "ja" ? "画像ウォーターマーク追加ツール" : "Add Watermark to Images", "image-watermark-tool"],
     ["011", locale === "ko" ? "이미지 여백·배경 추가기" : locale === "ja" ? "画像余白・背景追加ツール" : "Image Padding & Background Tool", "image-padding-background-tool"],
   ] as const;
-  const url = `https://toolbox.fixlgs.com/${locale}/youtube-channel-banner-maker`;
+  const url = `https://fixlgs.com/tools/${locale}/youtube-channel-banner-maker`;
   return <ToolboxSubpageShell locale={locale} appName={t.title}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: t.title, url, applicationCategory: "MultimediaApplication", operatingSystem: "Any", description: t.desc, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } }) }} />
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/content-image` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] }) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` }, { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/content-image` }, { "@type": "ListItem", position: 3, name: t.title, item: url }] }) }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: t.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }) }} />
 
     <section className="toolbox-tool-detail-hero tool020-detail-hero">

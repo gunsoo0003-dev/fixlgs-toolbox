@@ -44,15 +44,15 @@ const copy = {
 
 export function PdfToImageConverterPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/pdf-to-image-converter`;
+  const url = `https://fixlgs.com/tools/${locale}/pdf-to-image-converter`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "WebApplication", name: t.title, applicationCategory: "UtilitiesApplication", operatingSystem: "Any", url, description: t.desc, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } },
       { "@type": "FAQPage", mainEntity: t.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) },
       { "@type": "BreadcrumbList", itemListElement: [
-        { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://toolbox.fixlgs.com/${locale}` },
-        { "@type": "ListItem", position: 2, name: t.back, item: `https://toolbox.fixlgs.com/${locale}/category/pdf` },
+        { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` },
+        { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/pdf` },
         { "@type": "ListItem", position: 3, name: t.title, item: url },
       ] },
     ],

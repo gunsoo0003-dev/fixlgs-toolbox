@@ -38,7 +38,7 @@ export function TextDiffComparePage({locale}:{locale:Locale}){
   ["Source text and reports stay in the browser","Both source versions and the generated plain-text diff report are processed in browser memory and are not sent to an external server."]
  ] as const;
  return <ToolboxSubpageShell locale={locale} appName={t.title}>
-  <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://toolbox.fixlgs.com/${locale}/text-diff-compare`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
+  <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",url:`https://fixlgs.com/tools/${locale}/text-diff-compare`,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}}/>
   <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
    <Link className="toolbox-subpage-back" href={`/${locale}/category/text`}>← {t.back}</Link><p className="toolbox-subpage-eyebrow">043 · TEXT</p>
    <div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title}</span></h1><p>{t.desc}</p></div>

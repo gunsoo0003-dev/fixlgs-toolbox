@@ -18,8 +18,8 @@ export async function generateMetadata({params}:{params:Promise<{locale:string}>
   const {locale}=await params;
   if(!locales.includes(locale as Locale)) notFound();
   const l=locale as Locale;
-  const canonical=`https://toolbox.fixlgs.com/${l}/character-document-counter`;
-  return {title:title[l],description:description[l],alternates:{canonical,languages:{ko:"https://toolbox.fixlgs.com/ko/character-document-counter",en:"https://toolbox.fixlgs.com/en/character-document-counter",ja:"https://toolbox.fixlgs.com/ja/character-document-counter","x-default":"https://toolbox.fixlgs.com/ko/character-document-counter"}},openGraph:{title:title[l],description:description[l],url:canonical,type:"website"}};
+  const canonical=`https://fixlgs.com/tools/${l}/character-document-counter`;
+  return {title:title[l],description:description[l],alternates:{canonical,languages:{ko:"https://fixlgs.com/tools/ko/character-document-counter",en:"https://fixlgs.com/tools/en/character-document-counter",ja:"https://fixlgs.com/tools/ja/character-document-counter","x-default":"https://fixlgs.com/tools/ko/character-document-counter"}},openGraph:{title:title[l],description:description[l],url:canonical,type:"website"}};
 }
 
 export default async function Page({params}:{params:Promise<{locale:string}>}){

@@ -84,10 +84,10 @@ const copy = {
 export function BeforeAfterImagePage({locale}:{locale:Locale}){
   const t=copy[locale];
   const appName=locale==="ko"?"전후 비교 이미지 만들기":locale==="en"?"Before & After Image Maker":"ビフォー・アフター比較画像作成";
-  const url=`https://toolbox.fixlgs.com/${locale}/before-after-image-maker`;
+  const url=`https://fixlgs.com/tools/${locale}/before-after-image-maker`;
   const jsonLd={"@context":"https://schema.org","@graph":[
     {"@type":"WebApplication",name:appName,applicationCategory:"MultimediaApplication",operatingSystem:"Any",url,description:t.desc,offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},
-    {"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/image-edit`},{"@type":"ListItem",position:3,name:appName,item:url}]},
+    {"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/image-edit`},{"@type":"ListItem",position:3,name:appName,item:url}]},
     {"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}
   ]};
   const nextTitle=locale==="ko"?"다음 작업":locale==="en"?"Next steps":"次の作業";

@@ -16,22 +16,23 @@ function detectLocale(request: NextRequest): Locale {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const appPathname = pathname.startsWith('/tools') ? pathname.slice('/tools'.length) || '/' : pathname;
 
-  if (pathname === '/toolbox' || pathname === '/toolbox/') {
+  if (appPathname === '/toolbox' || appPathname === '/toolbox/') {
     const url = request.nextUrl.clone();
-    url.pathname = `/${detectLocale(request)}`;
+    url.pathname = `/tools/${detectLocale(request)}`;
     return NextResponse.redirect(url, 308);
   }
 
-  const legacyMatch = pathname.match(/^\/(ko|en|ja)\/toolbox(?:\/(.*))?$/);
+  const legacyMatch = appPathname.match(/^\/(ko|en|ja)\/toolbox(?:\/(.*))?$/);
   if (legacyMatch) {
     const [, locale, rest] = legacyMatch;
     const url = request.nextUrl.clone();
-    url.pathname = rest ? `/${locale}/${rest}` : `/${locale}`;
+    url.pathname = rest ? `/tools/${locale}/${rest}` : `/tools/${locale}`;
     return NextResponse.redirect(url, 308);
   }
 
-  const locale = pathname.match(/^\/(ko|en|ja)(?:\/|$)/)?.[1] as Locale | undefined;
+  const locale = appPathname.match(/^\/(ko|en|ja)(?:\/|$)/)?.[1] as Locale | undefined;
   if (locale) {
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-fixlgs-locale', locale);
@@ -42,5 +43,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/toolbox/:path*', '/(ko|en|ja)/:path*'],
+  matcher: ['/:path*'],
 };

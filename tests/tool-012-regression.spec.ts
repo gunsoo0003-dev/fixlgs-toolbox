@@ -36,7 +36,7 @@ test('001-011 protected routes remain reachable and 012 locale routes resolve', 
 test('012 SEO canonical hreflang structured data are present for all locales', async ({ page }) => {
   for (const [locale, url] of Object.entries(TOOL012)) {
     await page.goto(url, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://toolbox.fixlgs.com${url}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://fixlgs.com/tools${url}`);
 
     for (const lang of ['ko', 'en', 'ja']) {
       await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1);
@@ -56,13 +56,13 @@ test('012 sitemap robots and image-edit category registration are additive', asy
   expect(sitemapResponse.ok()).toBeTruthy();
   const sitemap = await sitemapResponse.text();
   for (const url of Object.values(TOOL012)) {
-    expect(sitemap).toContain(`https://toolbox.fixlgs.com${url}`);
+    expect(sitemap).toContain(`https://fixlgs.com/tools${url}`);
   }
 
   // Existing completed tools must remain in sitemap after adding 012.
   for (const url of [
-    'https://toolbox.fixlgs.com/ko/image-mosaic-blur-tool',
-    'https://toolbox.fixlgs.com/ko/image-padding-background-tool',
+    'https://fixlgs.com/tools/ko/image-mosaic-blur-tool',
+    'https://fixlgs.com/tools/ko/image-padding-background-tool',
   ]) {
     expect(sitemap).toContain(url);
   }
@@ -70,7 +70,7 @@ test('012 sitemap robots and image-edit category registration are additive', asy
   const robotsResponse = await request.get('/robots.txt');
   expect(robotsResponse.ok()).toBeTruthy();
   const robots = await robotsResponse.text();
-  expect(robots).toContain('https://toolbox.fixlgs.com/sitemap.xml');
+  expect(robots).toContain('https://fixlgs.com/tools/sitemap.xml');
 
   for (const locale of ['ko', 'en', 'ja'] as const) {
     const categoryResponse = await request.get(`/${locale}/category/image-edit`);

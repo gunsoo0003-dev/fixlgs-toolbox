@@ -51,7 +51,7 @@ test('016 sitemap and robots integration are present', async ({ page }) => {
   for (const locale of ['ko', 'en', 'ja']) expect(xml).toContain(`/${locale}/add-text-to-image`);
   const robots = await page.request.get('/robots.txt');
   expect(robots.ok()).toBeTruthy();
-  expect(await robots.text()).toContain('https://toolbox.fixlgs.com/sitemap.xml');
+  expect(await robots.text()).toContain('https://fixlgs.com/tools/sitemap.xml');
 });
 
 test('016 structured data contains WebApplication, FAQPage and BreadcrumbList', async ({ page }) => {

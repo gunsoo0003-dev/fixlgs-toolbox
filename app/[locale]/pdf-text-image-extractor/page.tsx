@@ -18,10 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const l = locale as Locale;
-  const canonical = `https://toolbox.fixlgs.com/${l}/pdf-text-image-extractor`;
+  const canonical = `https://fixlgs.com/tools/${l}/pdf-text-image-extractor`;
   return {
     title: titles[l], description: descriptions[l],
-    alternates: { canonical, languages: { ko: "https://toolbox.fixlgs.com/ko/pdf-text-image-extractor", en: "https://toolbox.fixlgs.com/en/pdf-text-image-extractor", ja: "https://toolbox.fixlgs.com/ja/pdf-text-image-extractor", "x-default": "https://toolbox.fixlgs.com/en/pdf-text-image-extractor" } },
+    alternates: { canonical, languages: { ko: "https://fixlgs.com/tools/ko/pdf-text-image-extractor", en: "https://fixlgs.com/tools/en/pdf-text-image-extractor", ja: "https://fixlgs.com/tools/ja/pdf-text-image-extractor", "x-default": "https://fixlgs.com/tools/en/pdf-text-image-extractor" } },
     openGraph: { title: titles[l], description: descriptions[l], url: canonical, type: "website" },
   };
 }

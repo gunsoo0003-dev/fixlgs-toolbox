@@ -2223,15 +2223,15 @@ before-after-image-maker
 
 한국어:
 
-[https://toolbox.fixlgs.com/ko/before-after-image-maker](https://toolbox.fixlgs.com/ko/before-after-image-maker)
+[https://fixlgs.com/tools/ko/before-after-image-maker](https://fixlgs.com/tools/ko/before-after-image-maker)
 
 영어:
 
-[https://toolbox.fixlgs.com/en/before-after-image-maker](https://toolbox.fixlgs.com/en/before-after-image-maker)
+[https://fixlgs.com/tools/en/before-after-image-maker](https://fixlgs.com/tools/en/before-after-image-maker)
 
 일본어:
 
-[https://toolbox.fixlgs.com/ja/before-after-image-maker](https://toolbox.fixlgs.com/ja/before-after-image-maker)
+[https://fixlgs.com/tools/ja/before-after-image-maker](https://fixlgs.com/tools/ja/before-after-image-maker)
 
 015만 별도 URL 규칙을 만들지 않는다.
 
@@ -2348,7 +2348,7 @@ hreflang:
 
 사이트맵:
 
-[https://toolbox.fixlgs.com/sitemap.xml](https://toolbox.fixlgs.com/sitemap.xml)
+[https://fixlgs.com/tools/sitemap.xml](https://fixlgs.com/tools/sitemap.xml)
 
 기존 URL 누락 회귀 검수
 

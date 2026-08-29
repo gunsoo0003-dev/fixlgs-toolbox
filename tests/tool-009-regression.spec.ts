@@ -24,7 +24,7 @@ test("robots remains indexable and keeps the production sitemap", async ({ reque
   expect(response.ok()).toBeTruthy();
   const robots = await response.text();
   expect(robots).toContain("Allow: /");
-  expect(robots).toContain("https://toolbox.fixlgs.com/sitemap.xml");
+  expect(robots).toContain("https://fixlgs.com/tools/sitemap.xml");
 });
 
 test("language switching preserves the tool 009 slug", async ({ page }) => {

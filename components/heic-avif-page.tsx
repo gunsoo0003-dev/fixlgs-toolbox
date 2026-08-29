@@ -138,9 +138,9 @@ export function HeicAvifPage({ locale }:{locale:Locale}) {
   const t=text[locale];
   const appName = locale === "ko" ? "HEIC·AVIF 이미지 변환기" : locale === "en" ? "HEIC & AVIF Image Converter" : "HEIC・AVIF画像変換ツール";
   const jsonLd = [
-    {"@context":"https://schema.org","@type":"WebApplication",name:appName,applicationCategory:"MultimediaApplication",operatingSystem:"Any",offers:{"@type":"Offer",price:"0",priceCurrency:"USD"},url:`https://toolbox.fixlgs.com/${locale}/heic-avif-image-converter`,description:t.desc},
+    {"@context":"https://schema.org","@type":"WebApplication",name:appName,applicationCategory:"MultimediaApplication",operatingSystem:"Any",offers:{"@type":"Offer",price:"0",priceCurrency:"USD"},url:`https://fixlgs.com/tools/${locale}/heic-avif-image-converter`,description:t.desc},
     {"@context":"https://schema.org","@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))},
-    {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/image-convert`},{"@type":"ListItem",position:3,name:appName,item:`https://toolbox.fixlgs.com/${locale}/heic-avif-image-converter`}]}
+    {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/image-convert`},{"@type":"ListItem",position:3,name:appName,item:`https://fixlgs.com/tools/${locale}/heic-avif-image-converter`}]}
   ];
   const nextTitle = locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業";
   const relatedTitle = locale === "ko" ? "관련 도구" : locale === "en" ? "Related tools" : "関連ツール";

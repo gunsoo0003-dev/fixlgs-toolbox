@@ -34,7 +34,7 @@ const copy = {
 
 export function CharacterDocumentCounterPage({ locale }: { locale: Locale }) {
   const t = copy[locale];
-  const url = `https://toolbox.fixlgs.com/${locale}/character-document-counter`;
+  const url = `https://fixlgs.com/tools/${locale}/character-document-counter`;
   const related = [
     { n:"037", slug:"text-whitespace-linebreak-cleaner", name:locale === "ko" ? "텍스트 공백·줄바꿈 정리기" : locale === "ja" ? "テキスト空白・改行整理ツール" : "Text Whitespace & Line Break Cleaner" },
     { n:"038", slug:"text-case-sentence-converter", name:locale === "ko" ? "대소문자·문장 형식 변환기" : locale === "ja" ? "大文字・小文字・文形式変換ツール" : "Text Case & Sentence Converter" },
@@ -42,7 +42,7 @@ export function CharacterDocumentCounterPage({ locale }: { locale: Locale }) {
   ];
   const jsonLd = { "@context":"https://schema.org", "@graph":[
     { "@type":"WebApplication", name:t.title, applicationCategory:"UtilitiesApplication", operatingSystem:"Any", url, description:t.desc, offers:{"@type":"Offer",price:"0",priceCurrency:"USD"} },
-    { "@type":"BreadcrumbList", itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://toolbox.fixlgs.com/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://toolbox.fixlgs.com/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}] },
+    { "@type":"BreadcrumbList", itemListElement:[{"@type":"ListItem",position:1,name:"TOOLBOX",item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/text`},{"@type":"ListItem",position:3,name:t.title,item:url}] },
     { "@type":"FAQPage", mainEntity:t.faqs.map(([q,a]) => ({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}})) },
   ]};
 

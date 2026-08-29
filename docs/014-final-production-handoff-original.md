@@ -2008,15 +2008,15 @@ image-collage-maker
 
 한국어:
 
-[https://toolbox.fixlgs.com/ko/image-collage-maker](https://toolbox.fixlgs.com/ko/image-collage-maker)
+[https://fixlgs.com/tools/ko/image-collage-maker](https://fixlgs.com/tools/ko/image-collage-maker)
 
 영어:
 
-[https://toolbox.fixlgs.com/en/image-collage-maker](https://toolbox.fixlgs.com/en/image-collage-maker)
+[https://fixlgs.com/tools/en/image-collage-maker](https://fixlgs.com/tools/en/image-collage-maker)
 
 일본어:
 
-[https://toolbox.fixlgs.com/ja/image-collage-maker](https://toolbox.fixlgs.com/ja/image-collage-maker)
+[https://fixlgs.com/tools/ja/image-collage-maker](https://fixlgs.com/tools/ja/image-collage-maker)
 
 014만 별도 URL 규칙 생성 금지
 
@@ -2134,7 +2134,7 @@ hreflang:
 
 사이트맵:
 
-[https://toolbox.fixlgs.com/sitemap.xml](https://toolbox.fixlgs.com/sitemap.xml)
+[https://fixlgs.com/tools/sitemap.xml](https://fixlgs.com/tools/sitemap.xml)
 
 기존 URL 누락 회귀 검수
 

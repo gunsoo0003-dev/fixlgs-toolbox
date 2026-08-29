@@ -75,7 +75,7 @@ test.describe('013 regression-only', () => {
     const robotsResponse = await page.request.get('/robots.txt');
     expect(robotsResponse.ok(), 'PRODUCT_FAIL: robots.txt response').toBeTruthy();
     const robots = await robotsResponse.text();
-    expect(robots).toContain('https://toolbox.fixlgs.com/sitemap.xml');
+    expect(robots).toContain('https://fixlgs.com/tools/sitemap.xml');
   });
 
   test('013 structured data remains attached to the tool route', async ({ page }) => {

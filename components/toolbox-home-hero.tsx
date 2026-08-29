@@ -71,7 +71,7 @@ export function ToolboxHomeHero({ locale, hero, search }: Props) {
           </div>
           <div className="toolbox-quick-links"><span>{search.quick}</span>{search.links.map((item) => <button type="button" key={item} onClick={() => setQuickQuery(item)}>{item}</button>)}</div>
         </div>
-        <div className="toolbox-hero-blue" aria-hidden="true"><span>71+</span><small>TOOLS SYSTEM</small></div>
+        <div className="toolbox-hero-blue" aria-hidden="true"><span>90+</span><small>TOOLS SYSTEM</small></div>
       </section>
 
       {normalized ? (

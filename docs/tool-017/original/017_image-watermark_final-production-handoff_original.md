@@ -2677,13 +2677,13 @@ add-watermark-to-image
 예:
 
 한국어:
-[https://toolbox.fixlgs.com/ko/image-watermark](https://toolbox.fixlgs.com/ko/image-watermark)
+[https://fixlgs.com/tools/ko/image-watermark](https://fixlgs.com/tools/ko/image-watermark)
 
 영어:
-[https://toolbox.fixlgs.com/en/image-watermark](https://toolbox.fixlgs.com/en/image-watermark)
+[https://fixlgs.com/tools/en/image-watermark](https://fixlgs.com/tools/en/image-watermark)
 
 일본어:
-[https://toolbox.fixlgs.com/ja/image-watermark](https://toolbox.fixlgs.com/ja/image-watermark)
+[https://fixlgs.com/tools/ja/image-watermark](https://fixlgs.com/tools/ja/image-watermark)
 
 017만 별도 URL 체계를 만들지 않는다.
 
@@ -2815,7 +2815,7 @@ hreflang:
 
 사이트맵:
 
-[https://toolbox.fixlgs.com/sitemap.xml](https://toolbox.fixlgs.com/sitemap.xml)
+[https://fixlgs.com/tools/sitemap.xml](https://fixlgs.com/tools/sitemap.xml)
 
 기존 URL 누락 여부 회귀 확인
 

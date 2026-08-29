@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { commonValidationTools } from "../lib/validation/common-tool-catalog";
 import { assertNoHorizontalOverflow, assertNoPageErrors } from "./helpers/toolbox-validation";
 
-const base = "https://toolbox.fixlgs.com";
+const base = "https://fixlgs.com/tools";
 const normalize = (value: string) => value.replace(/\s+/g, "").trim();
 
 /**

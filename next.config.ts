@@ -10,6 +10,7 @@ const isTool018Runtime = process.env.TOOL018_RUNTIME === "1";
 const isTool019Runtime = process.env.TOOL019_RUNTIME === "1";
 
 const nextConfig: NextConfig = {
+  basePath: "/tools",
   allowedDevOrigins: ["127.0.0.1", "localhost"],
   distDir: isTool019Runtime
     ? ".next-tool019-runtime"

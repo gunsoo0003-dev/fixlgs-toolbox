@@ -147,12 +147,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: seoTitle,
     description: seoDescription,
     alternates: {
-      canonical: `https://toolbox.fixlgs.com/${current}/${toolSlug}`,
+      canonical: `https://fixlgs.com/tools/${current}/${toolSlug}`,
       languages: {
-        ko: `https://toolbox.fixlgs.com/ko/${toolSlug}`,
-        en: `https://toolbox.fixlgs.com/en/${toolSlug}`,
-        ja: `https://toolbox.fixlgs.com/ja/${toolSlug}`,
-        "x-default": `https://toolbox.fixlgs.com/en/${toolSlug}`,
+        ko: `https://fixlgs.com/tools/ko/${toolSlug}`,
+        en: `https://fixlgs.com/tools/en/${toolSlug}`,
+        ja: `https://fixlgs.com/tools/ja/${toolSlug}`,
+        "x-default": `https://fixlgs.com/tools/en/${toolSlug}`,
       },
     },
   };
@@ -328,7 +328,7 @@ export default async function Tool001Page({ params }: { params: Promise<{ locale
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Any",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      url: `https://toolbox.fixlgs.com/${current}/${tool001Slug}`,
+      url: `https://fixlgs.com/tools/${current}/${tool001Slug}`,
       description: tool001Descriptions[current],
     },
     {
