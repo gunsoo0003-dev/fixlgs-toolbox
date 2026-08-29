@@ -11,6 +11,61 @@ const isTool019Runtime = process.env.TOOL019_RUNTIME === "1";
 
 const nextConfig: NextConfig = {
   basePath: "/tools",
+  async redirects() {
+    const legacyHost = [{ type: "host" as const, value: "toolbox.fixlgs.com" }];
+
+    return [
+      {
+        source: "/",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/ko",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/tools",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/ko",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/tools/:path*",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/:path*",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/toolbox",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/ko",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/:locale(ko|en|ja)/toolbox",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/:locale",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/:locale(ko|en|ja)/toolbox/:path*",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/:locale/:path*",
+        permanent: true,
+        basePath: false,
+      },
+      {
+        source: "/:path*",
+        has: legacyHost,
+        destination: "https://fixlgs.com/tools/:path*",
+        permanent: true,
+        basePath: false,
+      },
+    ];
+  },
   allowedDevOrigins: ["127.0.0.1", "localhost"],
   distDir: isTool019Runtime
     ? ".next-tool019-runtime"
