@@ -16,7 +16,6 @@ export function BlogOpenGraphImageMakerPage({locale}:{locale:Locale}){
   const t=copy[locale];
   const url=`https://fixlgs.com/tools/${locale}/blog-open-graph-image-maker`;
   const ready=locale==='ko'?'사용 가능':locale==='en'?'AVAILABLE':'利用可能';
-  const coming=locale==='ko'?'준비 중':locale==='en'?'PLANNED':'準備中';
   const next=locale==='ko'?'다음 작업':locale==='en'?'Next tool':'次のツール';
   const relatedTitle=locale==='ko'?'관련 도구':locale==='en'?'Related tools':'関連ツール';
   const titleLines=locale==='ko'?['블로그·오픈그래프','이미지 제작기']:[t.title];

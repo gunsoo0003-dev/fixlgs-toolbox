@@ -34,7 +34,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
   const back = currentLocale === "ko" ? "전체 카테고리" : currentLocale === "en" ? "All categories" : "すべてのカテゴリー";
   const label = currentLocale === "ko" ? "카테고리 도구" : currentLocale === "en" ? "CATEGORY TOOLS" : "カテゴリーツール";
   const open = currentLocale === "ko" ? "도구 열기" : currentLocale === "en" ? "OPEN TOOL" : "ツールを開く";
-  const preparing = currentLocale === "ko" ? "준비 중" : currentLocale === "en" ? "COMING SOON" : "準備中";
   const expertCopy = (() => {
     const guides: Partial<Record<string, Record<Locale, { eyebrow: string; title: string; description: string; points: [string, string][] }>>> = {
       "image-convert": {
@@ -237,7 +236,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ local
               <>
                 <div className="toolbox-subpage-card-top"><span>{(categorySlug === "content-image" || categorySlug === "pdf" || categorySlug === "text" || categorySlug === "date-time" || categorySlug === "unit-calc" || categorySlug === "business-finance") ? String(toolNumber).padStart(3, "0") : String(toolNumber).padStart(2, "0")}</span><small>{tool.active ? "LIVE" : "NEXT"}</small></div>
                 <div><h2>{cardTitle}</h2>{tool.description[currentLocale] ? <p>{tool.description[currentLocale]}</p> : null}</div>
-                <div className="toolbox-subpage-card-foot"><b>{tool.active ? open : preparing}</b><i>↗</i></div>
+                <div className="toolbox-subpage-card-foot"><b>{open}</b><i>↗</i></div>
               </>
             );
             const cardClassName = `toolbox-subpage-card ${index === 0 ? "is-featured" : ""} ${categorySlug === "content-image" && index === 0 ? "is-tool019-featured" : ""}`.trim();

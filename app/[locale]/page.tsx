@@ -14,7 +14,7 @@ type Copy = {
   nav: [string, string];
   hero: { eyebrow: string; title1: string; title2: string; description: string };
   search: { label: string; placeholder: string; quick: string; links: [string, string, string] };
-  popular: { eyebrow: string; title: string; note: string; status: string };
+  popular: { eyebrow: string; title: string; note: string };
   categories: { eyebrow: string; title: string };
   signature: { line1: string; line2: string; description: string };
   footer: { home: string; privacy: string; terms: string; contact: string };
@@ -28,7 +28,7 @@ const copies: Record<Locale, Copy> = {
     nav: ['주요 도구', '카테고리'],
     hero: { eyebrow: 'FAST · SIMPLE · PRIVATE', title1: '필요한 순간,', title2: '가장 빠른 도구.', description: '설치와 가입 없이, 찾고 바로 실행하는 웹도구 플랫폼.' },
     search: { label: '도구 검색', placeholder: '필요한 도구를 검색하세요', quick: '인기 검색', links: ['이미지 압축', 'PDF 합치기', '날짜 계산'] },
-    popular: { eyebrow: 'POPULAR TOOLS', title: '가장 많이 찾는 도구', note: '도구는 순차적으로 추가됩니다.', status: '준비 중' },
+    popular: { eyebrow: 'POPULAR TOOLS', title: '가장 많이 찾는 도구', note: '도구는 순차적으로 추가됩니다.' },
     categories: { eyebrow: 'CATEGORIES', title: '도구를 목적별로 찾기' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: '가능한 작업은 브라우저 안에서 처리하고, 사용자의 흐름을 방해하지 않습니다.' },
     footer: { home: 'FIXLGS 홈', privacy: '개인정보처리방침', terms: '이용약관', contact: '문의하기' },
@@ -40,7 +40,7 @@ const copies: Record<Locale, Copy> = {
     nav: ['Featured Tools', 'Categories'],
     hero: { eyebrow: 'FAST · SIMPLE · PRIVATE', title1: 'The right tool,', title2: 'right when you need it.', description: 'Find and use practical web tools instantly—no installation or sign-up.' },
     search: { label: 'Search tools', placeholder: 'Search for the tool you need', quick: 'Popular searches', links: ['Image compressor', 'Merge PDF', 'Date calculator'] },
-    popular: { eyebrow: 'POPULAR TOOLS', title: 'Most-used tools', note: 'New tools are being added step by step.', status: 'Coming soon' },
+    popular: { eyebrow: 'POPULAR TOOLS', title: 'Most-used tools', note: 'New tools are being added step by step.' },
     categories: { eyebrow: 'CATEGORIES', title: 'Find tools by purpose' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: 'Whenever possible, processing stays in your browser without interrupting your workflow.' },
     footer: { home: 'FIXLGS HOME', privacy: 'Privacy Policy', terms: 'Terms of Use', contact: 'Contact' },
@@ -52,7 +52,7 @@ const copies: Record<Locale, Copy> = {
     nav: ['主要ツール', 'カテゴリー'],
     hero: { eyebrow: 'FAST · SIMPLE · PRIVATE', title1: '必要なときに、', title2: 'すぐ使えるツール。', description: 'インストールも会員登録も不要。必要なツールを見つけて、そのまますぐに使えます。' },
     search: { label: 'ツールを検索', placeholder: '必要なツールを検索', quick: '人気の検索ワード', links: ['画像圧縮', 'PDF結合', '日付計算'] },
-    popular: { eyebrow: 'POPULAR TOOLS', title: '人気のツール', note: 'ツールは順次追加されます。', status: '準備中' },
+    popular: { eyebrow: 'POPULAR TOOLS', title: '人気のツール', note: 'ツールは順次追加されます。' },
     categories: { eyebrow: 'CATEGORIES', title: '目的からツールを探す' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: '可能な処理はブラウザ内で行い、作業の流れやプライバシーをできる限り守ります。' },
     footer: { home: 'FIXLGS ホーム', privacy: 'プライバシーポリシー', terms: '利用規約', contact: 'お問い合わせ' },

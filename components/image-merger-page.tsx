@@ -15,7 +15,6 @@ export function ImageMergerPage({locale}:{locale:Locale}){
  const t=copy[locale];
  const nextTitle=locale==="ko"?"다음 작업":locale==="en"?"Next steps":"次の作業";
  const ready=locale==="ko"?"사용 가능":locale==="en"?"Available":"利用可能";
- const soon=locale==="ko"?"준비 중":locale==="en"?"Coming soon":"準備中";
  const nextCards=[
    {n:"014",name:locale==="ko"?"이미지 콜라주 만들기":locale==="en"?"Image Collage Maker":"画像コラージュ作成",href:null},
    {n:"015",name:locale==="ko"?"전후 비교 이미지 만들기":locale==="en"?"Before & After Image Maker":"ビフォー・アフター画像作成",href:null},

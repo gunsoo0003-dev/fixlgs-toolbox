@@ -57,7 +57,6 @@ const copy = {
     ],
     next: "다음 작업",
     related: "관련 도구",
-    coming: "준비 중",
   },
   en: {
     back: "PDF Tools",
@@ -109,7 +108,6 @@ const copy = {
     ],
     next: "Next work",
     related: "Related tools",
-    coming: "Coming soon",
   },
   ja: {
     back: "PDFツール",
@@ -161,7 +159,6 @@ const copy = {
     ],
     next: "次の作業",
     related: "関連ツール",
-    coming: "準備中",
   },
 } as const;
 

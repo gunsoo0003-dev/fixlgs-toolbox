@@ -92,7 +92,6 @@ export function BeforeAfterImagePage({locale}:{locale:Locale}){
   ]};
   const nextTitle=locale==="ko"?"다음 작업":locale==="en"?"Next steps":"次の作業";
   const ready=locale==="ko"?"사용 가능":locale==="en"?"Available":"利用可能";
-  const soon=locale==="ko"?"준비 중":locale==="en"?"Coming soon":"準備中";
   const cards=[
     {n:"16",name:locale==="ko"?"이미지에 글자 넣기":locale==="en"?"Add Text to Image":"画像に文字を追加",href:null},
     {n:"13",name:locale==="ko"?"이미지 합치기":locale==="en"?"Image Merger":"画像結合ツール",href:`/${locale}/image-merger`},

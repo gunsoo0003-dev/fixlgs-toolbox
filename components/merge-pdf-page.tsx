@@ -12,7 +12,6 @@ const copy = {
     desc: "여러 PDF를 원하는 파일 순서대로 정렬하고 페이지를 확인한 뒤, 원본 페이지 품질을 불필요하게 바꾸지 않고 하나의 PDF로 합칩니다.",
     local: "PDF 내용은 서버로 업로드하지 않고 현재 브라우저에서 처리합니다.",
     next: "다음 작업",
-    coming: "준비 중",
     related: "관련 도구",
     how: "사용 방법",
     steps: [
@@ -59,7 +58,6 @@ const copy = {
     desc: "Arrange multiple PDFs in the exact file order you want, inspect their pages, and combine them without unnecessarily changing the original page quality.",
     local: "PDF contents stay in this browser and are not uploaded to a server.",
     next: "Next work",
-    coming: "Coming soon",
     related: "Related tools",
     how: "How to use",
     steps: [
@@ -106,7 +104,6 @@ const copy = {
     desc: "複数のPDFを希望するファイル順に並べ、ページを確認してから、元ページの品質を不要に変えず1つのPDFへ結合します。",
     local: "PDFの内容はサーバーへアップロードせず、このブラウザ内で処理します。",
     next: "次の作業",
-    coming: "準備中",
     related: "関連ツール",
     how: "使い方",
     steps: [

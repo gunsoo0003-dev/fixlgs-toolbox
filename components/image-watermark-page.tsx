@@ -65,7 +65,6 @@ const copy = {
     ],
     nextTitle: "다음 작업",
     ready: "사용 가능",
-    soon: "준비 중",
   },
   en: {
     back: "Image Edit",
@@ -125,7 +124,6 @@ const copy = {
     ],
     nextTitle: "Next steps",
     ready: "Available",
-    soon: "Coming soon",
   },
   ja: {
     back: "画像編集",
@@ -185,7 +183,6 @@ const copy = {
     ],
     nextTitle: "次の作業",
     ready: "利用可能",
-    soon: "準備中",
   },
 } as const;
 

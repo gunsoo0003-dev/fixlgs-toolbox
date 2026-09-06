@@ -28,7 +28,7 @@ const pageCopy = {
       ["이미지가 서버로 업로드되나요?", "아니요. 입력 이미지와 결과 파일은 현재 브라우저에서만 처리합니다."],
       ["Apple 규격은 하나만 지원하나요?", "아니요. iPhone 대형과 iPad 13의 세로·가로 accepted size preset을 기본 제공하도록 구성합니다."],
     ],
-    next: "다음 작업", coming: "준비 중", related: "관련 도구"
+    next: "다음 작업", related: "관련 도구"
   },
   en: {
     back: "Content Image Creation", title: "App Store Screenshot Maker",
@@ -52,7 +52,7 @@ const pageCopy = {
       ["Are images uploaded to a server?", "No. Input and output files are processed in your current browser."],
       ["Does Apple use only one screenshot size?", "No. The tool provides default portrait and landscape presets for large iPhone and iPad 13 accepted sizes."],
     ],
-    next: "Next work", coming: "Coming soon", related: "Related tools"
+    next: "Next work", related: "Related tools"
   },
   ja: {
     back: "コンテンツ画像作成", title: "アプリストア スクリーンショット作成ツール",
@@ -76,7 +76,7 @@ const pageCopy = {
       ["画像はサーバーへ送信されますか？", "いいえ。入力と結果は現在のブラウザ内で処理されます。"],
       ["Appleは1つのサイズだけですか？", "いいえ。大型iPhoneとiPad 13の縦・横accepted size presetを基本提供します。"],
     ],
-    next: "次の作業", coming: "準備中", related: "関連ツール"
+    next: "次の作業", related: "関連ツール"
   }
 } as const;
 

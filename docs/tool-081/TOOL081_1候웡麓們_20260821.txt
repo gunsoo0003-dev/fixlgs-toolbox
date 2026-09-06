@@ -1,0 +1,41 @@
+FIXLGS TOOLBOX TOOL081 1차 완료 보고
+DATE=2026-08-21
+BASELINE=FIXLGS_TOOLBOX_080_다음작업용_20260821.zip
+AUX=FIXLGS_TOOLBOX_081_평수_평당가격_계산기_보조작업완료_20260821(1).zip
+
+[완료]
+- TOOL081 전용 product/lib/route/CSS/tests/scripts 통합
+- 9번 카테고리 REAL ESTATE & BUILD 재노출
+  - app/[locale]/page.tsx categoryBase slice 0,9
+  - lib/site.ts publicCategorySlugs slice 0,9
+  - app/sitemap.ts category slice 0,9
+  - components/toolbox-home-hero.tsx 검색 결과 cap 9 유지/공개 TOOL081 검색 등록
+- real-estate-build TOOL081 LIVE card 등록
+- 카테고리 카드 실제 번호 081 적용(index+81)
+- publicTools TOOL081 등록
+- sitemap KO/EN/JA TOOL081 등록
+- package scripts tool081:static/secret/browser/final 등록
+- FINAL runner 순서 static -> secret -> TypeScript -> browser -> build 적용
+- FINAL_SENTINEL=TOOL081_PASS/FAIL 적용
+
+[정적 검수]
+SOURCE=27/27 PASS
+DESIGN=12/12 PASS
+HARNESS=15/15 PASS
+LOGIC=7/7 PASS
+COMMON_PROTECTION=10/10 PASS
+SECRET_SCAN=PASS
+STATIC_TOTAL=6/6 PASS
+
+[동적 FULL FINAL]
+static=PASS
+secret=PASS
+dependency-preflight=BLOCK (local node_modules/.bin playwright,next,tsc 없음)
+ENVIRONMENT_BLOCK=1
+STATUS=FAIL
+FINAL_SENTINEL=TOOL081_FAIL
+분류=ENVIRONMENT (제품 FAIL 아님)
+
+[다음 주작업장]
+의존성이 존재하는 실제 프로젝트 폴더에서 npm run tool081:final 실행.
+TypeScript -> browser PC/mobile KO/EN/JA -> production build 실제 PASS 후 최종 완료 판정.

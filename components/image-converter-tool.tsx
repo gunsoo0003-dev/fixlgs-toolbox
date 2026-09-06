@@ -1073,13 +1073,3 @@ export function ImageConverterTool({ locale }: { locale: Locale }) {
   );
 }
 
-function ToolCardSkeleton({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="toolbox-next-work-card">
-      <h3 className="text-base font-semibold">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
-      <div className="toolbox-next-work-card-foot"><span>Coming soon</span><strong aria-hidden="true">↗</strong></div>
-    </div>
-  );
-}
-

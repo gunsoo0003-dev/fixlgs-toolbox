@@ -55,7 +55,6 @@ export function TargetSizeCompressorPage({ locale }: { locale: Locale }) {
   ];
   const next = locale === "ko" ? "다음 작업" : locale === "en" ? "Next steps" : "次の作業";
   const available = locale === "ko" ? "사용 가능" : locale === "en" ? "Available" : "利用可能";
-  const soon = locale === "ko" ? "준비 중" : locale === "en" ? "Coming soon" : "準備中";
   return <ToolboxSubpageShell locale={locale} appName={appName}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <section className="toolbox-tool-detail-hero"><Link href={`/${locale}/category/image-convert`} className="toolbox-subpage-back">← {t.back}</Link><p className="toolbox-subpage-eyebrow">005 · IMAGE CONVERT</p><div className="toolbox-tool-detail-heading"><h1><span className="toolbox-tool-title-line">{t.title1}</span><span className="toolbox-tool-title-line">{t.title2}</span></h1><p>{t.desc}</p></div><div className="toolbox-tool-detail-badge"><strong>LOCAL</strong><span>{locale === "ko" ? "브라우저에서 바로 처리" : locale === "en" ? "PROCESS IN YOUR BROWSER" : "ブラウザ内で処理"}</span></div></section>

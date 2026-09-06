@@ -64,7 +64,6 @@ export function SvgBmpTiffPage({locale}:{locale:Locale}){
   const nextTitle=locale==="ko"?"다음 작업":locale==="en"?"Next steps":"次の作業";
   const relatedTitle=locale==="ko"?"관련 도구":locale==="en"?"Related tools":"関連ツール";
   const ready=locale==="ko"?"사용 가능":locale==="en"?"Available":"利用可能";
-  const soon=locale==="ko"?"준비 중":locale==="en"?"Coming soon":"準備中";
   const cards=[
     {n:"001",name:locale==="ko"?"JPG·PNG·WebP 이미지 변환기":locale==="en"?"JPG, PNG & WebP Converter":"JPG・PNG・WebP画像変換",href:`/${locale}/jpg-png-webp-image-converter`,ready:true},
     {n:"002",name:locale==="ko"?"HEIC·AVIF 이미지 변환기":locale==="en"?"HEIC & AVIF Converter":"HEIC・AVIF画像変換",href:`/${locale}/heic-avif-image-converter`,ready:true},

@@ -15,7 +15,6 @@ export function ImageCollageMakerPage({locale}:{locale:Locale}){
  const t=copy[locale];
  const nextTitle=locale==="ko"?"다음 작업":locale==="en"?"Next steps":"次の作業";
  const ready=locale==="ko"?"사용 가능":locale==="en"?"Available":"利用可能";
- const soon=locale==="ko"?"준비 중":locale==="en"?"Coming soon":"準備中";
  const nextCards=[
   {n:"015",name:locale==="ko"?"전후 비교 이미지 만들기":locale==="en"?"Before & After Image Maker":"ビフォー・アフター画像作成",href:null},
   {n:"016",name:locale==="ko"?"이미지에 글자 넣기":locale==="en"?"Add Text to Image":"画像に文字を追加",href:null},

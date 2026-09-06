@@ -64,7 +64,6 @@ const pageCopy = {
     related: "관련 도구",
     available: "사용 가능",
     next: "다음 작업",
-    coming: "준비 중",
   },
   en: {
     back: "Content Image Creation",
@@ -123,7 +122,6 @@ const pageCopy = {
     related: "Related tools",
     available: "Available",
     next: "Next work",
-    coming: "Coming soon",
   },
   ja: {
     back: "コンテンツ画像作成",
@@ -182,7 +180,6 @@ const pageCopy = {
     related: "関連ツール",
     available: "利用可能",
     next: "次の作業",
-    coming: "準備中",
   },
 } as const;
 

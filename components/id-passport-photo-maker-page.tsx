@@ -52,7 +52,7 @@ const copy = {
       ["A4에 여러 장을 자동 배치하면 실제 사진 크기도 유지되나요?", "네. 선택한 mm 규격을 기준으로 A4 210×297mm 안에 반복 배치합니다. 다만 실제 인쇄 시 프린터 배율을 100% 또는 실제 크기로 설정해야 최종 크기가 유지됩니다."],
       ["사진과 결과 파일이 서버로 올라가나요?", "아니요. 입력 사진의 처리, 미리보기, JPG·PNG 생성과 A4 배치는 현재 브라우저 안에서 진행되며 서버에 업로드해 저장하는 방식이 아닙니다."]
     ],
-    next: "다음 작업", coming: "준비 중", related: "관련 도구"
+    next: "다음 작업", related: "관련 도구"
   },
   en: {
     back: "Content Image Creation",
@@ -100,7 +100,7 @@ const copy = {
       ["Will A4 auto-layout preserve the physical photo size?", "Yes. The layout is calculated from the selected millimeter size on a 210×297mm A4 page, but the printer must be set to 100% or Actual Size."],
       ["Are my photos uploaded to a server?", "No. Input handling, preview, JPG/PNG generation, and A4 layout are performed in the current browser rather than uploaded for server-side storage."]
     ],
-    next: "Next work", coming: "Coming soon", related: "Related tools"
+    next: "Next work", related: "Related tools"
   },
   ja: {
     back: "コンテンツ画像作成",
@@ -148,7 +148,7 @@ const copy = {
       ["A4自動配置でも写真の実寸は維持されますか？", "はい。選択したmmサイズを基準に210×297mmのA4へ配置します。ただし印刷時に100%または実際のサイズを指定する必要があります。"],
       ["写真と結果ファイルはサーバーへ送信されますか？", "いいえ。入力処理、プレビュー、JPG・PNG生成、A4配置は現在のブラウザ内で行われ、サーバー保存のためにアップロードする方式ではありません。"]
     ],
-    next: "次の作業", coming: "準備中", related: "関連ツール"
+    next: "次の作業", related: "関連ツール"
   }
 } as const;
 
