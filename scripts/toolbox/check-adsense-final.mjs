@@ -118,9 +118,9 @@ for (const [slug, count] of expectedCounts) {
 
 
 // 8) Main-domain path migration SEO integrity
-check('metadataBase uses main /tools path', rootLayout.includes("metadataBase: new URL('https://fixlgs.com/tools')") || rootLayout.includes('metadataBase: new URL("https://fixlgs.com/tools")'));
-check('sitemap base URL uses main /tools path', sitemap.includes('const baseUrl = "https://fixlgs.com/tools"') || sitemap.includes("const baseUrl = 'https://fixlgs.com/tools'"));
-check('robots exposes main /tools sitemap', robotsFile.includes('https://fixlgs.com/tools/sitemap.xml'));
+check('metadataBase uses main /tools path', rootLayout.includes("metadataBase: new URL('https://www.fixlgs.com/tools')") || rootLayout.includes('metadataBase: new URL("https://www.fixlgs.com/tools")'));
+check('sitemap base URL uses main /tools path', sitemap.includes('const baseUrl = "https://www.fixlgs.com/tools"') || sitemap.includes("const baseUrl = 'https://www.fixlgs.com/tools'"));
+check('robots exposes main /tools sitemap', robotsFile.includes('https://www.fixlgs.com/tools/sitemap.xml'));
 check('robots blocks internal validation routes', ['/tools/dev/', '/tools/tool020-harness', '/tools/__tool020-harness'].every((x) => robotsFile.includes(x)));
 const internalNoindexFiles = ['app/dev/validation/page.tsx', 'app/tool020-harness/page.tsx', 'app/__tool020-harness/page.tsx'];
 check('internal validation pages declare noindex', internalNoindexFiles.every((file) => { const text = read(file); return text.includes('robots: { index: false, follow: false'); }));

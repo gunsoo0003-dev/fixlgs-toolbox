@@ -221,17 +221,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const copy = copies[locale];
-  const canonical = `https://fixlgs.com/tools/${locale}`;
+  const canonical = `https://www.fixlgs.com/tools/${locale}`;
   return {
     title: copy.metadata.title,
     description: copy.metadata.description,
     alternates: {
       canonical,
       languages: {
-        'ko-KR': 'https://fixlgs.com/tools/ko',
-        'en': 'https://fixlgs.com/tools/en',
-        'ja-JP': 'https://fixlgs.com/tools/ja',
-        'x-default': 'https://fixlgs.com/tools/ko',
+        'ko-KR': 'https://www.fixlgs.com/tools/ko',
+        'en': 'https://www.fixlgs.com/tools/en',
+        'ja-JP': 'https://www.fixlgs.com/tools/ja',
+        'x-default': 'https://www.fixlgs.com/tools/ko',
       },
     },
   };

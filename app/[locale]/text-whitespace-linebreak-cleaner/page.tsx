@@ -18,8 +18,8 @@ export async function generateMetadata({params}:{params:Promise<{locale:string}>
   const {locale}=await params;
   if(!locales.includes(locale as Locale)) notFound();
   const l=locale as Locale;
-  const canonical=`https://fixlgs.com/tools/${l}/text-whitespace-linebreak-cleaner`;
-  return {title:title[l],description:description[l],alternates:{canonical,languages:{ko:"https://fixlgs.com/tools/ko/text-whitespace-linebreak-cleaner",en:"https://fixlgs.com/tools/en/text-whitespace-linebreak-cleaner",ja:"https://fixlgs.com/tools/ja/text-whitespace-linebreak-cleaner","x-default":"https://fixlgs.com/tools/ko/text-whitespace-linebreak-cleaner"}},openGraph:{title:title[l],description:description[l],url:canonical,type:"website"}};
+  const canonical=`https://www.fixlgs.com/tools/${l}/text-whitespace-linebreak-cleaner`;
+  return {title:title[l],description:description[l],alternates:{canonical,languages:{ko:"https://www.fixlgs.com/tools/ko/text-whitespace-linebreak-cleaner",en:"https://www.fixlgs.com/tools/en/text-whitespace-linebreak-cleaner",ja:"https://www.fixlgs.com/tools/ja/text-whitespace-linebreak-cleaner","x-default":"https://www.fixlgs.com/tools/ko/text-whitespace-linebreak-cleaner"}},openGraph:{title:title[l],description:description[l],url:canonical,type:"website"}};
 }
 
 export default async function Page({params}:{params:Promise<{locale:string}>}){

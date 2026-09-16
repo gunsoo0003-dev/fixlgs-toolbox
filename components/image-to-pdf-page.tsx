@@ -171,7 +171,7 @@ export function ImageToPdfPage({ locale }: { locale: Locale }) {
   ) : (
     <>Practical standards for image quality<br />{" "}and page layout when creating PDFs</>
   );
-  const url = `https://fixlgs.com/tools/${locale}/image-to-pdf`;
+  const url = `https://www.fixlgs.com/tools/${locale}/image-to-pdf`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -188,8 +188,8 @@ export function ImageToPdfPage({ locale }: { locale: Locale }) {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` },
-          { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/pdf` },
+          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://www.fixlgs.com/tools/${locale}` },
+          { "@type": "ListItem", position: 2, name: t.back, item: `https://www.fixlgs.com/tools/${locale}/category/pdf` },
           { "@type": "ListItem", position: 3, name: t.title, item: url },
         ],
       },

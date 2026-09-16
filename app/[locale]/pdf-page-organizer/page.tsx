@@ -18,10 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const l = locale as Locale;
-  const canonical = `https://fixlgs.com/tools/${l}/pdf-page-organizer`;
+  const canonical = `https://www.fixlgs.com/tools/${l}/pdf-page-organizer`;
   return {
     title: titles[l], description: descriptions[l],
-    alternates: { canonical, languages: { ko: "https://fixlgs.com/tools/ko/pdf-page-organizer", en: "https://fixlgs.com/tools/en/pdf-page-organizer", ja: "https://fixlgs.com/tools/ja/pdf-page-organizer", "x-default": "https://fixlgs.com/tools/en/pdf-page-organizer" } },
+    alternates: { canonical, languages: { ko: "https://www.fixlgs.com/tools/ko/pdf-page-organizer", en: "https://www.fixlgs.com/tools/en/pdf-page-organizer", ja: "https://www.fixlgs.com/tools/ja/pdf-page-organizer", "x-default": "https://www.fixlgs.com/tools/en/pdf-page-organizer" } },
     openGraph: { title: titles[l], description: descriptions[l], url: canonical, type: "website" },
   };
 }

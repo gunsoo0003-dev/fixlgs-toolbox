@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { validationTools } from "../lib/validation/tool-registry";
 
-const base = "https://fixlgs.com/tools";
+const base = "https://www.fixlgs.com/tools";
 
 test.describe("TOOLBOX SEO 공통 검수", () => {
   for (const tool of validationTools) {

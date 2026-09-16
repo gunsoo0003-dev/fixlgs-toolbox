@@ -19,17 +19,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) notFound();
   const current = locale as Locale;
-  const canonical = `https://fixlgs.com/tools/${current}/merge-pdf`;
+  const canonical = `https://www.fixlgs.com/tools/${current}/merge-pdf`;
   return {
     title: title[current],
     description: description[current],
     alternates: {
       canonical,
       languages: {
-        ko: "https://fixlgs.com/tools/ko/merge-pdf",
-        en: "https://fixlgs.com/tools/en/merge-pdf",
-        ja: "https://fixlgs.com/tools/ja/merge-pdf",
-        "x-default": "https://fixlgs.com/tools/ko/merge-pdf",
+        ko: "https://www.fixlgs.com/tools/ko/merge-pdf",
+        en: "https://www.fixlgs.com/tools/en/merge-pdf",
+        ja: "https://www.fixlgs.com/tools/ja/merge-pdf",
+        "x-default": "https://www.fixlgs.com/tools/ko/merge-pdf",
       },
     },
     openGraph: { title: title[current], description: description[current], url: canonical, type: "website" },
