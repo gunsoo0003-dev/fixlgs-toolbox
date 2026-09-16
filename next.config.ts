@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+﻿import type { NextConfig } from "next";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
@@ -18,49 +18,49 @@ const nextConfig: NextConfig = {
       {
         source: "/",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
+        destination: "https://www.fixlgs.com/tools/ko",
         permanent: true,
         basePath: false,
       },
       {
         source: "/tools",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
+        destination: "https://www.fixlgs.com/tools/ko",
         permanent: true,
         basePath: false,
       },
       {
         source: "/tools/:path*",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/:path*",
+        destination: "https://www.fixlgs.com/tools/:path*",
         permanent: true,
         basePath: false,
       },
       {
         source: "/toolbox",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
+        destination: "https://www.fixlgs.com/tools/ko",
         permanent: true,
         basePath: false,
       },
       {
         source: "/:locale(ko|en|ja)/toolbox",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/:locale",
+        destination: "https://www.fixlgs.com/tools/:locale",
         permanent: true,
         basePath: false,
       },
       {
         source: "/:locale(ko|en|ja)/toolbox/:path*",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/:locale/:path*",
+        destination: "https://www.fixlgs.com/tools/:locale/:path*",
         permanent: true,
         basePath: false,
       },
       {
         source: "/:path*",
         has: legacyHost,
-        destination: "https://fixlgs.com/tools/:path*",
+        destination: "https://www.fixlgs.com/tools/:path*",
         permanent: true,
         basePath: false,
       },
@@ -90,3 +90,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
