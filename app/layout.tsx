@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'FIXLGS TOOLBOX | Free Online Tools',
   description:
     'Free browser-based tools for images, documents, text, calculations and everyday work.',
-  metadataBase: new URL('https://www.fixlgs.com/tools'),
+  metadataBase: new URL('https://fixlgs.com/tools'),
   manifest: '/tools/manifest.webmanifest',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'FIXLGS TOOLBOX' },
   icons: {

@@ -185,7 +185,7 @@ const pageCopy = {
 
 export function SocialMediaImageMakerPage({ locale }: { locale: Locale }) {
   const t = pageCopy[locale];
-  const url = `https://www.fixlgs.com/tools/${locale}/social-media-image-maker`;
+  const url = `https://fixlgs.com/tools/${locale}/social-media-image-maker`;
   const related = [
     { n: "017", name: locale === "ko" ? "이미지 워터마크 넣기" : locale === "en" ? "Add Watermark to Images" : "画像ウォーターマーク追加", href: `/${locale}/image-watermark-tool` },
     { n: "016", name: locale === "ko" ? "이미지에 글자 넣기" : locale === "en" ? "Add Text to Image" : "画像文字入れツール", href: `/${locale}/add-text-to-image` },
@@ -218,8 +218,8 @@ export function SocialMediaImageMakerPage({ locale }: { locale: Locale }) {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://www.fixlgs.com/tools/${locale}` },
-          { "@type": "ListItem", position: 2, name: t.back, item: `https://www.fixlgs.com/tools/${locale}/category/content-image` },
+          { "@type": "ListItem", position: 1, name: "TOOLBOX", item: `https://fixlgs.com/tools/${locale}` },
+          { "@type": "ListItem", position: 2, name: t.back, item: `https://fixlgs.com/tools/${locale}/category/content-image` },
           { "@type": "ListItem", position: 3, name: t.title, item: url },
         ],
       },

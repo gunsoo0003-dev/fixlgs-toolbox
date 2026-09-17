@@ -8,10 +8,10 @@ for (const locale of ['ko', 'en', 'ja']) {
     });
     await page.goto(`/${locale}/merge-pdf`);
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.fixlgs.com/tools/${locale}/merge-pdf`);
-    await expect(page.locator('link[hreflang="ko"]')).toHaveAttribute('href', 'https://www.fixlgs.com/tools/ko/merge-pdf');
-    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute('href', 'https://www.fixlgs.com/tools/en/merge-pdf');
-    await expect(page.locator('link[hreflang="ja"]')).toHaveAttribute('href', 'https://www.fixlgs.com/tools/ja/merge-pdf');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://fixlgs.com/tools/${locale}/merge-pdf`);
+    await expect(page.locator('link[hreflang="ko"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/ko/merge-pdf');
+    await expect(page.locator('link[hreflang="en"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/en/merge-pdf');
+    await expect(page.locator('link[hreflang="ja"]')).toHaveAttribute('href', 'https://fixlgs.com/tools/ja/merge-pdf');
     await page.getByTestId('tool028-file-input').setInputFiles([
       'tests/fixtures/tool-028/한글-계약서.pdf',
       'tests/fixtures/tool-028/日本語-資料.pdf',

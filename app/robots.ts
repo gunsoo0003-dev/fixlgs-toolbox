@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: "https://www.fixlgs.com/tools/sitemap.xml",
+    sitemap: "https://fixlgs.com/tools/sitemap.xml",
   };
 }

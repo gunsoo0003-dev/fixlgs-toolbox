@@ -130,8 +130,8 @@ const expert={
 
 export function Tool081AreaPriceCalculatorPage({locale}:{locale:Locale}){
  const t=copy[locale];
- const url=`https://www.fixlgs.com/tools/${locale}/area-price-per-unit-calculator`;
- const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://www.fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://www.fixlgs.com/tools/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
+ const url=`https://fixlgs.com/tools/${locale}/area-price-per-unit-calculator`;
+ const jsonLd={"@context":"https://schema.org","@graph":[{"@type":"WebApplication",name:t.title,applicationCategory:'UtilitiesApplication',operatingSystem:'Any',url,description:t.desc,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}},{"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:'TOOLBOX',item:`https://fixlgs.com/tools/${locale}`},{"@type":"ListItem",position:2,name:t.back,item:`https://fixlgs.com/tools/${locale}/category/real-estate-build`},{"@type":"ListItem",position:3,name:t.title,item:url}]},{"@type":"FAQPage",mainEntity:t.faqs.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]};
  return <ToolboxSubpageShell locale={locale} appName={t.title}>
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
   <section className="toolbox-tool-detail-hero toolbox-tool-detail-hero--single-line-description">
