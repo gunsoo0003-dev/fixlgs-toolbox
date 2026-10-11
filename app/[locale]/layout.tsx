@@ -16,12 +16,12 @@ export async function generateMetadata({
 
   return {
     alternates: {
-      canonical: `https://fixlgs.com/tools/${locale}`,
+      canonical: `https://toolbox.fixlgs.com/${locale}`,
       languages: {
-        ko: "https://fixlgs.com/tools/ko",
-        en: "https://fixlgs.com/tools/en",
-        ja: "https://fixlgs.com/tools/ja",
-        "x-default": "https://fixlgs.com/tools/ko",
+        ko: "https://toolbox.fixlgs.com/ko",
+        en: "https://toolbox.fixlgs.com/en",
+        ja: "https://toolbox.fixlgs.com/ja",
+        "x-default": "https://toolbox.fixlgs.com/ko",
       },
     },
   };

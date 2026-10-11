@@ -22,17 +22,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) return {};
   const l = locale as Locale;
-  const path = `https://fixlgs.com/tools/${l}/unit-price-comparison-calculator`;
+  const path = `https://toolbox.fixlgs.com/${l}/unit-price-comparison-calculator`;
   return {
     title: meta[l].title,
     description: meta[l].description,
     alternates: {
       canonical: path,
       languages: {
-        ko: "https://fixlgs.com/tools/ko/unit-price-comparison-calculator",
-        en: "https://fixlgs.com/tools/en/unit-price-comparison-calculator",
-        ja: "https://fixlgs.com/tools/ja/unit-price-comparison-calculator",
-        "x-default": "https://fixlgs.com/tools/ko/unit-price-comparison-calculator",
+        ko: "https://toolbox.fixlgs.com/ko/unit-price-comparison-calculator",
+        en: "https://toolbox.fixlgs.com/en/unit-price-comparison-calculator",
+        ja: "https://toolbox.fixlgs.com/ja/unit-price-comparison-calculator",
+        "x-default": "https://toolbox.fixlgs.com/ko/unit-price-comparison-calculator",
       },
     },
   };

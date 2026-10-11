@@ -1,4 +1,4 @@
-﻿import type { NextConfig } from "next";
+import type { NextConfig } from "next";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
@@ -10,60 +10,21 @@ const isTool018Runtime = process.env.TOOL018_RUNTIME === "1";
 const isTool019Runtime = process.env.TOOL019_RUNTIME === "1";
 
 const nextConfig: NextConfig = {
-  basePath: "/tools",
+  // The TOOLBOX now lives at toolbox.fixlgs.com, without /tools prefix.
+  // Preserve older subdomain URLs that used /tools as a basePath.
   async redirects() {
-    const legacyHost = [{ type: "host" as const, value: "toolbox.fixlgs.com" }];
-
     return [
-      {
-        source: "/",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/tools",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/tools/:path*",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/:path*",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/toolbox",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/ko",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/:locale(ko|en|ja)/toolbox",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/:locale",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/:locale(ko|en|ja)/toolbox/:path*",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/:locale/:path*",
-        permanent: true,
-        basePath: false,
-      },
-      {
-        source: "/:path*",
-        has: legacyHost,
-        destination: "https://fixlgs.com/tools/:path*",
-        permanent: true,
-        basePath: false,
-      },
+      { source: "/toolbox", destination: "/ko", permanent: true },
+      { source: "/:locale(ko|en|ja)/toolbox", destination: "/:locale", permanent: true },
+      { source: "/:locale(ko|en|ja)/toolbox/:path*", destination: "/:locale/:path*", permanent: true },
+    ];
+  },
+  // Compatibility bridge while fixlgs.com/tools still rewrites to this app.
+  // Keep original request URL stable until the main-domain 301 migration is deployed.
+  async rewrites() {
+    return [
+      { source: "/tools", destination: "/ko" },
+      { source: "/tools/:path*", destination: "/:path*" },
     ];
   },
   allowedDevOrigins: ["127.0.0.1", "localhost"],

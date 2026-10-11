@@ -8,15 +8,15 @@ export const metadata: Metadata = {
   title: 'FIXLGS TOOLBOX | Free Online Tools',
   description:
     'Free browser-based tools for images, documents, text, calculations and everyday work.',
-  metadataBase: new URL('https://fixlgs.com/tools'),
-  manifest: '/tools/manifest.webmanifest',
+  metadataBase: new URL('https://toolbox.fixlgs.com'),
+  manifest: '/manifest.webmanifest',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'FIXLGS TOOLBOX' },
   icons: {
     icon: [
-      { url: '/tools/favicon.png', sizes: '512x512', type: 'image/png' },
-      { url: '/tools/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.png', sizes: '512x512', type: 'image/png' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
     ],
-    apple: '/tools/icons/apple-touch-icon.png',
+    apple: '/icons/apple-touch-icon.png',
   },
 };
 

@@ -20,7 +20,7 @@ export function proxy(request: NextRequest) {
 
   if (appPathname === '/toolbox' || appPathname === '/toolbox/') {
     const url = request.nextUrl.clone();
-    url.pathname = `/tools/${detectLocale(request)}`;
+    url.pathname = `/${detectLocale(request)}`;
     return NextResponse.redirect(url, 308);
   }
 
@@ -28,7 +28,7 @@ export function proxy(request: NextRequest) {
   if (legacyMatch) {
     const [, locale, rest] = legacyMatch;
     const url = request.nextUrl.clone();
-    url.pathname = rest ? `/tools/${locale}/${rest}` : `/tools/${locale}`;
+    url.pathname = rest ? `/${locale}/${rest}` : `/${locale}`;
     return NextResponse.redirect(url, 308);
   }
 

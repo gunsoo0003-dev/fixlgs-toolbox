@@ -31,7 +31,7 @@ const copies: Record<Locale, Copy> = {
     popular: { eyebrow: 'POPULAR TOOLS', title: '가장 많이 찾는 도구', note: '도구는 순차적으로 추가됩니다.' },
     categories: { eyebrow: 'CATEGORIES', title: '도구를 목적별로 찾기' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: '가능한 작업은 브라우저 안에서 처리하고, 사용자의 흐름을 방해하지 않습니다.' },
-    footer: { home: 'FIXLGS 홈', privacy: '개인정보처리방침', terms: '이용약관', contact: '문의하기' },
+    footer: { home: 'TOOLBOX 홈', privacy: '개인정보처리방침', terms: '이용약관', contact: '문의하기' },
     faq: { eyebrow: 'FAQ', title: '자주 묻는 질문', more: 'FAQ 더보기', collapse: 'FAQ 접기', items: [['TOOLBOX는 무료인가요?', '현재 제공되는 기본 웹도구는 무료로 사용할 수 있습니다.'], ['설치나 회원가입이 필요한가요?', '아니요. TOOLBOX는 별도 설치나 회원가입 없이 브라우저에서 바로 사용할 수 있습니다.'], ['업로드한 파일은 어디에서 처리되나요?', '가능한 도구는 브라우저 내부에서 처리하며, 각 도구 페이지에서 처리 방식을 안내합니다.'], ['모바일에서도 사용할 수 있나요?', '네. 휴대전화와 태블릿에서도 사용할 수 있도록 반응형 화면을 제공합니다.'], ['어떤 브라우저를 지원하나요?', '최신 Chrome, Edge, Safari, Firefox 사용을 권장합니다.'], ['파일 크기나 사용 횟수 제한이 있나요?', '제한은 도구마다 다를 수 있으며 각 도구 화면에서 별도로 안내합니다.'], ['새로운 도구는 계속 추가되나요?', '네. 카테고리별 우선순위에 따라 새로운 도구를 순차적으로 추가합니다.'], ['광고는 왜 표시되나요?', '무료 도구 운영과 지속적인 기능 개선을 위해 일부 페이지에 광고가 표시될 수 있습니다.'], ['문제가 발생하거나 기능을 제안하려면 어떻게 하나요?', '페이지 하단의 문의하기를 통해 오류 내용이나 원하는 기능을 전달할 수 있습니다.']] },
     trust: { note: '빠르고 단순하게, 가능한 작업은 브라우저 안에서 처리합니다.', privacy: '개인정보처리방침', contact: '문의하기' },
   },
@@ -43,7 +43,7 @@ const copies: Record<Locale, Copy> = {
     popular: { eyebrow: 'POPULAR TOOLS', title: 'Most-used tools', note: 'New tools are being added step by step.' },
     categories: { eyebrow: 'CATEGORIES', title: 'Find tools by purpose' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: 'Whenever possible, processing stays in your browser without interrupting your workflow.' },
-    footer: { home: 'FIXLGS HOME', privacy: 'Privacy Policy', terms: 'Terms of Use', contact: 'Contact' },
+    footer: { home: 'TOOLBOX HOME', privacy: 'Privacy Policy', terms: 'Terms of Use', contact: 'Contact' },
     faq: { eyebrow: 'FAQ', title: 'Frequently asked questions', more: 'View more FAQs', collapse: 'Show fewer FAQs', items: [['Is TOOLBOX free to use?', 'The basic web tools currently provided are free to use.'], ['Do I need to install anything or create an account?', 'No. TOOLBOX runs directly in your browser without installation or registration.'], ['Where are uploaded files processed?', 'Whenever possible, processing stays in your browser. Each tool page explains its processing method.'], ['Can I use the tools on mobile devices?', 'Yes. The interface is responsive and supports phones and tablets.'], ['Which browsers are supported?', 'We recommend the latest versions of Chrome, Edge, Safari, or Firefox.'], ['Are there file-size or usage limits?', 'Limits may vary by tool and are explained on the individual tool page.'], ['Will more tools be added?', 'Yes. New tools are added step by step across each category.'], ['Why are advertisements displayed?', 'Some pages may show ads to support free operation and continued improvements.'], ['How can I report a problem or suggest a feature?', 'Use the contact link in the footer to send details about an issue or feature request.']] },
     trust: { note: 'Fast, simple, and processed in your browser whenever possible.', privacy: 'Privacy Policy', contact: 'Contact' },
   },
@@ -55,7 +55,7 @@ const copies: Record<Locale, Copy> = {
     popular: { eyebrow: 'POPULAR TOOLS', title: '人気のツール', note: 'ツールは順次追加されます。' },
     categories: { eyebrow: 'CATEGORIES', title: '目的からツールを探す' },
     signature: { line1: 'SIMPLE TO USE.', line2: 'PRIVATE BY DESIGN.', description: '可能な処理はブラウザ内で行い、作業の流れやプライバシーをできる限り守ります。' },
-    footer: { home: 'FIXLGS ホーム', privacy: 'プライバシーポリシー', terms: '利用規約', contact: 'お問い合わせ' },
+    footer: { home: 'TOOLBOX ホーム', privacy: 'プライバシーポリシー', terms: '利用規約', contact: 'お問い合わせ' },
     faq: { eyebrow: 'FAQ', title: 'よくある質問', more: 'FAQをもっと見る', collapse: 'FAQを閉じる', items: [['TOOLBOXは無料ですか？', '現在提供している基本的なウェブツールは無料で利用できます。'], ['インストールや会員登録は必要ですか？', 'いいえ。インストールや会員登録なしでブラウザからすぐに利用できます。'], ['アップロードしたファイルはどこで処理されますか？', '可能なツールはブラウザ内で処理し、各ツールページで処理方法を案内します。'], ['モバイルでも利用できますか？', 'はい。スマートフォンやタブレットに対応した画面を提供します。'], ['どのブラウザに対応していますか？', '最新のChrome、Edge、Safari、Firefoxを推奨します。'], ['ファイルサイズや利用回数に制限はありますか？', '制限はツールごとに異なる場合があり、各ツール画面で案内します。'], ['新しいツールは追加されますか？', 'はい。カテゴリーごとの優先順位に沿って順次追加します。'], ['広告が表示されるのはなぜですか？', '無料運営と継続的な改善のため、一部のページに広告が表示される場合があります。'], ['不具合報告や機能提案はどこからできますか？', 'フッターのお問い合わせから不具合や希望する機能を送信できます。']] },
     trust: { note: 'すばやく、シンプルに。可能な処理はブラウザ内で行います。', privacy: 'プライバシーポリシー', contact: 'お問い合わせ' },
   },
@@ -221,17 +221,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const copy = copies[locale];
-  const canonical = `https://fixlgs.com/tools/${locale}`;
+  const canonical = `https://toolbox.fixlgs.com/${locale}`;
   return {
     title: copy.metadata.title,
     description: copy.metadata.description,
     alternates: {
       canonical,
       languages: {
-        'ko-KR': 'https://fixlgs.com/tools/ko',
-        'en': 'https://fixlgs.com/tools/en',
-        'ja-JP': 'https://fixlgs.com/tools/ja',
-        'x-default': 'https://fixlgs.com/tools/ko',
+        'ko-KR': 'https://toolbox.fixlgs.com/ko',
+        'en': 'https://toolbox.fixlgs.com/en',
+        'ja-JP': 'https://toolbox.fixlgs.com/ja',
+        'x-default': 'https://toolbox.fixlgs.com/ko',
       },
     },
   };
@@ -248,7 +248,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
   return (
     <main className={`toolbox-site toolbox-locale-${locale}`}>
       <header className="toolbox-header">
-        <Link href="https://fixlgs.com/" className="toolbox-wordmark" aria-label={copy.footer.home}>
+        <Link href={`/${locale}`} className="toolbox-wordmark" aria-label={copy.footer.home}>
           <strong>FIXLGS</strong><span>TOOLBOX</span>
         </Link>
         <nav className="toolbox-nav" aria-label={`${copy.nav[0]} / ${copy.nav[1]}`}>
@@ -298,19 +298,8 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
         </div>
       </section>
 
-      <section className="toolbox-section toolbox-editorial-guides">
-        <div className="toolbox-section-head"><div><p>{editorialCopies[locale].guides.eyebrow}</p><h2>{editorialCopies[locale].guides.title}</h2></div><span>{editorialCopies[locale].guides.note}</span></div>
-        <div className="toolbox-editorial-guide-grid">
-          {editorialCopies[locale].guides.items.map((guide) => (
-            <a className="toolbox-editorial-guide-card" href={guide.href} key={guide.number}>
-              <div><span>{guide.number}</span><b>{guide.tag}</b></div>
-              <h3>{guide.title}</h3>
-              <p>{guide.description}</p>
-              <strong>{editorialCopies[locale].guides.read} <i aria-hidden="true">↗</i></strong>
-            </a>
-          ))}
-        </div>
-      </section>
+      {/* Guides formerly linked to fixlgs.com/guides, which now belongs to the
+          BUILDING-first main site. Do not publish cards that lead to retired URLs. */}
 
       <section className="toolbox-editorial-principles">
         <div className="toolbox-editorial-principles-head"><p>{editorialCopies[locale].principles.eyebrow}</p><h2>{editorialCopies[locale].principles.title}</h2></div>
@@ -328,7 +317,7 @@ export default async function LocalizedToolboxPage({ params }: { params: Promise
         <ToolboxFaqList items={copy.faq.items} initialCount={5} moreLabel={copy.faq.more} collapseLabel={copy.faq.collapse} />
       </section>
 
-      <footer className="toolbox-footer"><Link href="https://fixlgs.com/">{copy.footer.home}</Link><span>TOOLBOX · 2026</span><div><Link href="https://fixlgs.com/privacy">{copy.footer.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.footer.terms}</Link><Link href={`https://fixlgs.com/contact?app=${encodeURIComponent('FIXLGS TOOLBOX')}`}>{copy.footer.contact}</Link></div></footer>
+      <footer className="toolbox-footer"><Link href={`/${locale}`}>{copy.footer.home}</Link><span>TOOLBOX · 2026</span><div><Link href="https://fixlgs.com/privacy">{copy.footer.privacy}</Link><Link href="https://fixlgs.com/terms">{copy.footer.terms}</Link><Link href={`https://fixlgs.com/contact?app=${encodeURIComponent('FIXLGS TOOLBOX')}`}>{copy.footer.contact}</Link></div></footer>
     </main>
   );
 }

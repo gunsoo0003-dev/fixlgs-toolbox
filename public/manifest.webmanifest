@@ -1,28 +1,28 @@
 {
-  "name": "FIXLGS",
-  "short_name": "FIXLGS",
-  "description": "Apps, web services, websites and practical digital tools by FIXLGS.",
-  "start_url": "/tools/ko",
-  "scope": "/tools/",
+  "name": "FIXLGS TOOLBOX",
+  "short_name": "TOOLBOX",
+  "description": "Free browser-based tools for images, PDF, text and calculations.",
+  "start_url": "/ko",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "orientation": "any",
   "icons": [
     {
-      "src": "/tools/icons/icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/tools/icons/icon-512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/tools/icons/maskable-512.png",
+      "src": "/icons/maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
